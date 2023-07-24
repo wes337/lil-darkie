@@ -3,11 +3,11 @@ export function getRandomNumberBetween(min, max) {
 }
 
 export function isMobileSizedScreen() {
-  if (typeof window === "undefined") {
-    return;
+  try {
+    return window.innerWidth < 1100;
+  } catch {
+    return false;
   }
-
-  return window.innerWidth < 1100;
 }
 
 export function formateDate(dateString) {
