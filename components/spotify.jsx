@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { CDN_URL } from "@/app/utils";
 import useStore from "@/app/store";

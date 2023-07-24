@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { CDN_URL } from "@/app/utils";

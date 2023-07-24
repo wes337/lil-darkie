@@ -8,12 +8,27 @@ import "@/styles/nav.scss";
 
 export default function Nav() {
   const pathname = usePathname();
-  const { navOpen, setNavOpen, sticky, setFlashing } = useStore();
+  const { navOpen, setNavOpen, sticky, setSticky, setScroll, setFlashing } =
+    useStore();
 
   useEffect(() => {
     setNavOpen(false);
     setFlashing(false);
   }, [pathname, setFlashing, setNavOpen]);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const scrollY = Math.floor(window.scrollY);
+      setScroll(scrollY);
+      setSticky(scrollY >= 32);
+    };
+
+    onScroll();
+
+    window.addEventListener("scroll", onScroll);
+
+    return () => window.removeEventListener("scoll", onScroll);
+  }, [setScroll, setSticky]);
 
   return (
     <>
