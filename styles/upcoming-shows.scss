@@ -1,0 +1,202 @@
+@import "./variables.scss";
+
+.upcoming-shows {
+  padding-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-lg;
+  margin: 0 $space-md;
+
+  @include for-desktop {
+    padding-top: 100px;
+  }
+
+  h1 {
+    margin: 0;
+    text-transform: uppercase;
+    color: $color-yellow;
+    text-align: center;
+    text-shadow: 1px 1px 0px $color-black, 2px 2px 0px $color-black,
+      3px 3px 0px $color-black;
+
+    @include for-phone-only {
+      font-size: $font-size-xl;
+      letter-spacing: 1.5px;
+    }
+
+    @include for-tablet {
+      font-size: $font-size-xl;
+    }
+  }
+
+  .upcoming-shows-list {
+    display: flex;
+    flex-direction: column;
+    background-color: $color-black;
+    gap: $space-lg;
+    width: 100%;
+    max-width: 800px;
+    box-shadow: 8px 8px 0px $color-red;
+    position: relative;
+    overflow: hidden;
+
+    @include for-desktop {
+      max-width: 1000px;
+      height: 100vh;
+    }
+  }
+
+  .upcoming-show {
+    display: flex;
+    flex-direction: column;
+    color: $color-white;
+    font-size: 16px;
+    text-align: center;
+    text-transform: uppercase;
+    padding: $space-md;
+    gap: $space-sm;
+    position: relative;
+    z-index: 0;
+    text-shadow: 2px 2px 0px $color-black;
+
+    .upcoming-show-city {
+      font-size: 18px;
+      font-weight: 700;
+      color: $color-yellow;
+      // text-shadow: 2px 2px 0px $color-yellow;
+    }
+
+    .upcoming-show-venue {
+      font-weight: 200;
+      font-size: 14px;
+      letter-spacing: -1px;
+    }
+
+    .upcoming-show-date {
+      flex-grow: 1;
+      flex-shrink: 0;
+    }
+
+    .upcoming-show-tickets {
+      all: unset;
+      cursor: pointer;
+      position: relative;
+      margin-top: $space-sm;
+      background-color: $color-red;
+      padding: $space-md;
+      margin: auto;
+      width: 75%;
+      color: $color-white;
+      text-shadow: 2px 2px 0px $color-black;
+      font-weight: 700;
+      box-shadow: 4px 4px 0px $color-black;
+      max-width: 500px;
+
+      &:disabled {
+        cursor: default;
+      }
+
+      .boom {
+        top: -50px;
+        left: 0;
+        position: absolute;
+        width: 100%;
+        height: 150px;
+        object-fit: contain;
+        visibility: hidden;
+        margin: auto;
+        mix-blend-mode: screen;
+        z-index: -1;
+      }
+
+      &:not(.disabled) {
+        &:hover,
+        &:focus,
+        &:active {
+          .boom {
+            visibility: visible;
+          }
+        }
+      }
+    }
+
+    &.over {
+      .upcoming-show-tickets {
+        opacity: 0.5;
+        text-decoration: line-through;
+      }
+    }
+  }
+
+  &.flashing {
+    .upcoming-shows-list {
+      animation: flashingBackground 200ms infinite;
+
+      color: $color-white;
+      background-color: $color-white;
+
+      @keyframes flashingBackground {
+        0% {
+          background-color: $color-white;
+        }
+        20% {
+          background-color: $color-black;
+        }
+        40% {
+          background-color: $color-white;
+        }
+        60% {
+          background-color: $color-black;
+        }
+        80% {
+          background-color: $color-white;
+        }
+      }
+    }
+  }
+}
+
+.camo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 1;
+}
+
+.voices {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 0;
+
+  @include for-desktop {
+    width: 100%;
+  }
+}
+
+.acid {
+  display: none;
+
+  @include for-desktop {
+    display: block;
+    position: fixed;
+    bottom: $space-md;
+    left: $space-md;
+    height: auto;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 1;
+    width: 20vw;
+  }
+}

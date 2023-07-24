@@ -1,0 +1,328 @@
+@import "./variables.scss";
+
+.fall-tour {
+  position: relative;
+  max-width: 1920px;
+  margin: auto;
+  background-color: $color-white;
+  margin-top: 100px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  img {
+    width: 100%;
+  }
+
+  .copyright {
+    position: absolute;
+    bottom: $space-md;
+    right: $space-xl;
+    font-weight: 600;
+    text-align: right;
+
+    @include for-phone-only {
+      bottom: $space-sm;
+      right: $space-md;
+      font-size: $font-size-xs;
+      font-weight: 700;
+    }
+  }
+
+  .title {
+    max-width: 800px;
+    margin: auto;
+    z-index: 0;
+    will-change: transform;
+    transition: all 0.1s ease;
+
+    @include for-phone-only {
+      z-index: 0;
+      position: fixed;
+      top: 90px;
+      max-width: 95vw;
+      margin-bottom: calc($space-md * -1);
+    }
+  }
+
+  .bottom {
+    max-width: 1200px;
+    margin: auto;
+    margin-bottom: calc($space-lg * -1);
+    z-index: 1;
+
+    @include for-phone-only {
+      padding-top: 150px;
+      max-width: auto;
+      width: 110vw;
+      transform: translateX(-5vw);
+      margin-bottom: calc($space-xxs * -1);
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  .end {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: 10vw;
+    transform: translateY(100%);
+
+    @include for-phone-only {
+      transform: translateY(300%);
+      max-width: 20vw;
+    }
+  }
+
+  .panel {
+    position: relative;
+    background-color: $color-yellow;
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    word-break: break-all;
+    z-index: 2;
+  }
+
+  .grid {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .tour-date {
+    display: flex;
+    flex-direction: column;
+    padding: $space-sm;
+    gap: $space-sm;
+    width: 80%;
+    overflow: hidden;
+  }
+
+  .city {
+    all: unset;
+    cursor: pointer;
+    font-size: $font-size-xxl;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: $color-white;
+    text-shadow: $space-xs $space-xs 0px $color-black;
+    position: relative;
+
+    .venue {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 0;
+      font-size: $font-size-sm;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      .venue {
+        display: flex;
+        font-weight: 800;
+        letter-spacing: -1.5px;
+        transform: rotate(10deg);
+        color: lighten($color-blue, 10%);
+      }
+    }
+  }
+
+  .date {
+    font-size: $font-size-lg;
+    font-weight: 500;
+  }
+
+  .buy {
+    all: unset;
+    cursor: pointer;
+    padding: $space-md 0;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: $color-white;
+    background-color: $color-blue;
+    font-size: $font-size-xl;
+    letter-spacing: $space-xxs;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    box-shadow: $space-xs $space-xs 0px $color-black;
+
+    text-shadow: 1px 1px 0px $color-black, 2px 2px 0px $color-black,
+      3px 3px 0px $color-black, 2px 2px 0px $color-black,
+      3px 0px 0px $color-black;
+  }
+
+  .tour-cities {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    padding: $space-xl;
+    text-align: center;
+    gap: $space-xl;
+    justify-content: space-evenly;
+    align-items: center;
+    white-space: nowrap;
+    user-select: none;
+    overflow: hidden;
+
+    .city {
+      color: $color-white;
+      text-shadow: 1px 1px 0px $color-black, 2px 2px 0px $color-black,
+        3px 3px 0px $color-black;
+      font-size: 2rem;
+      cursor: pointer;
+      z-index: 1;
+
+      &:hover {
+        color: $color-red;
+        background-color: rgba($color-red, 0.25);
+
+        @include for-desktop {
+          transform: scale(1.2);
+        }
+
+        .date {
+          color: $color-black;
+        }
+      }
+    }
+
+    .date {
+      color: $color-red;
+      font-weight: 600;
+      font-size: 1.2rem;
+      text-shadow: none;
+    }
+
+    @include for-phone-only {
+      grid-template-columns: repeat(2, auto);
+      gap: $space-md 0;
+      padding: $space-sm 0;
+
+      .city {
+        font-size: 1.2rem;
+        padding: $space-sm;
+        background-color: rgba($color-yellow, 0.5);
+
+        .date {
+          font-weight: 400;
+          font-size: 0.8rem;
+          mix-blend-mode: multiply;
+        }
+      }
+    }
+  }
+
+  .vote-guy {
+    position: absolute;
+    bottom: calc($space-xs * -1);
+    max-width: 800px;
+    z-index: 0;
+    pointer-events: none;
+    left: -25%;
+
+    img {
+      width: 100%;
+    }
+
+    @include for-phone-only {
+      display: none;
+    }
+  }
+
+  .paratrooper {
+    position: absolute;
+    bottom: calc($space-xs * -1);
+    right: 0;
+    max-width: 800px;
+    z-index: 0;
+    pointer-events: none;
+
+    mix-blend-mode: multiply;
+    opacity: 0.5;
+
+    img {
+      width: 100%;
+    }
+
+    @include for-desktop {
+      display: none;
+    }
+  }
+
+  @include for-tablet {
+    .title {
+      max-width: 650px;
+      z-index: 1;
+      filter: drop-shadow($space-xs $space-xs 0 $color-yellow);
+      margin-bottom: -2%;
+    }
+
+    .bottom {
+      padding-top: 0px;
+      max-width: auto;
+      width: 100vw;
+      max-width: 800px;
+      margin: auto;
+      transform: translateX(0vw);
+      margin-bottom: calc($space-xxs * -1);
+      z-index: 0;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .end {
+      position: fixed;
+      top: -10%;
+      left: 0;
+      width: 100%;
+      max-width: 15vw;
+      transform: translateY(0%);
+    }
+  }
+
+  @media screen and (min-width: 1300px) and (max-height: 900px) {
+    .title {
+      max-width: 650px;
+      z-index: 1;
+      filter: drop-shadow($space-xs $space-xs 0 $color-yellow);
+      margin-bottom: -2%;
+    }
+
+    .bottom {
+      padding-top: 0px;
+      max-width: auto;
+      width: 100vw;
+      max-width: 1000px;
+      margin: auto;
+      transform: translateX(0vw);
+      margin-bottom: calc($space-xl * -1);
+      z-index: 0;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .end {
+      position: fixed;
+      top: -10%;
+      left: 0;
+      width: 100%;
+      max-width: 15vw;
+      transform: translateY(0%);
+    }
+  }
+}

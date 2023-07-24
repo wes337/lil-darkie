@@ -1,0 +1,36 @@
+@import "./variables.scss";
+
+.spotify {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  margin: $space-lg;
+  width: 64px;
+  z-index: 5;
+  cursor: pointer;
+  transition: all 1s cubic-bezier(0.25, 0.75, 0.5, 1.25);
+
+  img {
+    pointer-events: none;
+    width: 100%;
+  }
+
+  @include for-phone-only {
+    width: 32px;
+    top: 0;
+    bottom: auto;
+
+    &.sticky {
+      margin: 14px $space-md;
+    }
+
+    &.hide {
+      left: -50%;
+    }
+  }
+
+  &:hover {
+    transform: scale(1.1);
+    filter: saturate(2);
+  }
+}

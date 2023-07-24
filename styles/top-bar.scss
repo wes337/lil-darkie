@@ -1,0 +1,147 @@
+@import "./variables.scss";
+
+.top-bar {
+  position: fixed;
+  top: 32px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  user-select: none;
+  z-index: 4;
+
+  transition: top 0.2s ease;
+
+  .top-bar-logo {
+    all: unset;
+    cursor: pointer;
+    position: relative;
+    max-width: 200px;
+    height: 58px;
+
+    img {
+      pointer-events: none;
+      width: 100%;
+    }
+
+    .logo-primary {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 1;
+
+      @include for-phone-only {
+        top: -16px;
+      }
+    }
+
+    .logo-yellow {
+      opacity: 0;
+    }
+
+    &:hover {
+      transform: rotate(-5deg) scale(1.2);
+    }
+
+    &.sticky {
+      .logo-primary {
+        opacity: 0;
+      }
+
+      .logo-yellow {
+        opacity: 1;
+      }
+    }
+  }
+
+  &.sticky {
+    top: 0px;
+
+    .top-bar-logo {
+      margin-top: 2px;
+    }
+  }
+
+  a:not(.top-bar-logo),
+  button:not(.top-bar-logo) {
+    @include for-phone-only {
+      display: none;
+    }
+
+    all: unset;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    text-shadow: 2px 3px $color-black;
+    cursor: pointer;
+    position: relative;
+
+    &:hover,
+    &:focus,
+    &:active {
+      color: $color-yellow;
+
+      &:before {
+        position: absolute;
+        content: " ";
+        background-color: $color-red;
+        width: 120%;
+        margin-left: -5%;
+        height: 100%;
+        box-shadow: 4px 4px 0px darken($color-red, 25%);
+      }
+
+      img,
+      span {
+        transform: scale(1.17);
+      }
+    }
+
+    img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+    }
+  }
+
+  &.light {
+    @include for-phone-only {
+      background-color: transparent;
+    }
+
+    a,
+    button:not(.top-bar-logo) {
+      color: $color-yellow;
+      text-shadow: -1px -1px 0 $color-black, 1px -1px 0 $color-black,
+        -1px 1px 0 $color-black, 1px 1px 0 $color-black, 2px 2px $color-black;
+
+      &:hover,
+      &:focus,
+      &:active {
+        color: $color-yellow;
+        text-shadow: 2px 3px $color-black;
+      }
+    }
+  }
+}
+
+.top-bar-back {
+  position: fixed;
+  top: -2px;
+  width: 100vw;
+  height: 62px;
+  background-color: rgba($color-red, 1);
+  z-index: 3;
+  transition: transform 0.2s ease;
+  transform: translateY(-100%);
+
+  &.sticky {
+    transform: translateY(0);
+  }
+}

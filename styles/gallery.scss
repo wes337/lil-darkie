@@ -1,0 +1,25 @@
+@import "./variables.scss";
+
+.gallery {
+  display: flex;
+}
+
+.tv {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+
+  mix-blend-mode: screen;
+  filter: saturate(0.2) contrast(1.15);
+  opacity: 0.5;
+
+  @include for-phone-only {
+    height: 100vh;
+    width: 100%;
+    object-position: top left;
+    opacity: 1;
+  }
+}

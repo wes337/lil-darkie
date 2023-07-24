@@ -1,0 +1,273 @@
+@import "./variables.scss";
+
+.mobile-nav-button {
+  @include for-desktop {
+    display: none;
+  }
+
+  all: unset;
+  cursor: pointer;
+  position: fixed;
+  right: 32px;
+  top: 32px;
+  z-index: 4;
+  user-select: none;
+  transition: all 0.2s ease;
+
+  &.sticky {
+    filter: grayscale(1) brightness(5);
+    top: 16px;
+  }
+
+  img {
+    max-height: 40px;
+    max-width: 8vw;
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    filter: contrast(200%) brightness(200%);
+  }
+}
+
+.nav {
+  position: fixed;
+  background-color: darken($color-red, 5%);
+  top: 0;
+  right: 0;
+  width: 100vw;
+  min-height: 100vh;
+  max-height: -webkit-fill-available;
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+
+  transform: translateX(100%);
+  transition: transform 0.5s ease;
+
+  &.open {
+    transform: translateX(0);
+
+    @include for-desktop {
+      box-shadow: -8px 4px 0px darken($color-red, 25%);
+    }
+  }
+
+  @include for-desktop {
+    width: 40vw;
+  }
+
+  .nav-header {
+    display: flex;
+    align-items: center;
+    padding: $space-md $space-lg;
+    gap: $space-md;
+    user-select: none;
+
+    .social-media-links {
+      display: flex;
+      align-items: center;
+      gap: $space-md;
+      margin-left: $space-sm;
+
+      img {
+        width: 32px;
+        height: auto;
+        object-fit: contain;
+      }
+    }
+
+    .nav-logo {
+      height: 48px;
+      width: auto;
+
+      @include for-phone-only {
+        height: 32px;
+      }
+    }
+
+    .nav-close {
+      all: unset;
+      cursor: pointer;
+      margin-left: auto;
+
+      img {
+        max-width: 40px;
+      }
+
+      &:hover,
+      &:focus {
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    padding-left: 32px;
+    gap: 24px;
+
+    a {
+      all: unset;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+      text-shadow: 2px 3px $color-black;
+      cursor: pointer;
+      user-select: none;
+      color: $color-white;
+
+      &:hover,
+      &:focus,
+      &:active {
+        color: $color-yellow;
+
+        background-color: $color-red;
+
+        img,
+        span {
+          transform: scale(1.2);
+        }
+      }
+
+      img {
+        width: 48px;
+        height: 48px;
+        object-fit: contain;
+      }
+    }
+  }
+
+  .nav-copyright {
+    width: 100%;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: -0.5px;
+    text-shadow: 2px 3px $color-black;
+    margin-top: 80px;
+    color: $color-white;
+
+    @include for-desktop {
+      position: fixed;
+      bottom: $space-md;
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+.mushroom {
+  @include for-desktop {
+    display: none;
+  }
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  min-height: 100vh;
+  max-height: -webkit-fill-available;
+  z-index: 4;
+  transform: translateX(100%);
+  transition: transform 0.5s linear;
+  filter: brightness(80%);
+  pointer-events: none;
+
+  img {
+    height: 100%;
+  }
+
+  &.open {
+    transform: translateX(-225%);
+  }
+}
+
+.planes {
+  img {
+    position: fixed;
+    z-index: 4;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    opacity: 0.25;
+    pointer-events: none;
+    transition: bottom 1s ease, left 1s ease;
+
+    @include for-desktop {
+      opacity: 0.75;
+    }
+
+    &.plane-one {
+      width: 35%;
+      bottom: 50%;
+      left: -100%;
+
+      @include for-desktop {
+        width: 10%;
+      }
+    }
+
+    &.plane-two {
+      width: 75%;
+      bottom: -100%;
+      right: -50%;
+
+      @include for-desktop {
+        width: 20%;
+      }
+    }
+  }
+
+  &.open {
+    .plane-one {
+      bottom: 15%;
+      left: 20%;
+
+      @include for-desktop {
+        left: auto;
+        right: 15%;
+      }
+    }
+
+    .plane-two {
+      bottom: -2%;
+      right: -10%;
+
+      @include for-desktop {
+        bottom: -2%;
+        right: -2%;
+      }
+    }
+  }
+}
+
+.blur {
+  display: none;
+
+  @include for-desktop {
+    display: block;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 4;
+    background-color: rgba($color-black, 0.75);
+    top: 0;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s ease;
+
+    &.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+}

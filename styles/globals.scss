@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Martian+Mono:wght@100;200;300;400;500;600;700;800&display=swap");
+@import "./variables.scss";
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  font-family: "Martian Mono", monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background-color: $color-black;
+  color: $color-white;
+
+  &.light {
+    background-color: $color-white;
+    color: $color-black;
+  }
+
+  &.no-scroll {
+    overflow: hidden;
+  }
+}
+
+html {
+  &.no-scroll {
+    overflow: hidden;
+
+    body {
+      overflow: hidden;
+    }
+  }
+}
