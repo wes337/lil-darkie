@@ -1,0 +1,33 @@
+@import "./variables.scss";
+
+.sampler-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 120px;
+
+  .body {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-xl;
+    background-color: $color-gray;
+    padding: $space-xl;
+
+    @include for-phone-only {
+      padding: 0;
+    }
+  }
+}
+
+.camo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.25;
+}

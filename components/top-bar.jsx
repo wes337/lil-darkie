@@ -45,7 +45,7 @@ export default function TopBar() {
           />
           <img
             className="logo-primary"
-            src={`${CDN_URL}/logo-small.webp`}
+            src={`${CDN_URL}/logo-small.png`}
             alt="Lil Darkie"
           />
         </button>

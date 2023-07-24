@@ -1,0 +1,22 @@
+@import "@/styles/variables.scss";
+
+.note {
+  flex: 0 0 var(--note-width);
+  width: var(--note-width);
+  height: var(--note-height);
+  border: 1px solid $color-black;
+  box-sizing: border-box;
+  margin-top: var(--note-margin-vert);
+  margin-bottom: var(--note-margin-vert);
+  margin-left: var(--note-margin-horz);
+  margin-right: var(--note-margin-horz);
+  cursor: pointer;
+
+  &.on {
+    background-color: $color-gray;
+  }
+
+  &.playing {
+    background-color: $color-red;
+  }
+}

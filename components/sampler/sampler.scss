@@ -1,0 +1,34 @@
+@import "@/styles/variables.scss";
+
+:root {
+  --app-max-width: 0;
+  --app-visibility: hidden;
+}
+
+html {
+  font-size: var(--base-font-size);
+  color: var(--color-fg);
+}
+
+.sampler {
+  width: var(--app-max-width);
+  background-color: lighten($color-gray, 10%);
+  visibility: var(--app-visibility);
+  padding: 20px;
+  z-index: 1;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--spacer);
+  margin-bottom: var(--spacer);
+  position: relative;
+  transform: translateZ(0);
+}
