@@ -24,6 +24,11 @@ body {
   }
 }
 
+button,
+input {
+  font-family: "Martian Mono", monospace;
+}
+
 html {
   &.no-scroll {
     overflow: hidden;
