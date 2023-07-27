@@ -1,11 +1,17 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "@/styles/cookies.scss";
 
 export default function Cookies() {
-  const [hide, setHide] = useState(
-    localStorage?.getItem?.("lil-darkie-cookies") || false
-  );
+  const [hide, setHide] = useState(false);
+
+  useEffect(() => {
+    const hide = localStorage?.getItem?.("lil-darkie-cookies");
+
+    if (hide) {
+      setHide(true);
+    }
+  }, []);
 
   const onClick = () => {
     localStorage?.setItem?.("lil-darkie-cookies", true);

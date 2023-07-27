@@ -1,12 +1,18 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CDN_URL } from "@/app/utils";
 import "@/styles/epilepsy.scss";
 
 export default function Epilepsy() {
-  const [hide, setHide] = useState(
-    sessionStorage?.getItem?.("lil-darkie-epilepsy") || false
-  );
+  const [hide, setHide] = useState(false);
+
+  useEffect(() => {
+    const hide = localStorage?.getItem?.("lil-darkie-epilepsy");
+
+    if (hide) {
+      setHide(true);
+    }
+  }, []);
 
   const onClick = () => {
     sessionStorage?.setItem?.("lil-darkie-epilepsy", true);
