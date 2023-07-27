@@ -4,7 +4,14 @@ import { config } from "../constants/config";
 import { Context } from "../hooks/useStore";
 import "./note.scss";
 
-const Note = ({ trackID, stepID, isNoteOn, isNoteOnCurrentStep, play }) => {
+const Note = ({
+  trackID,
+  stepID,
+  isNoteOn,
+  isNoteOnCurrentStep,
+  play,
+  color,
+}) => {
   const { toggleNote } = useContext(Context);
   const {
     playedKick,
@@ -106,7 +113,7 @@ const Note = ({ trackID, stepID, isNoteOn, isNoteOnCurrentStep, play }) => {
     <div
       className={`note${isNoteOn ? " on" : ""}${
         isNoteOn && isNoteOnCurrentStep ? " playing" : ""
-      }`}
+      } ${color}`}
       onClick={noteClicked}
     />
   );

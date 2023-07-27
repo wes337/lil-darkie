@@ -29,6 +29,7 @@
 
 .input_bpm {
   width: var(--input-bpm-width);
+  font-size: 14px;
 }
 
 .label_bpm {

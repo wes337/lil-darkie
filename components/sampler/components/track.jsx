@@ -9,6 +9,7 @@ const Track = ({
   title,
   noteCount,
   onNotes,
+  color,
   soundFilePath,
 }) => {
   const [play] = useSound(soundFilePath);
@@ -26,12 +27,13 @@ const Track = ({
         isNoteOn={isNoteOn}
         isNoteOnCurrentStep={isNoteOnCurrentStep}
         play={play}
+        color={color}
       />
     );
   });
 
   return (
-    <div className="track">
+    <div className={`track ${color}`}>
       <header className="track_title">{title}</header>
       <main className="track_notes">{notes}</main>
     </div>

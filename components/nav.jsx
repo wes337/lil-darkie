@@ -79,9 +79,9 @@ export default function Nav() {
             <img src={`${CDN_URL}/icons/dash.png`} alt="" />
             <span>Gallery</span>
           </Link>
-          <Link href="/upcoming-shows">
+          <Link href="/sampler">
             <img src={`${CDN_URL}/icons/dash.png`} alt="" />
-            <span>Upcoming Shows</span>
+            <span>Sampler</span>
           </Link>
           <Link href="/fall-tour">
             <img src={`${CDN_URL}/icons/dash.png`} alt="" />
@@ -96,7 +96,7 @@ export default function Nav() {
             <span>The Lost Songs</span>
           </Link>
           <div className="nav-copyright">
-            Copyright © 2023 Lil Darkie - All Rights Reserved.
+            Copyright © 2023 Lil Darkie® - All Rights Reserved.
           </div>
         </div>
       </div>

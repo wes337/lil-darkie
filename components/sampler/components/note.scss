@@ -18,5 +18,29 @@
 
   &.playing {
     background-color: $color-red;
+
+    &.red {
+      background-color: $color-red;
+    }
+
+    &.yellow {
+      background-color: $color-yellow;
+    }
+
+    &.green {
+      background-color: $color-green;
+    }
+
+    &.blue {
+      background-color: $color-blue;
+    }
+
+    &.purple {
+      background-color: $color-purple;
+    }
+
+    &.white {
+      background-color: $color-white;
+    }
   }
 }

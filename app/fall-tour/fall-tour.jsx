@@ -2,11 +2,10 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { isMobileSizedScreen, formateDate, CDN_URL } from "@/app/utils";
-import tourDates from "@/data/fall-tour-dates.json";
 import useStore from "@/app/store";
 import "@/styles/fall-tour.scss";
 
-export default function FallTour() {
+export default function FallTour({ tourDates }) {
   const { setLightMode, scroll } = useStore();
 
   useEffect(() => {
@@ -52,12 +51,12 @@ export default function FallTour() {
           <img src={`${CDN_URL}/paratrooper-small.png`} alt="" />
         </div>
         <div className="tour-cities">
-          {tourDates.map(({ date, city, venue, ticketLink }) => {
+          {tourDates.map(({ date, city, venue, ticketlink }) => {
             return (
               <Link
                 className="city"
                 key={date}
-                href={ticketLink}
+                href={ticketlink}
                 target="_blank"
               >
                 {city.split(",")[0].trim()}

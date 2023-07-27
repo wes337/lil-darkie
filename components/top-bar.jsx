@@ -30,9 +30,9 @@ export default function TopBar() {
           <img src={`${CDN_URL}/icons/gun.png`} alt="" />
           <span>Merch</span>
         </Link>
-        <button onClick={() => transitionTo("/upcoming-shows")}>
+        <button onClick={() => transitionTo("/sampler")}>
           <img src={`${CDN_URL}/icons/skull.png`} alt="" />
-          <span>Upcoming Shows</span>
+          <span>Sampler</span>
         </button>
         <button
           onClick={() => transitionTo("/")}

@@ -8,12 +8,13 @@ const TrackList = ({ currentStepID }) => {
     sequence: { trackList, noteCount },
   } = useContext(Context);
   const content = trackList.map((track, trackID) => {
-    const { title, onNotes, soundFile } = track;
+    const { title, onNotes, soundFile, color } = track;
     const soundFilePath = soundFiles[soundFile];
 
     return (
       <Track
         key={title}
+        color={color}
         trackID={+trackID}
         currentStepID={currentStepID}
         title={title}
