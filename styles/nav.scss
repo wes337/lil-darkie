@@ -37,7 +37,7 @@
   top: 0;
   right: 0;
   width: 100vw;
-  min-height: 100vh;
+  min-height: 100%;
   max-height: -webkit-fill-available;
   overflow-x: hidden;
   overflow-y: auto;
@@ -140,7 +140,7 @@
       }
 
       img {
-        width: 48px;
+        width: 24px;
         height: 48px;
         object-fit: contain;
       }
@@ -161,6 +161,14 @@
       position: fixed;
       bottom: $space-md;
       font-size: $font-size-sm;
+    }
+
+    @include for-phone-only {
+      position: fixed;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      bottom: $space-md;
     }
   }
 }

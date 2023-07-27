@@ -1,0 +1,62 @@
+@import "./variables.scss";
+
+.cookies {
+  position: fixed;
+  bottom: $space-sm;
+  left: 0;
+  width: 100%;
+  z-index: 6;
+  pointer-events: none;
+
+  .cookies-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-md;
+    width: 80%;
+    margin: auto;
+    padding: $space-lg;
+    background-color: $color-gray;
+    border: 2px solid $color-light-gray;
+    pointer-events: auto;
+
+    @include for-desktop {
+      flex-wrap: nowrap;
+      width: 70%;
+    }
+
+    p {
+      margin: 0;
+      font-size: 12px;
+      font-weight: 200;
+      text-align: justify;
+      flex: 90%;
+      color: $color-white;
+    }
+
+    button {
+      all: unset;
+      cursor: pointer;
+      color: $color-red;
+      font-family: "Martian Mono", monospace;
+      font-weight: 400;
+      background-color: $color-red;
+      color: $color-white;
+      padding: 8px 32px;
+      border: 1px double $color-red;
+      text-shadow: 2px 3px $color-black;
+      font-size: 14px;
+      text-align: center;
+      user-select: none;
+      text-transform: uppercase;
+      margin: auto;
+      flex: 10%;
+
+      &:hover,
+      &:focus,
+      &:active {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+    }
+  }
+}

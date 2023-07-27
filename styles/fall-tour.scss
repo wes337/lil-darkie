@@ -23,7 +23,7 @@
     text-align: right;
 
     @include for-phone-only {
-      bottom: $space-sm;
+      bottom: $space-lg;
       right: $space-md;
       font-size: $font-size-xs;
       font-weight: 700;
@@ -110,7 +110,7 @@
   .city {
     all: unset;
     cursor: pointer;
-    font-size: $font-size-xxl;
+    font-size: $font-size-xl;
     font-weight: 800;
     text-transform: uppercase;
     color: $color-white;
@@ -179,9 +179,11 @@
       color: $color-white;
       text-shadow: 1px 1px 0px $color-black, 2px 2px 0px $color-black,
         3px 3px 0px $color-black;
-      font-size: 2rem;
+      font-size: $font-size-xxl;
       cursor: pointer;
       z-index: 1;
+
+      background-color: rgba($color-yellow, 0.25);
 
       &:hover {
         color: $color-red;
@@ -200,7 +202,7 @@
     .date {
       color: $color-red;
       font-weight: 600;
-      font-size: 1.2rem;
+      font-size: $font-size-lg;
       text-shadow: none;
     }
 
@@ -208,18 +210,23 @@
       grid-template-columns: repeat(2, auto);
       gap: $space-md 0;
       padding: $space-sm 0;
+      padding-bottom: $space-lg;
 
       .city {
-        font-size: 1.2rem;
+        font-size: $font-size-lg;
         padding: $space-sm;
         background-color: rgba($color-yellow, 0.5);
 
         .date {
           font-weight: 400;
-          font-size: 0.8rem;
+          font-size: $font-size-sm;
           mix-blend-mode: multiply;
         }
       }
+    }
+
+    @include for-tablet {
+      grid-template-columns: repeat(3, auto);
     }
   }
 
@@ -253,10 +260,6 @@
 
     img {
       width: 100%;
-    }
-
-    @include for-desktop {
-      display: none;
     }
   }
 

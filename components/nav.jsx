@@ -72,27 +72,27 @@ export default function Nav() {
         </div>
         <div className="nav-links">
           <Link href="https://www.smalldarkone.com">
-            <img src={`${CDN_URL}/icons/gun.png`} alt="" />
+            <img src={`${CDN_URL}/icons/dash.png`} alt="" />
             <span>Merch</span>
           </Link>
           <Link href="/gallery">
-            <img src={`${CDN_URL}/icons/skull.png`} alt="" />
+            <img src={`${CDN_URL}/icons/dash.png`} alt="" />
             <span>Gallery</span>
           </Link>
           <Link href="/upcoming-shows">
-            <img src={`${CDN_URL}/icons/grave.png`} alt="" />
+            <img src={`${CDN_URL}/icons/dash.png`} alt="" />
             <span>Upcoming Shows</span>
           </Link>
           <Link href="/fall-tour">
-            <img src={`${CDN_URL}/icons/knife.png`} alt="" />
+            <img src={`${CDN_URL}/icons/dash.png`} alt="" />
             <span>Fall 2023 Tour</span>
           </Link>
           <Link href="/posters">
-            <img src={`${CDN_URL}/icons/cig.png`} alt="" />
+            <img src={`${CDN_URL}/icons/dash.png`} alt="" />
             <span>Posters</span>
           </Link>
           <Link href="/the-lost-songs">
-            <img src={`${CDN_URL}/icons/booze.png`} alt="" />
+            <img src={`${CDN_URL}/icons/dash.png`} alt="" />
             <span>The Lost Songs</span>
           </Link>
           <div className="nav-copyright">
