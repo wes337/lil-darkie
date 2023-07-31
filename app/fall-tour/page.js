@@ -52,20 +52,29 @@ export default function FallTour() {
           <img src={`${CDN_URL}/paratrooper-small.png`} alt="" />
         </div>
         <div className="tour-cities">
-          {tourDates.map(({ date, city, venue, ticketLink }) => {
-            return (
-              <Link
-                className="city"
-                key={date}
-                href={ticketLink}
-                target="_blank"
-              >
-                {city.split(",")[0].trim()}
-                <div className="date">{formateDate(date)}</div>
-                <div className="venue">@ {venue}</div>
-              </Link>
-            );
-          })}
+          {tourDates.map(
+            ({ date, city, venue, ticketLink, soldOut, opener }) => {
+              return (
+                <Link
+                  className="city"
+                  key={date}
+                  href={ticketLink}
+                  target="_blank"
+                >
+                  {city.split(",")[0].trim()}
+                  <div className="date">{formateDate(date)}</div>
+                  <div className="venue">@ {venue}</div>
+                  {opener && (
+                    <div className="opener">
+                      <span>with</span>
+                      {opener}
+                    </div>
+                  )}
+                  {soldOut && <div className="sold-out">Sold out!</div>}
+                </Link>
+              );
+            }
+          )}
         </div>
         <div className="copyright">
           Copyright © 2023 Lil Darkie®

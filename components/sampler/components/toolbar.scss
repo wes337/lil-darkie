@@ -53,6 +53,8 @@
   cursor: pointer;
   background-color: $color-gray;
   margin-left: auto;
+  font-family: "Martian Mono", monospace;
+  font-size: $font-size-md;
 
   &:hover,
   &:focus {

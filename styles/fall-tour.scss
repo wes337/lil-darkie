@@ -117,12 +117,23 @@
     text-shadow: $space-xs $space-xs 0px $color-black;
     position: relative;
 
-    .venue {
+    .venue,
+    .opener {
       display: none;
       position: absolute;
       right: 0;
       top: 0;
       font-size: $font-size-sm;
+    }
+
+    .opener {
+      top: 18px;
+      right: -20px;
+
+      span {
+        font-size: $font-size-xs;
+        margin: $space-xs;
+      }
     }
 
     &:hover,
@@ -134,6 +145,14 @@
         letter-spacing: -1.5px;
         transform: rotate(10deg);
         color: lighten($color-blue, 10%);
+      }
+
+      .opener {
+        display: flex;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        transform: rotate(10deg);
+        color: lighten($color-green, 10%);
       }
     }
   }
@@ -176,6 +195,7 @@
     overflow: hidden;
 
     .city {
+      position: relative;
       color: $color-white;
       text-shadow: 1px 1px 0px $color-black, 2px 2px 0px $color-black,
         3px 3px 0px $color-black;
@@ -184,6 +204,17 @@
       z-index: 1;
 
       background-color: rgba($color-yellow, 0.25);
+
+      .sold-out {
+        position: absolute;
+        top: 25%;
+        left: 10%;
+        width: 80%;
+        margin: auto;
+        opacity: 0;
+        transform: rotate(-10deg);
+        background-color: $color-gray;
+      }
 
       &:hover {
         color: $color-red;
@@ -195,6 +226,10 @@
 
         .date {
           color: $color-black;
+        }
+
+        .sold-out {
+          opacity: 1;
         }
       }
     }
