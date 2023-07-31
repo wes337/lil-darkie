@@ -3,9 +3,9 @@ import { Context } from "../hooks/useStore";
 import { soundFiles } from "../constants/config";
 import Track from "./track";
 
-const TrackList = ({ currentStepID }) => {
+const TrackList = ({ currentStepID, noteCount }) => {
   const {
-    sequence: { trackList, noteCount },
+    sequence: { trackList },
   } = useContext(Context);
   const content = trackList.map((track, trackID) => {
     const { title, onNotes, soundFile, color } = track;

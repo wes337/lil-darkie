@@ -12,6 +12,18 @@
   margin-right: var(--note-margin-horz);
   cursor: pointer;
 
+  &:nth-child(n + 5) {
+    background-color: rgba($color-gray, 0.25);
+  }
+
+  &:nth-child(n + 9) {
+    background-color: transparent;
+  }
+
+  &:nth-child(n + 13) {
+    background-color: rgba($color-gray, 0.25);
+  }
+
   &.on {
     background-color: $color-gray;
   }

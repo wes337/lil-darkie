@@ -1,7 +1,6 @@
 export const config = {
   id: 0,
   title: "Sequence 1",
-  noteCount: 8,
   trackList: [
     {
       title: "Kick",

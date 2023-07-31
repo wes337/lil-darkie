@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { isMobileSizedScreen } from "@/app/utils";
 import ToolBar from "./components/toolbar";
 import TrackList from "./components/track-list";
 import PlayHead from "./components/play-head";
@@ -10,8 +11,9 @@ import "./sampler.scss";
 
 function Sampler() {
   const baseBPMPerOneSecond = 60;
-  const stepsPerBar = 4;
-  const beatsPerBar = 2;
+  const [noteCount, setNoteCount] = useState(16);
+  const stepsPerBar = noteCount / 2;
+  const beatsPerBar = stepsPerBar / 2;
   const barsPerSequence = 2;
   const totalSteps = stepsPerBar * barsPerSequence;
   const totalBeats = beatsPerBar * barsPerSequence;
@@ -40,6 +42,21 @@ function Sampler() {
     }
   }, [isSequencePlaying, timePerStep, totalLapsedTime, totalSteps]);
 
+  useEffect(() => {
+    const onResize = () => {
+      const count = isMobileSizedScreen() ? 8 : 16;
+      setNoteCount(count);
+    };
+
+    onResize();
+
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+
   const toolBarProps = {
     setStartTime,
     setPastLapse,
@@ -57,6 +74,7 @@ function Sampler() {
 
   const trackListProps = {
     currentStepID,
+    noteCount,
   };
 
   return (
