@@ -15,7 +15,7 @@ export default function Epilepsy() {
   }, []);
 
   const onClick = () => {
-    sessionStorage?.setItem?.("lil-darkie-epilepsy", true);
+    localStorage?.setItem?.("lil-darkie-epilepsy", true);
     setHide(true);
   };
 

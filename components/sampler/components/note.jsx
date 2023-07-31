@@ -30,7 +30,6 @@ const Note = ({
   const triggerNotePlayed = useCallback(
     (trackId) => {
       const trackName = config.trackList[trackId].title.toLowerCase();
-      console.log(trackName);
       switch (trackName) {
         case "kick":
           playedKick(true);

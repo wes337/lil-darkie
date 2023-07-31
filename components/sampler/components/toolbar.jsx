@@ -1,4 +1,5 @@
-import React, { memo } from "react";
+import React, { useContext, memo } from "react";
+import { Context } from "../hooks/useStore";
 import "./toolbar.css";
 
 const ToolBar = ({
@@ -9,6 +10,8 @@ const ToolBar = ({
   startTime,
   BPM,
 }) => {
+  const { clearNotes } = useContext(Context);
+
   function togglePlayback() {
     if (isSequencePlaying) {
       setPastLapse((l) => l + performance.now() - startTime);
@@ -78,6 +81,9 @@ const ToolBar = ({
       <label className="label_bpm" htmlFor="bpm">
         BPM
       </label>
+      <button onClick={clearNotes} style={{ marginLeft: "32px" }}>
+        Clear
+      </button>
     </nav>
   );
 };

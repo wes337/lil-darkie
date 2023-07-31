@@ -29,32 +29,32 @@ export default function SamplerFace() {
         alt=""
       />
       <img
-        className={`face${kick || laugh ? " show" : ""}`}
+        className={`s-face${kick || laugh ? " show" : ""}`}
         src={`${CDN_URL}/face/face-1-blink.png`}
         alt=""
       />
       <img
-        className={`face${huh ? " show" : ""}`}
+        className={`s-face${huh ? " show" : ""}`}
         src={`${CDN_URL}/face/face-3.png`}
         alt=""
       />
       <img
-        className={`face${snare || wood || pigSqueal ? " show" : ""}`}
+        className={`s-face${snare || wood || pigSqueal ? " show" : ""}`}
         src={`${CDN_URL}/face/face-2.png`}
         alt=""
       />
       <img
-        className={`face${closedHat ? " show" : ""}`}
+        className={`s-face${closedHat ? " show" : ""}`}
         src={`${CDN_URL}/face/face-6.png`}
         alt=""
       />
       <img
-        className={`face${openHat || growl ? " show" : ""}`}
+        className={`s-face${openHat || growl ? " show" : ""}`}
         src={`${CDN_URL}/face/face-5.png`}
         alt=""
       />
       <img
-        className={`face${kickAlt || yuh ? " show" : ""}`}
+        className={`s-face${kickAlt || yuh ? " show" : ""}`}
         src={`${CDN_URL}/face/face-7.png`}
         alt=""
       />

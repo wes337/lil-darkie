@@ -8,7 +8,7 @@ const Context = createContext({
 
 const appReducer = (state, action) => {
   switch (action.type) {
-    case "SET_ON_NOTES":
+    case "SET_ON_NOTES": {
       let newTrackList = state.trackList.map((track, trackID) => {
         if (action.trackID === trackID) {
           return {
@@ -23,8 +23,19 @@ const appReducer = (state, action) => {
         ...state,
         trackList: newTrackList,
       };
-    default:
+    }
+    case "CLEAR_NOTES": {
+      return {
+        ...state,
+        trackList: state.trackList.map((trackList) => ({
+          ...trackList,
+          onNotes: [],
+        })),
+      };
+    }
+    default: {
       return state;
+    }
   }
 };
 
@@ -47,8 +58,14 @@ const Provider = ({ children }) => {
     });
   };
 
+  const clearNotes = () => {
+    dispatch({
+      type: "CLEAR_NOTES",
+    });
+  };
+
   return (
-    <Context.Provider value={{ sequence, toggleNote }}>
+    <Context.Provider value={{ sequence, toggleNote, clearNotes }}>
       {children}
     </Context.Provider>
   );
