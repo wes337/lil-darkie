@@ -1,6 +1,6 @@
 import React, { useContext, memo } from "react";
 import { Context } from "../hooks/useStore";
-import "./toolbar.css";
+import "./toolbar.scss";
 
 const ToolBar = ({
   setStartTime,
@@ -81,7 +81,7 @@ const ToolBar = ({
       <label className="label_bpm" htmlFor="bpm">
         BPM
       </label>
-      <button onClick={clearNotes} style={{ marginLeft: "32px" }}>
+      <button className="clear" onClick={clearNotes}>
         Clear
       </button>
     </nav>
