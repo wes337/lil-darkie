@@ -29,4 +29,4 @@ export function formateDate(dateString) {
   }).format(new Date(dateString));
 }
 
-export const CDN_URL = "https://f004.backblazeb2.com/file/lil-darkie";
+export const CDN_URL = "https://lil-darkie.b-cdn.net";

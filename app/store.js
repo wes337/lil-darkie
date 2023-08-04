@@ -11,6 +11,8 @@ const useStore = create((set) => ({
 
     set(() => ({ navOpen }));
   },
+  flashingEnabled: false,
+  setFlashingEnabled: (flashingEnabled) => set(() => ({ flashingEnabled })),
   flashing: false,
   setFlashing: (flashing) => set(() => ({ flashing })),
   sticky: false,

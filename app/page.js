@@ -7,7 +7,26 @@ import "@/styles/landing.scss";
 
 export default function Landing() {
   const router = useRouter();
-  const { flashing, setFlashing, setBloodTransition } = useStore();
+  const {
+    flashing,
+    setFlashing,
+    setBloodTransition,
+    flashingEnabled,
+    setFlashingEnabled,
+  } = useStore();
+
+  const toggleStrobe = () => {
+    const nextFlashingEnabled = !flashingEnabled;
+    setFlashingEnabled(nextFlashingEnabled);
+
+    if (nextFlashingEnabled) {
+      setTimeout(() => {
+        setFlashing(true);
+      }, 200);
+    } else {
+      setFlashing(false);
+    }
+  };
 
   return (
     <div className={`landing${flashing ? " flashing" : ""}`}>
@@ -24,14 +43,24 @@ export default function Landing() {
         </div>
         <div
           className="tickets"
-          onPointerOver={() => setFlashing(true)}
+          onPointerOver={() => {
+            if (!flashingEnabled) {
+              return;
+            }
+
+            setFlashing(true);
+          }}
           onPointerLeave={() => setFlashing(false)}
         >
           Get Tickets
         </div>
       </button>
+      <button className="strobe-toggle" onClick={toggleStrobe}>
+        <span className="label">Strobe</span>
+        <span className="value">{flashingEnabled ? "On" : "Off"}</span>
+      </button>
       <div className="landing-monsters">
-        <img src={`${CDN_URL}/monsters.png`} alt="" />
+        <img src={`${CDN_URL}/monsters-red.png`} alt="" />
       </div>
     </div>
   );

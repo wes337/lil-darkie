@@ -1,5 +1,5 @@
 import { CDN_URL } from "@/app/utils";
-// import Swiper from "@/components/swiper";
+import Swiper from "@/components/swiper";
 import "@/styles/posters.scss";
 
 const posters = [];
@@ -12,7 +12,7 @@ export default function Posters() {
   return (
     <div className="posters">
       <h1>Posters</h1>
-      {/* <Swiper items={posters} /> */}
+      <Swiper items={posters} />
     </div>
   );
 }

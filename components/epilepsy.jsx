@@ -1,9 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import { CDN_URL } from "@/app/utils";
+import useStore from "@/app/store";
 import "@/styles/epilepsy.scss";
 
 export default function Epilepsy() {
+  const { flashingEnabled } = useStore();
   const [hide, setHide] = useState(false);
 
   useEffect(() => {
@@ -19,7 +21,7 @@ export default function Epilepsy() {
     setHide(true);
   };
 
-  if (hide) {
+  if (hide || !flashingEnabled) {
     return null;
   }
 

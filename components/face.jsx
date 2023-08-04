@@ -7,7 +7,7 @@ import "@/styles/face.scss";
 
 export default function Face() {
   const router = useRouter();
-  const { setFlashing, setBloodTransition } = useStore();
+  const { setFlashing, setBloodTransition, flashingEnabled } = useStore();
   const [facePressed, setFacePressed] = useState(false);
   const [blinking, setBlinking] = useState(false);
 
@@ -35,8 +35,12 @@ export default function Face() {
   }, []);
 
   useEffect(() => {
+    if (!flashingEnabled) {
+      return;
+    }
+
     setFlashing(facePressed);
-  }, [facePressed, setFlashing]);
+  }, [facePressed, setFlashing, flashingEnabled]);
 
   return (
     <div

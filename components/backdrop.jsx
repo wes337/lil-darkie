@@ -5,9 +5,13 @@ import useStore from "@/app/store";
 import "@/styles/backdrop.scss";
 
 export default function Backdrop() {
-  const { lightMode, flashing, setFlashing } = useStore();
+  const { lightMode, flashing, setFlashing, flashingEnabled } = useStore();
 
   useEffect(() => {
+    if (!flashingEnabled) {
+      return;
+    }
+
     let initialFlashingTimeout;
     let flashingTimeout;
     setFlashing(false);
@@ -35,7 +39,7 @@ export default function Backdrop() {
       clearTimeout(flashingTimeout);
       clearTimeout(initialFlashingTimeout);
     };
-  }, [setFlashing]);
+  }, [setFlashing, flashingEnabled]);
 
   return (
     <div className={`backdrop${flashing || lightMode ? " flashing" : ""}`} />

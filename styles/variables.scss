@@ -31,7 +31,7 @@ $space-md: 16px;
 $space-lg: 24px;
 $space-xl: 32px;
 
-$cdn-url: "https://lil-darkie.s3.us-west-004.backblazeb2.com";
+$cdn-url: "https://lil-darkie.b-cdn.net";
 
 @mixin for-phone-only {
   @media screen and (max-width: $screen-size-sm) {
