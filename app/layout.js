@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-page-custom-font */
 import { Martian_Mono } from "next/font/google";
 import Spotify from "@/components/spotify";
 import TopBar from "@/components/top-bar";
@@ -18,6 +19,18 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin=""
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@100;200;300;400;500;600;700;800&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className={martianMono.className}>
         <Epilepsy />
         <Cookies />
