@@ -5,12 +5,12 @@ import "@/styles/swiper.scss";
 
 const Hammer = () => import("hammerjs");
 
-export default function Swiper({ items }) {
+export default function Swiper({ items = [] }) {
   const swiperRef = useRef();
   const { setHideScroll } = useStore();
 
   const initItems = useCallback(() => {
-    if (typeof window === "undefined" || !items || items.length === 0) {
+    if (items.length === 0) {
       return;
     }
 
@@ -31,34 +31,23 @@ export default function Swiper({ items }) {
   }, [items]);
 
   useEffect(() => {
-    if (typeof window === "undefined" || !items || items.length === 0) {
-      return;
-    }
-
     setHideScroll(true);
 
     return () => {
       setHideScroll(false);
     };
-  }, [setHideScroll, items]);
+  }, [setHideScroll]);
 
   useEffect(() => {
-    if (typeof window === "undefined" || !items || items.length === 0) {
-      return;
-    }
-
     initItems();
-  }, [items, initItems]);
+  }, [initItems]);
 
   useEffect(() => {
-    if (typeof window === "undefined" || !items || items.length === 0) {
-      return;
-    }
-
     const allItems = document.querySelectorAll(".item");
 
-    allItems.forEach((element) => {
-      const hammertime = new Hammer(element);
+    allItems.forEach(async (element) => {
+      const hammer = await Hammer().then((mod) => mod.default || mod);
+      const hammertime = new hammer(element);
 
       hammertime.on("pan", (event) => {
         if (typeof window === "undefined") {
@@ -137,9 +126,9 @@ export default function Swiper({ items }) {
         }
       });
     });
-  }, [items, initItems]);
+  }, [initItems]);
 
-  if (!items || items.length === 0) {
+  if (items.length === 0) {
     return null;
   }
 
