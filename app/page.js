@@ -12,21 +12,24 @@ export default function Landing() {
   return (
     <div className={`landing${flashing ? " flashing" : ""}`}>
       <Face />
-      <div className="landing-footer">
+      <button
+        className="landing-footer"
+        onClick={() => {
+          setBloodTransition(true);
+          setTimeout(() => router.push("/fall-tour"), 400);
+        }}
+      >
         <div className="landing-footer-tour">
           <img src={`${CDN_URL}/fall-tour-title-dark-small.png`} alt="" />
         </div>
-        <button
+        <div
+          className="tickets"
           onPointerOver={() => setFlashing(true)}
           onPointerLeave={() => setFlashing(false)}
-          onClick={() => {
-            setBloodTransition(true);
-            setTimeout(() => router.push("/fall-tour"), 400);
-          }}
         >
           Get Tickets
-        </button>
-      </div>
+        </div>
+      </button>
       <div className="landing-monsters">
         <img src={`${CDN_URL}/monsters.png`} alt="" />
       </div>

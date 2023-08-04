@@ -207,13 +207,15 @@
 
       .sold-out {
         position: absolute;
-        top: 25%;
-        left: 10%;
-        width: 80%;
+        top: 0;
+        left: 0;
+        width: max-content;
         margin: auto;
-        opacity: 0;
-        transform: rotate(-10deg);
+        padding: $space-xs;
+        opacity: 1;
+        transform: rotate(-10deg) scale(0.6) translate(50%, 150%);
         background-color: $color-gray;
+        color: $color-red;
       }
 
       &:hover {
