@@ -1,15 +1,16 @@
 "use client";
-import { useEffect, useRef } from "react";
-import Hammer from "hammerjs";
+import { useEffect, useRef, useCallback } from "react";
 import useStore from "@/app/store";
 import "@/styles/swiper.scss";
+
+const Hammer = () => import("hammerjs");
 
 export default function Swiper({ items }) {
   const swiperRef = useRef();
   const { setHideScroll } = useStore();
 
-  const initItems = () => {
-    if (typeof window === "undefined") {
+  const initItems = useCallback(() => {
+    if (typeof window === "undefined" || !items || items.length === 0) {
       return;
     }
 
@@ -27,10 +28,10 @@ export default function Swiper({ items }) {
         ` rotate(${index * 3}deg)`;
       item.style.opacity = (10 - index) / 10;
     });
-  };
+  }, [items]);
 
   useEffect(() => {
-    if (typeof window === "undefined") {
+    if (typeof window === "undefined" || !items || items.length === 0) {
       return;
     }
 
@@ -39,18 +40,18 @@ export default function Swiper({ items }) {
     return () => {
       setHideScroll(false);
     };
-  }, [setHideScroll]);
+  }, [setHideScroll, items]);
 
   useEffect(() => {
-    if (typeof window === "undefined") {
+    if (typeof window === "undefined" || !items || items.length === 0) {
       return;
     }
 
     initItems();
-  }, []);
+  }, [items, initItems]);
 
   useEffect(() => {
-    if (typeof window === "undefined") {
+    if (typeof window === "undefined" || !items || items.length === 0) {
       return;
     }
 
@@ -136,9 +137,9 @@ export default function Swiper({ items }) {
         }
       });
     });
-  }, []);
+  }, [items, initItems]);
 
-  if (!items) {
+  if (!items || items.length === 0) {
     return null;
   }
 
