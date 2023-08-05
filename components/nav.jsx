@@ -91,6 +91,10 @@ export default function Nav() {
             <img src={`${CDN_URL}/icons/dash.png`} alt="" />
             <span>Posters</span>
           </Link>
+          <Link href="/blog">
+            <img src={`${CDN_URL}/icons/dash.png`} alt="" />
+            <span>Writings</span>
+          </Link>
           <Link href="/the-lost-songs">
             <img src={`${CDN_URL}/icons/dash.png`} alt="" />
             <span>The Lost Songs</span>
