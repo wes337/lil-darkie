@@ -31,6 +31,16 @@ const useStore = create((set) => ({
 
     set(() => ({ lightMode }));
   },
+  peachMode: false,
+  setPeachMode: (peachMode) => {
+    if (peachMode) {
+      document.body.classList.add("peach");
+    } else {
+      document.body.classList.remove("peach");
+    }
+
+    set(() => ({ peachMode }));
+  },
   setHideScroll: (hide) => {
     if (hide) {
       document.body.classList.add("no-scroll");

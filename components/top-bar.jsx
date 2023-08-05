@@ -8,7 +8,8 @@ import "@/styles/top-bar.scss";
 export default function TopBar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { lightMode, sticky, setBloodTransition, setNavOpen } = useStore();
+  const { lightMode, peachMode, sticky, setBloodTransition, setNavOpen } =
+    useStore();
 
   const transitionTo = (url) => {
     if (pathname === url) {
@@ -22,7 +23,7 @@ export default function TopBar() {
   return (
     <>
       <div
-        className={`top-bar${lightMode ? " light" : ""}${
+        className={`top-bar${lightMode || peachMode ? " light" : ""}${
           sticky ? " sticky" : ""
         }`}
       >
