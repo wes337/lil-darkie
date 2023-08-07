@@ -3,6 +3,8 @@
 .posters {
   width: 100vw;
   height: calc(100vh - 80px);
+
+  max-height: -webkit-fill-available;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -10,6 +12,8 @@
   padding-top: 80px;
 
   transition: opacity 0.1s ease-in-out;
+
+  -webkit-overflow-scrolling: none;
 
   @include for-desktop {
     padding-top: 100px;
@@ -71,6 +75,57 @@
     &.moving {
       transition: none;
       cursor: grabbing;
+    }
+  }
+}
+
+.swiper-controls {
+  display: flex;
+  width: 100%;
+
+  button {
+    all: unset;
+    display: flex;
+    gap: $space-md;
+    align-items: center;
+    justify-content: center;
+    padding: $space-md;
+    flex: 1;
+    height: 72px;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+    }
+
+    &:hover {
+      &:not(&:disabled) {
+        background-color: rgba($color-white, 0.05);
+        text-shadow: 4px 4px 0px $color-black;
+
+        img {
+          filter: drop-shadow(0px 0px 4px rgba($color-white, 0.2));
+        }
+      }
+    }
+
+    .swiper-label {
+      font-size: $font-size-xl;
+      text-transform: uppercase;
+      color: $color-yellow;
+      font-weight: 800;
+    }
+
+    img {
+      object-fit: contain;
+      height: 100%;
+      max-width: 60px;
+      width: auto;
+
+      &.flip {
+        transform: scale(-1);
+      }
     }
   }
 }

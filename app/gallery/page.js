@@ -4,8 +4,8 @@ import "@/styles/gallery.scss";
 
 const images = [];
 
-for (let i = 1; i <= 29; i++) {
-  images.push(`${CDN_URL}/photos/usa-2023/${i}.webp`);
+for (let i = 1; i <= 9; i++) {
+  images.push(`${CDN_URL}/photos/comp/${i}.png`);
 }
 
 export default function Gallery() {

@@ -1,6 +1,7 @@
 "use client";
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 import useStore from "@/app/store";
+import { CDN_URL } from "@/app/utils";
 import "@/styles/swiper.scss";
 
 const Hammer = () => import("hammerjs");
@@ -8,6 +9,7 @@ const Hammer = () => import("hammerjs");
 export default function Swiper({ items = [] }) {
   const swiperRef = useRef();
   const { setHideScroll } = useStore();
+  const [hasPrevious, setHasPrevious] = useState(false);
 
   const initItems = useCallback(() => {
     if (items.length === 0) {
@@ -37,10 +39,6 @@ export default function Swiper({ items = [] }) {
       setHideScroll(false);
     };
   }, [setHideScroll]);
-
-  useEffect(() => {
-    initItems();
-  }, [initItems]);
 
   useEffect(() => {
     const allItems = document.querySelectorAll(".item");
@@ -86,7 +84,7 @@ export default function Swiper({ items = [] }) {
 
         var moveOutWidth = document.body.clientWidth;
         var keep =
-          Math.abs(event.deltaX) < 80 || Math.abs(event.velocityX) < 0.5;
+          Math.abs(event.deltaX) < 80 || Math.abs(event.velocityX) < 0.01;
 
         event.target.classList.toggle("removed", !keep);
 
@@ -132,13 +130,93 @@ export default function Swiper({ items = [] }) {
     return null;
   }
 
+  const goToNext = () => {
+    const currentItem = document.querySelector(".item:not(.removed)");
+
+    if (!currentItem) {
+      return;
+    }
+
+    setHasPrevious(true);
+
+    currentItem.classList.add("removed");
+
+    const velocityX = 1;
+    const velocityY = 1;
+    const deltaX = 1;
+    const deltaY = 1;
+
+    var moveOutWidth = document.body.clientWidth;
+
+    var endX = Math.max(Math.abs(velocityX) * moveOutWidth, moveOutWidth);
+
+    var toX = deltaX > 0 ? endX : -endX;
+    var endY = Math.abs(velocityY) * moveOutWidth;
+    var toY = deltaY > 0 ? endY : -endY;
+    var xMulti = deltaX * 0.03;
+    var yMulti = deltaY / 80;
+    var rotate = xMulti * yMulti;
+
+    currentItem.style.transform =
+      "translate(" +
+      toX +
+      "px, " +
+      (toY + deltaY) +
+      "px) rotate(" +
+      rotate +
+      "deg)";
+
+    initItems();
+
+    const newItems = document.querySelectorAll(".item:not(.removed)");
+
+    if (newItems.length === 0) {
+      const removedItems = document.querySelectorAll(".item.removed");
+      removedItems.forEach((element) => element.classList.remove("removed"));
+      initItems();
+      setHasPrevious(false);
+    }
+  };
+
+  const goToPrevious = () => {
+    const removedItems = document.querySelectorAll(".item.removed");
+    const lastItem = removedItems[removedItems.length - 1];
+
+    if (!lastItem) {
+      return;
+    }
+
+    if (removedItems.length === 1) {
+      setHasPrevious(false);
+    }
+
+    lastItem.classList.remove("removed");
+    initItems();
+  };
+
   return (
-    <div className="swiper" ref={swiperRef}>
-      {items.map((item) => (
-        <div className="item" key={item}>
-          <img src={item} alt="" />
-        </div>
-      ))}
-    </div>
+    <>
+      <div className="swiper" ref={swiperRef}>
+        {items.map((item) => (
+          <div className="item" key={item}>
+            <img src={item} alt="" />
+          </div>
+        ))}
+      </div>
+      <div className="swiper-controls">
+        <button onClick={goToPrevious} disabled={!hasPrevious}>
+          <img
+            className="flip"
+            src={`${CDN_URL}/icons/arrow.png`}
+            alt="Previous"
+          />
+          <div className="swiper-label">Prev</div>
+        </button>
+        <button onClick={goToNext}>
+          <div className="swiper-label">Next</div>
+          <img src={`${CDN_URL}/icons/arrow.png`} alt="Next" />
+        </button>
+      </div>
+    </>
   );
 }
