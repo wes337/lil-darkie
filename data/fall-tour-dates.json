@@ -4,7 +4,7 @@
     "city": "Tampa, FL",
     "venue": "The Ritz",
     "ticketLink": "https://www.etix.com/ticket/p/6199505/lil-darkie-and-the-collapse-of-modern-society-tampa-the-ritz-fyf",
-    "opener": "Example",
+    "opener": "AFOURTEEN",
     "soldOut": false
   },
   {
@@ -13,7 +13,7 @@
     "venue": "The Eastern",
     "ticketLink": "https://www.axs.com/events/488827/lil-darkie-tickets",
     "opener": "",
-    "soldOut": true
+    "soldOut": false
   },
   {
     "date": "Saturday, October 28 2023",
@@ -44,7 +44,7 @@
     "city": "Brooklyn, NY",
     "venue": "Warsaw",
     "ticketLink": "https://www.ticketmaster.com/event/00005EC8FBFA8A1C",
-    "opener": "",
+    "opener": "CHRIST DILLINGER",
     "soldOut": false
   },
   {
@@ -52,7 +52,7 @@
     "city": "Boston, MA",
     "venue": "Big Night Live",
     "ticketLink": "https://www.ticketmaster.com/event/01005EC13118A2D2",
-    "opener": "",
+    "opener": "MKULTRA",
     "soldOut": false
   },
   {
@@ -76,7 +76,7 @@
     "city": "Detroit, MI",
     "venue": "The Fillmore",
     "ticketLink": "https://www.ticketmaster.com/event/08005EC1B62F326E",
-    "opener": "",
+    "opener": "JASIAH",
     "soldOut": false
   },
   {
@@ -84,7 +84,7 @@
     "city": "Cincinnati, OH",
     "venue": "Bogarts",
     "ticketLink": "https://www.ticketmaster.com/event/16005EC8F98E495E",
-    "opener": "",
+    "opener": "JASIAH",
     "soldOut": false
   },
   {
@@ -92,7 +92,7 @@
     "city": "St. Louis, MO",
     "venue": "Pops",
     "ticketLink": "https://www.ticketweb.com/event/lil-darkie-and-the-collapse-pops-concert-venue-tickets/13297908?pl=popsMJ",
-    "opener": "",
+    "opener": "JASIAH",
     "soldOut": false
   },
   {
@@ -100,7 +100,7 @@
     "city": "Chicago, IL",
     "venue": "Riviera Theatre",
     "ticketLink": "https://www.axs.com/events/489439/lil-darkie-and-the-collapse-of-modern-society-tickets",
-    "opener": "",
+    "opener": "BLCKK & JASIAH",
     "soldOut": false
   },
   {
@@ -148,7 +148,7 @@
     "city": "Seattle, WA",
     "venue": "Showbox Sodo",
     "ticketLink": "https://www.axs.com/events/489092/lil-darkie-tickets?skin=showboxpresents",
-    "opener": "",
+    "opener": "SAVAGE GASP",
     "soldOut": false
   },
   {
@@ -156,7 +156,7 @@
     "city": "Portland, OR",
     "venue": "Roseland Theater",
     "ticketLink": "https://www.etix.com/ticket/p/8386140/lil-darkie-and-the-collapse-of-modern-society-portland-roseland-theater",
-    "opener": "",
+    "opener": "SAVAGE GASP",
     "soldOut": false
   },
   {
@@ -228,7 +228,7 @@
     "city": "Fort Lauderdale, FL",
     "venue": "Revolution",
     "ticketLink": "https://www.ticketmaster.com/event/0D005EC6DD8ED578",
-    "opener": "",
+    "opener": "KXLLSWXTCH",
     "soldOut": false
   }
 ]
