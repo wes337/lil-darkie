@@ -9,10 +9,12 @@ import {
   parseTrack,
 } from "./tracks";
 
-const LIL_DARKIE_ID = "62F9BiUmjqeXbBztCwiX1U";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET(request) {
   try {
+    const LIL_DARKIE_ID = "62F9BiUmjqeXbBztCwiX1U";
     const { searchParams } = new URL(request.url);
 
     const access_token = searchParams.get("access_token");
