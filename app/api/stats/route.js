@@ -74,7 +74,7 @@ export async function GET(request) {
     };
 
     return NextResponse.json(lilDarkieData);
-  } catch {
-    return NextResponse.json({ error: true });
+  } catch (error) {
+    return NextResponse.json({ error: error.message });
   }
 }
