@@ -29,4 +29,13 @@ export function formateDate(dateString) {
   }).format(new Date(dateString));
 }
 
+export function formateDateWithYear(dateString) {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    weekday: "short",
+    year: "numeric",
+  }).format(new Date(dateString));
+}
+
 export const CDN_URL = "https://lil-darkie.b-cdn.net";

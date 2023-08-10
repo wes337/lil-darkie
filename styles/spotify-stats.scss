@@ -1,0 +1,293 @@
+@import "./variables.scss";
+
+.spotify-stats {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: $space-lg;
+  padding: 0 $space-md;
+  padding-bottom: $space-xl;
+  max-width: 80vw;
+  margin: auto;
+
+  $min-width: 480px;
+
+  .user {
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+    background-color: $color-red;
+    padding: $space-sm;
+    box-shadow: 4px 4px 0px darken($color-red, 25%);
+
+    text-shadow: 2px 2px 0px $color-black;
+
+    img {
+      outline: 1px solid $color-black;
+      border-radius: 100%;
+    }
+
+    font-weight: 600;
+    text-transform: uppercase;
+    color: $color-yellow;
+    font-size: $font-size-md;
+  }
+
+  .loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+
+    gap: 60px;
+    text-align: center;
+    margin: auto;
+
+    font-size: $font-size-xxl;
+    text-transform: uppercase;
+    color: $color-white;
+    text-shadow: 2px 2px 0px $color-black;
+    font-weight: 800;
+  }
+
+  .empty {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+
+    p {
+      font-size: $font-size-lg;
+    }
+
+    a {
+      all: unset;
+      display: flex;
+      gap: $space-md;
+      text-transform: uppercase;
+      color: $color-yellow;
+      cursor: pointer;
+      font-size: $font-size-xl;
+      padding: $space-md;
+      font-weight: 700;
+
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: $color-red;
+        text-shadow: 2px 3px 0px $color-black;
+        box-shadow: 4px 4px 0px darken($color-red, 25%);
+        transform: scale(1.2);
+      }
+
+      @include for-phone-only {
+        flex-direction: column;
+        gap: $space-xs;
+        text-align: center;
+        white-space: nowrap;
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .heading {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    gap: $space-md;
+    font-size: $font-size-xl;
+    z-index: 2;
+
+    p {
+      all: unset;
+      text-shadow: 2px 3px 0px $color-black;
+
+      &:first-child {
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      &:nth-child(2) {
+        font-weight: 300;
+        font-size: $font-size-lg;
+      }
+    }
+
+    span {
+      font-weight: 600;
+      color: $color-yellow;
+      text-shadow: 2px 3px 0px $color-black;
+    }
+  }
+
+  h2 {
+    all: unset;
+    font-size: $font-size-xl;
+    text-transform: uppercase;
+    color: $color-yellow;
+    text-align: center;
+    font-weight: 700;
+
+    text-shadow: 2px 3px 0px $color-black;
+  }
+
+  .first-like {
+    display: flex;
+    flex-direction: column;
+    gap: $space-lg;
+    padding: $space-md;
+    z-index: 2;
+    width: $min-width;
+
+    @media screen and (max-width: 600px) {
+      width: 80vw;
+    }
+
+    .album-cover {
+      box-shadow: 8px 8px 0px $color-black;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .track-info {
+      display: flex;
+      flex-direction: column;
+      gap: $space-sm;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      background-color: $color-gray;
+      box-shadow: 8px 8px 0px $color-black;
+      padding: $space-md;
+
+      .name {
+        font-size: $font-size-lg;
+        font-weight: 600;
+        text-shadow: 2px 3px 0px $color-black;
+      }
+
+      .album {
+        font-weight: 200;
+        font-size: $font-size-md;
+      }
+
+      .date {
+        font-weight: 300;
+        text-transform: uppercase;
+        color: $color-red;
+        font-size: $font-size-md;
+      }
+    }
+  }
+
+  .top-lists {
+    display: flex;
+    flex-direction: column;
+    gap: $space-lg;
+    min-width: $min-width;
+
+    @media screen and (max-width: 600px) {
+      min-width: auto;
+      width: 80vw;
+    }
+
+    .top-ten-tracks,
+    .top-three-albums {
+      display: flex;
+      flex-direction: column;
+      gap: $space-lg;
+      padding: $space-md;
+
+      max-width: 1000px;
+      background-color: $color-gray;
+      box-shadow: 8px 8px 0px $color-black;
+      font-size: $font-size-md;
+      z-index: 2;
+
+      @include for-phone-only {
+        max-width: 80vw;
+      }
+
+      .top-track,
+      .top-album {
+        all: unset;
+        cursor: pointer;
+        display: flex;
+        padding: $space-sm;
+        gap: $space-md;
+        align-items: center;
+        text-align: left;
+
+        &:nth-of-type(2n) {
+          background-color: lighten($color-gray, 5%);
+        }
+
+        &:hover,
+        &:focus {
+          background-color: lighten($color-gray, 10%);
+
+          color: $color-yellow;
+
+          .position {
+            color: $color-red;
+          }
+        }
+
+        .position {
+          display: flex;
+          align-items: center;
+          color: $color-light-gray;
+        }
+
+        .album {
+          height: 80px;
+          width: auto;
+
+          @include for-phone-only {
+            height: 60px;
+          }
+
+          img {
+            height: 100%;
+            width: auto;
+          }
+        }
+
+        .name {
+          display: flex;
+          flex-direction: column;
+          gap: $space-xs;
+
+          :first-child {
+            font-weight: 500;
+            font-size: $font-size-lg;
+
+            @include for-phone-only {
+              font-size: $font-size-md;
+            }
+          }
+
+          :nth-child(2) {
+            font-weight: 200;
+          }
+        }
+      }
+    }
+  }
+}
