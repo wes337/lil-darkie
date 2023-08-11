@@ -79,10 +79,13 @@ export default function SpotifyStats({ accessToken, refreshToken }) {
     );
   }
 
+  const firstLikeImg = data?.firstLike?.track?.images?.[0]?.url || null;
+  const profileImg = data.profile?.images?.[0]?.url || null;
+
   return (
     <div className="spotify-stats">
       <div className="user">
-        <img src={data.profile.images[0].url} alt="" width={32} height={32} />
+        <img src={profileImg} alt="" width={32} height={32} />
         <span>{data.profile.displayName}</span>
       </div>
       {(data.topRanking > 0 || data.totalLikes > 0) && (
@@ -106,7 +109,7 @@ export default function SpotifyStats({ accessToken, refreshToken }) {
           <div className="body">
             <div className="first-liked-track">
               <div className="album-cover">
-                <img src={data.firstLike.track.images[0].url} alt="" />
+                {firstLikeImg && <img src={firstLikeImg} alt="" />}
               </div>
               <div className="track-info">
                 <div className="name">{data.firstLike.track.trackName}</div>
@@ -125,44 +128,54 @@ export default function SpotifyStats({ accessToken, refreshToken }) {
           {data.topTracks.length > 0 && (
             <div className="top-ten-tracks">
               <h2>Your Top 10 Tracks</h2>
-              {data.topTracks.map((track, i) => (
-                <a
-                  key={`${track.trackName}-${i}`}
-                  className="top-track"
-                  href={track.spotifyUrl}
-                  target="_blank"
-                >
-                  <div className="position">#{i + 1}</div>
-                  <div className="album">
-                    <img src={track.images[1].url} alt="" />
-                  </div>
-                  <div className="name">
-                    <div>{track.trackName}</div>
-                    <div>{track.albumName}</div>
-                  </div>
-                </a>
-              ))}
+              {data.topTracks.map((track, i) => {
+                const image =
+                  track.images?.[1]?.url || track.images?.[0]?.url || null;
+
+                return (
+                  <a
+                    key={`${track.trackName}-${i}`}
+                    className="top-track"
+                    href={track.spotifyUrl}
+                    target="_blank"
+                  >
+                    <div className="position">#{i + 1}</div>
+                    <div className="album">
+                      {image && <img src={image} alt="" />}
+                    </div>
+                    <div className="name">
+                      <div>{track.trackName}</div>
+                      <div>{track.albumName}</div>
+                    </div>
+                  </a>
+                );
+              })}
             </div>
           )}
           {data.topAlbums.length > 0 && (
             <div className="top-three-albums">
               <h2>Your Top 3 Albums</h2>
-              {data.topAlbums.map((album, i) => (
-                <a
-                  key={`${album.albumName}-${i}`}
-                  className="top-album"
-                  href={album.spotifyUrl}
-                  target="_blank"
-                >
-                  <div className="position">#{i + 1}</div>
-                  <div className="album">
-                    <img src={album.images[1].url} alt="" />
-                  </div>
-                  <div className="name">
-                    <div>{album.albumName}</div>
-                  </div>
-                </a>
-              ))}
+              {data.topAlbums.map((album, i) => {
+                const image =
+                  album.images?.[1]?.url || album.images?.[0]?.url || null;
+
+                return (
+                  <a
+                    key={`${album.albumName}-${i}`}
+                    className="top-album"
+                    href={album.spotifyUrl}
+                    target="_blank"
+                  >
+                    <div className="position">#{i + 1}</div>
+                    <div className="album">
+                      {image && <img src={image} alt="" />}
+                    </div>
+                    <div className="name">
+                      <div>{album.albumName}</div>
+                    </div>
+                  </a>
+                );
+              })}
             </div>
           )}
         </div>
