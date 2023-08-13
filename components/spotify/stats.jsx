@@ -113,7 +113,11 @@ export default function SpotifyStats({ accessToken, refreshToken }) {
               </div>
               <div className="track-info">
                 <div className="name">{data.firstLike.track.trackName}</div>
-                <div className="album">{data.firstLike.track.albumName}</div>
+                <div className="album">
+                  {data.firstLike.track.single
+                    ? "SINGLE"
+                    : data.firstLike.track.albumName}
+                </div>
                 <div className="date">
                   Liked on{" "}
                   <span>{formateDateWithYear(data.firstLike.date)}</span>
@@ -145,7 +149,7 @@ export default function SpotifyStats({ accessToken, refreshToken }) {
                     </div>
                     <div className="name">
                       <div>{track.trackName}</div>
-                      <div>{track.albumName}</div>
+                      <div>{track.single ? "SINGLE" : track.albumName}</div>
                     </div>
                   </a>
                 );

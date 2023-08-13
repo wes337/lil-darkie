@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { uniqueBy } from "@/app/utils";
 import spotifyApi from "@/lib/spotify";
 import {
   getAllLikedTracks,
@@ -42,14 +43,26 @@ export async function GET(request) {
     const totalLikes = lilDarkieLikes.length || 0;
     const firstLike = lilDarkieLikes.length > 0 ? lilDarkieLikes[0] : null;
 
-    const allTopTracks = await getAllMyTopTracks();
+    const shortTermTopTracks = await getAllMyTopTracks("short_term");
+    const mediumTermTopTracks = await getAllMyTopTracks("medium_term");
+    const longTermTopTracks = await getAllMyTopTracks("long_term");
+
+    const allTopTracks = [
+      ...shortTermTopTracks,
+      ...mediumTermTopTracks,
+      ...longTermTopTracks,
+    ];
+
     const lilDarkieTopTracks = allTopTracks.filter((track) =>
       track.artists.find(({ id }) => id === LIL_DARKIE_ID)
     );
-    const topTracks = [
-      ...lilDarkieTopTracks,
-      ...lilDarkieLikes.map(({ track }) => track),
-    ].filter(Boolean);
+    const topTracks = uniqueBy(
+      [
+        ...lilDarkieTopTracks,
+        ...lilDarkieLikes.map(({ track }) => track),
+      ].filter(Boolean),
+      "id"
+    );
 
     const topAlbums = topTracks.length > 0 ? getMyTopAlbums(topTracks) : [];
 

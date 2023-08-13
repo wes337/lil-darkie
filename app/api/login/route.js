@@ -13,9 +13,7 @@ export async function GET() {
     "user-library-read",
     "user-read-email",
     "user-read-private",
-    "user-follow-read",
     "user-top-read",
-    "user-follow-modify",
   ];
 
   const redirectUrl = spotifyApi.createAuthorizeURL(scopes, state);

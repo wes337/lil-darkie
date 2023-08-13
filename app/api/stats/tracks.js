@@ -34,13 +34,13 @@ export async function getAllLikedTracks() {
   });
 }
 
-export async function getAllMyTopTracks() {
+export async function getAllMyTopTracks(time_range) {
   return new Promise((resolve) => {
     const topTracks = [];
 
     const getMyTopTracks = (offset) => {
       spotifyApi
-        .getMyTopTracks({ offset, limit: 50, time_range: "long_term" })
+        .getMyTopTracks({ offset, limit: 50, time_range })
         .then((response) => {
           const hasMore = response.body.next !== null;
 
@@ -97,6 +97,7 @@ export function parseTrack(rawTrack) {
     previewUrl: rawTrack.preview_url,
     spotifyUrl: rawTrack.external_urls?.spotify,
     images: rawTrack.album.images,
+    single: rawTrack.album?.album_type === "single",
   };
 }
 
@@ -105,14 +106,17 @@ export function getMyTopAlbums(tracks) {
 
   tracks.forEach((track) => {
     const albumName = track.album.name;
+    const isSingle = track.album.album_type === "single";
 
-    if (albumMap[albumName]?.count) {
-      albumMap[albumName].count += 1;
-    } else {
-      albumMap[albumName] = {
-        ...track.album,
-        count: 1,
-      };
+    if (!isSingle) {
+      if (albumMap[albumName]?.count) {
+        albumMap[albumName].count += 1;
+      } else {
+        albumMap[albumName] = {
+          ...track.album,
+          count: 1,
+        };
+      }
     }
   });
 

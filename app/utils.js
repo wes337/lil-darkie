@@ -38,4 +38,27 @@ export function formateDateWithYear(dateString) {
   }).format(new Date(dateString));
 }
 
+export function uniqueBy(array, key) {
+  if (!Array.isArray(array)) {
+    return [];
+  }
+
+  const callback = typeof key === "function" ? key : (object) => object[key];
+
+  const pickedObjects = array
+    .filter((item) => item)
+    .reduce((map, item) => {
+      const key = callback(item);
+
+      if (!key) {
+        return map;
+      }
+
+      return map.has(key) ? map : map.set(key, item);
+    }, new Map())
+    .values();
+
+  return [...pickedObjects];
+}
+
 export const CDN_URL = "https://lil-darkie.b-cdn.net";
