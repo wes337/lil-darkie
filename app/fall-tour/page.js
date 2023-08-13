@@ -53,10 +53,10 @@ export default function FallTour() {
         </div>
         <div className="tour-cities">
           {tourDates.map(
-            ({ date, city, venue, ticketLink, soldOut, opener }) => {
+            ({ date, city, venue, ticketLink, soldOut, opener }, i) => {
               return (
                 <Link
-                  className="city"
+                  className={`city ${i % 2 ? "right" : "left"}`}
                   key={date}
                   href={ticketLink}
                   target="_blank"

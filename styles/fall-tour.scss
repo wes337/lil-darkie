@@ -154,6 +154,24 @@
         transform: rotate(10deg);
         color: lighten($color-green, 10%);
       }
+
+      @include for-phone-only {
+        &.right {
+          .venue {
+            right: auto;
+            left: 0;
+            top: 0;
+            transform: rotate(-10deg);
+          }
+
+          .opener {
+            right: auto;
+            top: 18px;
+            left: -20px;
+            transform: rotate(-10deg);
+          }
+        }
+      }
     }
   }
 

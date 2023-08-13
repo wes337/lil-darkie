@@ -51,20 +51,32 @@ export async function GET(request) {
       ...shortTermTopTracks,
       ...mediumTermTopTracks,
       ...longTermTopTracks,
+      ...lilDarkieLikes.map(({ track }) => track),
     ];
 
-    const lilDarkieTopTracks = allTopTracks.filter((track) =>
-      track.artists.find(({ id }) => id === LIL_DARKIE_ID)
-    );
-    const topTracks = uniqueBy(
-      [
-        ...lilDarkieTopTracks,
-        ...lilDarkieLikes.map(({ track }) => track),
-      ].filter(Boolean),
-      "id"
-    );
+    const topTracks = [];
 
-    const topAlbums = topTracks.length > 0 ? getMyTopAlbums(topTracks) : [];
+    allTopTracks.forEach((track) => {
+      const existingIndex = topTracks.findIndex((t) => t.id === track.id);
+      const isLilDarkieTrack = track.artists.find(
+        ({ id }) => id === LIL_DARKIE_ID
+      );
+
+      if (existingIndex !== -1) {
+        topTracks[existingIndex].score =
+          Number(topTracks[existingIndex].score) + 1;
+      } else if (isLilDarkieTrack) {
+        topTracks.push({
+          ...track,
+          score: 1,
+        });
+      }
+    });
+
+    topTracks.sort((a, b) => b.score - a.score);
+
+    const topAlbums =
+      allTopTracks.length > 0 ? getMyTopAlbums(allTopTracks) : [];
 
     const profile = await getMyProfile();
 
