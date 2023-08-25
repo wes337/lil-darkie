@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { uniqueBy } from "@/app/utils";
 import spotifyApi from "@/lib/spotify";
 import {
   getAllLikedTracks,
@@ -52,20 +51,19 @@ export async function GET(request) {
       ...mediumTermTopTracks,
       ...longTermTopTracks,
       ...lilDarkieLikes.map(({ track }) => track),
-    ];
+    ].filter((track) =>
+      track.album.artists.find(({ id }) => id === LIL_DARKIE_ID)
+    );
 
     const topTracks = [];
 
     allTopTracks.forEach((track) => {
       const existingIndex = topTracks.findIndex((t) => t.id === track.id);
-      const isLilDarkieTrack = track.artists.find(
-        ({ id }) => id === LIL_DARKIE_ID
-      );
 
       if (existingIndex !== -1) {
         topTracks[existingIndex].score =
           Number(topTracks[existingIndex].score) + 1;
-      } else if (isLilDarkieTrack) {
+      } else {
         topTracks.push({
           ...track,
           score: 1,

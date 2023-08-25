@@ -54,7 +54,10 @@ export default function Nav() {
               href="https://open.spotify.com/artist/62F9BiUmjqeXbBztCwiX1U"
               target="_blank"
             >
-              <img src={`${CDN_URL}/icons/spotify.png`} alt="Spotify" />
+              <img
+                src={`${CDN_URL}/icons/Spotify_Icon_RGB_White.png`}
+                alt="Spotify"
+              />
             </Link>
             <Link href="https://soundcloud.com/lildvrkie" target="_blank">
               <img src={`${CDN_URL}/icons/soundcloud.png`} alt="Soundcloud" />

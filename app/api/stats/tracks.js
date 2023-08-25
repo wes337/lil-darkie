@@ -97,7 +97,9 @@ export function parseTrack(rawTrack) {
     previewUrl: rawTrack.preview_url,
     spotifyUrl: rawTrack.external_urls?.spotify,
     images: rawTrack.album.images,
-    single: rawTrack.album?.album_type === "single",
+    single:
+      rawTrack.album?.album_type === "single" ||
+      rawTrack.album?.name?.toLowerCase?.() === rawTrack.name?.toLowerCase?.(),
   };
 }
 
@@ -106,7 +108,9 @@ export function getMyTopAlbums(tracks) {
 
   tracks.forEach((track) => {
     const albumName = track.album.name;
-    const isSingle = track.album.album_type === "single";
+    const isSingle =
+      track.album.album_type === "single" ||
+      track.album?.name?.toLowerCase?.() === track.name?.toLowerCase?.();
 
     if (!isSingle) {
       if (albumMap[albumName]?.count) {

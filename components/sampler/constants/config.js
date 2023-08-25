@@ -1,3 +1,5 @@
+import { CDN_URL } from "@/app/utils";
+
 export const config = {
   id: 0,
   title: "Sequence 1",
@@ -72,15 +74,15 @@ export const config = {
 };
 
 export const soundFiles = {
-  kick: "/sounds/kick.wav",
-  kick2: "/sounds/kick2.wav",
-  snare: "/sounds/snare.wav",
-  hh_open: "/sounds/hh_open.wav",
-  hh_closed: "/sounds/hh_closed.wav",
-  pig: "/sounds/pig.wav",
-  yuh: "/sounds/yuh.wav",
-  huh: "/sounds/huh.wav",
-  wood: "/sounds/wood.wav",
-  growl: "/sounds/growl.wav",
-  lol: "/sounds/lol.wav",
+  kick: `${CDN_URL}/sounds/kick.wav`,
+  kick2: `${CDN_URL}/sounds/kick2.wav`,
+  snare: `${CDN_URL}/sounds/snare.wav`,
+  hh_open: `${CDN_URL}/sounds/hh_open.wav`,
+  hh_closed: `${CDN_URL}/sounds/hh_closed.wav`,
+  pig: `${CDN_URL}/sounds/pig.wav`,
+  yuh: `${CDN_URL}/sounds/yuh.wav`,
+  huh: `${CDN_URL}/sounds/huh.wav`,
+  wood: `${CDN_URL}/sounds/wood.wav`,
+  growl: `${CDN_URL}/sounds/growl.wav`,
+  lol: `${CDN_URL}/sounds/lol.wav`,
 };

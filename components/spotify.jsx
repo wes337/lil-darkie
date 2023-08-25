@@ -13,7 +13,7 @@ export default function Spotify() {
       href="https://open.spotify.com/artist/62F9BiUmjqeXbBztCwiX1U"
       target="_blank"
     >
-      <img src={`${CDN_URL}/icons/spotify.png`} alt="" />
+      <img src={`${CDN_URL}/icons/Spotify_Icon_RGB_White.png`} alt="" />
     </Link>
   );
 }
