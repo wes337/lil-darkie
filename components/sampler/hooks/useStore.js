@@ -33,6 +33,12 @@ const appReducer = (state, action) => {
         })),
       };
     }
+    case "LOAD": {
+      return {
+        ...state,
+        trackList: action.value,
+      };
+    }
     default: {
       return state;
     }
@@ -64,8 +70,15 @@ const Provider = ({ children }) => {
     });
   };
 
+  const loadNotes = (trackList) => {
+    dispatch({
+      type: "LOAD",
+      value: trackList,
+    });
+  };
+
   return (
-    <Context.Provider value={{ sequence, toggleNote, clearNotes }}>
+    <Context.Provider value={{ sequence, toggleNote, clearNotes, loadNotes }}>
       {children}
     </Context.Provider>
   );

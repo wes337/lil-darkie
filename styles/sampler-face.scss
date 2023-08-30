@@ -20,6 +20,10 @@
     margin: 0;
     mix-blend-mode: color-dodge;
     opacity: 0.5;
+
+    &.hide {
+      opacity: 0;
+    }
   }
 
   .red {
