@@ -68,9 +68,49 @@ export default function SpotifyStats({ accessToken, refreshToken }) {
     );
   }
 
+  const profileImg = data.profile?.images?.[0]?.url || null;
+
   if (notEnoughData) {
     return (
       <div className="spotify-stats">
+        {data.profile && (
+          <div className="header">
+            <div className="user">
+              {profileImg && (
+                <img src={profileImg} alt="" width={32} height={32} />
+              )}
+              <span>{data.profile.displayName}</span>
+            </div>
+            <button
+              className="disconnect"
+              onClick={() => setShowDisconnectInstructions(true)}
+            >
+              Disconnect<span> My Spotify Account</span>
+            </button>
+            {showDisconnectInstructions && (
+              <div className="instructions">
+                <div className="inner">
+                  <button
+                    className="close"
+                    onClick={() => setShowDisconnectInstructions(false)}
+                  >
+                    <img src={`${CDN_URL}/icons/close.png`} alt="Close" />
+                  </button>
+                  <p>To disconnect your Spotify account, go to:</p>
+                  <p>
+                    <a href="https://www.spotify.com/account/apps/">
+                      https://www.spotify.com/account/apps
+                    </a>
+                  </p>
+                  <p>
+                    Then click the disconnect button next to the{" "}
+                    <span>Lil Darkie</span> app.
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
         <div className="empty">
           <p>You don&apos;t have enough Lil Darkie listening data...</p>
           <a
@@ -86,7 +126,6 @@ export default function SpotifyStats({ accessToken, refreshToken }) {
   }
 
   const firstLikeImg = data?.firstLike?.track?.images?.[0]?.url || null;
-  const profileImg = data.profile?.images?.[0]?.url || null;
 
   return (
     <div className="spotify-stats">
