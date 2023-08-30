@@ -15,27 +15,6 @@
 
   overflow: hidden;
 
-  .user {
-    display: flex;
-    align-items: center;
-    gap: $space-md;
-    background-color: $color-red;
-    padding: $space-sm;
-    box-shadow: 4px 4px 0px darken($color-red, 25%);
-
-    text-shadow: 2px 2px 0px $color-black;
-
-    img {
-      outline: 1px solid $color-black;
-      border-radius: 100%;
-    }
-
-    font-weight: 600;
-    text-transform: uppercase;
-    color: $color-yellow;
-    font-size: $font-size-md;
-  }
-
   .loading {
     position: fixed;
     top: 0;
@@ -151,6 +130,11 @@
     }
   }
 
+  .first-liked-track {
+    all: unset;
+    cursor: pointer;
+  }
+
   .first-like {
     display: flex;
     flex-direction: column;
@@ -164,10 +148,20 @@
     }
 
     .album-cover {
+      position: relative;
       box-shadow: 8px 8px 0px $color-black;
 
-      img {
+      .album-img {
         width: 100%;
+      }
+
+      .spotify-album {
+        position: absolute;
+        height: 40px;
+        width: auto;
+        bottom: 0;
+        left: 0;
+        margin: $space-md;
       }
     }
 
@@ -213,6 +207,15 @@
       width: 90vw;
     }
 
+    .spotify-link {
+      position: absolute;
+      height: 18px;
+      width: auto;
+      bottom: 0;
+      right: 0;
+      margin: $space-sm;
+    }
+
     .top-ten-tracks,
     .top-three-albums {
       display: flex;
@@ -233,6 +236,7 @@
       .top-track,
       .top-album {
         all: unset;
+        position: relative;
         cursor: pointer;
         display: flex;
         padding: $space-sm;
@@ -259,6 +263,9 @@
           display: flex;
           align-items: center;
           color: $color-light-gray;
+          min-width: 24px;
+          max-width: 24px;
+          white-space: nowrap;
         }
 
         .album {
@@ -266,7 +273,7 @@
           width: auto;
 
           @include for-phone-only {
-            height: 60px;
+            height: 80px;
           }
 
           img {
@@ -293,6 +300,135 @@
             font-weight: 200;
           }
         }
+      }
+    }
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-sm;
+
+    .instructions {
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      z-index: 4;
+      background-color: rgba($color-black, 0.5);
+
+      .inner {
+        position: relative;
+        background-color: $color-gray;
+        border: 2px solid $color-light-gray;
+        padding: $space-lg;
+        text-align: center;
+
+        @include for-phone-only {
+          padding: $space-sm 0;
+        }
+
+        .close {
+          all: unset;
+          position: absolute;
+          top: 0;
+          right: 0;
+          margin: $space-md;
+          cursor: pointer;
+
+          img {
+            max-width: 40px;
+          }
+
+          &:hover,
+          &:focus {
+            transform: scale(1.2);
+          }
+        }
+      }
+
+      p {
+        margin: $space-md 0;
+
+        @include for-phone-only {
+          padding: 0 $space-lg;
+        }
+      }
+
+      a {
+        color: $color-yellow;
+        font-weight: 600;
+      }
+
+      span {
+        font-weight: 600;
+        color: $color-red;
+      }
+    }
+  }
+
+  .user {
+    display: flex;
+    flex: 75%;
+    align-items: center;
+    gap: $space-md;
+    background-color: $color-red;
+    padding: $space-sm;
+    box-shadow: 4px 4px 0px darken($color-red, 25%);
+    text-shadow: 2px 2px 0px $color-black;
+
+    img {
+      outline: 1px solid $color-black;
+      border-radius: 100%;
+    }
+
+    font-weight: 600;
+    text-transform: uppercase;
+    color: $color-yellow;
+    font-size: $font-size-md;
+  }
+
+  .disconnect {
+    all: unset;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    margin: $space-md;
+
+    text-align: center;
+    cursor: pointer;
+    gap: $space-md;
+    background-color: darken($color-red, 15%);
+    padding: $space-sm;
+    box-shadow: 4px 4px 0px darken($color-red, 25%);
+    text-shadow: 2px 2px 0px $color-black;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: $color-yellow;
+    font-size: $font-size-md;
+
+    &:hover,
+    &:focus {
+      background-color: $color-red;
+    }
+
+    @include for-phone-only {
+      position: static;
+      display: flex;
+      align-items: center;
+      flex-shrink: 1;
+      flex-grow: 0;
+      margin: 0;
+      height: 32px;
+
+      span {
+        display: none;
       }
     }
   }
