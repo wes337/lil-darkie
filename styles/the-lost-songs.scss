@@ -14,6 +14,7 @@
   max-width: 1200px;
   margin: auto;
   box-shadow: $space-md $space-md 0px $color-black;
+  font-size: $font-size-md;
 
   @include for-desktop {
     padding-top: 120px;
