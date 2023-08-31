@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import { CDN_URL } from "@/app/utils";
+import Image from "next/image";
+import { ASSETS } from "@/app/assets";
 import SpotifyLogin from "@/components/spotify/login";
 import SpotifyStats from "@/components/spotify/stats";
 import "@/styles/stats.scss";
@@ -23,7 +24,7 @@ export default function Stats() {
 
   return (
     <>
-      <img className="tv" src={`${CDN_URL}/tv.jpg`} alt="" />
+      <Image className="tv" src={ASSETS.tv} alt="" width={1920} height={1080} />
       <div className="stats">
         {loggedIn ? (
           <SpotifyStats refreshToken={refreshToken} accessToken={accessToken} />

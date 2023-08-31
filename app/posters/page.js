@@ -1,4 +1,4 @@
-import { CDN_URL } from "@/app/utils";
+import { CDN_URL } from "@/app/assets";
 import Swiper from "@/components/swiper";
 import "@/styles/posters.scss";
 

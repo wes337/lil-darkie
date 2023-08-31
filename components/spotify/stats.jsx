@@ -1,7 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { CDN_URL, formateDateWithYear } from "@/app/utils";
+import { ASSETS } from "@/app/assets";
+import { formateDateWithYear } from "@/app/utils";
 import Spinner from "../spinner";
 import "@/styles/spotify-stats.scss";
 
@@ -94,7 +96,12 @@ export default function SpotifyStats({ accessToken, refreshToken }) {
                     className="close"
                     onClick={() => setShowDisconnectInstructions(false)}
                   >
-                    <img src={`${CDN_URL}/icons/close.png`} alt="Close" />
+                    <Image
+                      src={ASSETS.closeIcon}
+                      alt="Close"
+                      width={40}
+                      height={42}
+                    />
                   </button>
                   <p>To disconnect your Spotify account, go to:</p>
                   <p>
@@ -147,7 +154,12 @@ export default function SpotifyStats({ accessToken, refreshToken }) {
                 className="close"
                 onClick={() => setShowDisconnectInstructions(false)}
               >
-                <img src={`${CDN_URL}/icons/close.png`} alt="Close" />
+                <Image
+                  src={ASSETS.closeIcon}
+                  alt="Close"
+                  width={24}
+                  height={24}
+                />
               </button>
               <p>To disconnect your Spotify account, go to:</p>
               <p>
@@ -192,10 +204,12 @@ export default function SpotifyStats({ accessToken, refreshToken }) {
                 {firstLikeImg && (
                   <img className="album-img" src={firstLikeImg} alt="" />
                 )}
-                <img
+                <Image
                   className="spotify-album"
-                  src={`${CDN_URL}/icons/Spotify_Logo_RGB_Green.png`}
+                  src={ASSETS.spotifyGreenLogo}
                   alt="Listen on Spotify"
+                  width={133}
+                  height={40}
                 />
               </div>
               <div className="track-info">
@@ -238,10 +252,12 @@ export default function SpotifyStats({ accessToken, refreshToken }) {
                       <div>{track.trackName}</div>
                       <div>{track.single ? "SINGLE" : track.albumName}</div>
                     </div>
-                    <img
+                    <Image
                       className="spotify-link"
-                      src={`${CDN_URL}/icons/Spotify_Icon_RGB_Green.png`}
+                      src={ASSETS.spotifyGreenIcon}
                       alt="Listen on Spotify"
+                      width={18}
+                      height={18}
                     />
                   </a>
                 );
@@ -269,10 +285,12 @@ export default function SpotifyStats({ accessToken, refreshToken }) {
                     <div className="name">
                       <div>{album.albumName}</div>
                     </div>
-                    <img
+                    <Image
                       className="spotify-link"
-                      src={`${CDN_URL}/icons/Spotify_Icon_RGB_Green.png`}
+                      src={ASSETS.spotifyGreenIcon}
                       alt="Listen on Spotify"
+                      width={18}
+                      height={18}
                     />
                   </a>
                 );

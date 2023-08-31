@@ -60,5 +60,3 @@ export function uniqueBy(array, key) {
 
   return [...pickedObjects];
 }
-
-export const CDN_URL = "https://lil-darkie.b-cdn.net";

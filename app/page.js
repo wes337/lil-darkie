@@ -1,6 +1,7 @@
 "use client";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { CDN_URL } from "@/app/utils";
+import { ASSETS } from "@/app/assets";
 import useStore from "@/app/store";
 import Face from "@/components/face";
 import "@/styles/landing.scss";
@@ -39,7 +40,12 @@ export default function Landing() {
         }}
       >
         <div className="landing-footer-tour">
-          <img src={`${CDN_URL}/fall-tour-title-dark-small.png`} alt="" />
+          <Image
+            src={ASSETS.fallTourTitleDark}
+            alt=""
+            width={800}
+            height={278}
+          />
         </div>
         <div
           className="tickets"
@@ -60,7 +66,7 @@ export default function Landing() {
         <span className="value">{flashingEnabled ? "On" : "Off"}</span>
       </button>
       <div className="landing-monsters">
-        <img src={`${CDN_URL}/monsters-red.png`} alt="" />
+        <Image src={ASSETS.monsters} alt="" width={1920} height={273} />
       </div>
     </div>
   );

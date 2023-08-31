@@ -8,11 +8,11 @@
   width: 64px;
   z-index: 6;
   cursor: pointer;
-  transition: all 1s cubic-bezier(0.25, 0.75, 0.5, 1.25);
 
   img {
     pointer-events: none;
     width: 100%;
+    height: auto;
   }
 
   @include for-phone-only {
@@ -27,9 +27,5 @@
     &.hide {
       left: -50%;
     }
-  }
-
-  &:hover {
-    transform: scale(1.1);
   }
 }

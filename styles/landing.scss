@@ -94,6 +94,7 @@
       img {
         pointer-events: none;
         width: 100%;
+        height: auto;
         filter: drop-shadow(1px 3px 0px $color-black);
       }
     }

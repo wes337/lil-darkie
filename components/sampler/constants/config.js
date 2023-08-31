@@ -1,4 +1,4 @@
-import { CDN_URL } from "@/app/utils";
+import { CDN_URL } from "@/app/assets";
 
 export const config = {
   id: 0,

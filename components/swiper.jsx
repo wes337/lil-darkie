@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useRef, useCallback, useState } from "react";
+import Image from "next/image";
 import useStore from "@/app/store";
-import { CDN_URL } from "@/app/utils";
+import { ASSETS } from "@/app/assets";
 import "@/styles/swiper.scss";
 
 const Hammer = () => import("hammerjs");
@@ -205,16 +206,18 @@ export default function Swiper({ items = [] }) {
       </div>
       <div className="swiper-controls">
         <button onClick={goToPrevious} disabled={!hasPrevious}>
-          <img
+          <Image
             className="flip"
-            src={`${CDN_URL}/icons/arrow.png`}
-            alt="Previous"
+            src={ASSETS.arrowIcon}
+            alt=""
+            width={60}
+            height={72}
           />
           <div className="swiper-label">Prev</div>
         </button>
         <button onClick={goToNext}>
           <div className="swiper-label">Next</div>
-          <img src={`${CDN_URL}/icons/arrow.png`} alt="Next" />
+          <Image src={ASSETS.arrowIcon} alt="" width={60} height={72} />
         </button>
       </div>
     </>

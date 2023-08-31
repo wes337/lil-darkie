@@ -1,5 +1,6 @@
 import React, { useContext, useState, memo } from "react";
-import { CDN_URL } from "@/app/utils";
+import Image from "next/image";
+import { ASSETS } from "@/app/assets";
 import { Context } from "../hooks/useStore";
 import "./toolbar.scss";
 
@@ -192,7 +193,12 @@ const ToolBar = ({
                 unhideSamplerFace();
               }}
             >
-              <img src={`${CDN_URL}/icons/close.png`} alt="Close" />
+              <Image
+                src={ASSETS.closeIcon}
+                alt="Close"
+                width={24}
+                height={24}
+              />
             </button>
           </div>
         </div>
@@ -213,7 +219,12 @@ const ToolBar = ({
                 unhideSamplerFace();
               }}
             >
-              <img src={`${CDN_URL}/icons/close.png`} alt="Close" />
+              <Image
+                src={ASSETS.closeIcon}
+                alt="Close"
+                width={24}
+                height={24}
+              />
             </button>
             {error && (
               <div className="error">Failed to load notes from code...</div>

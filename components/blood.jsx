@@ -1,5 +1,6 @@
 "use client";
-import { CDN_URL } from "@/app/utils";
+import Image from "next/image";
+import { ASSETS } from "@/app/assets";
 import useStore from "@/app/store";
 import "@/styles/blood.scss";
 
@@ -20,7 +21,7 @@ export default function Blood() {
           />
         </svg>
         <div className="blood-face">
-          <img src={`${CDN_URL}/broken.png`} alt="" />
+          <Image src={ASSETS.broken} alt="" width={768} height={843} priority />
         </div>
       </div>
       <div className="blood-middle" />

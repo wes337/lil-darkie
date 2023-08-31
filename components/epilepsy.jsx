@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import { CDN_URL } from "@/app/utils";
+import Image from "next/image";
+import { ASSETS } from "@/app/assets";
 import useStore from "@/app/store";
 import "@/styles/epilepsy.scss";
 
@@ -27,11 +28,14 @@ export default function Epilepsy() {
 
   return (
     <div className="epilepsy">
-      <img
+      <Image
         className="epilepsy-logo"
-        src={`${CDN_URL}/logo-small.png`}
+        src={ASSETS.logo}
         alt="Lil Darkie"
+        width={254}
+        height={68}
       />
+
       <div className="epilepsy-inner">
         <h1>Epilepsy</h1>
         <h1>Warning</h1>

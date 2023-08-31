@@ -32,6 +32,7 @@
 
   .title {
     max-width: 800px;
+    height: auto;
     margin: auto;
     z-index: 0;
     will-change: transform;
@@ -48,6 +49,7 @@
 
   .bottom {
     max-width: 1200px;
+    height: auto;
     margin: auto;
     margin-bottom: calc($space-lg * -1);
     z-index: 1;
@@ -56,12 +58,9 @@
       padding-top: 150px;
       max-width: auto;
       width: 110vw;
+      height: auto;
       transform: translateX(-5vw);
       margin-bottom: calc($space-xxs * -1);
-
-      img {
-        width: 100%;
-      }
     }
   }
 
@@ -72,6 +71,7 @@
     width: 100%;
     max-width: 10vw;
     transform: translateY(100%);
+    height: auto;
 
     @include for-phone-only {
       transform: translateY(300%);
@@ -295,6 +295,7 @@
 
     img {
       width: 100%;
+      height: auto;
     }
 
     @include for-phone-only {
@@ -315,12 +316,14 @@
 
     img {
       width: 100%;
+      height: auto;
     }
   }
 
   @include for-tablet {
     .title {
       max-width: 650px;
+      height: auto;
       z-index: 1;
       filter: drop-shadow($space-xs $space-xs 0 $color-yellow);
       margin-bottom: -2%;
@@ -331,14 +334,11 @@
       max-width: auto;
       width: 100vw;
       max-width: 800px;
+      height: auto;
       margin: auto;
       transform: translateX(0vw);
       margin-bottom: calc($space-xxs * -1);
       z-index: 0;
-
-      img {
-        width: 100%;
-      }
     }
 
     .end {
@@ -348,12 +348,14 @@
       width: 100%;
       max-width: 15vw;
       transform: translateY(0%);
+      height: auto;
     }
   }
 
   @media screen and (min-width: 1300px) and (max-height: 900px) {
     .title {
       max-width: 650px;
+      height: auto;
       z-index: 1;
       filter: drop-shadow($space-xs $space-xs 0 $color-yellow);
       margin-bottom: -2%;
@@ -364,14 +366,11 @@
       max-width: auto;
       width: 100vw;
       max-width: 1000px;
+      height: auto;
       margin: auto;
       transform: translateX(0vw);
       margin-bottom: calc($space-xl * -1);
       z-index: 0;
-
-      img {
-        width: 100%;
-      }
     }
 
     .end {
@@ -381,6 +380,7 @@
       width: 100%;
       max-width: 15vw;
       transform: translateY(0%);
+      height: auto;
     }
   }
 }

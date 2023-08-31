@@ -80,6 +80,7 @@
   img {
     position: absolute;
     width: 100%;
+    height: auto;
     pointer-events: none;
 
     @include for-phone-only {

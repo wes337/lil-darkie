@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { CDN_URL } from "@/app/utils";
+import Image from "next/image";
+import { ASSETS } from "@/app/assets";
 import "@/styles/slide-show.scss";
 
 export default function SlideShow({ images }) {
@@ -58,25 +59,31 @@ export default function SlideShow({ images }) {
     <div className="slide-show">
       <h1>USA 2023 Tour Photos</h1>
       <div className="slide-show-selected-image">
-        <img
+        <Image
           className="frame-left"
-          src={`${CDN_URL}/frame-left-small.png`}
+          src={ASSETS.frameLeft}
           alt=""
+          width={193}
+          height={500}
         />
         <img
           className="slide-show-main-image"
           src={images[selectedImage]}
           alt=""
         />
-        <img
+        <Image
           className="frame-right"
-          src={`${CDN_URL}/frame-right-small.png`}
+          src={ASSETS.frameRight}
           alt=""
+          width={192}
+          height={499}
         />
-        <img
+        <Image
           className="frame-bottom"
-          src={`${CDN_URL}/frame-bottom-small.png`}
+          src={ASSETS.frameBottom}
           alt=""
+          width={1384}
+          height={966}
         />
       </div>
       <div className="slide-show-images" onScroll={clearResetAutoScrollTimeout}>

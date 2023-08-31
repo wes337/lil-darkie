@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { CDN_URL } from "@/app/utils";
+import { ASSETS } from "@/app/assets";
 import useStore from "@/app/store";
 import "@/styles/top-bar.scss";
 
@@ -28,34 +29,38 @@ export default function TopBar() {
         }`}
       >
         <Link href="https://www.smalldarkone.com">
-          <img src={`${CDN_URL}/icons/gun.png`} alt="" />
+          <Image src={ASSETS.gunIcon} alt="" width={48} height={48} />
           <span>Merch</span>
         </Link>
         <button onClick={() => transitionTo("/sampler")}>
-          <img src={`${CDN_URL}/icons/skull.png`} alt="" />
+          <Image src={ASSETS.skullIcon} alt="" width={48} height={48} />
           <span>Sampler</span>
         </button>
         <button
           onClick={() => transitionTo("/")}
           className={`top-bar-logo${sticky ? " sticky" : ""}`}
         >
-          <img
+          <Image
             className="logo-yellow"
-            src={`${CDN_URL}/logo-yellow.png`}
+            src={ASSETS.logoYellow}
             alt="Lil Darkie"
+            width={254}
+            height={68}
           />
-          <img
+          <Image
             className="logo-primary"
-            src={`${CDN_URL}/logo-small.png`}
+            src={ASSETS.logo}
             alt="Lil Darkie"
+            width={254}
+            height={68}
           />
         </button>
         <button onClick={() => transitionTo("/fall-tour")}>
-          <img src={`${CDN_URL}/icons/grave.png`} alt="" />
+          <Image src={ASSETS.graveIcon} alt="" width={48} height={48} />
           <span>Fall Tour 2023</span>
         </button>
         <button onClick={() => setNavOpen(true)}>
-          <img src={`${CDN_URL}/icons/booze.png`} alt="" />
+          <Image src={ASSETS.boozeIcon} alt="" width={48} height={48} />
           <span>More</span>
         </button>
       </div>

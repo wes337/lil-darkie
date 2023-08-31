@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-import { isMobileSizedScreen, CDN_URL } from "@/app/utils";
+import Image from "next/image";
+import { ASSETS } from "@/app/assets";
+import { isMobileSizedScreen } from "@/app/utils";
 import blog from "@/data/blog.json";
 import useStore from "@/app/store";
 import "@/styles/blog.scss";
@@ -31,7 +33,7 @@ export default function Blog() {
           )}px)`,
         }}
       >
-        <img src={`${CDN_URL}/emo.png`} alt="" />
+        <Image src={ASSETS.emo} alt="" width={672} height={801} />
       </div>
       <div className="blog-entries">
         {blog.map((entry, i) => (
@@ -50,7 +52,7 @@ export default function Blog() {
           )}px)`,
         }}
       >
-        <img src={`${CDN_URL}/billion-peach.png`} alt="" />
+        <Image src={ASSETS.billion} alt="" width={1000} height={1000} />
       </div>
     </div>
   );
