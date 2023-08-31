@@ -58,10 +58,22 @@ export default function FallTour() {
       />
       <div className={`panel${scroll >= 100 ? " scroll" : ""}`}>
         <div className="vote-guy">
-          <Image src={ASSETS.voteGuy} alt="" width={1200} height={1170} />
+          <Image
+            src={ASSETS.voteGuy}
+            alt=""
+            width={800}
+            height={783}
+            priority
+          />
         </div>
         <div className="paratrooper">
-          <Image src={ASSETS.paratrooper} alt="" width={1100} height={1208} />
+          <Image
+            src={ASSETS.paratrooper}
+            alt=""
+            width={800}
+            height={881}
+            priority
+          />
         </div>
         <div className="tour-cities">
           {tourDates.map(
