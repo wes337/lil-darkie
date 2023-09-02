@@ -54,6 +54,9 @@ export default function Blog() {
       >
         <Image src={ASSETS.billion} alt="" width={1000} height={1000} />
       </div>
+      <div className="copyright">
+        Copyright © 2023 Lil Darkie® All Rights Reserved
+      </div>
     </div>
   );
 }

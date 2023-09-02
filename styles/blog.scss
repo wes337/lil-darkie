@@ -12,6 +12,18 @@
 
   background-color: $color-peach;
 
+  .copyright {
+    position: fixed;
+    bottom: $space-sm;
+    left: 0;
+    width: 100vw;
+    text-align: center;
+    color: $color-white;
+    font-size: $font-size-xs;
+    font-weight: 300;
+    text-shadow: 2px 1px 0px $color-black;
+  }
+
   .blog-entries {
     display: flex;
     flex-direction: column;
@@ -19,8 +31,6 @@
 
     max-width: 1000px;
     margin: auto;
-    // color: $color-white;
-    // text-shadow: 2px 2px 0px $color-black;
 
     .entry {
       display: flex;

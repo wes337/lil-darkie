@@ -19,6 +19,9 @@ export default function SamplerPage() {
           <Sampler />
           <SamplerFace />
         </div>
+        <div className="copyright">
+          Copyright © 2023 Lil Darkie® All Rights Reserved
+        </div>
       </div>
     </>
   );

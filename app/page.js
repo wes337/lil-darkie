@@ -68,6 +68,9 @@ export default function Landing() {
       <div className="landing-monsters">
         <Image src={ASSETS.monsters} alt="" width={1920} height={273} />
       </div>
+      <div className="copyright">
+        Copyright © 2023 Lil Darkie® All Rights Reserved
+      </div>
     </div>
   );
 }

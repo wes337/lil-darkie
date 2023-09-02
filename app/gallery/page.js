@@ -15,6 +15,9 @@ export default function Gallery() {
       <Image className="tv" src={ASSETS.tv} alt="" width={1920} height={1080} />
       <div className="gallery">
         <SlideShow images={images} />
+        <div className="copyright">
+          Copyright © 2023 Lil Darkie® All Rights Reserved
+        </div>
       </div>
     </>
   );
