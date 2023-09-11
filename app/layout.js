@@ -7,6 +7,7 @@ import Nav from "@/components/nav";
 import Epilepsy from "@/components/epilepsy";
 import Backdrop from "@/components/backdrop";
 import Cookies from "@/components/cookies";
+import GoogleAnalytics from "@/components/google-analytics";
 import "@/styles/globals.scss";
 
 const martianMono = Martian_Mono({ subsets: ["latin"] });
@@ -40,6 +41,7 @@ export default function RootLayout({ children }) {
         <Blood />
         <Nav />
         <Backdrop />
+        <GoogleAnalytics />
       </body>
     </html>
   );
