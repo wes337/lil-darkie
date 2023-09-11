@@ -1,0 +1,58 @@
+@import "@/styles/variables.scss";
+
+.note {
+  flex: 0 0 var(--note-width);
+  width: var(--note-width);
+  height: var(--note-height);
+  border: 1px solid $color-black;
+  box-sizing: border-box;
+  margin-top: var(--note-margin-vert);
+  margin-bottom: var(--note-margin-vert);
+  margin-left: var(--note-margin-horz);
+  margin-right: var(--note-margin-horz);
+  cursor: pointer;
+
+  &:nth-child(n + 5) {
+    background-color: rgba($color-gray, 0.25);
+  }
+
+  &:nth-child(n + 9) {
+    background-color: transparent;
+  }
+
+  &:nth-child(n + 13) {
+    background-color: rgba($color-gray, 0.25);
+  }
+
+  &.on {
+    background-color: $color-gray;
+  }
+
+  &.playing {
+    background-color: $color-red;
+
+    &.red {
+      background-color: $color-red;
+    }
+
+    &.yellow {
+      background-color: $color-yellow;
+    }
+
+    &.green {
+      background-color: $color-green;
+    }
+
+    &.blue {
+      background-color: $color-blue;
+    }
+
+    &.purple {
+      background-color: $color-purple;
+    }
+
+    &.white {
+      background-color: $color-white;
+    }
+  }
+}

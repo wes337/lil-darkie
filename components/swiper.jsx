@@ -1,15 +1,19 @@
 "use client";
-import { useEffect, useRef } from "react";
-import Hammer from "hammerjs";
+import { useEffect, useRef, useCallback, useState } from "react";
+import Image from "next/image";
 import useStore from "@/app/store";
+import { ASSETS } from "@/app/assets";
 import "@/styles/swiper.scss";
 
-export default function Swiper({ items }) {
+const Hammer = () => import("hammerjs");
+
+export default function Swiper({ items = [] }) {
   const swiperRef = useRef();
   const { setHideScroll } = useStore();
+  const [hasPrevious, setHasPrevious] = useState(false);
 
-  const initItems = () => {
-    if (typeof window === "undefined") {
+  const initItems = useCallback(() => {
+    if (items.length === 0) {
       return;
     }
 
@@ -27,13 +31,9 @@ export default function Swiper({ items }) {
         ` rotate(${index * 3}deg)`;
       item.style.opacity = (10 - index) / 10;
     });
-  };
+  }, [items]);
 
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
     setHideScroll(true);
 
     return () => {
@@ -42,22 +42,11 @@ export default function Swiper({ items }) {
   }, [setHideScroll]);
 
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    initItems();
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
     const allItems = document.querySelectorAll(".item");
 
-    allItems.forEach((element) => {
-      const hammertime = new Hammer(element);
+    allItems.forEach(async (element) => {
+      const hammer = await Hammer().then((mod) => mod.default || mod);
+      const hammertime = new hammer(element);
 
       hammertime.on("pan", (event) => {
         if (typeof window === "undefined") {
@@ -96,7 +85,7 @@ export default function Swiper({ items }) {
 
         var moveOutWidth = document.body.clientWidth;
         var keep =
-          Math.abs(event.deltaX) < 80 || Math.abs(event.velocityX) < 0.5;
+          Math.abs(event.deltaX) < 80 || Math.abs(event.velocityX) < 0.01;
 
         event.target.classList.toggle("removed", !keep);
 
@@ -136,19 +125,101 @@ export default function Swiper({ items }) {
         }
       });
     });
-  }, []);
+  }, [initItems]);
 
-  if (!items) {
+  if (items.length === 0) {
     return null;
   }
 
+  const goToNext = () => {
+    const currentItem = document.querySelector(".item:not(.removed)");
+
+    if (!currentItem) {
+      return;
+    }
+
+    setHasPrevious(true);
+
+    currentItem.classList.add("removed");
+
+    const velocityX = 1;
+    const velocityY = 1;
+    const deltaX = 1;
+    const deltaY = 1;
+
+    var moveOutWidth = document.body.clientWidth;
+
+    var endX = Math.max(Math.abs(velocityX) * moveOutWidth, moveOutWidth);
+
+    var toX = deltaX > 0 ? endX : -endX;
+    var endY = Math.abs(velocityY) * moveOutWidth;
+    var toY = deltaY > 0 ? endY : -endY;
+    var xMulti = deltaX * 0.03;
+    var yMulti = deltaY / 80;
+    var rotate = xMulti * yMulti;
+
+    currentItem.style.transform =
+      "translate(" +
+      toX +
+      "px, " +
+      (toY + deltaY) +
+      "px) rotate(" +
+      rotate +
+      "deg)";
+
+    initItems();
+
+    const newItems = document.querySelectorAll(".item:not(.removed)");
+
+    if (newItems.length === 0) {
+      const removedItems = document.querySelectorAll(".item.removed");
+      removedItems.forEach((element) => element.classList.remove("removed"));
+      initItems();
+      setHasPrevious(false);
+    }
+  };
+
+  const goToPrevious = () => {
+    const removedItems = document.querySelectorAll(".item.removed");
+    const lastItem = removedItems[removedItems.length - 1];
+
+    if (!lastItem) {
+      return;
+    }
+
+    if (removedItems.length === 1) {
+      setHasPrevious(false);
+    }
+
+    lastItem.classList.remove("removed");
+    initItems();
+  };
+
   return (
-    <div className="swiper" ref={swiperRef}>
-      {items.map((item) => (
-        <div className="item" key={item}>
-          <img src={item} alt="" />
-        </div>
-      ))}
-    </div>
+    <>
+      <div className="swiper" ref={swiperRef}>
+        {items.map((item) => (
+          <div className="item" key={item}>
+            <img src={item} alt="" />
+          </div>
+        ))}
+      </div>
+      <div className="swiper-controls">
+        <button onClick={goToPrevious} disabled={!hasPrevious}>
+          <Image
+            className="flip"
+            src={ASSETS.arrowIcon}
+            alt=""
+            width={60}
+            height={72}
+          />
+          <div className="swiper-label">Prev</div>
+        </button>
+        <button onClick={goToNext}>
+          <div className="swiper-label">Next</div>
+          <Image src={ASSETS.arrowIcon} alt="" width={60} height={72} />
+        </button>
+      </div>
+    </>
   );
 }

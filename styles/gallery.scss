@@ -2,6 +2,17 @@
 
 .gallery {
   display: flex;
+
+  .copyright {
+    position: fixed;
+    bottom: $space-sm;
+    left: 0;
+    width: 100vw;
+    text-align: center;
+    color: $color-white;
+    font-size: $font-size-xs;
+    font-weight: 200;
+  }
 }
 
 .tv {

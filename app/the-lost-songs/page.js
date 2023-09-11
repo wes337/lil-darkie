@@ -1,6 +1,7 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
-import { CDN_URL } from "@/app/utils";
+import { ASSETS } from "@/app/assets";
 import "@/styles/the-lost-songs.scss";
 
 const SPOTIFY_ALBUM_URL =
@@ -12,11 +13,17 @@ const SOUNDCLOUD_PLAYER_URL =
 export default function TheLostSongs() {
   return (
     <>
-      <img className="big" src={`${CDN_URL}/melting.png`} alt="" />
+      <Image
+        className="big"
+        src={ASSETS.melting}
+        alt=""
+        width={607}
+        height={758}
+      />
       <div className="the-lost-songs">
         <div className="the-lost-songs-header">
           <div className="the-lost-songs-album-cover">
-            <img src={`${CDN_URL}/lost-songs/album.jpg`} alt="" />
+            <Image src={ASSETS.lostSongs} alt="" width={500} height={500} />
           </div>
           <div className="the-lost-songs-album-text">
             <h1>Lost Songs</h1>

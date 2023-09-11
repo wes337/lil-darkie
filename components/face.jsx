@@ -1,11 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
-import { CDN_URL } from "@/app/utils";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { ASSETS } from "@/app/assets";
 import useStore from "@/app/store";
 import "@/styles/face.scss";
 
 export default function Face() {
-  const { setFlashing } = useStore();
+  const router = useRouter();
+  const { setFlashing, setBloodTransition, flashingEnabled } = useStore();
   const [facePressed, setFacePressed] = useState(false);
   const [blinking, setBlinking] = useState(false);
 
@@ -33,35 +36,51 @@ export default function Face() {
   }, []);
 
   useEffect(() => {
+    if (!flashingEnabled) {
+      return;
+    }
+
     setFlashing(facePressed);
-  }, [facePressed, setFlashing]);
+  }, [facePressed, setFlashing, flashingEnabled]);
 
   return (
     <div
       className={`face${blinking ? " blink" : ""}`}
       onPointerDown={() => setFacePressed(true)}
       onPointerUp={() => setFacePressed(false)}
+      onClick={() => {
+        setBloodTransition(true);
+        setTimeout(() => router.push("/fall-tour"), 400);
+      }}
     >
       <div className={`red${facePressed ? " show" : ""}`} />
-      <img
+      <Image
         className={`normal${facePressed ? "" : " show"}`}
-        src={`${CDN_URL}/face/face-1.png`}
+        src={ASSETS.face1}
         alt=""
+        width={395}
+        height={429}
       />
-      <img
+      <Image
         className={`blink${!facePressed && blinking ? " show" : ""}`}
-        src={`${CDN_URL}/face/face-1-blink.png`}
+        src={ASSETS.face1Blink}
         alt=""
+        width={395}
+        height={429}
       />
-      <img
+      <Image
         className={`speak${!blinking && facePressed ? " show" : ""}`}
-        src={`${CDN_URL}/face/face-2.png`}
+        src={ASSETS.face2}
         alt=""
+        width={431}
+        height={538}
       />
-      <img
+      <Image
         className={`speak-blink${blinking && facePressed ? " show" : ""}`}
-        src={`${CDN_URL}/face/face-5.png`}
+        src={ASSETS.face5}
         alt=""
+        width={446}
+        height={483}
       />
     </div>
   );

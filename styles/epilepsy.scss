@@ -1,0 +1,68 @@
+@import "./variables.scss";
+
+.epilepsy {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: $color-black;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+
+  .epilepsy-logo {
+    position: fixed;
+    display: flex;
+    top: 0;
+    padding: $space-md;
+    width: 160px;
+  }
+
+  .epilepsy-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  h1 {
+    margin: 0;
+    text-transform: uppercase;
+    color: $color-yellow;
+    font-size: 4rem;
+
+    &:nth-of-type(2) {
+      letter-spacing: 5px;
+    }
+  }
+
+  button {
+    all: unset;
+    cursor: pointer;
+    color: $color-red;
+    font-family: "Martian Mono", monospace;
+    font-weight: 400;
+    background-color: $color-red;
+    color: $color-white;
+    padding: 16px;
+    border: 1px double $color-red;
+    text-shadow: 2px 3px $color-black;
+    font-size: 24px;
+    text-align: center;
+    user-select: none;
+    width: 90%;
+    margin-top: $space-xl;
+    text-transform: uppercase;
+
+    &:hover,
+    &:focus,
+    &:active {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+  }
+}

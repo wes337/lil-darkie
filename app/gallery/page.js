@@ -1,19 +1,23 @@
-import { CDN_URL } from "@/app/utils";
+import Image from "next/image";
+import { CDN_URL, ASSETS } from "@/app/assets";
 import SlideShow from "@/components/slide-show";
 import "@/styles/gallery.scss";
 
 const images = [];
 
-for (let i = 1; i <= 29; i++) {
-  images.push(`${CDN_URL}/photos/usa-2023/${i}.webp`);
+for (let i = 1; i <= 9; i++) {
+  images.push(`${CDN_URL}/photos/comp/${i}.png`);
 }
 
 export default function Gallery() {
   return (
     <>
-      <img className="tv" src={`${CDN_URL}/tv.jpg`} alt="" />
+      <Image className="tv" src={ASSETS.tv} alt="" width={1920} height={1080} />
       <div className="gallery">
         <SlideShow images={images} />
+        <div className="copyright">
+          Copyright © 2023 Lil Darkie® All Rights Reserved
+        </div>
       </div>
     </>
   );

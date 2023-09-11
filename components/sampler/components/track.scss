@@ -1,0 +1,43 @@
+@import "@/styles/variables.scss";
+
+.track {
+  display: flex;
+  flex-direction: row;
+
+  .track_title {
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: flex-end;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 1.1rem;
+    padding: var(--spacer);
+    width: var(--track-title-width);
+    text-shadow: 2px 2px 0px $color-black;
+  }
+
+  &.red {
+    color: $color-red;
+  }
+
+  &.yellow {
+    color: $color-yellow;
+  }
+
+  &.green {
+    color: $color-green;
+  }
+
+  &.blue {
+    color: $color-blue;
+  }
+
+  &.purple {
+    color: $color-purple;
+  }
+
+  .track_notes {
+    display: flex;
+  }
+}

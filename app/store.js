@@ -11,6 +11,8 @@ const useStore = create((set) => ({
 
     set(() => ({ navOpen }));
   },
+  flashingEnabled: false,
+  setFlashingEnabled: (flashingEnabled) => set(() => ({ flashingEnabled })),
   flashing: false,
   setFlashing: (flashing) => set(() => ({ flashing })),
   sticky: false,
@@ -29,6 +31,16 @@ const useStore = create((set) => ({
 
     set(() => ({ lightMode }));
   },
+  peachMode: false,
+  setPeachMode: (peachMode) => {
+    if (peachMode) {
+      document.body.classList.add("peach");
+    } else {
+      document.body.classList.remove("peach");
+    }
+
+    set(() => ({ peachMode }));
+  },
   setHideScroll: (hide) => {
     if (hide) {
       document.body.classList.add("no-scroll");
@@ -37,6 +49,28 @@ const useStore = create((set) => ({
       document.body.classList.remove("no-scroll");
     }
   },
+  kick: false,
+  playedKick: (kick) => set(() => ({ kick })),
+  kickAlt: false,
+  playedKickAlt: (kickAlt) => set(() => ({ kickAlt })),
+  snare: false,
+  playedSnare: (snare) => set(() => ({ snare })),
+  openHat: false,
+  playedOpenHat: (openHat) => set(() => ({ openHat })),
+  closedHat: false,
+  playedClosedHat: (closedHat) => set(() => ({ closedHat })),
+  growl: false,
+  playedGrowl: (growl) => set(() => ({ growl })),
+  pigSqueal: false,
+  playedPigSqueal: (pigSqueal) => set(() => ({ pigSqueal })),
+  huh: false,
+  playedHuh: (huh) => set(() => ({ huh })),
+  yuh: false,
+  playedYuh: (yuh) => set(() => ({ yuh })),
+  laugh: false,
+  playedLaugh: (laugh) => set(() => ({ laugh })),
+  wood: false,
+  playedWood: (wood) => set(() => ({ wood })),
 }));
 
 export default useStore;

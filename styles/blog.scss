@@ -1,0 +1,92 @@
+@import "./variables.scss";
+
+.blog {
+  position: relative;
+  max-width: 1920px;
+  margin: auto;
+  background-color: $color-white;
+  margin-top: 100px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+
+  background-color: $color-peach;
+
+  .copyright {
+    position: fixed;
+    bottom: $space-sm;
+    left: 0;
+    width: 100vw;
+    text-align: center;
+    color: $color-white;
+    font-size: $font-size-xs;
+    font-weight: 300;
+    text-shadow: 2px 1px 0px $color-black;
+  }
+
+  .blog-entries {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xl;
+
+    max-width: 1000px;
+    margin: auto;
+
+    .entry {
+      display: flex;
+      flex-direction: column;
+      gap: $space-md;
+      padding: $space-lg;
+      z-index: 1;
+
+      .date {
+        text-transform: uppercase;
+        font-size: $font-size-lg;
+        font-weight: 700;
+        color: $color-white;
+        text-shadow: 2px 2px 0px $color-black;
+        background-color: $color-red;
+        padding: $space-sm;
+        box-shadow: 4px 4px 0px darken($color-red, 25%);
+      }
+
+      .content {
+        background-color: $color-white;
+        padding: $space-md;
+        border-radius: 16px;
+        border: 2px solid $color-black;
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 20px;
+
+        @include for-phone-only {
+          z-index: 3;
+        }
+      }
+    }
+  }
+
+  .art-left {
+    pointer-events: none;
+    position: fixed;
+    bottom: -5%;
+    left: 0;
+    mix-blend-mode: multiply;
+
+    @include for-phone-only {
+      display: none;
+    }
+  }
+
+  .art-right {
+    pointer-events: none;
+    position: fixed;
+    top: -25%;
+    right: 0;
+
+    @include for-desktop {
+      top: auto;
+      bottom: 0;
+    }
+  }
+}

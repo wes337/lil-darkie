@@ -11,6 +11,17 @@
   color: $color-white;
   overflow-x: hidden;
 
+  .copyright {
+    position: fixed;
+    bottom: $space-sm;
+    left: 0;
+    width: 100vw;
+    text-align: center;
+    color: $color-white;
+    font-size: $font-size-xs;
+    font-weight: 200;
+  }
+
   &.flashing {
     animation: flashingBackground 200ms infinite;
 
@@ -37,6 +48,8 @@
   }
 
   .landing-footer {
+    all: unset;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -49,9 +62,9 @@
     z-index: 1;
     user-select: none;
 
-    a,
-    button {
-      all: unset;
+    cursor: pointer;
+
+    .tickets {
       cursor: pointer;
       color: $color-red;
       font-family: "Martian Mono", monospace;
@@ -61,7 +74,7 @@
       padding: 16px 0;
       border: 1px double $color-red;
       text-shadow: 2px 3px $color-black;
-      font-size: 16px;
+      font-size: 24px;
       width: 100%;
       text-align: center;
       user-select: none;
@@ -92,13 +105,70 @@
       img {
         pointer-events: none;
         width: 100%;
+        height: auto;
         filter: drop-shadow(1px 3px 0px $color-black);
       }
     }
   }
 
   .landing-monsters {
+    opacity: 1;
     position: fixed;
+    width: 100vw;
     bottom: calc($space-xs * -1);
+
+    img {
+      width: 100%;
+    }
+
+    @include for-phone-only {
+      width: 100%;
+      height: 250px;
+      bottom: 0px;
+
+      opacity: 0.75;
+
+      img {
+        width: 150%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .strobe-toggle {
+    all: unset;
+    font-family: "Martian Mono", monospace;
+    font-size: $font-size-md;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+    cursor: pointer;
+    text-align: center;
+    padding: $space-sm;
+    outline: 1px solid $color-red;
+    margin: $space-lg;
+    z-index: 4;
+
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: $color-red;
+    }
+
+    .value {
+      color: $color-yellow;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    @include for-phone-only {
+      padding: $space-xs;
+      font-size: $font-size-sm;
+      top: 48px;
+    }
   }
 }

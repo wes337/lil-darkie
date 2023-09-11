@@ -1,8 +1,9 @@
 "use client";
 import { useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { CDN_URL } from "@/app/utils";
+import { ASSETS } from "@/app/assets";
 import useStore from "@/app/store";
 import "@/styles/nav.scss";
 
@@ -40,79 +41,104 @@ export default function Nav() {
         className={`mobile-nav-button${sticky ? " sticky" : ""}`}
         onClick={() => setNavOpen(true)}
       >
-        <img src={`${CDN_URL}/menu.png`} alt="" />
+        <Image src={ASSETS.menu} alt="Menu" width={98} height={66} />
       </button>
       <div className={`nav${navOpen ? " open" : ""}`}>
         <div className="nav-header">
-          <img
+          <Image
             className="nav-logo"
-            src={`${CDN_URL}/logo-yellow.png`}
+            src={ASSETS.logoYellow}
             alt="Lil Darkie"
+            width={254}
+            height={68}
           />
           <div className="social-media-links">
             <Link
               href="https://open.spotify.com/artist/62F9BiUmjqeXbBztCwiX1U"
               target="_blank"
             >
-              <img src={`${CDN_URL}/icons/spotify.png`} alt="Spotify" />
+              <Image
+                src={ASSETS.spotifyWhiteIcon}
+                alt="Spotify"
+                width={32}
+                height={32}
+              />
             </Link>
             <Link href="https://soundcloud.com/lildvrkie" target="_blank">
-              <img src={`${CDN_URL}/icons/soundcloud.png`} alt="Soundcloud" />
+              <Image
+                src={ASSETS.soundcloudIcon}
+                alt="Soundcloud"
+                width={32}
+                height={32}
+              />
             </Link>
             <Link
               href="https://www.youtube.com/channel/UCy1PnulzEixUtsR-w-Pgd4w"
               target="_blank"
             >
-              <img src={`${CDN_URL}/icons/youtube.png`} alt="YouTube" />
+              <Image
+                src={ASSETS.youtubeIcon}
+                alt="YouTube"
+                width={32}
+                height={32}
+              />
             </Link>
           </div>
           <button className="nav-close" onClick={() => setNavOpen(false)}>
-            <img src={`${CDN_URL}/icons/close.png`} alt="Close" />
+            <Image src={ASSETS.closeIcon} alt="Close" width={40} height={42} />
           </button>
         </div>
         <div className="nav-links">
           <Link href="https://www.smalldarkone.com">
-            <img src={`${CDN_URL}/icons/gun.png`} alt="" />
+            <Image src={ASSETS.dashIcon} alt="" width={24} height={48} />
             <span>Merch</span>
           </Link>
           <Link href="/gallery">
-            <img src={`${CDN_URL}/icons/skull.png`} alt="" />
+            <Image src={ASSETS.dashIcon} alt="" width={24} height={48} />
             <span>Gallery</span>
           </Link>
-          <Link href="/upcoming-shows">
-            <img src={`${CDN_URL}/icons/grave.png`} alt="" />
-            <span>Upcoming Shows</span>
+          <Link href="/sampler">
+            <Image src={ASSETS.dashIcon} alt="" width={24} height={48} />
+            <span>Sampler</span>
           </Link>
           <Link href="/fall-tour">
-            <img src={`${CDN_URL}/icons/knife.png`} alt="" />
+            <Image src={ASSETS.dashIcon} alt="" width={24} height={48} />
             <span>Fall 2023 Tour</span>
           </Link>
           <Link href="/posters">
-            <img src={`${CDN_URL}/icons/cig.png`} alt="" />
+            <Image src={ASSETS.dashIcon} alt="" width={24} height={48} />
             <span>Posters</span>
           </Link>
+          <Link href="/blog">
+            <Image src={ASSETS.dashIcon} alt="" width={24} height={48} />
+            <span>Writings</span>
+          </Link>
           <Link href="/the-lost-songs">
-            <img src={`${CDN_URL}/icons/booze.png`} alt="" />
+            <Image src={ASSETS.dashIcon} alt="" width={24} height={48} />
             <span>The Lost Songs</span>
           </Link>
           <div className="nav-copyright">
-            Copyright © 2023 Lil Darkie - All Rights Reserved.
+            Copyright © 2023 Lil Darkie® - All Rights Reserved.
           </div>
         </div>
       </div>
       <div className={`mushroom${navOpen ? " open" : ""}`}>
-        <img src={`${CDN_URL}/mushroom-small.png`} alt="" />
+        <Image src={ASSETS.mushroom} alt="" width={867} height={1076} />
       </div>
       <div className={`planes${navOpen ? " open" : ""}`}>
-        <img
+        <Image
           className="plane-one"
-          src={`${CDN_URL}/plane-2-small.png`}
+          src={ASSETS.plane2}
           alt=""
+          width={800}
+          height={547}
         />
-        <img
+        <Image
           className="plane-two"
-          src={`${CDN_URL}/plane-1-small.png`}
+          src={ASSETS.plane1}
           alt=""
+          width={688}
+          height={516}
         />
       </div>
     </>

@@ -1,7 +1,9 @@
 "use client";
 import { useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { isMobileSizedScreen, formateDate, CDN_URL } from "@/app/utils";
+import { ASSETS } from "@/app/assets";
+import { isMobileSizedScreen, formateDate } from "@/app/utils";
 import tourDates from "@/data/fall-tour-dates.json";
 import useStore from "@/app/store";
 import "@/styles/fall-tour.scss";
@@ -17,9 +19,9 @@ export default function FallTour() {
 
   return (
     <div className="fall-tour">
-      <img
+      <Image
         className="title"
-        src={`${CDN_URL}/fall-tour-title-small.png`}
+        src={ASSETS.fallTourTitle}
         alt=""
         style={{
           transform: `translateY(${
@@ -28,47 +30,78 @@ export default function FallTour() {
               : Math.floor(scroll + 5 * 2)
           }px)`,
         }}
+        width={800}
+        height={278}
       />
-      <img
+      <Image
         className="end"
-        src={`${CDN_URL}/end.png`}
+        src={ASSETS.end}
         alt=""
         style={{
           transform: `translateY(calc(
-            ${isMobileSizedScreen() ? "280%" : "100%"} +
-            ${
-              isMobileSizedScreen()
-                ? Math.floor(scroll / 4)
-                : Math.floor(scroll * 0.75)
-            }px))`,
+                    ${isMobileSizedScreen() ? "280%" : "100%"} +
+                    ${
+                      isMobileSizedScreen()
+                        ? Math.floor(scroll / 4)
+                        : Math.floor(scroll * 0.75)
+                    }px))`,
         }}
+        width={358}
+        height={335}
       />
-      <img className="bottom" src={`${CDN_URL}/bottom-small.png`} alt="" />
+      <Image
+        className="bottom"
+        src={ASSETS.bottom}
+        alt=""
+        width={1200}
+        height={512}
+      />
       <div className={`panel${scroll >= 100 ? " scroll" : ""}`}>
         <div className="vote-guy">
-          <img src={`${CDN_URL}/vote_guy-small.png`} alt="" />
+          <Image
+            src={ASSETS.voteGuy}
+            alt=""
+            width={800}
+            height={783}
+            priority
+          />
         </div>
         <div className="paratrooper">
-          <img src={`${CDN_URL}/paratrooper-small.png`} alt="" />
+          <Image
+            src={ASSETS.paratrooper}
+            alt=""
+            width={800}
+            height={881}
+            priority
+          />
         </div>
         <div className="tour-cities">
-          {tourDates.map(({ date, city, venue, ticketLink }) => {
-            return (
-              <Link
-                className="city"
-                key={date}
-                href={ticketLink}
-                target="_blank"
-              >
-                {city.split(",")[0].trim()}
-                <div className="date">{formateDate(date)}</div>
-                <div className="venue">@ {venue}</div>
-              </Link>
-            );
-          })}
+          {tourDates.map(
+            ({ date, city, venue, ticketLink, soldOut, opener }, i) => {
+              return (
+                <Link
+                  className={`city ${i % 2 ? "right" : "left"}`}
+                  key={date}
+                  href={ticketLink}
+                  target="_blank"
+                >
+                  {city.split(",")[0].trim()}
+                  <div className="date">{formateDate(date)}</div>
+                  <div className="venue">@ {venue}</div>
+                  {opener && (
+                    <div className="opener">
+                      <span>with</span>
+                      {opener}
+                    </div>
+                  )}
+                  {soldOut && <div className="sold-out">Sold out!</div>}
+                </Link>
+              );
+            }
+          )}
         </div>
         <div className="copyright">
-          Copyright © 2023 Lil Darkie
+          Copyright © 2023 Lil Darkie®
           <br />
           All Rights Reserved
         </div>

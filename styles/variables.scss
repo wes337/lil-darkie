@@ -6,6 +6,7 @@ $color-blue: #4178b0;
 $color-red-alt: #ff1010;
 $color-red: #e00910;
 $color-yellow: #f6c601;
+$color-peach: #efbf75;
 
 $color-light-gray: #dfe1dc;
 $color-purple: #3e5fa4;
@@ -13,6 +14,7 @@ $color-brown: #736353;
 $color-light-brown: #a6a1a7;
 $color-light-blue: #b2bfd0;
 
+$screen-size-xxs: 400px;
 $screen-size-xs: 500px;
 $screen-size-sm: 1100px;
 $screen-size-lg: 1920px;
@@ -31,7 +33,13 @@ $space-md: 16px;
 $space-lg: 24px;
 $space-xl: 32px;
 
-$cdn-url: "https://lil-darkie.s3.us-west-004.backblazeb2.com";
+$cdn-url: "https://lil-darkie.b-cdn.net";
+
+@mixin for-very-small-phone-only {
+  @media screen and (max-width: $screen-size-xxs) {
+    @content;
+  }
+}
 
 @mixin for-phone-only {
   @media screen and (max-width: $screen-size-sm) {

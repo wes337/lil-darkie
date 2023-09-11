@@ -19,6 +19,11 @@ body {
     color: $color-black;
   }
 
+  &.peach {
+    background-color: $color-peach;
+    color: $color-black;
+  }
+
   &.no-scroll {
     overflow: hidden;
   }
