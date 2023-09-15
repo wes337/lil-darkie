@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ASSETS } from "@/app/assets";
+import { ASSETS, CDN_URL } from "@/app/assets";
 import useStore from "@/app/store";
 import Face from "@/components/face";
 import "@/styles/landing.scss";
@@ -32,6 +32,19 @@ export default function Landing() {
   return (
     <div className={`landing${flashing ? " flashing" : ""}`}>
       <Face />
+      <button
+        className="make-track-button"
+        onClick={(event) => {
+          event.stopPropagation();
+          setBloodTransition(true);
+          setTimeout(() => router.push("/sampler"), 400);
+        }}
+      >
+        <img src={`${CDN_URL}/bubble.png`} alt="" />
+        <div className="make">Make your own</div>
+        <div className="lil-darkie">Lil Darkie</div>
+        <div className="track">Track</div>
+      </button>
       <button
         className="landing-footer"
         onClick={() => {
