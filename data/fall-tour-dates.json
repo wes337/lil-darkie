@@ -53,7 +53,7 @@
     "venue": "Big Night Live",
     "ticketLink": "https://www.ticketmaster.com/event/01005EC13118A2D2",
     "opener": "MKULTRA",
-    "soldOut": false
+    "soldOut": true
   },
   {
     "date": "Tuesday, November 7 2023",
@@ -165,7 +165,7 @@
     "venue": "Ace of Spades",
     "ticketLink": "https://www.ticketmaster.com/event/1C005EC67C23174F",
     "opener": "FLVD4K",
-    "soldOut": false
+    "soldOut": true
   },
   {
     "date": "Saturday, December 2 2023",
