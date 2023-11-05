@@ -78,12 +78,17 @@ export default function FallTour() {
         <div className="tour-cities">
           {tourDates.map(
             ({ date, city, venue, ticketLink, soldOut, opener }, i) => {
+              const showIsOver = new Date(date).getTime() < Date.now();
+
               return (
                 <Link
-                  className={`city ${i % 2 ? "right" : "left"}`}
+                  className={`city ${i % 2 ? "right" : "left"} ${
+                    showIsOver ? "over" : ""
+                  }`}
                   key={date}
                   href={ticketLink}
                   target="_blank"
+                  disabled={showIsOver}
                 >
                   {city.split(",")[0].trim()}
                   <div className="date">{formateDate(date)}</div>

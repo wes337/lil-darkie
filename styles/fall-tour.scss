@@ -117,6 +117,17 @@
     text-shadow: $space-xs $space-xs 0px $color-black;
     position: relative;
 
+    &.over {
+      text-decoration: line-through;
+      text-decoration-thickness: 4px;
+      text-decoration-color: $color-red;
+      pointer-events: none;
+
+      @include for-phone-only {
+        text-decoration-thickness: 2px;
+      }
+    }
+
     .venue,
     .opener {
       display: none;
@@ -139,36 +150,38 @@
     &:hover,
     &:focus,
     &:active {
-      .venue {
-        display: flex;
-        font-weight: 800;
-        letter-spacing: -1.5px;
-        transform: rotate(10deg);
-        color: lighten($color-blue, 10%);
-      }
+      &:not(&.over) {
+        .venue {
+          display: flex;
+          font-weight: 800;
+          letter-spacing: -1.5px;
+          transform: rotate(10deg);
+          color: lighten($color-blue, 10%);
+        }
 
-      .opener {
-        display: flex;
-        font-weight: 800;
-        letter-spacing: -0.5px;
-        transform: rotate(10deg);
-        color: lighten($color-green, 10%);
-      }
+        .opener {
+          display: flex;
+          font-weight: 800;
+          letter-spacing: -0.5px;
+          transform: rotate(10deg);
+          color: lighten($color-green, 10%);
+        }
 
-      @include for-phone-only {
-        &.right {
-          .venue {
-            right: auto;
-            left: 0;
-            top: 0;
-            transform: rotate(-10deg);
-          }
+        @include for-phone-only {
+          &.right {
+            .venue {
+              right: auto;
+              left: 0;
+              top: 0;
+              transform: rotate(-10deg);
+            }
 
-          .opener {
-            right: auto;
-            top: 18px;
-            left: -20px;
-            transform: rotate(-10deg);
+            .opener {
+              right: auto;
+              top: 18px;
+              left: -20px;
+              transform: rotate(-10deg);
+            }
           }
         }
       }
@@ -237,19 +250,27 @@
       }
 
       &:hover {
-        color: $color-red;
-        background-color: rgba($color-red, 0.25);
+        &:not(&.over) {
+          color: $color-red;
+          background-color: rgba($color-red, 0.25);
 
-        @include for-desktop {
-          transform: scale(1.2);
+          @include for-desktop {
+            transform: scale(1.2);
+          }
+
+          .date {
+            color: $color-black;
+          }
+
+          .sold-out {
+            opacity: 1;
+          }
         }
+      }
 
-        .date {
-          color: $color-black;
-        }
-
-        .sold-out {
-          opacity: 1;
+      &.over {
+        &:hover {
+          cursor: default;
         }
       }
     }
