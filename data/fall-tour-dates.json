@@ -53,7 +53,7 @@
     "venue": "Big Night Live",
     "ticketLink": "https://www.ticketmaster.com/event/01005EC13118A2D2",
     "opener": "MKULTRA",
-    "soldOut": false
+    "soldOut": true
   },
   {
     "date": "Tuesday, November 7 2023",
@@ -140,7 +140,7 @@
     "city": "Salt Lake City, UT",
     "venue": "The Complex",
     "ticketLink": "https://tickets.thecomplexslc.com/event/lil-darkie-23/",
-    "opener": "BLCKK",
+    "opener": "BLCKK, HXSTAGE",
     "soldOut": false
   },
   {
@@ -164,15 +164,15 @@
     "city": "Sacramento, CA",
     "venue": "Ace of Spades",
     "ticketLink": "https://www.ticketmaster.com/event/1C005EC67C23174F",
-    "opener": "",
-    "soldOut": false
+    "opener": "FLVD4K",
+    "soldOut": true
   },
   {
     "date": "Saturday, December 2 2023",
     "city": "Los Angeles, CA",
     "venue": "The Novo",
     "ticketLink": "https://www.axs.com/events/489534/lil-darkie-tickets",
-    "opener": "JASIAH, SAVAGE GA$P, RADICAL  ",
+    "opener": "LIL TOE, JASIAH, RADICAL, SAVAGE GA$P, KAMAARA",
     "soldOut": false
   },
   {
@@ -212,7 +212,7 @@
     "city": "New Orleans, LA",
     "venue": "House of Blues",
     "ticketLink": "https://www.ticketmaster.com/event/1B005EC409935FC6",
-    "opener": "",
+    "opener": "CXRPSE",
     "soldOut": false
   },
   {
@@ -220,7 +220,7 @@
     "city": "Orlando, FL",
     "venue": "The Beacham",
     "ticketLink": "https://tkx.live/events/lil-darkie-collapse-of-society/",
-    "opener": "NAAVI",
+    "opener": "LIL TOE, CHERRY ILLS, NAVVVI",
     "soldOut": false
   },
   {
@@ -228,7 +228,7 @@
     "city": "Fort Lauderdale, FL",
     "venue": "Revolution",
     "ticketLink": "https://www.ticketmaster.com/event/0D005EC6DD8ED578",
-    "opener": "KXLLSWXTCH, EDDISON, FL.VCO (MESQ)",
+    "opener": "LIL TOE, KXLLSWXTCH, EDDISON, FL.VCO (MESQ)",
     "soldOut": false
   }
 ]
