@@ -78,7 +78,8 @@ export default function FallTour() {
         <div className="tour-cities">
           {tourDates.map(
             ({ date, city, venue, ticketLink, soldOut, opener }, i) => {
-              const showIsOver = new Date(date).getTime() < Date.now();
+              const showIsOver =
+                new Date(date).getTime() < Date.now() - 86400000;
 
               return (
                 <Link
