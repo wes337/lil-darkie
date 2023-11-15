@@ -76,7 +76,7 @@
     "city": "Detroit, MI",
     "venue": "The Fillmore",
     "ticketLink": "https://www.ticketmaster.com/event/08005EC1B62F326E",
-    "opener": "JASIAH",
+    "opener": "",
     "soldOut": false
   },
   {
@@ -84,7 +84,7 @@
     "city": "Cincinnati, OH",
     "venue": "Bogarts",
     "ticketLink": "https://www.ticketmaster.com/event/16005EC8F98E495E",
-    "opener": "JASIAH",
+    "opener": "",
     "soldOut": true
   },
   {
@@ -92,7 +92,7 @@
     "city": "St. Louis, MO",
     "venue": "Pops",
     "ticketLink": "https://www.ticketweb.com/event/lil-darkie-and-the-collapse-pops-concert-venue-tickets/13297908?pl=popsMJ",
-    "opener": "JASIAH",
+    "opener": "",
     "soldOut": false
   },
   {
@@ -100,7 +100,7 @@
     "city": "Chicago, IL",
     "venue": "Riviera Theatre",
     "ticketLink": "https://www.axs.com/events/489439/lil-darkie-and-the-collapse-of-modern-society-tickets",
-    "opener": "JASIAH",
+    "opener": "",
     "soldOut": false
   },
   {
@@ -117,7 +117,7 @@
     "venue": "Wooly's",
     "ticketLink": "https://www.axs.com/events/489484/lil-darkie-and-the-collapse-of-modern-society-tickets",
     "opener": "",
-    "soldOut": false
+    "soldOut": true
   },
   {
     "date": "Tuesday, November 21 2023",
