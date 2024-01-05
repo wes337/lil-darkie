@@ -284,6 +284,8 @@
       max-height: 90vh;
       width: auto;
       animation: float 6s ease-in-out infinite;
+      pointer-events: none;
+      user-select: none;
 
       @include for-phone-only {
         max-height: 65vh;
