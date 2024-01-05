@@ -41,7 +41,7 @@ export default function Landing() {
       </button>
       <button className="landing-footer" onClick={listenToNewAlbum}>
         <div
-          className="tickets"
+          className="listen"
           onPointerOver={() => {
             if (!flashingEnabled) {
               return;
@@ -51,7 +51,8 @@ export default function Landing() {
           }}
           onPointerLeave={() => setFlashing(false)}
         >
-          Listen to the New Album
+          <div>Listen to the</div>
+          <div className="new-album">New Album</div>
         </div>
       </button>
       <div className="copyright">

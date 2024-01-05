@@ -101,7 +101,7 @@
 
   .copyright {
     position: fixed;
-    bottom: $space-sm;
+    bottom: $space-md;
     left: 0;
     width: 100vw;
     text-align: center;
@@ -152,11 +152,16 @@
 
     cursor: pointer;
 
-    .tickets {
+    .listen {
       position: fixed;
       width: 33%;
       bottom: 0;
       margin-bottom: 80px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
 
       cursor: pointer;
       color: $color-red;
@@ -194,6 +199,15 @@
 
       @include for-phone-only {
         width: 90vw;
+        margin-bottom: 48px;
+        gap: 0;
+        flex-direction: column;
+
+        .new-album {
+          font-size: 32px;
+          letter-spacing: 2px;
+          font-weight: 600;
+        }
       }
 
       @include for-tablet {
