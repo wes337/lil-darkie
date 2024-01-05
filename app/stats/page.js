@@ -32,7 +32,7 @@ export default function Stats() {
           <SpotifyLogin />
         )}
         <div className="footer">
-          Copyright © 2023 Lil Darkie® All Rights Reserved
+          Copyright © 2024 Lil Darkie® All Rights Reserved
         </div>
       </div>
     </>

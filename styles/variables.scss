@@ -7,6 +7,7 @@ $color-red-alt: #ff1010;
 $color-red: #e00910;
 $color-yellow: #f6c601;
 $color-peach: #efbf75;
+$color-teal: #65dafb;
 
 $color-light-gray: #dfe1dc;
 $color-purple: #3e5fa4;
@@ -18,6 +19,7 @@ $screen-size-xxs: 400px;
 $screen-size-xs: 500px;
 $screen-size-sm: 1100px;
 $screen-size-lg: 1920px;
+$screen-size-xl: 2000px;
 
 $font-size-xs: 10px;
 $font-size-sm: 14px;
@@ -55,6 +57,12 @@ $cdn-url: "https://lil-darkie.b-cdn.net";
 
 @mixin for-tablet {
   @media screen and (min-width: 800px) and (max-width: 1300px) and (max-height: 1100px) {
+    @content;
+  }
+}
+
+@mixin for-large-screens {
+  @media screen and (min-width: $screen-size-xl) {
     @content;
   }
 }

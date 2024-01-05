@@ -3,6 +3,9 @@ const USE_IPFS = false;
 export const CDN_URL = "https://lil-darkie.b-cdn.net";
 
 export const ASSETS = {
+  globeGuy: USE_IPFS
+    ? "/images/new-album/globe-guy.png"
+    : `${CDN_URL}/globe-guy.png`,
   fallTourTitle: USE_IPFS
     ? "https://bafybeiadtignohh24xmumfioqtyxfqzfjjm2r3zbyzttlgy3hyefqrpqpu.ipfs.w3s.link/fall-tour-title-small.png"
     : `${CDN_URL}/fall-tour-title-small.png`,

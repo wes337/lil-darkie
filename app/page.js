@@ -3,35 +3,29 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ASSETS, CDN_URL } from "@/app/assets";
 import useStore from "@/app/store";
-import Face from "@/components/face";
 import "@/styles/landing.scss";
 
 export default function Landing() {
   const router = useRouter();
-  const {
-    flashing,
-    setFlashing,
-    setBloodTransition,
-    flashingEnabled,
-    setFlashingEnabled,
-  } = useStore();
+  const { flashing, setFlashing, setBloodTransition, flashingEnabled } =
+    useStore();
 
-  const toggleStrobe = () => {
-    const nextFlashingEnabled = !flashingEnabled;
-    setFlashingEnabled(nextFlashingEnabled);
-
-    if (nextFlashingEnabled) {
-      setTimeout(() => {
-        setFlashing(true);
-      }, 200);
-    } else {
-      setFlashing(false);
-    }
+  const listenToNewAlbum = () => {
+    setBloodTransition(true);
+    setTimeout(() => {
+      window.location.href = "https://vyd.co/Thefutureisdarkdeluxe";
+    }, 400);
   };
 
   return (
-    <div className={`landing${flashing ? " flashing" : ""}`}>
-      <Face />
+    <div
+      className={`landing${flashing ? " flashing" : ""}`}
+      onClick={listenToNewAlbum}
+    >
+      <div className="star-bg" />
+      <div className="globe-guy">
+        <Image src={ASSETS.globeGuy} alt="" width={1170} height={1153} />
+      </div>
       <button
         className="make-track-button"
         onClick={(event) => {
@@ -45,21 +39,7 @@ export default function Landing() {
         <div className="lil-darkie">Lil Darkie</div>
         <div className="track">Track</div>
       </button>
-      <button
-        className="landing-footer"
-        onClick={() => {
-          setBloodTransition(true);
-          setTimeout(() => router.push("/fall-tour"), 400);
-        }}
-      >
-        <div className="landing-footer-tour">
-          <Image
-            src={ASSETS.fallTourTitleDark}
-            alt=""
-            width={800}
-            height={278}
-          />
-        </div>
+      <button className="landing-footer" onClick={listenToNewAlbum}>
         <div
           className="tickets"
           onPointerOver={() => {
@@ -71,18 +51,11 @@ export default function Landing() {
           }}
           onPointerLeave={() => setFlashing(false)}
         >
-          Get Tickets
+          Listen to the New Album
         </div>
       </button>
-      <button className="strobe-toggle" onClick={toggleStrobe}>
-        <span className="label">Strobe</span>
-        <span className="value">{flashingEnabled ? "On" : "Off"}</span>
-      </button>
-      <div className="landing-monsters">
-        <Image src={ASSETS.monsters} alt="" width={1920} height={273} />
-      </div>
       <div className="copyright">
-        Copyright © 2023 Lil Darkie® All Rights Reserved
+        Copyright © 2024 Lil Darkie® All Rights Reserved
       </div>
     </div>
   );

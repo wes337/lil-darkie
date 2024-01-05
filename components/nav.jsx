@@ -118,7 +118,7 @@ export default function Nav() {
             <span>The Lost Songs</span>
           </Link>
           <div className="nav-copyright">
-            Copyright © 2023 Lil Darkie® - All Rights Reserved.
+            Copyright © 2024 Lil Darkie® - All Rights Reserved.
           </div>
         </div>
       </div>
