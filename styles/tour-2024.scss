@@ -121,9 +121,11 @@
       justify-content: center;
       font-weight: 600;
       text-shadow: 3px 3px 0px $color-black;
-      gap: 40px;
+      gap: 8px;
+      width: 33%;
 
       @include for-phone-only {
+        width: 100%;
       }
     }
 
@@ -148,6 +150,10 @@
         outline: 4px solid $color-red;
         transform: scale(1.1);
       }
+
+      @include for-phone-only {
+        width: 100%;
+      }
     }
 
     .city,
@@ -159,21 +165,21 @@
     }
 
     .country {
-      font-size: 32px;
+      font-size: 28px;
       letter-spacing: -2.5px;
       margin-top: -16px;
     }
 
     .date {
       color: $color-yellow;
-      font-size: 50px;
+      font-size: 44px;
       font-weight: 800;
     }
 
     .tickets {
       font-size: 28px;
 
-      padding: 8px;
+      padding: 16px;
 
       background-color: $color-red;
       color: $color-white;
@@ -182,6 +188,8 @@
       font-weight: 600;
       text-decoration: none;
       width: 100%;
+
+      max-width: 50%;
     }
   }
 }
