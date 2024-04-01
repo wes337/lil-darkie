@@ -22,10 +22,9 @@ export function isMobileDevice() {
 }
 
 export function formateDate(dateString) {
-  return new Intl.DateTimeFormat("en-US", {
-    month: "short",
+  return new Intl.DateTimeFormat("en-UK", {
     day: "numeric",
-    weekday: "short",
+    month: "short",
   }).format(new Date(dateString));
 }
 

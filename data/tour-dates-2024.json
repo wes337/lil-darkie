@@ -1,0 +1,58 @@
+[
+  {
+    "date": "15 June 2024",
+    "city": "New York City",
+    "country": "USA",
+    "venue": "Brooklyn Monarch",
+    "ticketLink": "https://dice.fm/partner/dice/event/my35k-mulletmania-24-w-lil-darkie-much-more-15th-jun-the-brooklyn-monarch-new-york-tickets?dice_id=2659138&dice_channel=web&dice_tags=organic&dice_campaign=DICE&dice_feature=mio_marketing",
+    "soldOut": false
+  },
+  {
+    "date": "20 June 2024",
+    "city": "Prague",
+    "country": "Czech Republic",
+    "venue": "Futurum",
+    "ticketLink": "https://goout.net/en/tickets/lil-darkie/tjrx/",
+    "soldOut": false
+  },
+  {
+    "date": "21 June 2024",
+    "city": "Berlin",
+    "country": "Germany",
+    "venue": "Urban Spree",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "23 June 2024",
+    "city": "Copenhagen",
+    "country": "Denmark",
+    "venue": "Pumpehuset",
+    "ticketLink": "https://www.ticketmaster.dk/event/PUM2306?language=da-dk&brand=dk_livenation",
+    "soldOut": false
+  },
+  {
+    "date": "25 June 2024",
+    "city": "Frankfurt",
+    "country": "Germany",
+    "venue": "Zoom",
+    "ticketLink": "https://www.eventim.de/event/lil-darkie-zoom-18496565/",
+    "soldOut": false
+  },
+  {
+    "date": "27 June 2024",
+    "city": "Amsterdam",
+    "country": "Netherlands",
+    "venue": "Melkweg OZ",
+    "ticketLink": "https://www.ticketmaster.nl/event/304167?brand=nl_melkweg",
+    "soldOut": false
+  },
+  {
+    "date": "30 June 2024",
+    "city": "Manchester",
+    "country": "UK",
+    "venue": "Academy",
+    "ticketLink": "http://www.alttickets.com/lil-darkie-tickets",
+    "soldOut": false
+  }
+]

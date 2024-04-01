@@ -10,18 +10,13 @@ export default function Landing() {
   const { flashing, setFlashing, setBloodTransition, flashingEnabled } =
     useStore();
 
-  const listenToNewAlbum = () => {
+  const onClick = () => {
     setBloodTransition(true);
-    setTimeout(() => {
-      window.location.href = "https://vyd.co/Thefutureisdarkdeluxe";
-    }, 400);
+    setTimeout(() => router.push("/tour-2024"), 400);
   };
 
   return (
-    <div
-      className={`landing${flashing ? " flashing" : ""}`}
-      onClick={listenToNewAlbum}
-    >
+    <div className={`landing${flashing ? " flashing" : ""}`} onClick={onClick}>
       <div className="star-bg" />
       <div className="globe-guy">
         <Image src={ASSETS.globeGuy} alt="" width={1170} height={1153} />
@@ -39,7 +34,7 @@ export default function Landing() {
         <div className="lil-darkie">Lil Darkie</div>
         <div className="track">Track</div>
       </button>
-      <button className="landing-footer" onClick={listenToNewAlbum}>
+      <button className="landing-footer" onClick={onClick}>
         <div
           className="listen"
           onPointerOver={() => {
@@ -51,8 +46,7 @@ export default function Landing() {
           }}
           onPointerLeave={() => setFlashing(false)}
         >
-          <div>Listen to the</div>
-          <div className="new-album">New Album</div>
+          Buy Tickets Here
         </div>
       </button>
       <div className="copyright">
