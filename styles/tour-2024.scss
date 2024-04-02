@@ -123,6 +123,8 @@
       text-shadow: 3px 3px 0px $color-black;
       gap: 8px;
       width: 33%;
+      padding-top: $space-md;
+      padding-bottom: $space-md;
 
       @include for-phone-only {
         width: 100%;

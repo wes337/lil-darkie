@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { ASSETS } from "@/app/assets";
@@ -28,10 +27,10 @@ export default function TopBar() {
           sticky ? " sticky" : ""
         }`}
       >
-        <Link href="https://www.smalldarkone.com">
+        <a href="https://www.smalldarkone.com">
           <Image src={ASSETS.gunIcon} alt="" width={48} height={48} />
           <span>Merch</span>
-        </Link>
+        </a>
         <button onClick={() => transitionTo("/sampler")}>
           <Image src={ASSETS.skullIcon} alt="" width={48} height={48} />
           <span>Sampler</span>
