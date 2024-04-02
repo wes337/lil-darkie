@@ -1,4 +1,4 @@
-const USE_IPFS = true;
+const USE_IPFS = false;
 
 export const CDN_URL = "https://lil-darkie.b-cdn.net";
 
