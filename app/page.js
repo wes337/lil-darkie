@@ -1,18 +1,34 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { isMobileSizedScreen } from "@/app/utils";
 import { ASSETS, CDN_URL } from "@/app/assets";
 import useStore from "@/app/store";
 import "@/styles/landing.scss";
 
 export default function Landing() {
   const router = useRouter();
-  const { flashing, setFlashing, setBloodTransition, flashingEnabled } =
-    useStore();
+  const {
+    flashing,
+    setFlashing,
+    setBloodTransition,
+    flashingEnabled,
+    cookies,
+  } = useStore();
 
   const onClick = () => {
     setBloodTransition(true);
     setTimeout(() => router.push("/tour-2024"), 400);
+  };
+
+  const getClassName = () => {
+    let className = "buy-tickets";
+
+    if (cookies) {
+      className += " cookies";
+    }
+
+    return className;
   };
 
   return (
@@ -45,6 +61,13 @@ export default function Landing() {
             setFlashing(true);
           }}
           onPointerLeave={() => setFlashing(false)}
+          style={{
+            marginBottom: isMobileSizedScreen()
+              ? !cookies
+                ? "300px"
+                : "80px"
+              : undefined,
+          }}
         >
           Buy Tickets Here
         </div>

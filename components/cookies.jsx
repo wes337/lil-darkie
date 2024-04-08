@@ -1,9 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
 import "@/styles/cookies.scss";
+import useStore from "@/app/store";
 
 export default function Cookies() {
   const [show, setShow] = useState(false);
+  const { setCookies } = useStore();
+
+  useEffect(() => {
+    setCookies(!show);
+  }, [show, setCookies]);
 
   useEffect(() => {
     const alreadySeen = localStorage?.getItem?.("lil-darkie-cookies");

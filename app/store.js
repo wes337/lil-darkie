@@ -11,6 +11,8 @@ const useStore = create((set) => ({
 
     set(() => ({ navOpen }));
   },
+  setCookies: (cookies) => set(() => ({ cookies })),
+  cookies: false,
   flashingEnabled: false,
   setFlashingEnabled: (flashingEnabled) => set(() => ({ flashingEnabled })),
   flashing: false,
