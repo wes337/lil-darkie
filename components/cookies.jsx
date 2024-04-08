@@ -6,8 +6,11 @@ export default function Cookies() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    const show = !localStorage?.getItem?.("lil-darkie-cookies");
-    setShow(!show);
+    const alreadySeen = localStorage?.getItem?.("lil-darkie-cookies");
+
+    if (!alreadySeen) {
+      setShow(true);
+    }
   }, []);
 
   const onClick = () => {
