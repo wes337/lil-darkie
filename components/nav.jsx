@@ -89,32 +89,32 @@ export default function Nav() {
           </button>
         </div>
         <div className="nav-links">
-          <Link href="https://www.smalldarkone.com">
-            <Image src={ASSETS.dashIcon} alt="" width={24} height={48} />
+          <a href="https://www.smalldarkone.com">
+            <Image src={ASSETS.dashIcon} aria-hidden="true" alt="" width={24} height={48} />
             <span>Merch</span>
-          </Link>
+          </a>
           <Link href="/gallery">
-            <Image src={ASSETS.dashIcon} alt="" width={24} height={48} />
+            <Image src={ASSETS.dashIcon} aria-hidden="true" alt="" width={24} height={48} />
             <span>Gallery</span>
           </Link>
           <Link href="/sampler">
-            <Image src={ASSETS.dashIcon} alt="" width={24} height={48} />
+            <Image src={ASSETS.dashIcon} aria-hidden="true" alt="" width={24} height={48} />
             <span>Sampler</span>
           </Link>
           <Link href="/fall-tour">
-            <Image src={ASSETS.dashIcon} alt="" width={24} height={48} />
+            <Image src={ASSETS.dashIcon} aria-hidden="true" alt="" width={24} height={48} />
             <span>Fall 2023 Tour</span>
           </Link>
           <Link href="/posters">
-            <Image src={ASSETS.dashIcon} alt="" width={24} height={48} />
+            <Image src={ASSETS.dashIcon} aria-hidden="true" alt="" width={24} height={48} />
             <span>Posters</span>
           </Link>
           <Link href="/blog">
-            <Image src={ASSETS.dashIcon} alt="" width={24} height={48} />
+            <Image src={ASSETS.dashIcon} aria-hidden="true" alt="" width={24} height={48} />
             <span>Writings</span>
           </Link>
           <Link href="/the-lost-songs">
-            <Image src={ASSETS.dashIcon} alt="" width={24} height={48} />
+            <Image src={ASSETS.dashIcon} aria-hidden="true" alt="" width={24} height={48} />
             <span>The Lost Songs</span>
           </Link>
           <div className="nav-copyright">
