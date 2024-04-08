@@ -3,22 +3,19 @@ import { useState, useEffect } from "react";
 import "@/styles/cookies.scss";
 
 export default function Cookies() {
-  const [hide, setHide] = useState(false);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
-    const hide = localStorage?.getItem?.("lil-darkie-cookies");
-
-    if (hide) {
-      setHide(true);
-    }
+    const show = !localStorage?.getItem?.("lil-darkie-cookies");
+    setShow(!show);
   }, []);
 
   const onClick = () => {
     localStorage?.setItem?.("lil-darkie-cookies", true);
-    setHide(true);
+    setShow(false);
   };
 
-  if (hide) {
+  if (!show) {
     return null;
   }
 

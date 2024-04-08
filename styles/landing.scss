@@ -152,7 +152,7 @@
 
     cursor: pointer;
 
-    .listen {
+    .buy-tickets {
       position: fixed;
       width: 33%;
       bottom: 0;
@@ -198,16 +198,11 @@
       }
 
       @include for-phone-only {
-        width: 90vw;
-        margin-bottom: 48px;
+        width: 95vw;
+        margin-bottom: 300px;
+        box-shadow: 4px 4px 0px $color-black;
         gap: 0;
         flex-direction: column;
-
-        .new-album {
-          font-size: 32px;
-          letter-spacing: 2px;
-          font-weight: 600;
-        }
       }
 
       @include for-tablet {

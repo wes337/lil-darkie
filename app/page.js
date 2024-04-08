@@ -36,7 +36,7 @@ export default function Landing() {
       </button>
       <button className="landing-footer" onClick={onClick}>
         <div
-          className="listen"
+          className="buy-tickets"
           onPointerOver={() => {
             if (!flashingEnabled) {
               return;
