@@ -56,6 +56,16 @@ export default function Landing() {
       <button className="get-tickets">
         <span>Get Tickets</span>
       </button>
+      <button
+        className="get-tickets"
+        onClick={(event) => {
+          event.stopPropagation();
+          setBloodTransition(true);
+          setTimeout(() => router.push("/tour-2024"), 400);
+        }}
+      >
+        Europe Tour 2024
+      </button>
       <div className="copyright">
         Copyright © 2024 Lil Darkie® All Rights Reserved
       </div>

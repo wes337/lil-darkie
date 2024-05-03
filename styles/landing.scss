@@ -225,12 +225,24 @@
     font-weight: 800;
 
     position: fixed;
-    bottom: 3rem;
+    bottom: 8rem;
     left: 50%;
     translate: -50%;
 
+    @include for-desktop {
+      bottom: 3rem;
+    }
+
     @include for-phone-only {
       width: 100%;
+    }
+
+    &:nth-of-type(2) {
+      bottom: 3rem;
+
+      @include for-desktop {
+        display: none;
+      }
     }
   }
 
@@ -246,7 +258,7 @@
       font-family: "SF Fedora";
       font-size: 1.6rem;
       line-height: 2.4rem;
-      padding-bottom: 40%;
+      padding-bottom: 50%;
 
       div:first-child {
         color: $color-yellow;
