@@ -1,76 +1,60 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { isMobileSizedScreen } from "@/app/utils";
-import { ASSETS, CDN_URL } from "@/app/assets";
 import useStore from "@/app/store";
 import "@/styles/landing.scss";
 
 export default function Landing() {
   const router = useRouter();
-  const {
-    flashing,
-    setFlashing,
-    setBloodTransition,
-    flashingEnabled,
-    cookies,
-  } = useStore();
+  const { setBloodTransition, cookies } = useStore();
 
   const onClick = () => {
     setBloodTransition(true);
-    setTimeout(() => router.push("/tour-2024"), 400);
-  };
-
-  const getClassName = () => {
-    let className = "buy-tickets";
-
-    if (cookies) {
-      className += " cookies";
-    }
-
-    return className;
+    setTimeout(() => router.push("/temple-of-doom-tour"), 400);
   };
 
   return (
-    <div className={`landing${flashing ? " flashing" : ""}`} onClick={onClick}>
-      <div className="star-bg" />
-      <div className="globe-guy">
-        <Image src={ASSETS.globeGuy} alt="" width={1170} height={1153} />
+    <div className="landing" onClick={onClick}>
+      <div className="temple-bg" />
+      <div className="monster">
+        <Image
+          src="/images/temple-of-doom/monster.png"
+          alt=""
+          width={1000}
+          height={604}
+        />
       </div>
-      <button
-        className="make-track-button"
-        onClick={(event) => {
-          event.stopPropagation();
-          setBloodTransition(true);
-          setTimeout(() => router.push("/sampler"), 400);
-        }}
-      >
-        <img src={`${CDN_URL}/bubble.png`} alt="" />
-        <div className="make">Make your own</div>
-        <div className="lil-darkie">Lil Darkie</div>
-        <div className="track">Track</div>
-      </button>
-      <button className="landing-footer" onClick={onClick}>
-        <div
-          className="buy-tickets"
-          onPointerOver={() => {
-            if (!flashingEnabled) {
-              return;
-            }
-
-            setFlashing(true);
-          }}
-          onPointerLeave={() => setFlashing(false)}
-          style={{
-            marginBottom: isMobileSizedScreen()
-              ? !cookies
-                ? "300px"
-                : "80px"
-              : undefined,
-          }}
-        >
-          Buy Tickets Here
-        </div>
+      <div className="band">
+        <Image
+          src="/images/temple-of-doom/band.png"
+          alt=""
+          width={600}
+          height={1177}
+        />
+      </div>
+      <div className="main">
+        <Image
+          className="lil-darkie"
+          src="/images/temple-of-doom/logo.png"
+          alt=""
+          width={1006}
+          height={576}
+        />
+        <h2 className="presents">Presents</h2>
+        <h1 className="doom">
+          <div>The Temple</div>
+          <div>of Doom Tour</div>
+        </h1>
+      </div>
+      <div className="featuring">
+        <div>Featuring:</div>
+        <div>Wendigo</div>
+        <div>Cubensis</div>
+        <div>MKULTRA</div>
+        <div>Jack</div>
+      </div>
+      <button className="get-tickets">
+        <span>Get Tickets</span>
       </button>
       <div className="copyright">
         Copyright © 2024 Lil Darkie® All Rights Reserved

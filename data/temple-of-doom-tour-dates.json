@@ -1,0 +1,72 @@
+[
+  {
+    "date": "6 November 2024",
+    "city": "Boston, MA",
+    "venue": "House of Blues",
+    "ticketLink": "https://www.ticketmaster.com/event/0100609794851E71",
+    "soldOut": false
+  },
+  {
+    "date": "8 November 2024",
+    "city": "Detroit, MI",
+    "venue": "The Fillmore",
+    "ticketLink": "https://www.ticketmaster.com/event/08006097D32E2B4D",
+    "soldOut": false
+  },
+  {
+    "date": "9 November 2024",
+    "city": "Cincinnati, OH",
+    "venue": "Bogarts",
+    "ticketLink": "https://www.ticketmaster.com/event/16006099238D7602",
+    "soldOut": false
+  },
+  {
+    "date": "12 November 2024",
+    "city": "Madison, WI",
+    "venue": "The Sylvee",
+    "ticketLink": "https://www.ticketmaster.com/event/07006097842C0F99",
+    "soldOut": false
+  },
+  {
+    "date": "13 November 2024",
+    "city": "Minneapolis, MN",
+    "venue": "The Fillmore",
+    "ticketLink": "https://www.ticketmaster.com/event/06006098170C8CE3",
+    "soldOut": false
+  },
+  {
+    "date": "16 November 2024",
+    "city": "Denver, CO",
+    "venue": "Fillmore Auditorium",
+    "ticketLink": "https://www.ticketmaster.com/event/1E006099A8493372",
+    "soldOut": false
+  },
+  {
+    "date": "18 November 2024",
+    "city": "Salt Lake City, UT",
+    "venue": "The Complex",
+    "ticketLink": "https://tickets.thecomplexslc.com/event/lil-darkie-24/",
+    "soldOut": false
+  },
+  {
+    "date": "20 November 2024",
+    "city": "Portland, OR",
+    "venue": "Roseland Theater",
+    "ticketLink": "https://www.etix.com/ticket/p/67924094/lil-darkiethe-temple-of-doom-us-tour-portland-roseland-theater",
+    "soldOut": false
+  },
+  {
+    "date": "21 November 2024",
+    "city": "Seattle, WA",
+    "venue": "Showbox Sodo",
+    "ticketLink": "https://www.axs.com/events/552105/lil-darkie-tickets?skin=showboxpresents",
+    "soldOut": false
+  },
+  {
+    "date": "23 November 2024",
+    "city": "Sacramento, CA",
+    "venue": "Ace of Spades",
+    "ticketLink": "https://www.ticketmaster.com/event/1C006099E7D04314",
+    "soldOut": false
+  }
+]

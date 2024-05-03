@@ -20,6 +20,8 @@ export default function TopBar() {
     setTimeout(() => router.push(url), 500);
   };
 
+  const hideTopBarLogo = pathname === "/";
+
   return (
     <>
       <div
@@ -37,7 +39,9 @@ export default function TopBar() {
         </button>
         <button
           onClick={() => transitionTo("/")}
-          className={`top-bar-logo${sticky ? " sticky" : ""}`}
+          className={`top-bar-logo${sticky ? " sticky" : ""} ${
+            hideTopBarLogo ? " hide" : ""
+          }`}
         >
           <Image
             className="logo-yellow"
@@ -54,9 +58,9 @@ export default function TopBar() {
             height={68}
           />
         </button>
-        <button onClick={() => transitionTo("/fall-tour")}>
+        <button onClick={() => transitionTo("/tour-2024")}>
           <Image src={ASSETS.graveIcon} alt="" width={48} height={48} />
-          <span>Fall Tour 2023</span>
+          <span>Europe Tour 2024</span>
         </button>
         <button onClick={() => setNavOpen(true)}>
           <Image src={ASSETS.boozeIcon} alt="" width={48} height={48} />

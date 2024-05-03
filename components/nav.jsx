@@ -90,31 +90,73 @@ export default function Nav() {
         </div>
         <div className="nav-links">
           <a href="https://www.smalldarkone.com">
-            <Image src={ASSETS.dashIcon} aria-hidden="true" alt="" width={24} height={48} />
+            <Image
+              src={ASSETS.dashIcon}
+              aria-hidden="true"
+              alt=""
+              width={24}
+              height={48}
+            />
             <span>Merch</span>
           </a>
           <Link href="/gallery">
-            <Image src={ASSETS.dashIcon} aria-hidden="true" alt="" width={24} height={48} />
+            <Image
+              src={ASSETS.dashIcon}
+              aria-hidden="true"
+              alt=""
+              width={24}
+              height={48}
+            />
             <span>Gallery</span>
           </Link>
           <Link href="/sampler">
-            <Image src={ASSETS.dashIcon} aria-hidden="true" alt="" width={24} height={48} />
+            <Image
+              src={ASSETS.dashIcon}
+              aria-hidden="true"
+              alt=""
+              width={24}
+              height={48}
+            />
             <span>Sampler</span>
           </Link>
-          <Link href="/fall-tour">
-            <Image src={ASSETS.dashIcon} aria-hidden="true" alt="" width={24} height={48} />
-            <span>Fall 2023 Tour</span>
+          <Link href="/tour-2024">
+            <Image
+              src={ASSETS.dashIcon}
+              aria-hidden="true"
+              alt=""
+              width={24}
+              height={48}
+            />
+            <span>Europe 2024 Tour</span>
           </Link>
           <Link href="/posters">
-            <Image src={ASSETS.dashIcon} aria-hidden="true" alt="" width={24} height={48} />
+            <Image
+              src={ASSETS.dashIcon}
+              aria-hidden="true"
+              alt=""
+              width={24}
+              height={48}
+            />
             <span>Posters</span>
           </Link>
           <Link href="/blog">
-            <Image src={ASSETS.dashIcon} aria-hidden="true" alt="" width={24} height={48} />
+            <Image
+              src={ASSETS.dashIcon}
+              aria-hidden="true"
+              alt=""
+              width={24}
+              height={48}
+            />
             <span>Writings</span>
           </Link>
           <Link href="/the-lost-songs">
-            <Image src={ASSETS.dashIcon} aria-hidden="true" alt="" width={24} height={48} />
+            <Image
+              src={ASSETS.dashIcon}
+              aria-hidden="true"
+              alt=""
+              width={24}
+              height={48}
+            />
             <span>The Lost Songs</span>
           </Link>
           <div className="nav-copyright">

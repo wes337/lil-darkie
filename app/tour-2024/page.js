@@ -1,16 +1,12 @@
 "use client";
-import { Fragment, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ASSETS } from "@/app/assets";
-import { isMobileSizedScreen, formateDate } from "@/app/utils";
+import { formateDate } from "@/app/utils";
 import tourDates from "@/data/tour-dates-2024.json";
-import useStore from "@/app/store";
 import "@/styles/tour-2024.scss";
 
 export default function Tour2024() {
-  const { scroll } = useStore();
-
   return (
     <div className="tour-2024">
       <div className="star-bg" />

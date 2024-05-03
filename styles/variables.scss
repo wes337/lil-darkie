@@ -66,3 +66,13 @@ $cdn-url: "https://lil-darkie.b-cdn.net";
     @content;
   }
 }
+
+@font-face {
+  font-family: "SF Fedora";
+  src: url($cdn-url + "/fonts/sf-fedora.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SF Fedora Titles Italic";
+  src: url($cdn-url + "/fonts/sf-fedora-titles-italic.ttf") format("truetype");
+}

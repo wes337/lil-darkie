@@ -1,0 +1,89 @@
+@import "./variables.scss";
+
+.make-track-button {
+  all: unset;
+
+  cursor: pointer;
+  position: fixed;
+  top: 13%;
+  right: 5%;
+  text-transform: uppercase;
+  text-align: center;
+
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+
+  transform: rotate(25deg) scale(0.75);
+
+  gap: $space-xxs;
+
+  transition: all 0.2s ease;
+  opacity: 0;
+  animation: fadeIn 0.2s cubic-bezier(0.25, 0.1, 0.75, 0.9) forwards;
+  transform-style: preserve-3d;
+  animation-delay: 2s;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @include for-phone-only {
+    display: flex;
+  }
+
+  &:hover {
+    opacity: 1;
+    transform: rotate(25deg) scale(1.1);
+    gap: $space-xs;
+
+    img {
+      filter: saturate(1);
+    }
+  }
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    transform: translate(0, -15%) scale(1.25);
+    z-index: -1;
+
+    filter: saturate(0.75);
+  }
+
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+    font-weight: bold;
+
+    text-shadow: 2px 3px $color-black;
+
+    &.make {
+      font-size: 16px;
+      letter-spacing: -0.5px;
+      line-height: 20px;
+    }
+
+    &.lil-darkie {
+      font-size: 20px;
+      line-height: 20px;
+    }
+
+    &.track {
+      font-size: 24px;
+      transform: scaleY(1) scaleX(1.65);
+    }
+  }
+}
