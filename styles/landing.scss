@@ -156,7 +156,7 @@
       margin-left: -1rem;
 
       color: $color-red;
-      text-shadow: 0 1px 0px $color-black, 1px 0 0px $color-black,
+      text-shadow: 0 1px 0px $color-yellow, 1px 0 0px $color-black,
         1px 2px 1px $color-black, 2px 1px 1px $color-black,
         2px 3px 2px $color-black, 3px 2px 2px $color-black,
         3px 4px 2px $color-black, 4px 3px 3px $color-black,
@@ -205,44 +205,47 @@
     }
   }
 
+  .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 1;
+
+    position: fixed;
+    bottom: 3rem;
+    left: 50%;
+    translate: -50%;
+
+    width: 50vw;
+
+    @include for-phone-only {
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+
   .get-tickets {
     all: unset;
     cursor: pointer;
-
-    z-index: 1;
+    width: 100%;
     background-color: rgba($color-black, 0.75);
     padding: 1rem;
     text-transform: uppercase;
-    width: 33%;
     text-align: center;
     margin: auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
+    font-size: 1.6rem;
     line-height: 2rem;
     color: $color-white;
     font-weight: 800;
-
-    position: fixed;
-    bottom: 8rem;
-    left: 50%;
-    translate: -50%;
-
-    @include for-desktop {
-      bottom: 3rem;
-    }
+    white-space: nowrap;
 
     @include for-phone-only {
-      width: 100%;
-    }
-
-    &:nth-of-type(2) {
-      bottom: 3rem;
-
-      @include for-desktop {
-        display: none;
-      }
+      font-size: 1.6rem;
+      line-height: 1.2rem;
     }
   }
 
@@ -256,9 +259,10 @@
       margin-right: auto;
       margin-left: 2rem;
       font-family: "SF Fedora";
-      font-size: 1.6rem;
-      line-height: 2.4rem;
-      padding-bottom: 50%;
+      font-size: 1.2rem;
+      line-height: 2rem;
+      padding-bottom: 60%;
+      opacity: 0.8;
 
       div:first-child {
         color: $color-yellow;
