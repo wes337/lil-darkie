@@ -128,10 +128,20 @@
       user-select: none;
       color: $color-white;
 
+      .new {
+        font-style: italic;
+        color: $color-yellow;
+        font-size: 14px;
+      }
+
       &:hover,
       &:focus,
       &:active {
         color: $color-yellow;
+
+        .new {
+          color: $color-blue;
+        }
 
         background-color: $color-red;
 

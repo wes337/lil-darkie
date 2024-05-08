@@ -99,6 +99,17 @@ export default function Nav() {
             />
             <span>Merch</span>
           </a>
+          <Link href="/comics">
+            <Image
+              src={ASSETS.dashIcon}
+              aria-hidden="true"
+              alt=""
+              width={24}
+              height={48}
+            />
+            <span>Comics</span>
+            <span className="new">New!</span>
+          </Link>
           <Link href="/gallery">
             <Image
               src={ASSETS.dashIcon}
