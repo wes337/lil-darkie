@@ -55,29 +55,7 @@ export default function Landing() {
       </div>
       <div className="buttons">
         <button className="get-tickets">
-          <span>USA Tour 2024</span>
-        </button>
-        <button
-          className="get-tickets"
-          onClick={(event) => {
-            event.stopPropagation();
-            setBloodTransition(true);
-            setTimeout(() => router.push("/tour-2024"), 400);
-          }}
-        >
-          Europe Tour 2024
-        </button>
-        <button
-          className="get-tickets"
-          onClick={(event) => {
-            event.stopPropagation();
-            window.open(
-              "https://dice.fm/partner/dice/event/my35k-mulletmania-24-w-lil-darkie-much-more-15th-jun-the-brooklyn-monarch-new-york-tickets?dice_id=2659138&dice_channel=web&dice_tags=organic&dice_campaign=DICE&dice_feature=mio_marketing",
-              "_blank"
-            );
-          }}
-        >
-          <span>NYC Show June 15</span>
+          <span>Get Tickets</span>
         </button>
       </div>
       <div className="copyright">

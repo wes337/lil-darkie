@@ -156,7 +156,7 @@
       margin-left: -1rem;
 
       color: $color-red;
-      text-shadow: 0 1px 0px $color-yellow, 1px 0 0px $color-black,
+      text-shadow: 0 2px 0px darken($color-red, 20%), 1px 0 0px $color-black,
         1px 2px 1px $color-black, 2px 1px 1px $color-black,
         2px 3px 2px $color-black, 3px 2px 2px $color-black,
         3px 4px 2px $color-black, 4px 3px 3px $color-black,
@@ -228,24 +228,26 @@
   .get-tickets {
     all: unset;
     cursor: pointer;
-    width: 100%;
+    width: 30vw;
     background-color: rgba($color-black, 0.75);
-    padding: 1rem;
+    padding: 2rem 0;
     text-transform: uppercase;
     text-align: center;
     margin: auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.6rem;
+    font-size: 2rem;
     line-height: 2rem;
     color: $color-white;
     font-weight: 800;
     white-space: nowrap;
 
     @include for-phone-only {
-      font-size: 1.6rem;
+      font-size: 2rem;
       line-height: 1.2rem;
+
+      width: 100%;
     }
   }
 
@@ -261,7 +263,7 @@
       font-family: "SF Fedora";
       font-size: 1.2rem;
       line-height: 2rem;
-      padding-bottom: 60%;
+      padding-bottom: 45%;
       opacity: 0.8;
 
       div:first-child {

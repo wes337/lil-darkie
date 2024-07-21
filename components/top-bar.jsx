@@ -58,9 +58,9 @@ export default function TopBar() {
             height={68}
           />
         </button>
-        <button onClick={() => transitionTo("/tour-2024")}>
+        <button onClick={() => transitionTo("/comics")}>
           <Image src={ASSETS.graveIcon} alt="" width={48} height={48} />
-          <span>Europe Tour 2024</span>
+          <span>Comics</span>
         </button>
         <button onClick={() => setNavOpen(true)}>
           <Image src={ASSETS.boozeIcon} alt="" width={48} height={48} />
