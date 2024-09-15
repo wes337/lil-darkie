@@ -67,6 +67,6 @@
     "city": "Sacramento, CA",
     "venue": "Ace of Spades",
     "ticketLink": "https://www.ticketmaster.com/event/1C006099E7D04314",
-    "soldOut": false
+    "soldOut": true
   }
 ]
