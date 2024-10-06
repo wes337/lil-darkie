@@ -7,6 +7,9 @@ import { ASSETS } from "@/app/assets";
 import useStore from "@/app/store";
 import "@/styles/nav.scss";
 
+const showBrazilAustraliaNewZealandLink =
+  Date.now() >= Date.parse("7 Oct 2024 00:01:00 EDT");
+
 export default function Nav() {
   const pathname = usePathname();
   const { navOpen, setNavOpen, sticky, setSticky, setScroll, setFlashing } =
@@ -130,16 +133,18 @@ export default function Nav() {
             />
             <span>Sampler</span>
           </Link>
-          <Link href="/tour-2024">
-            <Image
-              src={ASSETS.dashIcon}
-              aria-hidden="true"
-              alt=""
-              width={24}
-              height={48}
-            />
-            <span>Europe 2024 Tour</span>
-          </Link>
+          {showBrazilAustraliaNewZealandLink && (
+            <Link href="/brazil-australia-new-zealand">
+              <Image
+                src={ASSETS.dashIcon}
+                aria-hidden="true"
+                alt=""
+                width={24}
+                height={48}
+              />
+              <span>Brazil & Aus & NZ Tour</span>
+            </Link>
+          )}
           <Link href="/posters">
             <Image
               src={ASSETS.dashIcon}

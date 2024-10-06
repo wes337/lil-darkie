@@ -1,0 +1,50 @@
+[
+  {
+    "date": "16 Jan 2025",
+    "city": "São Paulo",
+    "country": "Brazil",
+    "venue": "Cine Joia",
+    "ticketLink": "https://bileto.sympla.com.br/event/99121/d/282171",
+    "soldOut": false
+  },
+  {
+    "date": "05 Feb 2025",
+    "city": "Melbourne",
+    "country": "Australia",
+    "venue": "Prince Bandroom",
+    "ticketLink": "https://tickets.oztix.com.au/outlet/event/a259c18f-6da4-4aa6-828b-804d210576ee",
+    "soldOut": false
+  },
+  {
+    "date": "07 Feb 2025",
+    "city": "Sydney",
+    "country": "Australia",
+    "venue": "Liberty Hall",
+    "ticketLink": "https://www.moshtix.com.au/v2/event/lil-darkie-usa-australian-tour-2025/171901",
+    "soldOut": false
+  },
+  {
+    "date": "09 Feb 2025",
+    "city": "Brisbane",
+    "country": "Australia",
+    "venue": "The Princess Theatre",
+    "ticketLink": "https://tickets.oztix.com.au/outlet/event/7d56bc6f-a053-4a26-b1c6-4be52c4b82fc",
+    "soldOut": false
+  },
+  {
+    "date": "12 Feb 2025",
+    "city": "Wellington",
+    "country": "New Zealand",
+    "venue": "San Fran",
+    "ticketLink": "https://www.moshtix.co.nz/v2/event/lil-darkie-usa-new-zealand-tour-2025-wellington/172048",
+    "soldOut": false
+  },
+  {
+    "date": "14 Feb 2025",
+    "city": "Auckland",
+    "country": "New Zealand",
+    "venue": "The Tuning Fork",
+    "ticketLink": "https://www.moshtix.co.nz/v2/event/lil-darkie-usa-new-zealand-tour-2025-auckland/172051",
+    "soldOut": false
+  }
+]
