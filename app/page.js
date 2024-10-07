@@ -4,9 +4,6 @@ import { useRouter } from "next/navigation";
 import useStore from "@/app/store";
 import "@/styles/landing.scss";
 
-const showBrazilAustraliaNewZealandLink =
-  Date.now() >= Date.parse("7 Oct 2024 00:01:00 EDT");
-
 export default function Landing() {
   const router = useRouter();
   const { setBloodTransition, cookies } = useStore();
@@ -60,25 +57,20 @@ export default function Landing() {
         <button className="get-tickets">
           <span>Get Tickets</span>
         </button>
-        {showBrazilAustraliaNewZealandLink && (
-          <button
-            className="get-tickets br"
-            onClick={(event) => {
-              event.stopPropagation();
-              setBloodTransition(true);
-              setTimeout(
-                () => router.push("/brazil-australia-new-zealand"),
-                400
-              );
-            }}
-          >
-            <span>
-              Brazil
-              <br />
-              Australia & New Zealand
-            </span>
-          </button>
-        )}
+        <button
+          className="get-tickets br"
+          onClick={(event) => {
+            event.stopPropagation();
+            setBloodTransition(true);
+            setTimeout(() => router.push("/brazil-australia-new-zealand"), 400);
+          }}
+        >
+          <span>
+            Brazil
+            <br />
+            Australia & New Zealand
+          </span>
+        </button>
       </div>
       <div className="copyright">
         Copyright © 2024 Lil Darkie® All Rights Reserved

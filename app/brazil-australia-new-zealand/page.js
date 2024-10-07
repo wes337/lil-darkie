@@ -5,14 +5,7 @@ import { formateDate } from "@/app/utils";
 import tourDates from "@/data/brazil-australia-new-zealand.json";
 import "@/styles/brazil-australia-new-zealand.scss";
 
-const showBrazilAustraliaNewZealandLink =
-  Date.now() >= Date.parse("7 Oct 2024 00:01:00 EDT");
-
 export default function BrazilAustraliaNewZealand() {
-  if (!showBrazilAustraliaNewZealandLink) {
-    return null;
-  }
-
   return (
     <div className="brazil-australia-new-zealand">
       <div className="star-bg" />
