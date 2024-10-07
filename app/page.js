@@ -55,7 +55,7 @@ export default function Landing() {
       </div>
       <div className="buttons">
         <button className="get-tickets">
-          <span>Get Tickets</span>
+          <span>United States</span>
         </button>
         <button
           className="get-tickets br"
