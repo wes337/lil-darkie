@@ -8,9 +8,9 @@ import "@/styles/brazil-australia-new-zealand.scss";
 export default function BrazilAustraliaNewZealand() {
   return (
     <div className="brazil-australia-new-zealand">
-      <div className="star-bg" />
-      <div className="globe-guy">
-        <Image src={ASSETS.globeGuy} alt="" width={1170} height={1153} />
+      <div className="background" />
+      <div className="aus-guy">
+        <Image src={ASSETS.ausGuy} alt="" width={500} height={682} />
       </div>
       <div className="tour-dates">
         <div className="list">

@@ -22,7 +22,7 @@
     font-weight: 200;
   }
 
-  .star-bg {
+  .background {
     position: fixed;
     top: -2%;
     left: 0;
@@ -30,25 +30,24 @@
     height: 102%;
     object-fit: cover;
     content: " ";
-    background-image: url($cdn-url + "/star-bg-medium.png");
+    background-image: url("/images/temple-of-doom/background-desktop.png");
     background-size: cover;
     pointer-events: none;
     user-select: none;
 
-    animation: float 12s ease-in-out infinite reverse;
-
     @include for-phone-only {
-      background-image: url($cdn-url + "/star-bg-mobile.png");
+      background-image: url($cdn-url + "/aus-mobile-bg.png");
     }
 
     @include for-tablet {
-      background-image: url($cdn-url + "/star-bg-small.png");
-      background-size: fill;
+      background-image: url("/images/temple-of-doom/background-desktop.png");
     }
   }
 
-  .globe-guy {
-    position: relative;
+  .aus-guy {
+    position: fixed;
+    bottom: -10%;
+    left: 0;
     width: 395px;
     max-width: 60vw;
     height: 80vh;
@@ -58,40 +57,28 @@
     justify-content: center;
     z-index: 0;
     user-select: none;
-    margin-top: 0;
+    margin: 0;
     cursor: pointer;
 
-    @include for-desktop {
-      margin-top: 100px;
+    mix-blend-mode: hard-light;
+    opacity: 0.75;
+
+    z-index: 1;
+
+    @include for-large-screens {
+      bottom: -15%;
     }
 
     img {
-      position: fixed;
       max-height: 90vh;
       width: auto;
-      animation: float 6s ease-in-out infinite;
       pointer-events: none;
       user-select: none;
+      transform: scaleX(-1);
+    }
 
-      @include for-phone-only {
-        max-height: 65vh;
-        width: auto;
-      }
-    }
-  }
-
-  @keyframes float {
-    0% {
-      filter: drop-shadow(0px 0px 24px rgba($color-white, 0.1));
-      transform: translateY(0%);
-    }
-    50% {
-      filter: drop-shadow(0px 0px 48px rgba($color-white, 0.1));
-      transform: translateY(2%);
-    }
-    100% {
-      filter: drop-shadow(0px 0px 32px rgba($color-white, 0.1));
-      transform: translateY(0%);
+    @include for-phone-only {
+      display: none;
     }
   }
 
