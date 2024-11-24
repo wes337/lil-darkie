@@ -1,13 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
-import { ASSETS } from "@/app/assets";
+import { ASSETS, CDN_URL } from "@/app/assets";
 import useStore from "@/app/store";
 import "@/styles/comics.scss";
 
 const comics = [];
 
 for (let i = 0; i <= 1; i++) {
-  comics.push(`/images/comics/${i}.jpeg`);
+  comics.push(`${CDN_URL}/comics/${i}.jpeg`);
 }
 
 export default function Comics() {

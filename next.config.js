@@ -10,6 +10,11 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "w-img.b-cdn.net",
+        port: "",
+      },
+      {
+        protocol: "https",
         hostname: "**.ipfs.w3s.link",
         port: "",
       },

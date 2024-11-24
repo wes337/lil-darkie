@@ -18,17 +18,17 @@
     height: 102%;
     object-fit: cover;
     content: " ";
-    background-image: url("/images/temple-of-doom/background-desktop.png");
+    background-image: url($cdn-url + "/temple-of-doom/background-desktop.png");
     background-size: cover;
     pointer-events: none;
     user-select: none;
 
     @include for-phone-only {
-      background-image: url("/images/temple-of-doom/background-mobile.png");
+      background-image: url($cdn-url + "/temple-of-doom/background-mobile.png");
     }
 
     @include for-tablet {
-      background-image: url("/images/temple-of-doom/background-desktop.png");
+      background-image: url($cdn-url + "/temple-of-doom/background-desktop.png");
     }
   }
 

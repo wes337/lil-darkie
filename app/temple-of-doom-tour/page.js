@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { ASSETS } from "@/app/assets";
-import { isMobileSizedScreen, formateDate } from "@/app/utils";
+import { CDN_URL } from "@/app/assets";
+import { formateDate } from "@/app/utils";
 import tourDates from "@/data/temple-of-doom-tour-dates.json";
 import useStore from "@/app/store";
 import "@/styles/temple-of-doom-tour.scss";
@@ -15,7 +15,7 @@ export default function TempleOfDoomTour() {
       <div className="background" />
       <Image
         className="monster"
-        src="/images/temple-of-doom/monster.png"
+        src={`${CDN_URL}/temple-of-doom/monster.png`}
         alt=""
         width={800}
         height={278}

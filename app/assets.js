@@ -1,6 +1,6 @@
 const USE_IPFS = false;
 
-export const CDN_URL = "https://lil-darkie.b-cdn.net";
+export const CDN_URL = "https://w-img.b-cdn.net/lil-darkie";
 
 export const ASSETS = {
   ausGuy: USE_IPFS ? "/images/aus-guy2.png" : `${CDN_URL}/aus-guy2.png`,

@@ -30,17 +30,17 @@
     height: 100%;
     object-fit: cover;
     content: "";
-    background-image: url("/images/temple-of-doom/background-desktop.png");
+    background-image: url($cdn-url + "/temple-of-doom/background-desktop.png");
     background-size: cover;
     pointer-events: none;
     user-select: none;
 
     @include for-phone-only {
-      background-image: url("/images/temple-of-doom/background-mobile.png");
+      background-image: url($cdn-url + "/temple-of-doom/background-mobile.png");
     }
 
     @include for-tablet {
-      background-image: url("/images/temple-of-doom/background-desktop.png");
+      background-image: url($cdn-url + "/temple-of-doom/background-desktop.png");
     }
   }
 
@@ -228,7 +228,7 @@
   .get-tickets {
     all: unset;
     cursor: pointer;
-    width: 30vw;
+    width: 100%;
     background-color: rgba($color-black, 0.75);
     padding: 2rem 0;
     text-transform: uppercase;
@@ -251,11 +251,59 @@
     }
 
     &.br {
-      font-size: 1.4rem;
-      line-height: 1;
-      letter-spacing: -2.5px;
-      height: 96px;
-      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+
+      .country {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+
+        &:first-child {
+          .country-name {
+            font-size: 2rem;
+            letter-spacing: -2.5px;
+            text-shadow: 2px 2px 0px $color-black;
+
+            @include for-phone-only {
+              font-size: 1.2rem;
+              line-height: 18px;
+            }
+          }
+        }
+
+        .country-name {
+          font-size: 2rem;
+          letter-spacing: -2.5px;
+          text-shadow: 2px 2px 0px $color-black;
+
+          @include for-phone-only {
+            font-size: 1.1rem;
+            line-height: 18px;
+          }
+        }
+      }
+
+      .flag {
+        img {
+          width: 60px;
+          height: 30px;
+          border-radius: 4px;
+          object-fit: cover;
+          margin-bottom: 0.2rem;
+          filter: drop-shadow(4px 4px 0px rgba($color-black, 0.75));
+
+          @include for-phone-only {
+            width: 60px;
+            height: 30px;
+          }
+        }
+      }
     }
   }
 

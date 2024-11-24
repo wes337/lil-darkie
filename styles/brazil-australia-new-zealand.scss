@@ -30,7 +30,7 @@
     height: 102%;
     object-fit: cover;
     content: " ";
-    background-image: url("/images/temple-of-doom/background-desktop.png");
+    background-image: url($cdn-url + "/temple-of-doom/background-desktop.png");
     background-size: cover;
     pointer-events: none;
     user-select: none;
@@ -40,7 +40,7 @@
     }
 
     @include for-tablet {
-      background-image: url("/images/temple-of-doom/background-desktop.png");
+      background-image: url($cdn-url + "/temple-of-doom/background-desktop.png");
     }
   }
 
@@ -121,6 +121,7 @@
 
     .tour-date {
       all: unset;
+      position: relative;
       display: flex;
 
       justify-content: center;
@@ -150,6 +151,34 @@
     .location {
       display: flex;
       flex-direction: column;
+    }
+
+    .flag {
+      position: absolute;
+      left: -4px;
+      top: -2px;
+      transform: rotate(-10deg);
+
+      border-radius: 4px;
+
+      width: 40px;
+      height: 28px;
+      object-fit: fill;
+
+      filter: drop-shadow(2px 2px 2px rgba($color-black, 0.5));
+
+      @mixin for-large-screens {
+        left: -8px;
+        top: -8px;
+      }
+
+      @include for-phone-only {
+        left: 2px;
+        top: 0px;
+
+        width: 32px;
+        height: 20px;
+      }
     }
 
     .city,
