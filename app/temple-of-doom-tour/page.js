@@ -59,7 +59,7 @@ export default function TempleOfDoomTour() {
         </div>
       </div>
       <div className="copyright">
-        Copyright © 2024 Lil Darkie® All Rights Reserved
+        Copyright © 2025 Lil Darkie® All Rights Reserved
       </div>
     </div>
   );

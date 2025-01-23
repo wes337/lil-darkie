@@ -101,7 +101,7 @@ export default function Landing() {
         </button>
       </div>
       <div className="copyright">
-        Copyright © 2024 Lil Darkie® All Rights Reserved
+        Copyright © 2025 Lil Darkie® All Rights Reserved
       </div>
     </div>
   );
