@@ -11,6 +11,94 @@
   color: $color-white;
   overflow-x: hidden;
 
+  .make-track-button {
+    all: unset;
+
+    cursor: pointer;
+    position: fixed;
+    top: 13%;
+    right: 5%;
+    text-transform: uppercase;
+    text-align: center;
+
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+
+    transform: rotate(25deg) scale(0.75);
+
+    gap: $space-xxs;
+
+    transition: all 0.2s ease;
+    opacity: 0;
+    animation: fadeIn 0.2s cubic-bezier(0.25, 0.1, 0.75, 0.9) forwards;
+    transform-style: preserve-3d;
+    animation-delay: 2s;
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @include for-phone-only {
+      display: flex;
+    }
+
+    &:hover {
+      opacity: 1;
+      transform: rotate(25deg) scale(1.1);
+      gap: $space-xs;
+
+      img {
+        filter: saturate(1);
+      }
+    }
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      transform: translate(0, -15%) scale(1.25);
+      z-index: -1;
+
+      filter: saturate(0.75);
+    }
+
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      margin: auto;
+      font-weight: bold;
+
+      text-shadow: 2px 3px $color-black;
+
+      &.make {
+        font-size: 16px;
+        letter-spacing: -0.5px;
+        line-height: 20px;
+      }
+
+      &.lil-darkie {
+        font-size: 20px;
+        line-height: 20px;
+      }
+
+      &.track {
+        font-size: 24px;
+        transform: scaleY(1) scaleX(1.65);
+      }
+    }
+  }
+
   .copyright {
     position: fixed;
     bottom: $space-md;
@@ -22,33 +110,95 @@
     font-weight: 200;
   }
 
-  .temple-bg {
+  &.flashing {
+    animation: flashingBackground 200ms infinite;
+
+    color: $color-white;
+    background-color: $color-white;
+
+    @keyframes flashingBackground {
+      0% {
+        background-color: $color-white;
+      }
+      20% {
+        background-color: $color-black;
+      }
+      40% {
+        background-color: $color-white;
+      }
+      60% {
+        background-color: $color-black;
+      }
+      80% {
+        background-color: $color-white;
+      }
+    }
+  }
+
+  .landing-footer {
+    all: unset;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+    margin-bottom: 32px;
+
+    text-transform: uppercase;
+    text-align: center;
+    z-index: 1;
+    user-select: none;
+
+    cursor: pointer;
+
+    translate: 0 -64px;
+
+    @include for-phone-only {
+      translate: 0 -40px;
+      gap: 64px;
+    }
+
+    a {
+      img {
+        filter: drop-shadow(4px 2px 0 $color-black);
+      }
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  .star-bg {
     position: fixed;
-    top: 0;
+    top: -2%;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 102%;
+    height: 102%;
     object-fit: cover;
-    content: "";
-    background-image: url($cdn-url + "/temple-of-doom/background-desktop.png");
+    content: " ";
+    background-image: url($cdn-url + "/star-bg-medium.png");
     background-size: cover;
     pointer-events: none;
     user-select: none;
 
+    animation: float 12s ease-in-out infinite reverse;
+
     @include for-phone-only {
-      background-image: url($cdn-url + "/temple-of-doom/background-mobile.png");
+      background-image: url($cdn-url + "/star-bg-mobile.png");
     }
 
     @include for-tablet {
-      background-image: url($cdn-url + "/temple-of-doom/background-desktop.png");
+      background-image: url($cdn-url + "/star-bg-small.png");
+      background-size: fill;
     }
   }
 
-  .monster {
+  .globe-guy {
     position: relative;
     width: 395px;
-    max-width: 50vw;
-    height: 70vh;
+    max-width: 60vw;
+    height: 80vh;
     max-height: -webkit-fill-available;
     display: flex;
     align-items: center;
@@ -56,7 +206,7 @@
     z-index: 0;
     user-select: none;
     margin-top: 0;
-    cursor: pointer;
+    // cursor: pointer;
 
     @include for-desktop {
       margin-top: 100px;
@@ -64,287 +214,30 @@
 
     img {
       position: fixed;
-      top: -5%;
-      max-height: 70vh;
+      max-height: 90vh;
       width: auto;
       animation: float 6s ease-in-out infinite;
       pointer-events: none;
       user-select: none;
 
-      filter: brightness(0.66) drop-shadow(0 1rem 1rem $color-black);
-
       @include for-phone-only {
-        max-height: auto;
-        width: 100vw;
-        height: auto;
-        top: -1%;
-      }
-    }
-  }
-
-  .main {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    @include for-tablet {
-      justify-content: flex-start;
-      padding-top: 6rem;
-    }
-
-    @include for-phone-only {
-      justify-content: flex-start;
-      padding-top: 5rem;
-    }
-
-    .lil-darkie {
-      max-width: 33vw;
-      height: auto;
-      margin-bottom: -5rem;
-
-      @include for-tablet {
-        margin-bottom: 0;
-      }
-
-      @include for-phone-only {
-        max-width: 60vw;
-        height: auto;
-        margin-left: -8rem;
-      }
-    }
-
-    .presents {
-      all: unset;
-      font-size: 3rem;
-      font-family: "SF Fedora Titles Italic";
-      text-transform: uppercase;
-      text-shadow: 0.1rem 0.1rem 0 $color-black, 0.2rem 0.2rem 0 $color-black,
-        0.3rem 0.3rem 0 $color-black;
-
-      letter-spacing: -3px;
-
-      @include for-tablet {
-        font-size: 2rem;
-        line-height: 2rem;
-        margin-top: -3rem;
-        margin-bottom: 2rem;
-      }
-
-      @include for-phone-only {
-        font-size: 1.5rem;
-        line-height: 1.5rem;
-        margin-top: 1rem;
-        margin-bottom: 7rem;
-        margin-left: 8rem;
-      }
-    }
-
-    .doom {
-      all: unset;
-      font-size: 5rem;
-      line-height: 5rem;
-      font-family: "SF Fedora";
-      text-transform: uppercase;
-      text-align: center;
-      letter-spacing: -1px;
-      margin-left: -1rem;
-
-      color: $color-red;
-      text-shadow: 0 2px 0px darken($color-red, 20%), 1px 0 0px $color-black,
-        1px 2px 1px $color-black, 2px 1px 1px $color-black,
-        2px 3px 2px $color-black, 3px 2px 2px $color-black,
-        3px 4px 2px $color-black, 4px 3px 3px $color-black,
-        4px 5px 3px $color-black, 5px 4px 2px $color-black,
-        5px 6px 2px $color-black, 6px 5px 2px $color-black,
-        6px 7px 1px $color-black, 7px 6px 1px $color-black,
-        7px 8px 0px $color-black, 8px 7px 0px $color-black;
-
-      div:nth-child(2) {
-        letter-spacing: -3px;
-      }
-
-      @include for-tablet {
-        font-size: 4rem;
-        line-height: 4.5rem;
-      }
-
-      @include for-phone-only {
-        font-size: 3rem;
-        line-height: 3rem;
-        margin-left: -1rem;
-        margin-top: -5rem;
-      }
-    }
-  }
-
-  .band {
-    position: relative;
-
-    img {
-      position: fixed;
-      bottom: -10%;
-      right: 15%;
-      max-width: 20vw;
-      height: auto;
-      pointer-events: none;
-      user-select: none;
-      filter: drop-shadow(0 0 1rem $color-black);
-
-      @include for-phone-only {
-        max-width: 80vw;
-        right: -10%;
-        height: auto;
-        bottom: -10%;
-      }
-    }
-  }
-
-  .buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    z-index: 1;
-
-    position: fixed;
-    bottom: 3rem;
-    left: 50%;
-    translate: -50%;
-
-    width: 50vw;
-
-    @include for-phone-only {
-      flex-direction: column;
-      width: 100%;
-    }
-  }
-
-  .get-tickets {
-    all: unset;
-    cursor: pointer;
-    width: 100%;
-    background-color: rgba($color-black, 0.75);
-    padding: 2rem 0;
-    text-transform: uppercase;
-    text-align: center;
-    margin: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    line-height: 2rem;
-    color: $color-white;
-    font-weight: 800;
-    white-space: nowrap;
-
-    @include for-phone-only {
-      font-size: 2rem;
-      line-height: 1.2rem;
-
-      width: 100%;
-    }
-
-    &.br {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-
-      .country {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        width: 100%;
-
-        &:first-child {
-          .country-name {
-            font-size: 2rem;
-            letter-spacing: -2.5px;
-            text-shadow: 2px 2px 0px $color-black;
-
-            @include for-phone-only {
-              font-size: 1.2rem;
-              line-height: 18px;
-            }
-          }
-        }
-
-        .country-name {
-          font-size: 2rem;
-          letter-spacing: -2.5px;
-          text-shadow: 2px 2px 0px $color-black;
-
-          @include for-phone-only {
-            font-size: 1.1rem;
-            line-height: 18px;
-          }
-        }
-      }
-
-      .flag {
-        img {
-          width: 60px;
-          height: 30px;
-          border-radius: 4px;
-          object-fit: cover;
-          margin-bottom: 0.2rem;
-          filter: drop-shadow(4px 4px 0px rgba($color-black, 0.75));
-
-          @include for-phone-only {
-            width: 60px;
-            height: 30px;
-          }
-        }
-      }
-    }
-  }
-
-  .featuring {
-    display: none;
-
-    @include for-phone-only {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-right: auto;
-      margin-left: 2rem;
-      font-family: "SF Fedora";
-      font-size: 1.2rem;
-      line-height: 2rem;
-      padding-bottom: 55%;
-      opacity: 0.8;
-
-      div:first-child {
-        color: $color-yellow;
-        text-shadow: 2px 2px 0 $color-black;
-      }
-
-      div {
-        filter: drop-shadow(0.1rem 0.1rem 0 $color-black)
-          drop-shadow(0.2rem 0.2rem 0 $color-black)
-          drop-shadow(0.3rem 0.3rem 0 $color-black);
-
-        margin-top: -1rem;
+        max-height: 65vh;
+        width: auto;
       }
     }
   }
 
   @keyframes float {
     0% {
+      filter: drop-shadow(0px 0px 24px rgba($color-white, 0.1));
       transform: translateY(0%);
     }
     50% {
+      filter: drop-shadow(0px 0px 48px rgba($color-white, 0.1));
       transform: translateY(2%);
     }
     100% {
+      filter: drop-shadow(0px 0px 32px rgba($color-white, 0.1));
       transform: translateY(0%);
     }
   }

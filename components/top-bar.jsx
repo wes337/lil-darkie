@@ -20,7 +20,7 @@ export default function TopBar() {
     setTimeout(() => router.push(url), 500);
   };
 
-  const hideTopBarLogo = pathname === "/";
+  const hideTopBarLogo = false;
 
   return (
     <>

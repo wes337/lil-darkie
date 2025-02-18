@@ -108,7 +108,6 @@ export default function Nav() {
               height={48}
             />
             <span>Comics</span>
-            <span className="new">New!</span>
           </Link>
           <Link href="/gallery">
             <Image
@@ -129,16 +128,6 @@ export default function Nav() {
               height={48}
             />
             <span>Sampler</span>
-          </Link>
-          <Link href="/brazil-australia-new-zealand">
-            <Image
-              src={ASSETS.dashIcon}
-              aria-hidden="true"
-              alt=""
-              width={24}
-              height={48}
-            />
-            <span>Brazil & Aus & NZ Tour</span>
           </Link>
           <Link href="/posters">
             <Image

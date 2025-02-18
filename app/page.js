@@ -1,104 +1,106 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { isMobileSizedScreen } from "@/app/utils";
 import { CDN_URL } from "@/app/assets";
 import useStore from "@/app/store";
 import "@/styles/landing.scss";
 
 export default function Landing() {
   const router = useRouter();
-  const { setBloodTransition } = useStore();
+  const {
+    flashing,
+    setFlashing,
+    setBloodTransition,
+    flashingEnabled,
+    cookies,
+  } = useStore();
 
   const onClick = () => {
-    setBloodTransition(true);
-    setTimeout(() => router.push("/brazil-australia-new-zealand"), 400);
+    // setBloodTransition(true);
+    // setTimeout(() => router.push("/tour-2024"), 400);
   };
 
   return (
-    <div className="landing" onClick={onClick}>
-      <div className="temple-bg" />
-      <div className="monster">
+    <div className={`landing${flashing ? " flashing" : ""}`} onClick={onClick}>
+      <div className="star-bg" />
+      <div className="globe-guy">
         <Image
-          src={`${CDN_URL}/temple-of-doom/monster.png`}
+          src={`${CDN_URL}/globe-guy.png`}
           alt=""
-          width={1000}
-          height={604}
+          width={1170}
+          height={1153}
         />
       </div>
-      <div className="band">
-        <Image
-          src={`${CDN_URL}/temple-of-doom/band.png`}
-          alt=""
-          width={600}
-          height={1177}
-        />
-      </div>
-      <div className="main">
-        <Image
-          className="lil-darkie"
-          src={`${CDN_URL}/temple-of-doom/logo.png`}
-          alt=""
-          width={1006}
-          height={576}
-        />
-        <h2 className="presents">Presents</h2>
-        <h1 className="doom">
-          <div>The Temple</div>
-          <div>of Doom Tour</div>
-        </h1>
-      </div>
-      <div className="featuring">
-        <div>Featuring:</div>
-        <div>Wendigo</div>
-        <div>Cubensis</div>
-        <div>MKULTRA</div>
-        <div>Jack</div>
-      </div>
-      <div className="buttons">
-        <button
-          className="get-tickets br"
-          onClick={(event) => {
-            event.stopPropagation();
-            setBloodTransition(true);
-            setTimeout(() => router.push("/brazil-australia-new-zealand"), 400);
+      <button
+        className="make-track-button"
+        onClick={(event) => {
+          event.stopPropagation();
+          setBloodTransition(true);
+          setTimeout(() => router.push("/sampler"), 400);
+        }}
+      >
+        <img src={`${CDN_URL}/bubble.png`} alt="" />
+        <div className="make">Make your own</div>
+        <div className="lil-darkie">Lil Darkie</div>
+        <div className="track">Track</div>
+      </button>
+      {/* <button className="landing-footer" onClick={onClick}>
+        <div
+          className="buy-tickets"
+          onPointerOver={() => {
+            if (!flashingEnabled) {
+              return;
+            }
+
+            setFlashing(true);
+          }}
+          onPointerLeave={() => setFlashing(false)}
+          style={{
+            marginBottom: isMobileSizedScreen()
+              ? !cookies
+                ? "300px"
+                : "80px"
+              : undefined,
           }}
         >
-          <div className="country">
-            <div className="flag">
-              <Image
-                src={`${CDN_URL}/flags/brazil.png`}
-                alt=""
-                width={200}
-                height={140}
-              />
-            </div>
-            <div className="country-name">Brazil</div>
-          </div>
-          <div className="country">
-            <div className="flag">
-              <Image
-                className="flag"
-                src={`${CDN_URL}/flags/australia.png`}
-                alt=""
-                width={200}
-                height={100}
-              />
-            </div>
-            <div className="country-name">Australia</div>
-          </div>
-          <div className="country">
-            <div className="flag">
-              <Image
-                className="flag"
-                src={`${CDN_URL}/flags/new zealand.png`}
-                alt=""
-                width={200}
-                height={100}
-              />
-            </div>
-            <div className="country-name">New Zealand</div>
-          </div>
-        </button>
+          Buy Tickets Here
+        </div>
+      </button> */}
+      <div className="landing-footer">
+        <a
+          href="https://open.spotify.com/artist/62F9BiUmjqeXbBztCwiX1U?si=pFe2sfIXQb-JRli_XgwhwQ"
+          target="_blank"
+        >
+          <Image
+            src={`${CDN_URL}/icons/Spotify_Icon_RGB_White.png`}
+            alt="Spotify"
+            width={64}
+            height={64}
+          />
+        </a>
+        <a
+          href="https://music.apple.com/us/artist/lil-darkie/1411605197"
+          target="_blank"
+        >
+          <Image
+            src={`${CDN_URL}/icons/apple-music.png`}
+            alt="Apple Music"
+            width={64}
+            height={64}
+          />
+        </a>
+        <a
+          href="https://music.apple.com/us/artist/lil-darkie/1411605197"
+          target="_blank"
+        >
+          <Image
+            src={`${CDN_URL}/icons/youtube-blackwhite.png`}
+            alt="YouTube"
+            width={80}
+            height={64}
+          />
+        </a>
       </div>
       <div className="copyright">
         Copyright © 2025 Lil Darkie® All Rights Reserved
