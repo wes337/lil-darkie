@@ -1,20 +1,23 @@
 "use client";
+import { useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { isMobileSizedScreen } from "@/app/utils";
 import { CDN_URL } from "@/app/assets";
+import { formateDate } from "@/app/utils";
 import useStore from "@/app/store";
+import tourDates from "@/data/these-shows-exist.json";
 import "@/styles/landing.scss";
 
 export default function Landing() {
   const router = useRouter();
-  const {
-    flashing,
-    setFlashing,
-    setBloodTransition,
-    flashingEnabled,
-    cookies,
-  } = useStore();
+  const { setLightMode, scroll } = useStore();
+
+  useEffect(() => {
+    setLightMode(true);
+
+    return () => setLightMode(false);
+  }, [setLightMode]);
 
   const onClick = () => {
     // setBloodTransition(true);
@@ -22,86 +25,45 @@ export default function Landing() {
   };
 
   return (
-    <div className={`landing${flashing ? " flashing" : ""}`} onClick={onClick}>
-      <div className="star-bg" />
-      <div className="globe-guy">
-        <Image
-          src={`${CDN_URL}/globe-guy.png`}
-          alt=""
-          width={1170}
-          height={1153}
+    <div className={`landing`} onClick={onClick}>
+      <img
+        className="background"
+        src={`/images/these-shows-exist/background-sm.png`}
+        alt=""
+      />
+      <div class="header">
+        <img
+          className="title"
+          src={`/images/these-shows-exist/title.png`}
+          alt="These Shows Exist"
         />
       </div>
-      <button
-        className="make-track-button"
-        onClick={(event) => {
-          event.stopPropagation();
-          setBloodTransition(true);
-          setTimeout(() => router.push("/sampler"), 400);
-        }}
-      >
-        <img src={`${CDN_URL}/bubble.png`} alt="" />
-        <div className="make">Make your own</div>
-        <div className="lil-darkie">Lil Darkie</div>
-        <div className="track">Track</div>
-      </button>
-      {/* <button className="landing-footer" onClick={onClick}>
-        <div
-          className="buy-tickets"
-          onPointerOver={() => {
-            if (!flashingEnabled) {
-              return;
-            }
+      <div class="tour-dates">
+        {tourDates.map(
+          ({ date, city, venue, ticketLink, soldOut, opener }, i) => {
+            const showIsOver = new Date(date).getTime() < Date.now() - 86400000;
 
-            setFlashing(true);
-          }}
-          onPointerLeave={() => setFlashing(false)}
-          style={{
-            marginBottom: isMobileSizedScreen()
-              ? !cookies
-                ? "300px"
-                : "80px"
-              : undefined,
-          }}
-        >
-          Buy Tickets Here
-        </div>
-      </button> */}
-      <div className="landing-footer">
-        <a
-          href="https://open.spotify.com/artist/62F9BiUmjqeXbBztCwiX1U?si=pFe2sfIXQb-JRli_XgwhwQ"
-          target="_blank"
-        >
-          <Image
-            src={`${CDN_URL}/icons/Spotify_Icon_RGB_White.png`}
-            alt="Spotify"
-            width={64}
-            height={64}
-          />
-        </a>
-        <a
-          href="https://music.apple.com/us/artist/lil-darkie/1411605197"
-          target="_blank"
-        >
-          <Image
-            src={`${CDN_URL}/icons/apple-music.png`}
-            alt="Apple Music"
-            width={64}
-            height={64}
-          />
-        </a>
-        <a
-          href="https://music.apple.com/us/artist/lil-darkie/1411605197"
-          target="_blank"
-        >
-          <Image
-            src={`${CDN_URL}/icons/youtube-blackwhite.png`}
-            alt="YouTube"
-            width={80}
-            height={64}
-          />
-        </a>
+            return (
+              <Link
+                className={`tour-date`}
+                key={date}
+                href={ticketLink}
+                target="_blank"
+                disabled={showIsOver}
+              >
+                <div className="date">{formateDate(date)}</div>
+                <div className="city">{city.split(",")[0].trim()}</div>
+                <div className={`venue ${venue.length >= 20 ? "long" : ""}`}>
+                  {venue}
+                </div>
+
+                {soldOut && <div className="sold-out">Sold out!</div>}
+              </Link>
+            );
+          }
+        )}
       </div>
+
       <div className="copyright">
         Copyright © 2025 Lil Darkie® All Rights Reserved
       </div>

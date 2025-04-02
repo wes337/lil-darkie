@@ -59,3 +59,23 @@ export function uniqueBy(array, key) {
 
   return [...pickedObjects];
 }
+
+export function preloadUrl(url) {
+  const alreadyPreloaded = document.getElementById(`preload-${url}`);
+
+  if (alreadyPreloaded) {
+    return;
+  }
+
+  const BASE_URL = "https://www.lildarkie.com";
+
+  const link = document.createElement("link");
+  link.id = `preload-${url}`;
+  link.rel = "prefetch";
+  link.href = url[0] === "/" ? `${BASE_URL}${url}` : url;
+  document.head.appendChild(link);
+}
+
+export function preloadUrls(urls) {
+  urls.forEach((url) => preloadUrl(url));
+}

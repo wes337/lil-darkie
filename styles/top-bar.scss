@@ -27,6 +27,20 @@
       height: auto;
     }
 
+    &.head {
+      width: 200px;
+      translate: 0 -1rem;
+
+      img {
+        object-fit: contain;
+        max-height: 100px;
+
+        @include for-very-small-phone-only {
+          max-height: 80px;
+        }
+      }
+    }
+
     .logo-primary {
       position: absolute;
       top: 0;

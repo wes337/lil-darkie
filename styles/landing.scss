@@ -8,8 +8,153 @@
   max-height: -webkit-fill-available;
   align-items: center;
   justify-content: center;
-  color: $color-white;
+  color: $color-black;
   overflow-x: hidden;
+
+  background-image: url("/images/these-shows-exist/background-md.png");
+  background-size: cover;
+  background-position: bottom;
+
+  .background {
+    display: none;
+  }
+
+  @include for-phone-only {
+    background-image: none;
+
+    .background {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      opacity: 0.75;
+    }
+  }
+
+  .header {
+    width: 33vw;
+    max-width: 1000px;
+    z-index: 1;
+
+    img {
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0.2rem 0.2rem 0 $color-white);
+    }
+
+    @include for-phone-only {
+      width: 90vw;
+      margin-top: 3rem;
+
+      img {
+        filter: none;
+      }
+    }
+  }
+
+  .tour-dates {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+
+    max-height: 100%;
+    margin-top: 1rem;
+    width: 100%;
+    max-width: 90vw;
+
+    @include for-desktop {
+      max-width: 50vw;
+    }
+
+    @include for-tablet {
+      max-width: 60vw;
+    }
+  }
+
+  .tour-date {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    flex-direction: column;
+    align-items: center;
+    color: $color-black;
+    text-decoration: none;
+    font-family: "Simple Letter", serif;
+    font-size: 2rem;
+    line-height: 0.8;
+    letter-spacing: -1px;
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+    text-shadow: 1px 1px 0 $color-black, 0px 1px 0 $color-black,
+      1px 0px 0 $color-black, 2px 2px 0 $color-white, 2px 3px 0 $color-white,
+      3px 2px 0 $color-white;
+    border-bottom: 0.1rem solid transparent;
+
+    @include for-desktop {
+      font-size: 3.5rem;
+    }
+
+    @include for-tablet {
+      font-size: 2.4rem;
+    }
+
+    @include for-large-screens {
+      font-size: 4.5rem;
+    }
+
+    &:hover,
+    &:focus {
+      color: $color-red;
+      background-color: rgba(darken($color-red, 25%), 0.1);
+      transform: scale(1.1);
+
+      @include for-phone-only {
+        transform: scale(1.05);
+      }
+    }
+
+    .date {
+      grid-column: 1 / 2;
+      margin-right: 1rem;
+    }
+
+    .city {
+      grid-column: 2 / 3;
+    }
+
+    .venue {
+      grid-column: 3 / 4;
+      text-align: right;
+      line-height: 0.6;
+
+      &.long {
+        font-size: 1.8rem;
+        letter-spacing: -1.75px;
+
+        @include for-desktop {
+          font-size: 2.8rem;
+        }
+
+        @include for-large-screens {
+          font-size: 4rem;
+        }
+      }
+    }
+
+    .tickets {
+      grid-column: 1 / 4;
+      grid-row: 2 / 3;
+
+      text-align: center;
+      color: $color-red;
+      text-transform: uppercase;
+    }
+  }
 
   .make-track-button {
     all: unset;
@@ -105,140 +250,13 @@
     left: 0;
     width: 100vw;
     text-align: center;
-    color: $color-white;
-    font-size: $font-size-xs;
-    font-weight: 200;
-  }
-
-  &.flashing {
-    animation: flashingBackground 200ms infinite;
-
-    color: $color-white;
-    background-color: $color-white;
-
-    @keyframes flashingBackground {
-      0% {
-        background-color: $color-white;
-      }
-      20% {
-        background-color: $color-black;
-      }
-      40% {
-        background-color: $color-white;
-      }
-      60% {
-        background-color: $color-black;
-      }
-      80% {
-        background-color: $color-white;
-      }
-    }
-  }
-
-  .landing-footer {
-    all: unset;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 80px;
-    margin-bottom: 32px;
-
-    text-transform: uppercase;
-    text-align: center;
-    z-index: 1;
-    user-select: none;
-
-    cursor: pointer;
-
-    translate: 0 -64px;
-
-    @include for-phone-only {
-      translate: 0 -40px;
-      gap: 64px;
-    }
-
-    a {
-      img {
-        filter: drop-shadow(4px 2px 0 $color-black);
-      }
-
-      &:hover {
-        transform: scale(1.2);
-      }
-    }
-  }
-
-  .star-bg {
-    position: fixed;
-    top: -2%;
-    left: 0;
-    width: 102%;
-    height: 102%;
-    object-fit: cover;
-    content: " ";
-    background-image: url($cdn-url + "/star-bg-medium.png");
-    background-size: cover;
-    pointer-events: none;
-    user-select: none;
-
-    animation: float 12s ease-in-out infinite reverse;
-
-    @include for-phone-only {
-      background-image: url($cdn-url + "/star-bg-mobile.png");
-    }
-
-    @include for-tablet {
-      background-image: url($cdn-url + "/star-bg-small.png");
-      background-size: fill;
-    }
-  }
-
-  .globe-guy {
-    position: relative;
-    width: 395px;
-    max-width: 60vw;
-    height: 80vh;
-    max-height: -webkit-fill-available;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 0;
-    user-select: none;
-    margin-top: 0;
-    // cursor: pointer;
+    color: $color-black;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: "Simple Letter", serif;
 
     @include for-desktop {
-      margin-top: 100px;
-    }
-
-    img {
-      position: fixed;
-      max-height: 90vh;
-      width: auto;
-      animation: float 6s ease-in-out infinite;
-      pointer-events: none;
-      user-select: none;
-
-      @include for-phone-only {
-        max-height: 65vh;
-        width: auto;
-      }
-    }
-  }
-
-  @keyframes float {
-    0% {
-      filter: drop-shadow(0px 0px 24px rgba($color-white, 0.1));
-      transform: translateY(0%);
-    }
-    50% {
-      filter: drop-shadow(0px 0px 48px rgba($color-white, 0.1));
-      transform: translateY(2%);
-    }
-    100% {
-      filter: drop-shadow(0px 0px 32px rgba($color-white, 0.1));
-      transform: translateY(0%);
+      font-size: 1.4rem;
     }
   }
 }

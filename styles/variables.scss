@@ -76,3 +76,8 @@ $cdn-url: "https://w-img.b-cdn.net/lil-darkie";
   font-family: "SF Fedora Titles Italic";
   src: url($cdn-url + "/fonts/sf-fedora-titles-italic.ttf") format("truetype");
 }
+
+@font-face {
+  font-family: "Simple Letter";
+  src: url("/fonts/simple.otf") format("truetype");
+}
