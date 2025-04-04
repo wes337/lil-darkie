@@ -190,6 +190,10 @@
         font-size: 4rem;
       }
 
+      @include for-large-screens {
+        font-size: 5.5rem;
+      }
+
       &.long {
         letter-spacing: -2px;
       }
