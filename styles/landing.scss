@@ -46,7 +46,7 @@
     img {
       width: 100%;
       height: auto;
-      filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+      filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
     }
 
     @include for-phone-only {
@@ -115,7 +115,7 @@
     width: 115%;
     translate: -7.5%;
 
-    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
 
     @include for-desktop {
       font-size: 3.5rem;
@@ -358,7 +358,7 @@
     font-weight: 500;
     font-family: "Simple Letter", serif;
     text-shadow: 0px 1px 0 $color-black, 0px 1px 0 $color-black;
-    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
 
     @include for-desktop {
       font-size: 1.4rem;
