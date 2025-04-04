@@ -30,13 +30,26 @@
     &.head {
       width: 200px;
       translate: 0 -1rem;
+      filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
 
       img {
         object-fit: contain;
         max-height: 100px;
+      }
 
-        @include for-very-small-phone-only {
-          max-height: 80px;
+      @include for-short-screens {
+        translate: 0 -1rem;
+
+        img {
+          max-height: 72px;
+        }
+      }
+
+      @include for-phone-only {
+        translate: 0 -1.5rem;
+
+        img {
+          max-height: 72px;
         }
       }
     }

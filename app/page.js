@@ -31,6 +31,7 @@ export default function Landing() {
         src={`/images/these-shows-exist/background-sm.png`}
         alt=""
       />
+
       <div class="header">
         <img
           className="title"
@@ -52,11 +53,17 @@ export default function Landing() {
                 disabled={showIsOver}
               >
                 <div className="date">{formateDate(date)}</div>
-                <div className="city">{city.split(",")[0].trim()}</div>
-                <div className={`venue ${venue.length >= 20 ? "long" : ""}`}>
-                  {venue}
+                <div className="location">
+                  <div className={`city ${city.length > 12 ? "long" : ""}`}>
+                    {city}
+                  </div>
+                  <div className={`venue ${venue.length >= 20 ? "long" : ""}`}>
+                    @ {venue}
+                  </div>
                 </div>
-
+                <div className="tickets">
+                  <div>Tickets</div>
+                </div>
                 {soldOut && <div className="sold-out">Sold out!</div>}
               </Link>
             );

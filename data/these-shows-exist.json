@@ -61,5 +61,12 @@
     "venue": "The Palladium",
     "ticketLink": "https://www.google.com",
     "soldOut": false
+  },
+  {
+    "date": "14 Sep 2025",
+    "city": "Rochester, NY",
+    "venue": "Anthology",
+    "ticketLink": "https://www.google.com",
+    "soldOut": false
   }
 ]

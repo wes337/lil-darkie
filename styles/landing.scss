@@ -40,19 +40,28 @@
     max-width: 1000px;
     z-index: 1;
 
+    transform: scale(0.75);
+    margin-bottom: -1rem;
+
     img {
       width: 100%;
       height: auto;
-      filter: drop-shadow(0.2rem 0.2rem 0 $color-white);
+      filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
     }
 
     @include for-phone-only {
       width: 90vw;
       margin-top: 3rem;
+      translate: 0 -1rem;
 
       img {
         filter: none;
       }
+    }
+
+    @include for-tablet {
+      transform: scale(0.5);
+      margin-bottom: -4rem;
     }
   }
 
@@ -61,39 +70,51 @@
     flex-direction: column;
     gap: 1.4rem;
 
-    max-height: 100%;
     margin-top: 1rem;
     width: 100%;
-    max-width: 90vw;
 
     @include for-desktop {
       max-width: 50vw;
     }
 
     @include for-tablet {
-      max-width: 60vw;
+      max-width: 90vw;
+    }
+
+    @include for-phone-only {
+      translate: 0 -1rem;
     }
   }
 
   .tour-date {
     position: relative;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: auto 1fr auto;
     flex-direction: column;
     align-items: center;
     color: $color-black;
     text-decoration: none;
     font-family: "Simple Letter", serif;
-    font-size: 2rem;
+    font-size: 1.8rem;
     line-height: 0.8;
-    letter-spacing: -1px;
+    letter-spacing: 0;
     height: 100%;
     width: 100%;
     justify-content: space-between;
     text-shadow: 1px 1px 0 $color-black, 0px 1px 0 $color-black,
-      1px 0px 0 $color-black, 2px 2px 0 $color-white, 2px 3px 0 $color-white,
-      3px 2px 0 $color-white;
+      1px 0px 0 $color-black, 2px 2px 0 $color-black, 2px 1px 0 $color-black,
+      1px 2px 0 $color-black, 2px 3px 0 $color-white, 3px 2px 0 $color-white;
     border-bottom: 0.1rem solid transparent;
+
+    text-align: center;
+
+    margin-bottom: -2rem;
+    transform: scale(0.75);
+
+    width: 110%;
+    translate: -5%;
+
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
 
     @include for-desktop {
       font-size: 3.5rem;
@@ -107,37 +128,92 @@
       font-size: 4.5rem;
     }
 
+    @include for-short-screens {
+      margin-bottom: -2.4rem;
+    }
+
+    @include for-phone-only {
+      margin-bottom: -1.6rem;
+      transform: scale(0.75);
+    }
+
+    @include for-very-small-phone-only {
+      margin-bottom: -1.7rem;
+      transform: scale(0.7);
+    }
+
     &:hover,
     &:focus {
       color: $color-red;
       background-color: rgba(darken($color-red, 25%), 0.1);
-      transform: scale(1.1);
+      transform: scale(0.8);
 
       @include for-phone-only {
-        transform: scale(1.05);
+        transform: scale(0.8);
       }
     }
 
     .date {
       grid-column: 1 / 2;
-      margin-right: 1rem;
+
+      text-align: left;
+      white-space: nowrap;
+
+      @include for-phone-only {
+        font-size: 2.4rem;
+        margin-left: -1rem;
+      }
+    }
+
+    .location {
+      grid-column: 2 / 3;
+
+      display: flex;
+      flex-direction: column;
     }
 
     .city {
-      grid-column: 2 / 3;
+      // grid-column: 1 / 4;
+      // grid-row: 1 / 2;
+
+      font-size: 3rem;
+      white-space: nowrap;
+
+      text-shadow: 1px 1px 0 $color-black, 0px 1px 0 $color-black,
+        1px 0px 0 $color-black, 2px 2px 0 $color-black, 2px 1px 0 $color-black,
+        1px 2px 0 $color-black, 3px 3px 0 $color-black, 3px 2px 0 $color-white,
+        2px 3px 0 $color-white, 3px 4px 0 $color-white, 4px 3px 0 $color-white,
+        4px 4px 0 $color-white, 4px 5px 0 $color-white, 5px 4px 0 $color-white,
+        5px 5px 0 $color-white;
+
+      @include for-desktop {
+        font-size: 4rem;
+      }
+
+      &.long {
+        letter-spacing: -2px;
+      }
     }
 
     .venue {
-      grid-column: 3 / 4;
-      text-align: right;
+      // grid-column: 2 / 3;
+      // grid-row: 2 / 3;
+
       line-height: 0.6;
 
+      @include for-desktop {
+        font-size: 2.4rem;
+      }
+
+      @include for-large-screens {
+        font-size: 3rem;
+      }
+
       &.long {
-        font-size: 1.8rem;
-        letter-spacing: -1.75px;
+        font-size: 1.6rem;
 
         @include for-desktop {
-          font-size: 2.8rem;
+          font-size: 2rem;
         }
 
         @include for-large-screens {
@@ -147,12 +223,31 @@
     }
 
     .tickets {
-      grid-column: 1 / 4;
-      grid-row: 2 / 3;
+      grid-column: 3 / 4;
 
-      text-align: center;
       color: $color-red;
       text-transform: uppercase;
+      line-height: 0.7;
+      letter-spacing: 2px;
+
+      text-shadow: 1px 1px 0 $color-red, 0px 1px 0 $color-red,
+        1px 0px 0 $color-red, 2px 2px 0 $color-red, 2px 1px 0 $color-red,
+        1px 2px 0 $color-red, 3px 3px 0 $color-red, 3px 2px 0 $color-red,
+        2px 3px 0 $color-red, 3px 4px 0 $color-red, 4px 3px 0 $color-red,
+        4px 4px 0 $color-black, 4px 5px 0 $color-black, 5px 4px 0 $color-black,
+        5px 5px 0 $color-black;
+
+      @include for-phone-only {
+        font-size: 2.4rem;
+        margin-right: -1rem;
+      }
+
+      @include for-desktop {
+        display: flex;
+        gap: $space-md;
+        line-height: 1;
+        font-size: 3rem;
+      }
     }
   }
 
@@ -246,7 +341,7 @@
 
   .copyright {
     position: fixed;
-    bottom: $space-md;
+    bottom: $space-sm;
     left: 0;
     width: 100vw;
     text-align: center;
@@ -254,6 +349,8 @@
     font-size: 1rem;
     font-weight: 500;
     font-family: "Simple Letter", serif;
+    text-shadow: 0px 1px 0 $color-black, 0px 1px 0 $color-black;
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
 
     @include for-desktop {
       font-size: 1.4rem;
