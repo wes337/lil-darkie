@@ -51,8 +51,9 @@
 
     @include for-phone-only {
       width: 90vw;
-      margin-top: 3rem;
-      translate: 0 -1rem;
+      margin-top: 1rem;
+      translate: 0 0rem;
+      transform: scale(0.6);
 
       img {
         filter: none;
@@ -61,7 +62,7 @@
 
     @include for-tablet {
       transform: scale(0.5);
-      margin-bottom: -4rem;
+      margin-bottom: -2rem;
     }
   }
 
@@ -96,8 +97,8 @@
     text-decoration: none;
     font-family: "Simple Letter", serif;
     font-size: 1.8rem;
-    line-height: 0.8;
-    letter-spacing: 0;
+    line-height: 0.9;
+    letter-spacing: 2px;
     height: 100%;
     width: 100%;
     justify-content: space-between;
@@ -111,13 +112,16 @@
     margin-bottom: -2rem;
     transform: scale(0.75);
 
-    width: 110%;
-    translate: -5%;
+    width: 115%;
+    translate: -7.5%;
 
     filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
 
     @include for-desktop {
       font-size: 3.5rem;
+
+      width: 100%;
+      translate: 0%;
     }
 
     @include for-tablet {
@@ -138,7 +142,7 @@
     }
 
     @include for-very-small-phone-only {
-      margin-bottom: -1.7rem;
+      margin-bottom: -1.85rem;
       transform: scale(0.7);
     }
 
@@ -195,7 +199,7 @@
       }
 
       &.long {
-        letter-spacing: -2px;
+        letter-spacing: 0px;
       }
     }
 

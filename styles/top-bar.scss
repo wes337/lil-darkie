@@ -46,10 +46,10 @@
       }
 
       @include for-phone-only {
-        translate: 0 -1.5rem;
+        translate: 0 -1.75rem;
 
         img {
-          max-height: 72px;
+          max-height: 64px;
         }
       }
     }
