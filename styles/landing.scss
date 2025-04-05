@@ -138,12 +138,15 @@
 
     @include for-phone-only {
       margin-bottom: -1.6rem;
-      transform: scale(0.75);
+      transform: scale(0.7);
     }
 
     @include for-very-small-phone-only {
       margin-bottom: -1.85rem;
       transform: scale(0.7);
+
+      width: 120%;
+      translate: -10%;
     }
 
     &:hover,
@@ -153,7 +156,7 @@
       transform: scale(0.8);
 
       @include for-phone-only {
-        transform: scale(0.8);
+        transform: scale(0.75);
       }
     }
 
@@ -199,7 +202,19 @@
       }
 
       &.long {
-        letter-spacing: 0px;
+        letter-spacing: 3px;
+
+        @include for-tablet {
+          letter-spacing: 5px;
+        }
+
+        @include for-desktop {
+          letter-spacing: 5px;
+        }
+
+        @include for-very-small-phone-only {
+          letter-spacing: 2px;
+        }
       }
     }
 
