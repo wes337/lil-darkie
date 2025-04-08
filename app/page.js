@@ -32,14 +32,14 @@ export default function Landing() {
         alt=""
       />
 
-      <div class="header">
+      <div className="header">
         <img
           className="title"
           src={`/images/these-shows-exist/title.png`}
           alt="These Shows Exist"
         />
       </div>
-      <div class="tour-dates">
+      <div className="tour-dates">
         {tourDates.map(
           ({ date, city, venue, ticketLink, soldOut, opener }, i) => {
             const showIsOver = new Date(date).getTime() < Date.now() - 86400000;
