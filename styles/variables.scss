@@ -85,5 +85,5 @@ $cdn-url: "https://w-img.b-cdn.net/lil-darkie";
 
 @font-face {
   font-family: "Simple Letter";
-  src: url("/fonts/leo.ttf") format("truetype");
+  src: url($cdn-url + "/fonts/leo.ttf") format("truetype");
 }

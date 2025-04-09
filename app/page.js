@@ -28,14 +28,14 @@ export default function Landing() {
     <div className={`landing`} onClick={onClick}>
       <img
         className="background"
-        src={`/images/these-shows-exist/background-sm.png`}
+        src={`${CDN_URL}/these-shows-exist/background-sm.png`}
         alt=""
       />
 
       <div className="header">
         <img
           className="title"
-          src={`/images/these-shows-exist/title.png`}
+          src={`${CDN_URL}/these-shows-exist/title.png`}
           alt="These Shows Exist"
         />
       </div>

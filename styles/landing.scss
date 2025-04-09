@@ -11,7 +11,7 @@
   color: $color-black;
   overflow-x: hidden;
 
-  background-image: url("/images/these-shows-exist/background-md.png");
+  background-image: url($cdn-url + "/these-shows-exist/background-md.png");
   background-size: cover;
   background-position: bottom;
 
