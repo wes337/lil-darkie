@@ -1,9 +1,11 @@
 "use client";
+import { useEffect } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { ASSETS } from "@/app/assets";
+import { ASSETS, CDN_URL } from "@/app/assets";
 import useStore from "@/app/store";
 import "@/styles/top-bar.scss";
+import { preloadUrls } from "@/app/utils";
 
 export default function TopBar() {
   const pathname = usePathname();
@@ -22,6 +24,17 @@ export default function TopBar() {
 
   const hideTopBarLogo = false;
 
+  useEffect(() => {
+    preloadUrls([
+      "/comics",
+      "/sampler",
+      "/gallery",
+      "/posters",
+      "/blog",
+      "/the-lost-songs",
+    ]);
+  }, []);
+
   return (
     <>
       <div
@@ -37,27 +50,37 @@ export default function TopBar() {
           <Image src={ASSETS.skullIcon} alt="" width={48} height={48} />
           <span>Sampler</span>
         </button>
-        <button
-          onClick={() => transitionTo("/")}
-          className={`top-bar-logo${sticky ? " sticky" : ""} ${
-            hideTopBarLogo ? " hide" : ""
-          }`}
-        >
-          <Image
-            className="logo-yellow"
-            src={ASSETS.logoYellow}
-            alt="Lil Darkie"
-            width={254}
-            height={68}
-          />
-          <Image
-            className="logo-primary"
-            src={ASSETS.logo}
-            alt="Lil Darkie"
-            width={254}
-            height={68}
-          />
-        </button>
+        {pathname === "/" ? (
+          <button className="top-bar-logo head">
+            <img
+              src={`${CDN_URL}/these-shows-exist/head.png`}
+              alt="Lil Darkie"
+            />
+          </button>
+        ) : (
+          <button
+            onClick={() => transitionTo("/")}
+            className={`top-bar-logo${sticky ? " sticky" : ""} ${
+              hideTopBarLogo ? " hide" : ""
+            }`}
+          >
+            <Image
+              className="logo-yellow"
+              src={ASSETS.logoYellow}
+              alt="Lil Darkie"
+              width={254}
+              height={68}
+            />
+            <Image
+              className="logo-primary"
+              src={ASSETS.logo}
+              alt="Lil Darkie"
+              width={254}
+              height={68}
+            />
+          </button>
+        )}
+
         <button onClick={() => transitionTo("/comics")}>
           <Image src={ASSETS.graveIcon} alt="" width={48} height={48} />
           <span>Comics</span>

@@ -8,8 +8,272 @@
   max-height: -webkit-fill-available;
   align-items: center;
   justify-content: center;
-  color: $color-white;
+  color: $color-black;
   overflow-x: hidden;
+
+  background-image: url($cdn-url + "/these-shows-exist/background-md.png");
+  background-size: cover;
+  background-position: bottom;
+
+  .background {
+    display: none;
+  }
+
+  @include for-phone-only {
+    background-image: none;
+
+    .background {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      opacity: 0.75;
+    }
+  }
+
+  .header {
+    width: 33vw;
+    max-width: 1000px;
+    z-index: 1;
+
+    transform: scale(0.75);
+    margin-bottom: -1rem;
+
+    img {
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+    }
+
+    @include for-phone-only {
+      width: 90vw;
+      margin-top: 1rem;
+      translate: 0 0rem;
+      transform: scale(0.6);
+
+      img {
+        filter: none;
+      }
+    }
+
+    @include for-tablet {
+      transform: scale(0.5);
+      margin-bottom: -2rem;
+    }
+  }
+
+  .tour-dates {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+
+    margin-top: 1rem;
+    width: 100%;
+
+    @include for-desktop {
+      max-width: 50vw;
+    }
+
+    @include for-tablet {
+      max-width: 90vw;
+    }
+
+    @include for-phone-only {
+      translate: 0 -1rem;
+    }
+  }
+
+  .tour-date {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    flex-direction: column;
+    align-items: center;
+    color: $color-black;
+    text-decoration: none;
+    font-family: "Simple Letter", serif;
+    font-size: 1.8rem;
+    line-height: 0.9;
+    letter-spacing: 2px;
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+    text-shadow: 1px 1px 0 $color-black, 0px 1px 0 $color-black,
+      1px 0px 0 $color-black, 2px 2px 0 $color-black, 2px 1px 0 $color-black,
+      1px 2px 0 $color-black, 2px 3px 0 $color-white, 3px 2px 0 $color-white;
+    border-bottom: 0.1rem solid transparent;
+
+    text-align: center;
+
+    margin-bottom: -2rem;
+    transform: scale(0.75);
+
+    width: 115%;
+    translate: -7.5%;
+
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+
+    @include for-desktop {
+      font-size: 3.5rem;
+
+      width: 100%;
+      translate: 0%;
+    }
+
+    @include for-tablet {
+      font-size: 2.4rem;
+    }
+
+    @include for-large-screens {
+      font-size: 4.5rem;
+    }
+
+    @include for-short-screens {
+      margin-bottom: -2.4rem;
+    }
+
+    @include for-phone-only {
+      margin-bottom: -1.6rem;
+      transform: scale(0.7);
+    }
+
+    @include for-very-small-phone-only {
+      margin-bottom: -1.85rem;
+      transform: scale(0.7);
+
+      width: 120%;
+      translate: -10%;
+    }
+
+    &:hover,
+    &:focus {
+      color: $color-red;
+      background-color: rgba(darken($color-red, 25%), 0.1);
+      transform: scale(0.8);
+
+      @include for-phone-only {
+        transform: scale(0.75);
+      }
+    }
+
+    .date {
+      grid-column: 1 / 2;
+
+      text-align: left;
+      white-space: nowrap;
+
+      @include for-phone-only {
+        font-size: 2.4rem;
+        margin-left: -1rem;
+      }
+    }
+
+    .location {
+      grid-column: 2 / 3;
+
+      display: flex;
+      flex-direction: column;
+    }
+
+    .city {
+      // grid-column: 1 / 4;
+      // grid-row: 1 / 2;
+
+      font-size: 3rem;
+      white-space: nowrap;
+
+      text-shadow: 1px 1px 0 $color-black, 0px 1px 0 $color-black,
+        1px 0px 0 $color-black, 2px 2px 0 $color-black, 2px 1px 0 $color-black,
+        1px 2px 0 $color-black, 3px 3px 0 $color-black, 3px 2px 0 $color-white,
+        2px 3px 0 $color-white, 3px 4px 0 $color-white, 4px 3px 0 $color-white,
+        4px 4px 0 $color-white, 4px 5px 0 $color-white, 5px 4px 0 $color-white,
+        5px 5px 0 $color-white;
+
+      @include for-desktop {
+        font-size: 4rem;
+      }
+
+      @include for-large-screens {
+        font-size: 5.5rem;
+      }
+
+      &.long {
+        letter-spacing: 3px;
+
+        @include for-tablet {
+          letter-spacing: 5px;
+        }
+
+        @include for-desktop {
+          letter-spacing: 5px;
+        }
+
+        @include for-very-small-phone-only {
+          letter-spacing: 2px;
+        }
+      }
+    }
+
+    .venue {
+      // grid-column: 2 / 3;
+      // grid-row: 2 / 3;
+
+      line-height: 0.6;
+
+      @include for-desktop {
+        font-size: 2.4rem;
+      }
+
+      @include for-large-screens {
+        font-size: 3rem;
+      }
+
+      &.long {
+        font-size: 1.6rem;
+
+        @include for-desktop {
+          font-size: 2rem;
+        }
+
+        @include for-large-screens {
+          font-size: 4rem;
+        }
+      }
+    }
+
+    .tickets {
+      grid-column: 3 / 4;
+
+      color: $color-red;
+      text-transform: uppercase;
+      line-height: 0.7;
+      letter-spacing: 5px;
+
+      text-shadow: 1px 1px 0 $color-red, 0px 1px 0 $color-red,
+        1px 0px 0 $color-red, 2px 2px 0 $color-red, 2px 1px 0 $color-red,
+        1px 2px 0 $color-red, 3px 3px 0 $color-red, 3px 2px 0 $color-red,
+        2px 3px 0 $color-red, 3px 4px 0 $color-red, 4px 3px 0 $color-red,
+        4px 4px 0 $color-black, 4px 5px 0 $color-black, 5px 4px 0 $color-black,
+        5px 5px 0 $color-black;
+
+      @include for-phone-only {
+        font-size: 2.4rem;
+        margin-right: -2rem;
+        letter-spacing: 4px;
+      }
+
+      @include for-desktop {
+        display: flex;
+        gap: $space-md;
+        line-height: 1;
+        font-size: 3rem;
+      }
+    }
+  }
 
   .make-track-button {
     all: unset;
@@ -101,144 +365,19 @@
 
   .copyright {
     position: fixed;
-    bottom: $space-md;
+    bottom: $space-sm;
     left: 0;
     width: 100vw;
     text-align: center;
-    color: $color-white;
-    font-size: $font-size-xs;
-    font-weight: 200;
-  }
-
-  &.flashing {
-    animation: flashingBackground 200ms infinite;
-
-    color: $color-white;
-    background-color: $color-white;
-
-    @keyframes flashingBackground {
-      0% {
-        background-color: $color-white;
-      }
-      20% {
-        background-color: $color-black;
-      }
-      40% {
-        background-color: $color-white;
-      }
-      60% {
-        background-color: $color-black;
-      }
-      80% {
-        background-color: $color-white;
-      }
-    }
-  }
-
-  .landing-footer {
-    all: unset;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 80px;
-    margin-bottom: 32px;
-
-    text-transform: uppercase;
-    text-align: center;
-    z-index: 1;
-    user-select: none;
-
-    cursor: pointer;
-
-    translate: 0 -64px;
-
-    @include for-phone-only {
-      translate: 0 -40px;
-      gap: 64px;
-    }
-
-    a {
-      img {
-        filter: drop-shadow(4px 2px 0 $color-black);
-      }
-
-      &:hover {
-        transform: scale(1.2);
-      }
-    }
-  }
-
-  .star-bg {
-    position: fixed;
-    top: -2%;
-    left: 0;
-    width: 102%;
-    height: 102%;
-    object-fit: cover;
-    content: " ";
-    background-image: url($cdn-url + "/star-bg-medium.png");
-    background-size: cover;
-    pointer-events: none;
-    user-select: none;
-
-    animation: float 12s ease-in-out infinite reverse;
-
-    @include for-phone-only {
-      background-image: url($cdn-url + "/star-bg-mobile.png");
-    }
-
-    @include for-tablet {
-      background-image: url($cdn-url + "/star-bg-small.png");
-      background-size: fill;
-    }
-  }
-
-  .globe-guy {
-    position: relative;
-    width: 395px;
-    max-width: 60vw;
-    height: 80vh;
-    max-height: -webkit-fill-available;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 0;
-    user-select: none;
-    margin-top: 0;
-    // cursor: pointer;
+    color: $color-black;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: "Simple Letter", serif;
+    text-shadow: 0px 1px 0 $color-black, 0px 1px 0 $color-black;
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
 
     @include for-desktop {
-      margin-top: 100px;
-    }
-
-    img {
-      position: fixed;
-      max-height: 90vh;
-      width: auto;
-      animation: float 6s ease-in-out infinite;
-      pointer-events: none;
-      user-select: none;
-
-      @include for-phone-only {
-        max-height: 65vh;
-        width: auto;
-      }
-    }
-  }
-
-  @keyframes float {
-    0% {
-      filter: drop-shadow(0px 0px 24px rgba($color-white, 0.1));
-      transform: translateY(0%);
-    }
-    50% {
-      filter: drop-shadow(0px 0px 48px rgba($color-white, 0.1));
-      transform: translateY(2%);
-    }
-    100% {
-      filter: drop-shadow(0px 0px 32px rgba($color-white, 0.1));
-      transform: translateY(0%);
+      font-size: 1.4rem;
     }
   }
 }

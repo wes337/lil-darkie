@@ -20,6 +20,7 @@ $screen-size-xs: 500px;
 $screen-size-sm: 1100px;
 $screen-size-lg: 1920px;
 $screen-size-xl: 2000px;
+$screen-short-height: 940px;
 
 $font-size-xs: 10px;
 $font-size-sm: 14px;
@@ -66,6 +67,11 @@ $cdn-url: "https://w-img.b-cdn.net/lil-darkie";
     @content;
   }
 }
+@mixin for-short-screens {
+  @media screen and (max-height: $screen-short-height) {
+    @content;
+  }
+}
 
 @font-face {
   font-family: "SF Fedora";
@@ -75,4 +81,9 @@ $cdn-url: "https://w-img.b-cdn.net/lil-darkie";
 @font-face {
   font-family: "SF Fedora Titles Italic";
   src: url($cdn-url + "/fonts/sf-fedora-titles-italic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Simple Letter";
+  src: url($cdn-url + "/fonts/leo.ttf") format("truetype");
 }
