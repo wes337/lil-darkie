@@ -138,12 +138,15 @@
 
     @include for-phone-only {
       margin-bottom: -1.6rem;
-      transform: scale(0.7);
+      transform: scale(0.6);
+
+      width: 120%;
+      translate: -10%;
     }
 
     @include for-very-small-phone-only {
       margin-bottom: -1.85rem;
-      transform: scale(0.7);
+      transform: scale(0.6);
 
       width: 120%;
       translate: -10%;
