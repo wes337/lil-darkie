@@ -1,0 +1,177 @@
+[
+  {
+    "date": "10 July 2025",
+    "city": "Nashville, TN",
+    "venue": "Brooklyn Bowl",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "11 July 2025",
+    "city": "Asheville, NC",
+    "venue": "Eulogy",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "12 July 2025",
+    "city": "Raleigh, NC",
+    "venue": "The Ritz",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "8 August 2025",
+    "city": "Cincinnati, OH",
+    "venue": "Bogarts",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "10 August 2025",
+    "city": "Cleveland, OH",
+    "venue": "House of Blues",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "5 September 2025",
+    "city": "Baltimore, MD",
+    "venue": "Baltimore Soundstage",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "9 September 2025",
+    "city": "New York, NY",
+    "venue": "Irving Plaza",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "12 September 2025",
+    "city": "Worcester, MA",
+    "venue": "The Palladium",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "14 September 2025",
+    "city": "Rochester, NY",
+    "venue": "Anthology",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "9 October 2025",
+    "city": "Portland, OR",
+    "venue": "Roseland",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "11 October 2025",
+    "city": "Tacoma, WA",
+    "venue": "Temple",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "30 October 2025",
+    "city": "Atlanta, GA",
+    "venue": "The Eastern",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "1 November 2025",
+    "city": "Orlando, FL",
+    "venue": "The Beacham",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "4 November 2025",
+    "city": "New Orleans, LA",
+    "venue": "House of Blues",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "6 November 2025",
+    "city": "Houston, TX",
+    "venue": "House of Blues",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "8 November 2025",
+    "city": "Dallas, TX",
+    "venue": "The Bomb Factory",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "10 November 2025",
+    "city": "Oklahoma City, OK",
+    "venue": "The Criterion",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "12 November 2025",
+    "city": "Albuquerque, NM",
+    "venue": "Sunshine Theater",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "14 November 2025",
+    "city": "Phoenix, AZ",
+    "venue": "The Marquee",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "16 November 2025",
+    "city": "Las Vegas, NV",
+    "venue": "Brooklyn Bowl",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "18 November 2025",
+    "city": "Los Angeles, CA",
+    "venue": "The Echoplex",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "20 November 2025",
+    "city": "Anaheim, CA",
+    "venue": "House of Blues",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "22 November 2025",
+    "city": "Sacramento, CA",
+    "venue": "Channel 24",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "18 December 2025",
+    "city": "Salt Lake City, UT",
+    "venue": "Rockwell at The Complex",
+    "ticketLink": "",
+    "soldOut": false
+  },
+  {
+    "date": "20 December 2025",
+    "city": "Denver, CO",
+    "venue": "Fillmore Auditorium",
+    "ticketLink": "",
+    "soldOut": false
+  }
+]

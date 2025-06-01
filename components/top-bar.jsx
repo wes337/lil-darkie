@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { ASSETS, CDN_URL } from "@/app/assets";
+import { preloadUrls } from "@/app/utils";
 import useStore from "@/app/store";
 import "@/styles/top-bar.scss";
-import { preloadUrls } from "@/app/utils";
 
 export default function TopBar() {
   const pathname = usePathname();
@@ -52,10 +52,7 @@ export default function TopBar() {
         </button>
         {pathname === "/" ? (
           <button className="top-bar-logo head">
-            <img
-              src={`${CDN_URL}/these-shows-exist/head.png`}
-              alt="Lil Darkie"
-            />
+            <img src={`${CDN_URL}/greatest/lil-darkie.png`} alt="Lil Darkie" />
           </button>
         ) : (
           <button
@@ -90,7 +87,11 @@ export default function TopBar() {
           <span>More</span>
         </button>
       </div>
-      <div className={`top-bar-back${sticky ? " sticky" : ""}`} />
+      <div
+        className={`top-bar-back${sticky ? " sticky" : ""}${
+          pathname === "/" ? " black" : ""
+        }`}
+      />
     </>
   );
 }
