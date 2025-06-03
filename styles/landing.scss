@@ -3,376 +3,391 @@
 .landing {
   display: flex;
   flex-direction: column;
-  width: 100vw;
-  height: 100vh;
-  max-height: -webkit-fill-available;
+  width: 100%;
+  height: 100%;
+  //max-height: -webkit-fill-available;
   align-items: center;
   justify-content: center;
   color: $color-black;
   overflow-x: hidden;
+  overflow-y: auto;
+}
 
-  background-image: url($cdn-url + "/these-shows-exist/background-md.png");
-  background-size: cover;
-  background-position: bottom;
+.curtain {
+  position: fixed;
+  filter: saturate(0.75);
 
-  .background {
-    display: none;
+  &.top-left {
+    top: 0;
+    left: 0;
+    max-width: 33%;
+    z-index: 2;
   }
 
-  @include for-phone-only {
-    background-image: none;
+  &.top-right {
+    top: 0;
+    right: 0;
+    max-width: 33%;
+    z-index: 2;
+  }
 
-    .background {
-      display: block;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      pointer-events: none;
-      opacity: 0.75;
+  &.left {
+    top: 0;
+    right: 100%;
+    translate: 33%;
+    max-width: 50%;
+    z-index: 1;
+  }
+
+  &.right {
+    top: 0;
+    left: 100%;
+    translate: -33%;
+    max-width: 50%;
+    z-index: 1;
+  }
+}
+
+.header {
+  display: block;
+  height: 65vh;
+  width: 100vw;
+
+  @include for-phone-only {
+    height: 60vh;
+  }
+
+  @include for-long-phone-only {
+    height: 50vh;
+  }
+
+  @include for-desktop {
+    height: 85vh;
+  }
+
+  @mixin for-large-screens {
+    height: 75vh;
+  }
+
+  .presents {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    translate: -50% -200%;
+    width: 20%;
+    max-width: 120px;
+    z-index: 2;
+    filter: drop-shadow(4px 4px 0 $color-black);
+
+    animation: slideIn 0.75s cubic-bezier(0.25, 0.1, 0.75, 0.9) forwards;
+    animation-delay: 1.5s;
+
+    @include for-desktop {
+      animation-delay: 0s;
+      animation-duration: 0.5s;
     }
   }
 
-  .header {
-    width: 33vw;
-    max-width: 1000px;
+  .main-text {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    translate: -50% -200%;
+    width: 90%;
+    max-width: 800px;
+    z-index: 2;
+    filter: drop-shadow(4px 4px 0 $color-black);
+    z-index: 2;
+
+    @include for-long-phone-only {
+      top: 15%;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .the {
+      position: absolute;
+      width: 15%;
+      height: auto;
+    }
+
+    animation: slideIn 0.5s cubic-bezier(0.25, 0.1, 0.75, 0.9) forwards;
+    animation-delay: 1.5s;
+
+    @include for-desktop {
+      animation-delay: 0s;
+    }
+  }
+
+  .main-art {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    translate: -50% 50%;
+    width: 90%;
+    max-width: 800px;
     z-index: 1;
 
-    transform: scale(0.75);
-    margin-bottom: -1rem;
+    animation: 2s ease 0s infinite beat;
+
+    @include for-long-phone-only {
+      top: 15%;
+    }
+  }
+
+  .dates-banner {
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    translate: -50% 45%;
+    width: 100%;
+    z-index: 0;
+    max-width: 1200px;
 
     img {
       width: 100%;
       height: auto;
-      filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
     }
 
     @include for-phone-only {
-      width: 90vw;
-      margin-top: 1rem;
-      translate: 0 0rem;
-      transform: scale(0.6);
-
-      img {
-        filter: none;
-      }
+      top: 40%;
+      translate: -50% 40%;
     }
 
-    @include for-tablet {
-      transform: scale(0.5);
-      margin-bottom: -2rem;
-    }
-  }
-
-  .tour-dates {
-    display: flex;
-    flex-direction: column;
-    gap: 1.4rem;
-
-    margin-top: 1rem;
-    width: 100%;
-
-    @include for-desktop {
-      max-width: 50vw;
+    @include for-long-phone-only {
+      top: 33%;
+      translate: -50% 33%;
     }
 
-    @include for-tablet {
-      max-width: 90vw;
-    }
-
-    @include for-phone-only {
-      translate: 0 -1rem;
-    }
-  }
-
-  .tour-date {
-    position: relative;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    flex-direction: column;
-    align-items: center;
-    color: $color-black;
-    text-decoration: none;
-    font-family: "Simple Letter", serif;
-    font-size: 1.8rem;
-    line-height: 0.9;
-    letter-spacing: 2px;
-    height: 100%;
-    width: 100%;
-    justify-content: space-between;
-    text-shadow: 1px 1px 0 $color-black, 0px 1px 0 $color-black,
-      1px 0px 0 $color-black, 2px 2px 0 $color-black, 2px 1px 0 $color-black,
-      1px 2px 0 $color-black, 2px 3px 0 $color-white, 3px 2px 0 $color-white;
-    border-bottom: 0.1rem solid transparent;
-
-    text-align: center;
-
-    margin-bottom: -2rem;
-    transform: scale(0.75);
-
-    width: 115%;
-    translate: -7.5%;
-
-    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
-
-    @include for-desktop {
-      font-size: 3.5rem;
-
-      width: 100%;
-      translate: 0%;
-    }
-
-    @include for-tablet {
-      font-size: 2.4rem;
-    }
-
-    @include for-large-screens {
-      font-size: 4.5rem;
-    }
-
-    @include for-short-screens {
-      margin-bottom: -2.4rem;
-    }
-
-    @include for-phone-only {
-      margin-bottom: -1.6rem;
-      transform: scale(0.6);
-
-      width: 120%;
-      translate: -10%;
-    }
-
-    @include for-very-small-phone-only {
-      margin-bottom: -1.85rem;
-      transform: scale(0.6);
-
-      width: 120%;
-      translate: -10%;
-    }
-
-    &:hover,
-    &:focus {
-      color: $color-red;
-      background-color: rgba(darken($color-red, 25%), 0.1);
-      transform: scale(0.8);
-
-      @include for-phone-only {
-        transform: scale(0.75);
-      }
-    }
-
-    .date {
-      grid-column: 1 / 2;
-
-      text-align: left;
-      white-space: nowrap;
-
-      @include for-phone-only {
-        font-size: 2.4rem;
-        margin-left: -1rem;
-      }
-    }
-
-    .location {
-      grid-column: 2 / 3;
-
-      display: flex;
-      flex-direction: column;
-    }
-
-    .city {
-      // grid-column: 1 / 4;
-      // grid-row: 1 / 2;
-
-      font-size: 3rem;
-      white-space: nowrap;
-
-      text-shadow: 1px 1px 0 $color-black, 0px 1px 0 $color-black,
-        1px 0px 0 $color-black, 2px 2px 0 $color-black, 2px 1px 0 $color-black,
-        1px 2px 0 $color-black, 3px 3px 0 $color-black, 3px 2px 0 $color-white,
-        2px 3px 0 $color-white, 3px 4px 0 $color-white, 4px 3px 0 $color-white,
-        4px 4px 0 $color-white, 4px 5px 0 $color-white, 5px 4px 0 $color-white,
-        5px 5px 0 $color-white;
-
-      @include for-desktop {
-        font-size: 4rem;
-      }
-
-      @include for-large-screens {
-        font-size: 5.5rem;
-      }
-
-      &.long {
-        letter-spacing: 3px;
-
-        @include for-tablet {
-          letter-spacing: 5px;
-        }
-
-        @include for-desktop {
-          letter-spacing: 5px;
-        }
-
-        @include for-very-small-phone-only {
-          letter-spacing: 2px;
-        }
-      }
-    }
-
-    .venue {
-      // grid-column: 2 / 3;
-      // grid-row: 2 / 3;
-
-      line-height: 0.6;
-
-      @include for-desktop {
-        font-size: 2.4rem;
-      }
-
-      @include for-large-screens {
-        font-size: 3rem;
-      }
-
-      &.long {
-        font-size: 1.6rem;
-
-        @include for-desktop {
-          font-size: 2rem;
-        }
-
-        @include for-large-screens {
-          font-size: 4rem;
-        }
-      }
-    }
-
-    .tickets {
-      grid-column: 3 / 4;
-
-      color: $color-red;
-      text-transform: uppercase;
-      line-height: 0.7;
-      letter-spacing: 5px;
-
-      text-shadow: 1px 1px 0 $color-red, 0px 1px 0 $color-red,
-        1px 0px 0 $color-red, 2px 2px 0 $color-red, 2px 1px 0 $color-red,
-        1px 2px 0 $color-red, 3px 3px 0 $color-red, 3px 2px 0 $color-red,
-        2px 3px 0 $color-red, 3px 4px 0 $color-red, 4px 3px 0 $color-red,
-        4px 4px 0 $color-black, 4px 5px 0 $color-black, 5px 4px 0 $color-black,
-        5px 5px 0 $color-black;
-
-      @include for-phone-only {
-        font-size: 2.4rem;
-        margin-right: -2rem;
-        letter-spacing: 4px;
-      }
-
-      @include for-desktop {
-        display: flex;
-        gap: $space-md;
-        line-height: 1;
-        font-size: 3rem;
-      }
-    }
-  }
-
-  .make-track-button {
-    all: unset;
-
-    cursor: pointer;
-    position: fixed;
-    top: 13%;
-    right: 5%;
-    text-transform: uppercase;
-    text-align: center;
-
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-
-    transform: rotate(25deg) scale(0.75);
-
-    gap: $space-xxs;
-
-    transition: all 0.2s ease;
-    opacity: 0;
-    animation: fadeIn 0.2s cubic-bezier(0.25, 0.1, 0.75, 0.9) forwards;
-    transform-style: preserve-3d;
-    animation-delay: 2s;
-
-    @keyframes fadeIn {
-      0% {
-        opacity: 0;
-      }
-      100% {
-        opacity: 1;
-      }
-    }
-
-    @include for-phone-only {
-      display: flex;
-    }
-
-    &:hover {
-      opacity: 1;
-      transform: rotate(25deg) scale(1.1);
-      gap: $space-xs;
-
-      img {
-        filter: saturate(1);
-      }
-    }
-
-    img {
+    .dates-text {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: auto;
-      object-fit: contain;
-      transform: translate(0, -15%) scale(1.25);
-      z-index: -1;
 
-      filter: saturate(0.75);
+      translate: 0 -33%;
+    }
+  }
+
+  @keyframes beat {
+    0%,
+    50%,
+    100% {
+      transform: scale(1, 1);
+    }
+    30%,
+    80% {
+      transform: scale(0.92, 0.95);
+    }
+  }
+}
+
+.happy-mask {
+  position: fixed;
+  top: 55%;
+  left: 10%;
+
+  width: 10%;
+  max-width: 300px;
+  z-index: 3;
+
+  animation: sway 2.4s infinite;
+  animation-timing-function: ease-in-out;
+
+  @include for-long-phone-only {
+    top: 40%;
+  }
+}
+
+.sad-mask {
+  position: fixed;
+  top: 57.5%;
+  right: 10%;
+
+  width: 10%;
+  max-width: 300px;
+  z-index: 3;
+
+  animation: sway 2.4s infinite;
+  animation-delay: 0.4s;
+  animation-timing-function: ease-in-out;
+
+  @include for-long-phone-only {
+    top: 40%;
+  }
+}
+
+@keyframes sway {
+  0% {
+    transform: rotate(8deg);
+  }
+  50% {
+    transform: rotate(-8deg);
+  }
+  100% {
+    transform: rotate(8deg);
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    translate: -50% -200%;
+  }
+  100% {
+    translate: -50% 0%;
+  }
+}
+
+.tour-dates {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: $color-white;
+  z-index: 3;
+  width: 85%;
+  height: 100%;
+  padding: 1rem;
+  background-color: darken($color-gray, 5%);
+
+  box-shadow: 4px 4px 0 darken($color-gray, 3%);
+
+  max-width: 1000px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 2rem;
+
+  .column {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: auto;
+  }
+
+  @include for-small-phone-only {
+    // grid-template-columns: 1fr;
+    // gap: 0;
+  }
+}
+
+.tour-date {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  text-decoration: none;
+  color: $color-yellow;
+
+  margin: auto;
+  width: 100%;
+  letter-spacing: -1px;
+  white-space: nowrap;
+  text-align: center;
+  text-shadow: 0.1rem 0.1rem 0 $color-black, 0.2rem 0.2rem 0 $color-black;
+
+  &:hover,
+  &:focus {
+    transform: scale(1.2);
+
+    &:before {
+      opacity: 1;
+    }
+  }
+
+  &:before {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    translate: -50%;
+    width: 200px;
+    height: 100%;
+    background-color: $color-red;
+    content: " ";
+    z-index: -1;
+    opacity: 0;
+  }
+
+  .date {
+    font-size: 2.4rem;
+    text-transform: uppercase;
+    font-weight: 800;
+  }
+
+  .city {
+    font-size: 1.8rem;
+    color: $color-white;
+
+    &.long {
+      letter-spacing: -3.5px;
+    }
+  }
+
+  .venue {
+    font-size: 1.2rem;
+    color: $color-light-gray;
+
+    &.long {
+      letter-spacing: -3.5px;
+    }
+  }
+
+  @include for-small-phone-only {
+    gap: 0;
+
+    .date {
+      font-size: 1.6rem;
     }
 
-    div {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      margin: auto;
-      font-weight: bold;
+    .city {
+      font-size: 1.2rem;
+    }
 
-      text-shadow: 2px 3px $color-black;
+    .venue {
+      font-size: 1rem;
 
-      &.make {
-        font-size: 16px;
-        letter-spacing: -0.5px;
-        line-height: 20px;
-      }
-
-      &.lil-darkie {
-        font-size: 20px;
-        line-height: 20px;
-      }
-
-      &.track {
-        font-size: 24px;
-        transform: scaleY(1) scaleX(1.65);
+      &.long {
+        font-size: 0.8rem;
+        letter-spacing: -2px;
       }
     }
   }
 
+  @include for-phone-only {
+    gap: 0;
+
+    .date {
+      font-size: 1.4rem;
+    }
+
+    .city {
+      font-size: 1rem;
+    }
+
+    .venue {
+      font-size: 0.8rem;
+
+      &.long {
+        font-size: 0.8rem;
+        letter-spacing: -2px;
+      }
+    }
+  }
+}
+
+.footer {
+  margin-bottom: 1rem;
+
   .copyright {
-    position: fixed;
-    bottom: $space-sm;
-    left: 0;
-    width: 100vw;
     text-align: center;
-    color: $color-black;
+    color: $color-white;
     font-size: 1rem;
     font-weight: 500;
     font-family: "Simple Letter", serif;
@@ -381,6 +396,86 @@
 
     @include for-desktop {
       font-size: 1.4rem;
+    }
+  }
+}
+
+.curtains-animation {
+  position: fixed;
+  z-index: 10;
+
+  .animated-curtain {
+    position: fixed;
+
+    &.top-left {
+      top: 0;
+      left: 0;
+      z-index: 7;
+
+      animation: slideUp 1s ease-in-out forwards;
+      animation-delay: 1.2s;
+    }
+
+    &.top-right {
+      top: 0;
+      right: 0;
+      z-index: 6;
+
+      animation: slideUp 1.2s ease-in-out forwards;
+      animation-delay: 1.35s;
+    }
+
+    &.left {
+      top: 0;
+      left: 0;
+      z-index: 5;
+      transform: rotate(-10deg) translateX(0%);
+      translate: -45% -50%;
+
+      animation: curtainLeft 2s ease-in-out forwards;
+      animation-delay: 1s;
+    }
+
+    &.right {
+      top: 0;
+      right: 0;
+
+      z-index: 5;
+      transform: rotate(10deg) translateX(0%);
+      translate: 40% -50%;
+
+      animation: curtainRight 1.5s ease-in-out forwards;
+      animation-delay: 1s;
+    }
+
+    @keyframes slideUp {
+      0% {
+        transform: translateY(0%);
+      }
+
+      100% {
+        transform: translateY(-100%);
+      }
+    }
+
+    @keyframes curtainLeft {
+      0% {
+        transform: rotate(-10deg) translateX(0%);
+      }
+
+      100% {
+        transform: rotate(0deg) translateX(-100%);
+      }
+    }
+
+    @keyframes curtainRight {
+      0% {
+        transform: rotate(10deg) translateX(0%);
+      }
+
+      100% {
+        transform: rotate(0deg) translateX(100%);
+      }
     }
   }
 }

@@ -10,7 +10,7 @@
   align-items: center;
   gap: 32px;
   user-select: none;
-  z-index: 4;
+  z-index: 5;
 
   transition: top 0.2s ease;
 
@@ -29,7 +29,7 @@
 
     &.head {
       width: 200px;
-      translate: 0 -1rem;
+
       filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
 
       img {
@@ -38,18 +38,14 @@
       }
 
       @include for-short-screens {
-        translate: 0 -1rem;
-
         img {
           max-height: 72px;
         }
       }
 
       @include for-phone-only {
-        translate: 0 -1.75rem;
-
         img {
-          max-height: 56px;
+          max-height: 40px;
         }
       }
     }
@@ -169,9 +165,13 @@
   width: 100vw;
   height: 62px;
   background-color: rgba($color-red, 1);
-  z-index: 3;
+  z-index: 4;
   transition: transform 0.2s ease;
   transform: translateY(-100%);
+
+  &.black {
+    background-color: rgba($color-black, 0.75);
+  }
 
   &.sticky {
     transform: translateY(0);

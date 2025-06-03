@@ -44,8 +44,20 @@ $cdn-url: "https://w-img.b-cdn.net/lil-darkie";
   }
 }
 
+@mixin for-small-phone-only {
+  @media screen and (max-width: 600px) {
+    @content;
+  }
+}
+
 @mixin for-phone-only {
   @media screen and (max-width: $screen-size-sm) {
+    @content;
+  }
+}
+
+@mixin for-long-phone-only {
+  @media screen and (max-width: $screen-size-xs) and (min-height: 840px) {
     @content;
   }
 }
