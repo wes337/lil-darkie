@@ -256,25 +256,16 @@
 
   max-width: 1000px;
 
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-
   gap: 2rem;
-  align-items: center;
-  justify-content: center;
 
   margin-bottom: 2rem;
 
   .column {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 1rem;
     margin-bottom: auto;
-  }
-
-  @include for-small-phone-only {
-    // grid-template-columns: 1fr;
-    // gap: 0;
+    width: 100%;
   }
 }
 

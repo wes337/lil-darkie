@@ -13,10 +13,6 @@ export default function Landing() {
   const router = useRouter();
   const { scroll } = useStore();
 
-  useEffect(() => {
-    console.log(1 + scroll * 0.01);
-  }, [scroll]);
-
   return (
     <div className={`landing`}>
       <CurtainsAnimation />
@@ -171,21 +167,22 @@ function CurtainsAnimation() {
 }
 
 function TourDates() {
+  const futureTourDates = tourDates.filter(({ date }) => {
+    const showIsOver = new Date(date).getTime() < Date.now() - 86400000;
+    return !showIsOver;
+  });
+
   return (
     <div className="tour-dates">
       <div className="column">
-        {tourDates
-          .slice(0, Math.ceil((tourDates.length - 1) / 2))
-          .map(({ date, city, venue, ticketLink, soldOut, opener }, i) => {
-            const showIsOver = new Date(date).getTime() < Date.now() - 86400000;
-
+        {futureTourDates.map(
+          ({ date, city, venue, ticketLink, soldOut, opener }, i) => {
             return (
               <Link
                 className={`tour-date`}
                 key={date}
                 href={ticketLink}
                 target="_blank"
-                disabled={showIsOver}
               >
                 <div className="date">{formateDate(date)}</div>
                 <div className={`city ${city.length > 12 ? "long" : ""}`}>
@@ -200,38 +197,8 @@ function TourDates() {
                 {soldOut && <div className="sold-out">Sold out!</div>}
               </Link>
             );
-          })}
-      </div>
-      <div className="column">
-        {tourDates
-          .slice(Math.ceil((tourDates.length - 1) / 2))
-          .map(({ date, city, venue, ticketLink, soldOut, opener }, i) => {
-            const showIsOver = new Date(date).getTime() < Date.now() - 86400000;
-
-            return (
-              <Link
-                className={`tour-date`}
-                key={date}
-                href={ticketLink}
-                target="_blank"
-                disabled={showIsOver}
-              >
-                <div className="date">{formateDate(date)}</div>
-                <div className={`city ${city.length > 12 ? "long" : ""}`}>
-                  {city}
-                </div>
-
-                <div className={`venue ${venue.length >= 20 ? "long" : ""}`}>
-                  {venue}
-                </div>
-
-                {/* <div className="tickets">
-                <div>Tickets</div>
-              </div> */}
-                {soldOut && <div className="sold-out">Sold out!</div>}
-              </Link>
-            );
-          })}
+          }
+        )}
       </div>
     </div>
   );
