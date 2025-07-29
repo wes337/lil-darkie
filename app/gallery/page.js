@@ -1,20 +1,15 @@
 import Image from "next/image";
-import { CDN_URL, ASSETS } from "@/app/assets";
+import { ASSETS } from "@/app/assets";
+import { GALLERY } from "@/data/images";
 import SlideShow from "@/components/slide-show";
 import "@/styles/gallery.scss";
-
-const images = [];
-
-for (let i = 1; i <= 9; i++) {
-  images.push(`${CDN_URL}/photos/comp/${i}.png`);
-}
 
 export default function Gallery() {
   return (
     <>
       <Image className="tv" src={ASSETS.tv} alt="" width={1920} height={1080} />
       <div className="gallery">
-        <SlideShow images={images} />
+        <SlideShow images={GALLERY} />
         <div className="copyright">
           Copyright © 2025 Lil Darkie® All Rights Reserved
         </div>

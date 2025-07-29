@@ -62,9 +62,10 @@ export default function Landing() {
         <div
           className="main-text"
           style={{
-            transform: `translateY(${scroll * -0.3}%) scale(${
-              1 + scroll * 0.001
-            })`,
+            transform: `translateY(-${Math.max(
+              scroll * 0.3,
+              0
+            )}%) scale(${Math.max(1, 1 + scroll * 0.001)})`,
           }}
         >
           <img

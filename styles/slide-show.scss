@@ -38,7 +38,7 @@
     position: relative;
     width: calc(100vw - $space-xl);
     margin: $space-md;
-    background-color: rgba($color-white, 1);
+    background-color: lighten($color-gray, 20%);
     border: 2px solid $color-black;
 
     display: flex;
