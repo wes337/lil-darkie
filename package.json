@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "engines": {
+    "node": ">=22"
+  },
   "dependencies": {
     "@vercel/postgres": "^0.4.1",
     "eslint": "8.44.0",
