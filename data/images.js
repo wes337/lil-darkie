@@ -8,6 +8,21 @@ export const GALLERY = [
   "/images/gallery/7.png",
   "/images/gallery/8.png",
   "/images/gallery/9.png",
+  "/images/gallery/10.webp",
+  "/images/gallery/11.webp",
+  "/images/gallery/12.webp",
+  "/images/gallery/13.webp",
+  "/images/gallery/14.webp",
+  "/images/gallery/15.webp",
+  "/images/gallery/16.webp",
+  "/images/gallery/17.webp",
+  "/images/gallery/18.webp",
+  "/images/gallery/19.webp",
+  "/images/gallery/20.webp",
+  "/images/gallery/21.webp",
+  "/images/gallery/22.webp",
+  "/images/gallery/23.webp",
+  "/images/gallery/24.webp",
 ];
 
 export const POSTERS = [
