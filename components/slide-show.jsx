@@ -57,7 +57,7 @@ export default function SlideShow({ images }) {
 
   return (
     <div className="slide-show">
-      <h1>USA 2023 Tour Photos</h1>
+      <h1>Tour Photos</h1>
       <div className="slide-show-selected-image">
         <Image
           className="frame-left"
