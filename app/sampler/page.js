@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { ASSETS } from "@/app/assets";
 import Sampler from "@/components/sampler";
