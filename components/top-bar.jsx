@@ -19,7 +19,7 @@ export default function TopBar() {
     }
 
     setBloodTransition(true);
-    setTimeout(() => router.push(url), 500);
+    setTimeout(() => window.open(url, "_self"), 500);
   };
 
   const hideTopBarLogo = false;
