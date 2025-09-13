@@ -6,7 +6,7 @@ import Blood from "@/components/blood";
 import Nav from "@/components/nav";
 import Epilepsy from "@/components/epilepsy";
 import Backdrop from "@/components/backdrop";
-import Cookies from "@/components/cookies";
+// import Cookies from "@/components/cookies";
 import GoogleAnalytics from "@/components/google-analytics";
 import "@/styles/globals.scss";
 
@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className={martianMono.className}>
         <Epilepsy />
-        <Cookies />
+        {/* <Cookies /> */}
         <Spotify />
         <TopBar />
         {children}
