@@ -7,18 +7,18 @@ import { CDN_URL } from "@/app/assets";
 import { formateDate } from "@/app/utils";
 import useStore from "@/app/store";
 import tourDates from "@/data/greatest-show-in-human-history.json";
-import "@/styles/landing.scss";
+import styles from "@/styles/landing.module.scss";
 
 export default function Landing() {
   const router = useRouter();
   const { scroll } = useStore();
 
   return (
-    <div className={`landing`}>
+    <div className={styles.landing}>
       <CurtainsAnimation />
-      <div className="curtains">
+      <div className={styles.curtains}>
         <img
-          className="curtain top-left"
+          className={`${styles.curtain} ${styles["top-left"]}`}
           src={`${CDN_URL}/greatest/top-left-curtain.png`}
           alt=""
           style={{
@@ -26,7 +26,7 @@ export default function Landing() {
           }}
         />
         <img
-          className="curtain top-right"
+          className={`${styles.curtain} ${styles["top-right"]}`}
           src={`${CDN_URL}/greatest/top-right-curtain.png`}
           alt=""
           style={{
@@ -34,7 +34,7 @@ export default function Landing() {
           }}
         />
         <img
-          className="curtain left"
+          className={`${styles.curtain} ${styles["left"]}`}
           src={`${CDN_URL}/greatest/left-curtain.png`}
           alt=""
           style={{
@@ -42,7 +42,7 @@ export default function Landing() {
           }}
         />
         <img
-          className="curtain right"
+          className={`${styles.curtain} ${styles["right"]}`}
           src={`${CDN_URL}/greatest/right-curtain.png`}
           alt=""
           style={{
@@ -50,9 +50,9 @@ export default function Landing() {
           }}
         />
       </div>
-      <div className="header">
+      <div className={styles.header}>
         <img
-          className="presents"
+          className={styles.presents}
           src={`${CDN_URL}/greatest/presents.png`}
           alt="Presents"
           style={{
@@ -60,7 +60,7 @@ export default function Landing() {
           }}
         />
         <div
-          className="main-text"
+          className={styles["main-text"]}
           style={{
             transform: `translateY(-${Math.max(
               scroll * 0.3,
@@ -69,7 +69,7 @@ export default function Landing() {
           }}
         >
           <img
-            className="the"
+            className={styles.the}
             src={`${CDN_URL}/greatest/the-banner.png`}
             alt=""
           />
@@ -79,13 +79,13 @@ export default function Landing() {
           />
         </div>
         <img
-          className="main-art"
+          className={styles["main-art"]}
           src={`${CDN_URL}/greatest/main-art-2.png`}
           alt=""
           style={{ translate: `-50% ${50 + scroll * -0.15}%` }}
         />
         <div
-          className="dates-banner"
+          className={styles["dates-banner"]}
           style={{
             transform: `translateY(${scroll * -0.5}%) scale(${
               1 + scroll * 0.001
@@ -93,19 +93,19 @@ export default function Landing() {
           }}
         >
           <img
-            className="dates-curtains"
+            className={styles["dates-curtains"]}
             src={`${CDN_URL}/greatest/bottom-curtain.png`}
             alt=""
           />
           <img
-            className="dates-text"
+            className={styles["dates-text"]}
             src={`${CDN_URL}/greatest/dates-banner.png`}
             alt="North American Tour Dates 2025"
           />
         </div>
       </div>
       <img
-        className="happy-mask"
+        className={styles["happy-mask"]}
         src={`${CDN_URL}/greatest/happy-mask.png`}
         alt=""
         style={{
@@ -113,7 +113,7 @@ export default function Landing() {
         }}
       />
       <img
-        className="sad-mask"
+        className={styles["sad-mask"]}
         src={`${CDN_URL}/greatest/sad-mask.png`}
         alt=""
         style={{
@@ -121,8 +121,8 @@ export default function Landing() {
         }}
       />
       <TourDates />
-      <div className="footer">
-        <div className="copyright">
+      <div className={styles.footer}>
+        <div className={styles.copyright}>
           Copyright © 2025 Lil Darkie® All Rights Reserved
         </div>
       </div>
@@ -142,24 +142,27 @@ function CurtainsAnimation() {
   }
 
   return (
-    <div className="curtains-animation" onAnimationEnd={onAnimationEnd}>
+    <div
+      className={styles["curtains-animation"]}
+      onAnimationEnd={onAnimationEnd}
+    >
       <img
-        className="animated-curtain top-left"
+        className={`${styles["animated-curtain"]} ${styles["top-left"]}`}
         src={`${CDN_URL}/greatest/top-left-curtain.png`}
         alt=""
       />
       <img
-        className="animated-curtain top-right"
+        className={`${styles["animated-curtain"]} ${styles["top-right"]}`}
         src={`${CDN_URL}/greatest/top-right-curtain.png`}
         alt=""
       />
       <img
-        className="animated-curtain left"
+        className={`${styles["animated-curtain"]} ${styles["left"]}`}
         src={`${CDN_URL}/greatest/left-curtain.png`}
         alt=""
       />
       <img
-        className="animated-curtain right"
+        className={`${styles["animated-curtain"]} ${styles["right"]}`}
         src={`${CDN_URL}/greatest/right-curtain.png`}
         alt=""
       />
@@ -174,28 +177,33 @@ function TourDates() {
   });
 
   return (
-    <div className="tour-dates">
-      <div className="column">
+    <div className={styles["tour-dates"]}>
+      <div className={styles.column}>
         {futureTourDates.map(
           ({ date, city, venue, ticketLink, soldOut, opener }, i) => {
             return (
               <Link
-                className={`tour-date`}
+                className={styles["tour-date"]}
                 key={date}
                 href={ticketLink}
                 target="_blank"
               >
-                <div className="date">{formateDate(date)}</div>
-                <div className={`city ${city.length > 12 ? "long" : ""}`}>
+                <div className={styles.date}>{formateDate(date)}</div>
+                <div
+                  className={`${styles.city}${
+                    city.length > 12 ? styles.long : ""
+                  }`}
+                >
                   {city}
                 </div>
-                <div className={`venue ${venue.length >= 20 ? "long" : ""}`}>
+                <div
+                  className={`${styles.venue} ${
+                    venue.length >= 20 ? styles.long : ""
+                  }`}
+                >
                   {venue}
                 </div>
-                {/* <div className="tickets">
-                <div>Tickets</div>
-              </div> */}
-                {soldOut && <div className="sold-out">Sold out!</div>}
+                {soldOut && <div className={styles["sold-out"]}>Sold out!</div>}
               </Link>
             );
           }
