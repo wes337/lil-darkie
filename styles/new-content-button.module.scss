@@ -19,11 +19,15 @@
   animation: slideIn 0.75s cubic-bezier(0.25, 0.1, 0.75, 0.9) forwards;
   animation-delay: 2s;
 
+  @include for-small-phone-only {
+    width: 148px;
+  }
+
   @include for-phone-only {
-    width: 180px;
+    width: 172px;
     animation: slideInMobile 0.75s cubic-bezier(0.25, 0.1, 0.75, 0.9) forwards;
     animation-delay: 2s;
-    translate: -10% -10%;
+    translate: -100% -200%;
   }
 
   &:hover,
@@ -105,7 +109,7 @@
     }
 
     100% {
-      translate: -10% -10%;
+      translate: -15% -15%;
       transform: rotate(-10deg) scale(1);
     }
   }

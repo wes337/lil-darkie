@@ -18,6 +18,7 @@
   top: 0;
   left: 0;
   z-index: 5;
+  color: $color-white;
 }
 
 .curtain {
@@ -417,7 +418,7 @@
     &.top-right {
       top: 0;
       right: 0;
-      z-index: 6;
+      z-index: 5;
 
       animation: slideUp 1.2s ease-in-out forwards;
       animation-delay: 1.35s;
