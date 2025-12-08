@@ -95,7 +95,7 @@
     "city": "Orlando, FL",
     "venue": "The Beacham",
     "ticketLink": "https://tkx.live/events/lil-darkie-the-greatest-show-in-human-history-2/",
-    "soldOut": false
+    "soldOut": true
   },
   {
     "date": "4 November 2025",
@@ -144,13 +144,6 @@
     "city": "Las Vegas, NV",
     "venue": "Brooklyn Bowl",
     "ticketLink": "https://www.ticketmaster.com/event/170062BDDAEA4A41",
-    "soldOut": false
-  },
-  {
-    "date": "18 November 2025",
-    "city": "Los Angeles, CA",
-    "venue": "The Echoplex",
-    "ticketLink": "https://www.ticketmaster.com/event/090062C2A34410D1",
     "soldOut": false
   },
   {
