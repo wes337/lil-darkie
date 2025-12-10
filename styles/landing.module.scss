@@ -88,10 +88,10 @@
     filter: drop-shadow(4px 4px 0 $color-black);
 
     animation: slideIn 0.75s cubic-bezier(0.25, 0.1, 0.75, 0.9) forwards;
-    animation-delay: 1.5s;
+    // animation-delay: 1.5s;
 
     @include for-desktop {
-      animation-delay: 0s;
+      // animation-delay: 0s;
       animation-duration: 0.5s;
     }
   }
@@ -262,6 +262,11 @@
 
   @include for-phone-only {
     padding-bottom: 4rem;
+    margin-top: -3rem;
+  }
+
+  @include for-long-phone-only {
+    margin-top: -1rem;
   }
 
   .column {
