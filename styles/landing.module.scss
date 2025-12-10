@@ -252,21 +252,17 @@
 .tour-dates {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   color: $color-white;
   z-index: 3;
   width: 85%;
   height: 100%;
   padding: 1rem;
-  background-color: darken($color-gray, 5%);
-
-  box-shadow: 4px 4px 0 darken($color-gray, 3%);
-
   max-width: 1000px;
+  padding-bottom: 8rem;
 
-  gap: 2rem;
-
-  margin-bottom: 2rem;
+  @include for-phone-only {
+    padding-bottom: 4rem;
+  }
 
   .column {
     display: grid;
@@ -274,6 +270,28 @@
     gap: 1rem;
     margin-bottom: auto;
     width: 100%;
+
+    @include for-phone-only {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @include for-long-phone-only {
+      gap: 3rem;
+
+      .date {
+        font-size: 2.6rem;
+        margin-bottom: 0.4rem;
+      }
+
+      .city {
+        font-size: 1.8rem;
+      }
+
+      .venue {
+        font-size: 1.2rem;
+      }
+    }
   }
 }
 
@@ -283,19 +301,27 @@
   flex-direction: column;
   gap: 0;
   text-decoration: none;
-  color: $color-yellow;
-
+  color: $color-white;
   margin: auto;
   width: 100%;
+  height: 100%;
   letter-spacing: -1px;
   white-space: nowrap;
   text-align: center;
+  justify-content: flex-end;
   text-shadow: 0.1rem 0.1rem 0 $color-black, 0.2rem 0.2rem 0 $color-black;
 
-  &:hover,
-  &:focus {
-    transform: scale(1.2);
+  .image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    object-fit: contain;
+  }
 
+  &:hover,
+  &:focus,
+  &:active {
     &:before {
       opacity: 1;
     }
@@ -306,7 +332,7 @@
     top: 0;
     left: 50%;
     translate: -50%;
-    width: 200px;
+    width: 300px;
     height: 100%;
     background-color: $color-red;
     content: " ";
@@ -315,14 +341,18 @@
   }
 
   .date {
-    font-size: 2.4rem;
+    font-size: 5rem;
+    line-height: 1;
     text-transform: uppercase;
     font-weight: 800;
+    color: $color-yellow;
+    z-index: 2;
   }
 
   .city {
-    font-size: 1.8rem;
+    font-size: 2rem;
     color: $color-white;
+    z-index: 2;
 
     &.long {
       letter-spacing: -3.5px;
@@ -332,30 +362,10 @@
   .venue {
     font-size: 1.2rem;
     color: $color-light-gray;
+    z-index: 2;
 
     &.long {
       letter-spacing: -3.5px;
-    }
-  }
-
-  @include for-small-phone-only {
-    gap: 0;
-
-    .date {
-      font-size: 1.6rem;
-    }
-
-    .city {
-      font-size: 1.2rem;
-    }
-
-    .venue {
-      font-size: 1rem;
-
-      &.long {
-        font-size: 0.8rem;
-        letter-spacing: -2px;
-      }
     }
   }
 
@@ -363,15 +373,18 @@
     gap: 0;
 
     .date {
-      font-size: 1.4rem;
+      font-size: 2rem;
     }
 
     .city {
-      font-size: 1rem;
+      font-size: 1.6rem;
+      line-height: 1;
     }
 
     .venue {
       font-size: 0.8rem;
+      line-height: 1;
+      margin-top: 0.4rem;
 
       &.long {
         font-size: 0.8rem;
@@ -383,6 +396,11 @@
 
 .footer {
   margin-bottom: 1rem;
+
+  @include for-phone-only {
+    position: fixed;
+    bottom: 0;
+  }
 
   .copyright {
     text-align: center;

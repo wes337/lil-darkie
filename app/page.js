@@ -4,9 +4,9 @@ import Link from "next/link";
 import { CDN_URL } from "@/app/assets";
 import { formateDate } from "@/app/utils";
 import useStore from "@/app/store";
+import NewContentButton from "@/components/new-content-button";
 import tourDates from "@/data/greatest-show-in-human-history.json";
 import styles from "@/styles/landing.module.scss";
-import NewContentButton from "@/components/new-content-button";
 
 export default function Landing() {
   const { scroll } = useStore();
@@ -21,7 +21,7 @@ export default function Landing() {
       >
         <NewContentButton />
       </div>
-      <CurtainsAnimation />
+      {/* <CurtainsAnimation /> */}
       <div className={styles.curtains}>
         <img
           className={`${styles.curtain} ${styles["top-left"]}`}
@@ -196,7 +196,7 @@ function TourDates() {
               >
                 <div className={styles.date}>{formateDate(date)}</div>
                 <div
-                  className={`${styles.city}${
+                  className={`${styles.city} ${
                     city.length > 12 ? styles.long : ""
                   }`}
                 >
@@ -210,6 +210,13 @@ function TourDates() {
                   {venue}
                 </div>
                 {soldOut && <div className={styles["sold-out"]}>Sold out!</div>}
+                <img
+                  className={styles.image}
+                  src={`/images/greatest-show-in-human-history/city${
+                    i === 0 ? "1" : "2"
+                  }.png`}
+                  alt=""
+                />
               </Link>
             );
           }
