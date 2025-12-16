@@ -9,9 +9,9 @@
   object-fit: contain;
   background-image: url($cdn-url + "/textures/dust.png");
   filter: invert(1);
-  animation: changeBackground 0.5s steps(1) infinite alternate-reverse;
+  animation: changeBackground 0.75s steps(1) infinite alternate-reverse;
   background-repeat: repeat;
-  opacity: 0.5;
+  opacity: 0.2;
   z-index: 5;
   pointer-events: none;
 

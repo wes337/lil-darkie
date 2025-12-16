@@ -11,7 +11,8 @@
   gap: 32px;
   user-select: none;
   z-index: 5;
-  transition: all 0.2s ease;
+
+  transition: top 0.2s ease;
 
   .top-bar-logo {
     all: unset;
@@ -28,7 +29,7 @@
 
     &.head {
       width: 200px;
-      filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+      filter: drop-shadow(2px 2px 0px rgba(0, 0, 0, 1));
 
       img {
         object-fit: contain;

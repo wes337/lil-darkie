@@ -1,15 +1,15 @@
 "use client";
+
 import { useEffect } from "react";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { ASSETS, CDN_URL } from "@/app/assets";
 import { preloadUrls } from "@/app/utils";
 import useStore from "@/app/store";
-import "@/styles/top-bar.scss";
+import styles from "@/styles/top-bar.module.scss";
 
 export default function TopBar() {
   const pathname = usePathname();
-  const router = useRouter();
   const { lightMode, peachMode, sticky, setBloodTransition, setNavOpen } =
     useStore();
 
@@ -38,9 +38,9 @@ export default function TopBar() {
   return (
     <>
       <div
-        className={`top-bar${lightMode || peachMode ? " light" : ""}${
-          sticky ? " sticky" : ""
-        }`}
+        className={`${styles["top-bar"]} ${
+          lightMode || peachMode ? ` ${styles.light}` : ""
+        }${sticky ? ` ${styles.sticky}` : ""}`}
       >
         <a href="https://www.smalldarkone.com">
           <Image src={ASSETS.gunIcon} alt="" width={48} height={48} />
@@ -51,25 +51,25 @@ export default function TopBar() {
           <span>Sampler</span>
         </button>
         {pathname === "/" ? (
-          <button className="top-bar-logo head">
+          <button className={`${styles["top-bar-logo"]} ${styles.head}`}>
             <img src={`${CDN_URL}/greatest/lil-darkie.png`} alt="Lil Darkie" />
           </button>
         ) : (
           <button
             onClick={() => transitionTo("/")}
-            className={`top-bar-logo${sticky ? " sticky" : ""} ${
-              hideTopBarLogo ? " hide" : ""
-            }`}
+            className={`${styles["top-bar-logo"]} ${
+              sticky ? ` ${styles.sticky}` : ""
+            } ${hideTopBarLogo ? ` ${styles.hide}` : ""}`}
           >
             <Image
-              className="logo-yellow"
+              className={`${styles["logo-yellow"]}`}
               src={ASSETS.logoYellow}
               alt="Lil Darkie"
               width={254}
               height={68}
             />
             <Image
-              className="logo-primary"
+              className={`${styles["logo-primary"]}`}
               src={ASSETS.logo}
               alt="Lil Darkie"
               width={254}
@@ -88,9 +88,9 @@ export default function TopBar() {
         </button>
       </div>
       <div
-        className={`top-bar-back${sticky ? " sticky" : ""}${
-          pathname === "/" ? " black" : ""
-        }`}
+        className={`${styles["top-bar-back"]} ${
+          sticky ? ` ${styles.sticky}` : ""
+        }${pathname === "/" ? ` ${styles.black}` : ""}`}
       />
     </>
   );
