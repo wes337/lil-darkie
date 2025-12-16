@@ -39,7 +39,10 @@ export default function Blog() {
         {blog.map((entry, i) => (
           <div key={i} className="entry">
             <div className="date">{entry.date}</div>
-            <div className="content">{entry.content}</div>
+            <div
+              className="content"
+              dangerouslySetInnerHTML={{ __html: entry.content }}
+            ></div>
           </div>
         ))}
       </div>
