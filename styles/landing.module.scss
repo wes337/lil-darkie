@@ -11,6 +11,19 @@
   color: $color-black;
   overflow-x: hidden;
   overflow-y: auto;
+  background-color: $color-black;
+  transition: all 0.2s linear;
+
+  overflow: hidden;
+
+  &.light {
+    background-color: $color-white;
+
+    .backdrop {
+      filter: invert(0);
+      opacity: 0.25;
+    }
+  }
 }
 
 .new-content-button {
@@ -21,386 +34,99 @@
   color: $color-white;
 }
 
-.curtain {
-  position: fixed;
-  filter: saturate(0.75);
-
-  &.top-left {
-    top: 0;
-    left: 0;
-    max-width: 33%;
-    z-index: 2;
-  }
-
-  &.top-right {
-    top: 0;
-    right: 0;
-    max-width: 33%;
-    z-index: 2;
-  }
-
-  &.left {
-    top: 0;
-    right: 100%;
-    translate: 33%;
-    max-width: 50%;
-    z-index: 1;
-  }
-
-  &.right {
-    top: 0;
-    left: 100%;
-    translate: -33%;
-    max-width: 50%;
-    z-index: 1;
-  }
-}
-
-.header {
-  display: block;
-  height: 65vh;
-  width: 100vw;
+.backdrop {
+  position: absolute;
+  z-index: 0;
+  overflow: hidden;
+  filter: invert(1);
+  opacity: 0.1;
 
   @include for-phone-only {
-    height: 60vh;
-  }
-
-  @include for-long-phone-only {
-    height: 50vh;
-  }
-
-  @include for-desktop {
-    height: 85vh;
-  }
-
-  @mixin for-large-screens {
-    height: 75vh;
-  }
-
-  .presents {
-    position: fixed;
-    top: 100px;
-    left: 50%;
-    translate: -50% -200%;
-    width: 20%;
-    max-width: 120px;
-    z-index: 2;
-    filter: drop-shadow(4px 4px 0 $color-black);
-
-    animation: slideIn 0.75s cubic-bezier(0.25, 0.1, 0.75, 0.9) forwards;
-    // animation-delay: 1.5s;
-
-    @include for-desktop {
-      // animation-delay: 0s;
-      animation-duration: 0.5s;
-    }
-  }
-
-  .main-text {
-    position: fixed;
-    top: 20%;
-    left: 50%;
-    translate: -50% -200%;
-    width: 90%;
-    max-width: 800px;
-    z-index: 2;
-    filter: drop-shadow(4px 4px 0 $color-black);
-    z-index: 2;
-
-    @include for-long-phone-only {
-      top: 15%;
-    }
+    width: 150%;
+    height: 150%;
+    object-fit: contain;
 
     img {
       width: 100%;
       height: 100%;
-    }
-
-    .the {
-      position: absolute;
-      width: 15%;
-      height: auto;
-    }
-
-    animation: slideIn 0.5s cubic-bezier(0.25, 0.1, 0.75, 0.9) forwards;
-    animation-delay: 1.5s;
-
-    @include for-desktop {
-      animation-delay: 0s;
-    }
-  }
-
-  .main-art {
-    position: fixed;
-    top: 20%;
-    left: 50%;
-    translate: -50% 50%;
-    width: 90%;
-    max-width: 800px;
-    z-index: 1;
-
-    animation: 2s ease 0s infinite beat;
-
-    @include for-long-phone-only {
-      top: 15%;
-    }
-  }
-
-  .dates-banner {
-    position: fixed;
-    top: 45%;
-    left: 50%;
-    translate: -50% 45%;
-    width: 100%;
-    z-index: 0;
-    max-width: 1200px;
-
-    img {
-      width: 100%;
-      height: auto;
-    }
-
-    @include for-phone-only {
-      top: 40%;
-      translate: -50% 40%;
-    }
-
-    @include for-long-phone-only {
-      top: 33%;
-      translate: -50% 33%;
-    }
-
-    .dates-text {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-
-      translate: 0 -33%;
-    }
-  }
-
-  @keyframes beat {
-    0%,
-    50%,
-    100% {
-      transform: scale(1, 1);
-    }
-    30%,
-    80% {
-      transform: scale(0.92, 0.95);
+      object-fit: contain;
     }
   }
 }
 
-.happy-mask {
-  position: fixed;
-  top: 55%;
-  left: 10%;
-
-  width: 10%;
-  max-width: 300px;
-  z-index: 3;
-
-  animation: sway 2.4s infinite;
-  animation-timing-function: ease-in-out;
-
-  @include for-long-phone-only {
-    top: 40%;
-  }
-}
-
-.sad-mask {
-  position: fixed;
-  top: 57.5%;
-  right: 10%;
-
-  width: 10%;
-  max-width: 300px;
-  z-index: 3;
-
-  animation: sway 2.4s infinite;
-  animation-delay: 0.4s;
-  animation-timing-function: ease-in-out;
-
-  @include for-long-phone-only {
-    top: 40%;
-  }
-}
-
-@keyframes sway {
-  0% {
-    transform: rotate(8deg);
-  }
-  50% {
-    transform: rotate(-8deg);
-  }
-  100% {
-    transform: rotate(8deg);
-  }
-}
-
-@keyframes slideIn {
-  0% {
-    translate: -50% -200%;
-  }
-  100% {
-    translate: -50% 0%;
-  }
-}
-
-.tour-dates {
+.body {
   display: flex;
   flex-direction: column;
-  color: $color-white;
-  z-index: 3;
-  width: 85%;
-  height: 100%;
-  padding: 1rem;
-  max-width: 1000px;
-  padding-bottom: 8rem;
-
-  @include for-phone-only {
-    padding-bottom: 4rem;
-    margin-top: -3rem;
-  }
-
-  @include for-long-phone-only {
-    margin-top: -1rem;
-  }
-
-  .column {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    margin-bottom: auto;
-    width: 100%;
-
-    @include for-phone-only {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-
-    @include for-long-phone-only {
-      gap: 3rem;
-
-      .date {
-        font-size: 2.6rem;
-        margin-bottom: 0.4rem;
-      }
-
-      .city {
-        font-size: 1.8rem;
-      }
-
-      .venue {
-        font-size: 1.2rem;
-      }
-    }
-  }
+  align-items: center;
+  justify-content: center;
+  color: $color-red;
+  height: calc(100vh - 3rem);
 }
 
-.tour-date {
-  position: relative;
+.links {
   display: flex;
-  flex-direction: column;
-  gap: 0;
-  text-decoration: none;
-  color: $color-white;
-  margin: auto;
   width: 100%;
-  height: 100%;
-  letter-spacing: -1px;
-  white-space: nowrap;
-  text-align: center;
-  justify-content: flex-end;
-  text-shadow: 0.1rem 0.1rem 0 $color-black, 0.2rem 0.2rem 0 $color-black;
+  height: 5rem;
+  justify-content: space-evenly;
+  margin-top: 1rem;
+  z-index: 1;
 
-  .image {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    object-fit: contain;
+  @include for-phone-only {
+    height: 3rem;
   }
 
-  &:hover,
-  &:focus,
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    &:hover,
+    &:active {
+      transform: scale(1.2);
+    }
+  }
+
+  img {
+    height: 100%;
+    width: auto;
+  }
+}
+
+.unknown {
+  height: 50%;
+  width: auto;
+  user-select: none;
+  cursor: pointer;
+  z-index: 1;
+  margin-top: 3rem;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
   &:active {
-    &:before {
-      opacity: 1;
-    }
-  }
-
-  &:before {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    translate: -50%;
-    width: 300px;
-    height: 100%;
-    background-color: $color-red;
-    content: " ";
-    z-index: -1;
-    opacity: 0;
-  }
-
-  .date {
-    font-size: 5rem;
-    line-height: 1;
-    text-transform: uppercase;
-    font-weight: 800;
-    color: $color-yellow;
-    z-index: 2;
-  }
-
-  .city {
-    font-size: 2rem;
-    color: $color-white;
-    z-index: 2;
-
-    &.long {
-      letter-spacing: -3.5px;
-    }
-  }
-
-  .venue {
-    font-size: 1.2rem;
-    color: $color-light-gray;
-    z-index: 2;
-
-    &.long {
-      letter-spacing: -3.5px;
-    }
+    transform: scale(1.1);
   }
 
   @include for-phone-only {
-    gap: 0;
-
-    .date {
-      font-size: 2rem;
-    }
-
-    .city {
-      font-size: 1.6rem;
-      line-height: 1;
-    }
-
-    .venue {
-      font-size: 0.8rem;
-      line-height: 1;
-      margin-top: 0.4rem;
-
-      &.long {
-        font-size: 0.8rem;
-        letter-spacing: -2px;
-      }
-    }
+    width: 100%;
+    height: auto;
   }
 }
 
 .footer {
+  height: 2rem;
   margin-bottom: 1rem;
+  z-index: 1;
+
+  &.light {
+    .copyright {
+      color: $color-black;
+      text-shadow: 1px 1px 0 $color-white, 2px 2px 0 $color-white;
+      filter: none;
+    }
+  }
 
   @include for-phone-only {
     position: fixed;
@@ -418,86 +144,6 @@
 
     @include for-desktop {
       font-size: 1.4rem;
-    }
-  }
-}
-
-.curtains-animation {
-  position: fixed;
-  z-index: 10;
-
-  .animated-curtain {
-    position: fixed;
-
-    &.top-left {
-      top: 0;
-      left: 0;
-      z-index: 7;
-
-      animation: slideUp 1s ease-in-out forwards;
-      animation-delay: 1.2s;
-    }
-
-    &.top-right {
-      top: 0;
-      right: 0;
-      z-index: 5;
-
-      animation: slideUp 1.2s ease-in-out forwards;
-      animation-delay: 1.35s;
-    }
-
-    &.left {
-      top: 0;
-      left: 0;
-      z-index: 5;
-      transform: rotate(-10deg) translateX(0%);
-      translate: -45% -50%;
-
-      animation: curtainLeft 2s ease-in-out forwards;
-      animation-delay: 1s;
-    }
-
-    &.right {
-      top: 0;
-      right: 0;
-
-      z-index: 5;
-      transform: rotate(10deg) translateX(0%);
-      translate: 40% -50%;
-
-      animation: curtainRight 1.5s ease-in-out forwards;
-      animation-delay: 1s;
-    }
-
-    @keyframes slideUp {
-      0% {
-        transform: translateY(0%);
-      }
-
-      100% {
-        transform: translateY(-100%);
-      }
-    }
-
-    @keyframes curtainLeft {
-      0% {
-        transform: rotate(-10deg) translateX(0%);
-      }
-
-      100% {
-        transform: rotate(0deg) translateX(-100%);
-      }
-    }
-
-    @keyframes curtainRight {
-      0% {
-        transform: rotate(10deg) translateX(0%);
-      }
-
-      100% {
-        transform: rotate(0deg) translateX(100%);
-      }
     }
   }
 }
