@@ -78,16 +78,16 @@ export default function Landing() {
           }}
         />
         <div className={styles.links}>
-          <Link href="https://www.spotify.com" target="_blank">
+          <Link href="https://open.spotify.com/artist/62F9BiUmjqeXbBztCwiX1U?si=37h8I4wWQCeXkm2V5Bz7Jg" target="_blank">
             <img src={`${CDN_URL}/icons/spotify.png`} alt="Spotify" />
           </Link>
-          <Link href="https://www.spotify.com" target="_blank">
+          <Link href="https://music.apple.com/us/artist/lil-darkie/1411605197" target="_blank">
             <img src={`${CDN_URL}/icons/apple.png`} alt="Apple Music" />
           </Link>
-          <Link href="https://www.spotify.com" target="_blank">
+          <Link href="https://soundcloud.com/lildvrkie" target="_blank">
             <img src={`${CDN_URL}/icons/soundcloud.png`} alt="Soundcloud" />
           </Link>
-          <Link href="https://www.spotify.com" target="_blank">
+          <Link href="https://www.youtube.com/@lildvrkie" target="_blank">
             <img src={`${CDN_URL}/icons/youtube.png`} alt="YouTube" />
           </Link>
         </div>
