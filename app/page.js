@@ -68,15 +68,24 @@ export default function Landing() {
         />
       </div>
       <div className={styles.body}>
-        <img
-          className={styles.unknown}
-          src={`${CDN_URL}/unknown.png`}
-          alt=""
-          onClick={() => {
-            randomizeBackdropTranslate();
-            setLightMode(!lightMode);
-          }}
-        />
+        <div className={styles.hero}>
+          <img
+            className={styles.unknown}
+            src={`${CDN_URL}/unknown.png`}
+            alt=""
+            onClick={() => {
+              randomizeBackdropTranslate();
+              setLightMode(!lightMode);
+            }}
+          />
+          <Link
+            className={styles["release-show"]}
+            href="https://www.neckofthewoodssf.com/tm-event/lil-darkie-album-release-show/"
+            target="_blank"
+          >
+            Release Show Tickets
+          </Link>
+        </div>
         <div className={styles.links}>
           <Link href="https://open.spotify.com/artist/62F9BiUmjqeXbBztCwiX1U?si=37h8I4wWQCeXkm2V5Bz7Jg" target="_blank">
             <img src={`${CDN_URL}/icons/spotify.png`} alt="Spotify" />
