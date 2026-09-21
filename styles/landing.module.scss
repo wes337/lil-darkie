@@ -158,7 +158,13 @@
   }
 }
 
+.unknown-link {
+  display: block;
+  z-index: 1;
+}
+
 .unknown {
+  display: block;
   height: calc(50vh - 1.5rem);
   width: auto;
   user-select: none;

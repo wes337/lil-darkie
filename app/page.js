@@ -8,6 +8,9 @@ import { getRandomNumberBetween, isMobileSizedScreen } from "@/app/utils";
 import NewContentButton from "@/components/new-content-button";
 import styles from "@/styles/landing.module.scss";
 
+const TICKETS_URL =
+  "https://www.neckofthewoodssf.com/tm-event/lil-darkie-album-release-show/";
+
 export default function Landing() {
   const { lightMode, setLightMode, scroll, setNoScroll } = useStore();
   const [backdropTranslate, setBackdropTranslate] = useState(
@@ -69,18 +72,20 @@ export default function Landing() {
       </div>
       <div className={styles.body}>
         <div className={styles.hero}>
-          <img
-            className={styles.unknown}
-            src={`${CDN_URL}/unknown.png`}
-            alt=""
-            onClick={() => {
-              randomizeBackdropTranslate();
-              setLightMode(!lightMode);
-            }}
-          />
+          <Link
+            className={styles["unknown-link"]}
+            href={TICKETS_URL}
+            target="_blank"
+          >
+            <img
+              className={styles.unknown}
+              src={`${CDN_URL}/unknown.png`}
+              alt="Release Show Tickets"
+            />
+          </Link>
           <Link
             className={styles["release-show"]}
-            href="https://www.neckofthewoodssf.com/tm-event/lil-darkie-album-release-show/"
+            href={TICKETS_URL}
             target="_blank"
           >
             Release Show Tickets
