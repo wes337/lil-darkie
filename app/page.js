@@ -78,7 +78,6 @@ export default function Landing() {
               setLightMode(!lightMode);
             }}
           />
-          {/* Release show tickets button — hidden for now, uncomment to bring back
           <Link
             className={styles["release-show"]}
             href="https://www.neckofthewoodssf.com/tm-event/lil-darkie-album-release-show/"
@@ -86,7 +85,6 @@ export default function Landing() {
           >
             Release Show Tickets
           </Link>
-          */}
         </div>
         <div className={styles.links}>
           <Link href="https://open.spotify.com/artist/62F9BiUmjqeXbBztCwiX1U?si=37h8I4wWQCeXkm2V5Bz7Jg" target="_blank">
