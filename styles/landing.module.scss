@@ -1,218 +1,143 @@
 @import "./variables.scss";
 
+$poster-red: #8a2125;
+$top-bar-space: 8.5rem;
+$top-bar-space-phone: 5rem;
+$footer-space: 2.5rem;
+
 .landing {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
-  //max-height: -webkit-fill-available;
   align-items: center;
-  justify-content: center;
-  color: $color-black;
-  overflow-x: hidden;
-  overflow-y: auto;
-  background-color: $color-black;
-  transition: all 0.2s linear;
-
-  overflow: hidden;
-
-  &.light {
-    background-color: $color-white;
-
-    .backdrop {
-      filter: invert(0);
-      opacity: 0.25;
-    }
-  }
-}
-
-.new-content-button {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 5;
-  color: $color-white;
-}
-
-.backdrop {
-  position: absolute;
-  z-index: 0;
-  overflow: hidden;
-  filter: invert(1);
-  opacity: 0.1;
-
-  @include for-phone-only {
-    width: 150%;
-    height: 150%;
-    object-fit: contain;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-  }
-}
-
-.body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: $color-red;
-  height: calc(100vh - 3rem);
-}
-
-.hero {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  position: relative;
-  width: fit-content;
-  margin-top: 3rem;
-  z-index: 1;
-
-  @include for-phone-only {
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-}
-
-.release-show {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   box-sizing: border-box;
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 95%;
-  height: fit-content;
-  z-index: 2;
-  padding: 0.75rem 1rem;
-  background-color: $color-red;
-  border: 3px solid $color-black;
-  border-radius: 16px;
-  color: $color-white;
-  text-decoration: none;
-  text-transform: uppercase;
+  width: 100%;
+  height: 100svh;
+  padding: $top-bar-space 1rem $footer-space;
+  justify-content: center;
+  gap: 0;
+  overflow: hidden;
+  background-color: $poster-red;
+  color: $color-black;
+  font-family: Helvetica, Arial, "Helvetica Neue", sans-serif;
   text-align: center;
-  font-size: 2.2rem;
-  font-weight: 700;
-  line-height: 1;
-  white-space: nowrap;
-  text-shadow: -2px 2px 0px $color-black, 2px -2px 0px $color-black,
-    -2px -2px 0px $color-black, 2px 2px 0px $color-black,
-    4px 4px 0px $color-black;
-  filter: drop-shadow(4px 4px 0 $color-black);
+  line-height: 1.15;
+  cursor: pointer;
 
-  &:hover,
-  &:focus {
-    transform: scale(1.05);
-  }
-
-  &:active {
-    transform: scale(1.1);
+  @include for-desktop {
+    padding-bottom: $footer-space + 3rem;
   }
 
   @include for-phone-only {
-    padding: 0.5rem 0.75rem;
-    font-size: clamp(1rem, 6vw, 1.5rem);
-    max-width: 100%;
-    text-shadow: -1px 1px 0px $color-black, 1px -1px 0px $color-black,
-      -1px -1px 0px $color-black, 1px 1px 0px $color-black,
-      3px 3px 0px $color-black;
+    padding-top: $top-bar-space-phone;
+  }
+
+  :where(h1, h2, p) {
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
   }
 }
 
-.links {
+.top,
+.bottom {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 0 auto;
   width: 100%;
-  height: 5rem;
-  justify-content: space-evenly;
-  margin-top: 1rem;
-  z-index: 1;
+}
 
-  @include for-phone-only {
-    height: 3rem;
-  }
+.top {
+  translate: 0 32px;
+}
 
-  a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+.bottom {
+  translate: 0 -32px;
+}
 
-    &:hover,
-    &:active {
-      transform: scale(1.2);
-    }
+// The image is pre-cropped to the hand (1600x1255), so it is simply shown
+// contained. The box takes whatever height is left, but never more than the
+// image renders at, so the text hugs it.
+$artwork-ratio: 1.275;
+
+.artwork {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  max-height: calc((100vw - 2rem) / #{$artwork-ratio});
+  user-select: none;
+
+  @include for-desktop {
+    max-height: min(calc((100vw - 2rem) / #{$artwork-ratio}), 46svh);
   }
 
   img {
-    height: 100%;
-    width: auto;
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    pointer-events: none;
   }
 }
 
-.unknown-link {
-  display: block;
-  z-index: 1;
-}
-
-.unknown {
-  display: block;
-  height: calc(50vh - 1.5rem);
-  width: auto;
-  user-select: none;
-  cursor: pointer;
-  z-index: 1;
-
-  &:hover {
-    transform: scale(1.05);
-  }
-
-  &:active {
-    transform: scale(1.1);
-  }
+.album {
+  font-size: clamp(2.75rem, 7.5vmin, 5rem);
+  line-height: 1;
 
   @include for-phone-only {
-    width: 100%;
-    height: auto;
+    font-size: min(14vw, 4.5rem);
+  }
+}
+
+.subtitle {
+  margin-top: 0.25rem;
+  font-size: clamp(1rem, 2.8vmin, 1.6rem);
+  font-style: italic;
+  font-weight: 700;
+
+  @include for-phone-only {
+    font-size: min(5.5vw, 1.8rem);
+  }
+}
+
+.details {
+  font-size: clamp(0.9rem, 2.4vmin, 1.3rem);
+
+  @include for-phone-only {
+    font-size: min(4.4vw, 1.5rem);
+  }
+}
+
+.tickets {
+  margin-top: 0.75rem;
+  font-size: clamp(1.25rem, 3.8vmin, 2rem);
+
+  @include for-phone-only {
+    font-size: min(7vw, 2.4rem);
   }
 }
 
 .footer {
-  height: 2rem;
-  margin-bottom: 1rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: $footer-space;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 1;
-
-  &.light {
-    .copyright {
-      color: $color-black;
-      text-shadow: 1px 1px 0 $color-white, 2px 2px 0 $color-white;
-      filter: none;
-    }
-  }
-
-  @include for-phone-only {
-    position: fixed;
-    bottom: 0;
-  }
 
   .copyright {
     text-align: center;
-    color: $color-white;
+    color: $color-black;
     font-size: 0.7rem;
-    letter-spacing: -1px;
-    font-weight: 400;
-    text-shadow: 0px 1px 0 $color-black, 0px 1px 0 $color-black;
-    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
 
     @include for-desktop {
-      font-size: 1.4rem;
+      font-size: 0.9rem;
     }
   }
 }

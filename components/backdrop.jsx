@@ -1,11 +1,14 @@
 "use client";
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { getRandomNumberBetween } from "@/app/utils";
 import useStore from "@/app/store";
 import "@/styles/backdrop.scss";
 
 export default function Backdrop() {
+  const pathname = usePathname();
   const { lightMode, flashing, setFlashing, flashingEnabled } = useStore();
+  const subtle = pathname === "/";
 
   useEffect(() => {
     if (!flashingEnabled) {
@@ -42,6 +45,10 @@ export default function Backdrop() {
   }, [setFlashing, flashingEnabled]);
 
   return (
-    <div className={`backdrop${flashing || lightMode ? " flashing" : ""}`} />
+    <div
+      className={`backdrop${flashing || lightMode ? " flashing" : ""}${
+        subtle ? " subtle" : ""
+      }`}
+    />
   );
 }

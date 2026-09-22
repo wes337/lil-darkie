@@ -1,25 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import { CDN_URL } from "@/app/assets";
+import { useEffect } from "react";
 import useStore from "@/app/store";
-import { getRandomNumberBetween, isMobileSizedScreen } from "@/app/utils";
-import NewContentButton from "@/components/new-content-button";
 import styles from "@/styles/landing.module.scss";
 
 const TICKETS_URL =
   "https://www.neckofthewoodssf.com/tm-event/lil-darkie-album-release-show/";
 
 export default function Landing() {
-  const { lightMode, setLightMode, scroll, setNoScroll } = useStore();
-  const [backdropTranslate, setBackdropTranslate] = useState(
-    "translate(0%, 0%) scaleX(1)"
-  );
+  const { setLightMode, setNoScroll } = useStore();
+
+  const openTickets = () => {
+    window.open(TICKETS_URL, "_blank", "noopener");
+  };
 
   useEffect(() => {
     setLightMode(false);
-
     setNoScroll(true);
 
     return () => {
@@ -28,85 +24,28 @@ export default function Landing() {
     };
   }, [setLightMode, setNoScroll]);
 
-  const randomizeBackdropTranslate = () => {
-    if (isMobileSizedScreen()) {
-      const flipX = getRandomNumberBetween(0, 1) == 1;
-      const flipY = getRandomNumberBetween(0, 1) == 1;
-      setBackdropTranslate(
-        `translate(0%, 0%) scaleX(${flipX ? "-1" : "1"}) scaleY(${
-          flipY ? "-1" : "1"
-        })`
-      );
-      return;
-    }
-
-    const x = getRandomNumberBetween(-5, 5);
-    const y = getRandomNumberBetween(-30, 30);
-    const flip = getRandomNumberBetween(0, 1) == 1;
-
-    setBackdropTranslate(
-      `translate(${x}%, ${y}%) scaleX(${flip ? "-1" : "1"})`
-    );
-  };
-
-  useEffect(() => {
-    randomizeBackdropTranslate();
-  }, []);
-
   return (
-    <div className={`${styles.landing} ${lightMode ? styles.light : ""}`}>
-      <div
-        className={styles["new-content-button"]}
-        style={{
-          transform: `translate(${scroll * -0.1}px, ${scroll * -0.5}px)`,
-        }}
-      >
-        <NewContentButton />
+    <div className={styles.landing} onClick={openTickets}>
+      <div className={styles.top}>
+        <h1 className={styles.album}>“red”</h1>
+        <h2 className={styles.subtitle}>album release show</h2>
       </div>
-      <div className={styles.backdrop}>
-        <img
-          src={`${CDN_URL}/faces.png`}
-          alt=""
-          style={{ transform: backdropTranslate }}
-        />
+
+      <div className={styles.artwork}>
+        <img src="/images/red/background.jpeg" alt="" draggable={false} />
       </div>
-      <div className={styles.body}>
-        <div className={styles.hero}>
-          <Link
-            className={styles["unknown-link"]}
-            href={TICKETS_URL}
-            target="_blank"
-          >
-            <img
-              className={styles.unknown}
-              src={`${CDN_URL}/unknown.png`}
-              alt="Release Show Tickets"
-            />
-          </Link>
-          <Link
-            className={styles["release-show"]}
-            href={TICKETS_URL}
-            target="_blank"
-          >
-            Release Show Tickets
-          </Link>
-        </div>
-        <div className={styles.links}>
-          <Link href="https://open.spotify.com/artist/62F9BiUmjqeXbBztCwiX1U?si=37h8I4wWQCeXkm2V5Bz7Jg" target="_blank">
-            <img src={`${CDN_URL}/icons/spotify.png`} alt="Spotify" />
-          </Link>
-          <Link href="https://music.apple.com/us/artist/lil-darkie/1411605197" target="_blank">
-            <img src={`${CDN_URL}/icons/apple.png`} alt="Apple Music" />
-          </Link>
-          <Link href="https://soundcloud.com/lildvrkie" target="_blank">
-            <img src={`${CDN_URL}/icons/soundcloud.png`} alt="Soundcloud" />
-          </Link>
-          <Link href="https://www.youtube.com/@lildvrkie" target="_blank">
-            <img src={`${CDN_URL}/icons/youtube.png`} alt="YouTube" />
-          </Link>
-        </div>
+
+      <div className={styles.bottom}>
+        <p className={styles.details}>
+          Saturday October 17th
+          <br />
+          406 Clement St, San Francisco, CA 94118
+          <br />@ Neck of the Woods
+        </p>
+        <p className={styles.tickets}>tickets available here</p>
       </div>
-      <div className={`${styles.footer} ${lightMode ? styles.light : ""}`}>
+
+      <div className={styles.footer}>
         <div className={styles.copyright}>
           Copyright © 2026 Lil Darkie® All Rights Reserved
         </div>

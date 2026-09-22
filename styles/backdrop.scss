@@ -20,6 +20,15 @@
     filter: invert(0);
   }
 
+  // Landing page: same grain, toned down.
+  &.subtle {
+    opacity: 0.08;
+
+    &.flashing {
+      opacity: 0.2;
+    }
+  }
+
   @keyframes changeBackground {
     0% {
       background-image: url($cdn-url + "/textures/dust.png");
