@@ -16,6 +16,9 @@ export default function GameDialog({ game, onClose, onTalk, onSound }) {
     const element = ref.current;
     const origin = document.activeElement;
     element.showModal();
+    // showModal focuses the close button, which mobile Safari rings even after a tap.
+    // Start on the message instead; the ring still shows when the button is tabbed to.
+    answerRef.current?.focus({ preventScroll: true });
     return () => {
       element.close();
       if (origin?.isConnected && !origin.closest("[inert]"))
