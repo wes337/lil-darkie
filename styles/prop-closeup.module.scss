@@ -1,0 +1,80 @@
+.view {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+  background: #a4141a;
+}
+
+.canvas { position: absolute; inset: 0; overflow: hidden; isolation: isolate; }
+.wall { position: absolute; width: 230%; height: 210%; left: -72%; top: -60%; pointer-events: none; }
+.canvas:is([data-view="safe-keypad"], [data-view="safe-interior"], [data-view="desk-note"]) .wall { height: 250%; top: -65%; }
+.content { position: absolute; inset: 8% 12% 14%; display: grid; place-items: center; container-type: size; }
+.canvas[data-view="desk"] .content { align-items: end; }
+.subject {
+  width: min(100cqw, calc(100cqh * var(--asset-ratio)));
+  aspect-ratio: var(--asset-ratio);
+}
+
+// Bring the floor behind the rear legs instead of the front edge of the table.
+.canvas[data-view="desk"] .wall { top: -68%; }
+@media (min-width: 701px) {
+  .canvas[data-view="desk"] .content { inset: 4% 5% 12%; }
+  // The square assembly includes empty space above the props, so allow a taller box.
+  .canvas[data-view="desk"] .subject { width: min(100cqw, 104svh); }
+}
+.back {
+  position: absolute;
+  left: max(1.5vw, env(safe-area-inset-left));
+  top: max(1svh, env(safe-area-inset-top));
+  width: clamp(72px, 9vw, 132px);
+  height: clamp(72px, 9vw, 132px);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  filter: drop-shadow(2px 3px 2px #0006);
+  -webkit-tap-highlight-color: transparent;
+
+  img { width: 100%; height: 100%; pointer-events: none; }
+  &:enabled:active { scale: 1.08; rotate: -5deg; filter: drop-shadow(3px 5px 3px #0009); }
+  @media (hover: hover) {
+    &:enabled:hover { scale: 1.08; rotate: -5deg; filter: drop-shadow(3px 5px 3px #0009); }
+  }
+  &:disabled { cursor: default; }
+  &:focus-visible { outline: 2px solid #ffd333; outline-offset: 3px; }
+}
+
+@media (max-width: 700px) and (orientation: portrait) {
+  .back { width: 76px; height: 76px; left: max(4px, env(safe-area-inset-left)); }
+  .content { inset: 8% 6% 16%; }
+  // Crop the table edges while keeping the monitor and lamp inside the viewport.
+  .canvas[data-view="desk"] .content { left: -13%; right: -7%; }
+  .canvas[data-view="desk"] .subject { width: 100cqw; }
+  .canvas[data-view="desk"] .wall { top: -73%; }
+  // The back wall meets the floor at about 83% of this crop.
+  .canvas[data-view="mouse-hole"] .content {
+    inset: 8% -12% 17%;
+    align-items: end;
+  }
+}
+
+.canvas:is([data-view="computer-monitor"], [data-view="password-document"]) + .back {
+  z-index: 1;
+  left: max(18px, env(safe-area-inset-left));
+  top: max(14px, env(safe-area-inset-top));
+  width: 64px;
+  height: 64px;
+}
+
+@media (max-width: 700px), (max-height: 500px) and (pointer: coarse) {
+  .canvas:is([data-view="computer-monitor"], [data-view="password-document"]) + .back {
+    left: max(12px, env(safe-area-inset-left));
+    top: calc(10px + env(safe-area-inset-top));
+    width: 48px;
+    height: 48px;
+  }
+}

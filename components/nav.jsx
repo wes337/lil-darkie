@@ -9,7 +9,7 @@ import "@/styles/nav.scss";
 
 export default function Nav() {
   const pathname = usePathname();
-  const { navOpen, setNavOpen, sticky, setSticky, setScroll, setFlashing } =
+  const { navOpen, setNavOpen, sticky, setSticky, setScroll, setFlashing, gameStarted } =
     useStore();
 
   useEffect(() => {
@@ -28,8 +28,10 @@ export default function Nav() {
 
     window.addEventListener("scroll", onScroll);
 
-    return () => window.removeEventListener("scoll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, [setScroll, setSticky]);
+
+  const gamePlaying = pathname === "/" && gameStarted;
 
   return (
     <>
@@ -39,11 +41,15 @@ export default function Nav() {
       />
       <button
         className={`mobile-nav-button${sticky ? " sticky" : ""}`}
+        data-game-landing={pathname === "/"}
+        data-game-playing={gamePlaying}
+        disabled={gamePlaying}
+        aria-hidden={gamePlaying}
         onClick={() => setNavOpen(true)}
       >
         <Image src={ASSETS.menu} alt="Menu" width={98} height={66} />
       </button>
-      <div className={`nav${navOpen ? " open" : ""}`}>
+      <div className={`nav${navOpen ? " open" : ""}`} inert={!navOpen}>
         <div className="nav-header">
           <Image
             className="nav-logo"

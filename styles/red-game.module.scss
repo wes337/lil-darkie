@@ -1,0 +1,168 @@
+.game {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  isolation: isolate;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  overscroll-behavior: contain;
+
+  img {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    pointer-events: none;
+  }
+
+  button { touch-action: manipulation; }
+}
+
+.view {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  &[data-active="true"] {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.curtain {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: #080808;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--room-fade-duration) ease-in-out;
+}
+
+.game[data-transition="out"] .curtain {
+  opacity: 1;
+}
+
+.start {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: max-content;
+  max-width: calc(100% - 32px);
+
+  p { color: #fff; max-width: 28rem; font-size: 12px; }
+}
+
+.play {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(310px, 38vw, 420px);
+  max-width: 100%;
+  aspect-ratio: 3.7;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  font-family: inherit;
+  font-size: clamp(24px, 2.5vw, 32px);
+  font-weight: 400;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0 #000;
+  line-height: 1.1;
+  filter: drop-shadow(3px 4px 2px #08080880);
+  cursor: pointer;
+
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  span { position: relative; }
+  .playYellow { opacity: 0; }
+  .playRed { opacity: 1; }
+  &:disabled { opacity: 0.6; cursor: wait; }
+  &:enabled:is(:hover, :focus-visible, :active) {
+    scale: 1.15;
+    rotate: -2deg;
+    filter: drop-shadow(3px 5px 3px #0009);
+    .playYellow { opacity: 1; }
+    .playRed { opacity: 0; }
+  }
+}
+
+.navigation { position: absolute; inset: 0; pointer-events: none; }
+
+.arrow {
+  position: absolute;
+  width: clamp(72px, 9vw, 132px);
+  height: clamp(72px, 9vw, 132px);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  pointer-events: auto;
+  filter: drop-shadow(2px 3px 2px #0006);
+  -webkit-tap-highlight-color: transparent;
+
+  img { display: block; width: 100%; height: 100%; pointer-events: none; }
+  &:enabled:active {
+    scale: 1.08;
+    rotate: var(--hover-tilt, -5deg);
+    filter: brightness(1.12) drop-shadow(3px 5px 3px #0009);
+  }
+  @media (hover: hover) {
+    &:enabled:hover {
+      scale: 1.08;
+      rotate: var(--hover-tilt, -5deg);
+      filter: brightness(1.12) drop-shadow(3px 5px 3px #0009);
+    }
+  }
+  &:disabled { cursor: default; }
+}
+
+.play:focus-visible, .arrow:focus-visible {
+  outline: 2px solid #fff0a1;
+  outline-offset: 5px;
+}
+
+.left { left: max(1.5vw, env(safe-area-inset-left)); top: 44%; }
+.right { --hover-tilt: 5deg; right: max(1.5vw, env(safe-area-inset-right)); top: 44%; }
+.up { left: 50%; top: max(1svh, env(safe-area-inset-top)); translate: -50% 0; }
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) and (orientation: portrait) {
+  .arrow { width: 76px; height: 76px; }
+  .left, .right { top: auto; bottom: max(12px, env(safe-area-inset-bottom)); }
+  .left { left: max(4px, env(safe-area-inset-left)); }
+  .right { right: max(4px, env(safe-area-inset-right)); }
+  // The inventory sits between the arrows in this row (see .inventory in game-ui.module.scss).
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .curtain { display: none; }
+}

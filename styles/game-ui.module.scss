@@ -1,0 +1,96 @@
+.dialog {
+  box-sizing: border-box;
+  width: min(600px, calc(100% - 56px));
+  margin: auto;
+  padding: clamp(22px, 4vw, 36px);
+  overflow: visible;
+  text-align: center;
+  border: 0;
+  background: none;
+  isolation: isolate;
+  color: #fff;
+  font: inherit;
+  font-size: 21px;
+  &::backdrop { background: #08080865; }
+  // The box color lives on a layer so context art (.dialogArt) can sit between it and the page.
+  &::before { content: ""; position: absolute; inset: 0; z-index: -1; background: #100909f5; }
+  p { margin: 0; line-height: 1.7; white-space: pre-line; outline: 0; }
+}
+// Prop art centered behind the text box, bigger than it, for visual context.
+.dialogArt {
+  position: absolute; z-index: -2; left: 50%; top: 50%; translate: -50% -50%;
+  width: 125%; height: max(190%, 320px); container-type: size;
+  display: grid; place-items: center; pointer-events: none;
+  > span { width: min(100cqw, calc(100cqh * var(--prop-ratio))); }
+  @media (min-width: 701px) { width: 170%; height: min(max(300%, 620px), 92svh); }
+}
+.dialogBody { max-height: 74svh; overflow-y: auto; overscroll-behavior: contain; }
+.close {
+  position: absolute; top: -12px; right: -12px; width: 48px; height: 48px;
+  background: none; border: 0; padding: 4px; cursor: pointer;
+  img { width: 100%; height: 100%; }
+  &:hover, &:active { scale: 1.08; rotate: -5deg; filter: drop-shadow(3px 5px 3px #0009); }
+}
+.textButton {
+  box-sizing: border-box; display: inline-grid; place-items: center;
+  width: min(340px, calc(100% - 8px)); min-height: 60px; padding: 14px 28px;
+  border: 0; background: url('/images/red-game/buttons/paint-red.png') center / 100% 100% no-repeat;
+  color: #fff; font: inherit; font-size: 16px; font-weight: 400; line-height: 1.4;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0 #000; filter: drop-shadow(3px 4px 2px #08080880); cursor: pointer;
+  &[data-visited="true"] { opacity: .75; }
+  &:enabled:is(:focus-visible, :active) { background-image: url('/images/red-game/buttons/paint-yellow.png'); opacity: 1; }
+  @media (hover: hover) {
+    &:enabled:hover { background-image: url('/images/red-game/buttons/paint-yellow.png'); opacity: 1; }
+  }
+  &:disabled { opacity: .6; cursor: wait; }
+}
+.dialogBody > .textButton { margin-top: 18px; }
+.choices { display: flex; flex-direction: column; align-items: center; gap: 0; margin-top: 20px; }
+.close:focus-visible, .textButton:focus-visible, .item:focus-visible {
+  outline: 2px solid #ffd333; outline-offset: 3px;
+}
+.inventory {
+  box-sizing: border-box; width: max-content;
+  position: absolute; z-index: 4; bottom: max(10px, env(safe-area-inset-bottom)); left: 50%; translate: -50% 0;
+  max-width: calc(100% - 24px); display: flex; gap: 8px;
+}
+// Each tile carries its own tint, so the gaps between them show the room.
+.items { min-width: 0; display: flex; overflow-x: auto; align-items: stretch; gap: 3px; scrollbar-width: thin; scrollbar-color: #784c40 transparent; }
+.item {
+  box-sizing: border-box;
+  flex: 0 0 82px; width: 82px; min-height: 82px; padding: 6px; display: grid; place-items: center;
+  border: 0; background: #00000033; color: #fff4d4; font: inherit; cursor: pointer;
+  &:hover { background: linear-gradient(#ffffff0d, #ffffff0d) #00000033; }
+  &[aria-pressed="true"] { background: linear-gradient(#ffd33330, #ffd33330) #00000033; }
+}
+.itemArt { width: 45px; height: 44px; display: grid; place-items: center; container-type: size; overflow: hidden; }
+// The art grows inside the tile; the tile itself keeps its size.
+.item:is(:active, [aria-pressed="true"]) .itemArt { scale: 1.25; }
+@media (hover: hover) { .item:hover .itemArt { scale: 1.25; } }
+// Follows the mouse while an item is selected (HeldItem in inventory.jsx); offset so it doesn't cover the target.
+.heldItem {
+  position: fixed; z-index: 1000; left: 14px; top: 14px; width: 45px; pointer-events: none;
+  filter: drop-shadow(2px 3px 2px #0008);
+  &[hidden] { display: none; }
+  @media not ((hover: hover) and (pointer: fine)) { display: none; }
+}
+.itemArt > span { width: min(100cqw, calc(100cqh * var(--prop-ratio))); height: auto; }
+@media (max-width: 700px) {
+  // Shares the bottom row with the 76px nav arrows (red-game.module.scss): sits between them, vertically centered.
+  .inventory {
+    bottom: calc(max(12px, env(safe-area-inset-bottom)) + 6px);
+    left: calc(max(4px, env(safe-area-inset-left)) + 84px); right: calc(max(4px, env(safe-area-inset-right)) + 84px);
+    translate: none; width: auto; max-width: none;
+  }
+  .items { flex: 1; justify-content: safe center; align-items: center; }
+  // Square tiles that shrink from 64px so the most you can hold (4) fits beside the arrows.
+  .item { flex: 0 1 64px; width: auto; min-width: 32px; min-height: 0; aspect-ratio: 1; padding: 4px; }
+  .itemArt { width: min(44px, 100%); height: auto; aspect-ratio: 1; }
+  .dialog { font-size: 16px; }
+  .textButton[data-topic="escape"] {
+    font-size: clamp(10px, 3.2vw, 14px);
+    padding-inline: 16px;
+    white-space: nowrap;
+  }
+}
