@@ -31,7 +31,11 @@ export default function Landing() {
           setGameRun((run) => run + 1);
         }}
       />
-      <footer className={styles.footer} data-playing={gameStarted} aria-hidden={gameStarted}>
+      <footer
+        className={styles.footer}
+        data-playing={gameStarted}
+        aria-hidden={gameStarted}
+      >
         Copyright © 2026 Lil Darkie® All Rights Reserved
       </footer>
     </main>

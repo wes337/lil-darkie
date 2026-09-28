@@ -69,7 +69,7 @@ export default function Landing() {
           style={{
             transform: `translateY(-${Math.max(
               scroll * 0.3,
-              0
+              0,
             )}%) scale(${Math.max(1, 1 + scroll * 0.001)})`,
           }}
         >
@@ -182,7 +182,7 @@ function TourDates() {
                 />
               </Link>
             );
-          }
+          },
         )}
       </div>
     </div>

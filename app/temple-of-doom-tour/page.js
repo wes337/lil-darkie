@@ -54,7 +54,7 @@ export default function TempleOfDoomTour() {
                   {soldOut && <div className="sold-out">Sold out!</div>}
                 </Link>
               );
-            }
+            },
           )}
         </div>
       </div>

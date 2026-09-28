@@ -15,19 +15,39 @@
   }
 }
 
-.sprite:is([data-asset="flower-wilted"], [data-asset="flower-blooming"], [data-asset="safe-handle"], [data-asset="safe-keypad"], [data-asset="footprints"], [data-asset="computer-monitor"], [data-asset="computer-tower"], [data-asset="keyboard"]) > img {
-  opacity: .95;
+.sprite:is(
+    [data-asset="flower-wilted"],
+    [data-asset="flower-blooming"],
+    [data-asset="safe-handle"],
+    [data-asset="safe-keypad"],
+    [data-asset="footprints"],
+    [data-asset="computer-monitor"],
+    [data-asset="computer-tower"],
+    [data-asset="keyboard"]
+  )
+  > img {
+  opacity: 0.95;
 }
 
-.sprite[data-asset="stool"] > img { filter: brightness(0.8); }
+.sprite[data-asset="stool"] > img {
+  filter: brightness(0.8);
+}
 
-button.sprite, .deskHotspot, .doorHotspot {
+button.sprite,
+.deskHotspot,
+.doorHotspot {
   pointer-events: auto;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 
-  &:disabled { pointer-events: none; cursor: default; }
-  &:focus-visible { outline: 2px solid #ffd333; outline-offset: 8px; }
+  &:disabled {
+    pointer-events: none;
+    cursor: default;
+  }
+  &:focus-visible {
+    outline: 2px solid #ffd333;
+    outline-offset: 8px;
+  }
 }
 
 @media (hover: hover) {
@@ -48,27 +68,89 @@ button.sprite, .deskHotspot, .doorHotspot {
   pointer-events: none;
 }
 
-.deskPlacement, .floorLampPlacement, .safePlacement, .plantPlacement,
-.footprintsPlacement, .holePlacement, .wallLightPlacement, .mirrorPlacement,
-.sinkPlacement, .bearPlacement {
+.deskPlacement,
+.floorLampPlacement,
+.safePlacement,
+.plantPlacement,
+.footprintsPlacement,
+.holePlacement,
+.wallLightPlacement,
+.mirrorPlacement,
+.sinkPlacement,
+.bearPlacement {
   position: absolute;
   translate: -50% 0;
 }
 
-.deskPlacement { left: 39%; bottom: 18%; width: 48svh; }
-.floorLampPlacement { left: 73%; bottom: 18%; width: 18svh; }
-.deskSet { position: relative; width: 100%; aspect-ratio: 1; }
-.deskSet > .sprite { position: absolute; }
-.desk { width: 100%; left: 0; bottom: 0; }
+.deskPlacement {
+  left: 39%;
+  bottom: 18%;
+  width: 48svh;
+}
+.floorLampPlacement {
+  left: 73%;
+  bottom: 18%;
+  width: 18svh;
+}
+.deskSet {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+}
+.deskSet > .sprite {
+  position: absolute;
+}
+.desk {
+  width: 100%;
+  left: 0;
+  bottom: 0;
+}
 // Feet sit behind the front edge; flat objects follow the tabletop's shallow angle.
-.monitor { width: 29%; left: 16%; bottom: 50%; }
-.tower { width: 14.5%; left: 41%; bottom: 49%; }
-.deskLamp { width: 22%; left: 72%; bottom: 51.5%; }
-.keyboard, .note { scale: 1 var(--surface-squash); transform-origin: 50% 100%; }
-.keyboard { --surface-squash: 0.5; width: 28%; left: 14%; bottom: 45.2%; }
-.note { --surface-squash: 0.4; width: 16%; left: 68%; bottom: 46.6%; rotate: -3deg; }
-.thread { width: 5.5%; left: 60%; bottom: 49.5%; }
-.deskHotspot { position: absolute; inset: 19% 0 0; padding: 0; border: 0; background: none; }
+.monitor {
+  width: 29%;
+  left: 16%;
+  bottom: 50%;
+}
+.tower {
+  width: 14.5%;
+  left: 41%;
+  bottom: 49%;
+}
+.deskLamp {
+  width: 22%;
+  left: 72%;
+  bottom: 51.5%;
+}
+.keyboard,
+.note {
+  scale: 1 var(--surface-squash);
+  transform-origin: 50% 100%;
+}
+.keyboard {
+  --surface-squash: 0.5;
+  width: 28%;
+  left: 14%;
+  bottom: 45.2%;
+}
+.note {
+  --surface-squash: 0.4;
+  width: 16%;
+  left: 68%;
+  bottom: 46.6%;
+  rotate: -3deg;
+}
+.thread {
+  width: 5.5%;
+  left: 60%;
+  bottom: 49.5%;
+}
+.deskHotspot {
+  position: absolute;
+  inset: 19% 0 0;
+  padding: 0;
+  border: 0;
+  background: none;
+}
 @media (hover: hover) {
   .deskPlacement:has(.deskHotspot:enabled:hover) .deskSet {
     scale: 1.01;
@@ -77,25 +159,80 @@ button.sprite, .deskHotspot, .doorHotspot {
   }
 }
 
-.safePlacement { left: 32%; top: 23%; width: min(34vw, 60svh, 480px); }
-.safeSet { position: relative; width: 100%; }
-.safeSet > .safeHandle { position: absolute; width: 28%; left: 13%; top: 40%; }
-.safeSet > .safeKeypad { position: absolute; width: 13%; left: 67.5%; top: 19.5%; }
-.safeSet > .safeKey { position: absolute; width: 14%; left: 64%; top: 35%; scale: 1 0.5; transform-origin: 50% 0; }
-.safeSet > .safeDisc { position: absolute; width: 22%; left: 17%; top: 76%; }
-.plantPlacement { left: 74%; bottom: 10%; width: 34svh; }
-.plantSet { width: 100%; }
-.plantFlower { z-index: 2; margin-bottom: -4%; }
+.safePlacement {
+  left: 32%;
+  top: 23%;
+  width: min(34vw, 60svh, 480px);
+}
+.safeSet {
+  position: relative;
+  width: 100%;
+}
+.safeSet > .safeHandle {
+  position: absolute;
+  width: 28%;
+  left: 13%;
+  top: 40%;
+}
+.safeSet > .safeKeypad {
+  position: absolute;
+  width: 13%;
+  left: 67.5%;
+  top: 19.5%;
+}
+.safeSet > .safeKey {
+  position: absolute;
+  width: 14%;
+  left: 64%;
+  top: 35%;
+  scale: 1 0.5;
+  transform-origin: 50% 0;
+}
+.safeSet > .safeDisc {
+  position: absolute;
+  width: 22%;
+  left: 17%;
+  top: 76%;
+}
+.plantPlacement {
+  left: 74%;
+  bottom: 10%;
+  width: 34svh;
+}
+.plantSet {
+  width: 100%;
+}
+.plantFlower {
+  z-index: 2;
+  margin-bottom: -4%;
+}
 // Match the pot's size and position across the differently shaped plant sprites.
-.plantFlower[data-asset="flower-blooming"] { width: 64%; margin-inline: auto; left: 5%; }
+.plantFlower[data-asset="flower-blooming"] {
+  width: 64%;
+  margin-inline: auto;
+  left: 5%;
+}
 // GameDialog shows these props behind its text box, so hide the room copies meanwhile.
 :global([data-dialog-source="flower-wilted"]) .plantFlower,
 :global([data-dialog-source="thread-spool"]) .thread,
 :global([data-dialog-source="desk-lamp-on"]) .deskLamp,
-:global([data-dialog-source="bear-ripped"]) .bearPlacement { visibility: hidden; }
-.plantStool { width: 65%; margin-inline: auto; }
-.holePlacement { left: 22%; bottom: 20%; width: 10svh; }
-.footprintsPlacement { left: calc(22% - 10svh); top: 80%; width: 24svh; }
+:global([data-dialog-source="bear-ripped"]) .bearPlacement {
+  visibility: hidden;
+}
+.plantStool {
+  width: 65%;
+  margin-inline: auto;
+}
+.holePlacement {
+  left: 22%;
+  bottom: 20%;
+  width: 10svh;
+}
+.footprintsPlacement {
+  left: calc(22% - 10svh);
+  top: 80%;
+  width: 24svh;
+}
 
 .props[data-room="sink"] {
   --sink-width: 34svh;
@@ -104,11 +241,27 @@ button.sprite, .deskHotspot, .doorHotspot {
   --mirror-bottom: calc(var(--sink-bottom) + var(--sink-width) * 1.02);
 }
 // Follow the mirror's painted aspect ratio, leaving a small gap above it.
-.wallLightPlacement { left: 31%; bottom: calc(var(--mirror-bottom) + var(--mirror-width) * 1279 / 495 + 6px); width: 26svh; }
+.wallLightPlacement {
+  left: 31%;
+  bottom: calc(var(--mirror-bottom) + var(--mirror-width) * 1279 / 495 + 6px);
+  width: 26svh;
+}
 // Anchor the mirror's lower edge behind the basin at every sink size.
-.mirrorPlacement { left: 31%; bottom: var(--mirror-bottom); width: var(--mirror-width); }
-.sinkPlacement { left: 31%; bottom: var(--sink-bottom); width: var(--sink-width); }
-.bearPlacement { left: 72%; bottom: 12%; width: 24svh; }
+.mirrorPlacement {
+  left: 31%;
+  bottom: var(--mirror-bottom);
+  width: var(--mirror-width);
+}
+.sinkPlacement {
+  left: 31%;
+  bottom: var(--sink-bottom);
+  width: var(--sink-width);
+}
+.bearPlacement {
+  left: 72%;
+  bottom: 12%;
+  width: 24svh;
+}
 
 .doorHotspot {
   position: absolute;
@@ -137,32 +290,80 @@ button.sprite, .deskHotspot, .doorHotspot {
 }
 
 @media (min-width: 701px) {
-  .sinkPlacement, .mirrorPlacement, .wallLightPlacement { left: 36%; }
-  .bearPlacement { left: 66%; }
+  .sinkPlacement,
+  .mirrorPlacement,
+  .wallLightPlacement {
+    left: 36%;
+  }
+  .bearPlacement {
+    left: 66%;
+  }
 }
 
 @media (max-width: 700px) and (orientation: portrait) {
-  .deskPlacement { left: 33%; bottom: 21%; width: 54vw; }
-  .floorLampPlacement { left: 84%; bottom: 21%; width: 20vw; }
-  .safePlacement { left: 50%; top: 16%; width: 68vw; }
-  .plantPlacement { left: 73%; bottom: 12%; width: 42vw; }
-  .holePlacement { left: 24%; width: 14vw; }
-  .footprintsPlacement { left: 10%; top: 80%; width: 32vw; }
-  .wallLightPlacement { width: 46vw; }
-  .props[data-room="sink"] { --sink-width: 50vw; --mirror-width: 31vw; }
-  .bearPlacement { left: 74%; width: 31vw; }
-  .doorHotspot { left: 0; top: 35%; width: 15%; height: 48%; }
-
+  .deskPlacement {
+    left: 33%;
+    bottom: 21%;
+    width: 54vw;
+  }
+  .floorLampPlacement {
+    left: 84%;
+    bottom: 21%;
+    width: 20vw;
+  }
+  .safePlacement {
+    left: 50%;
+    top: 16%;
+    width: 68vw;
+  }
+  .plantPlacement {
+    left: 73%;
+    bottom: 12%;
+    width: 42vw;
+  }
+  .holePlacement {
+    left: 24%;
+    width: 14vw;
+  }
+  .footprintsPlacement {
+    left: 10%;
+    top: 80%;
+    width: 32vw;
+  }
+  .wallLightPlacement {
+    width: 46vw;
+  }
+  .props[data-room="sink"] {
+    --sink-width: 50vw;
+    --mirror-width: 31vw;
+  }
+  .bearPlacement {
+    left: 74%;
+    width: 31vw;
+  }
+  .doorHotspot {
+    left: 0;
+    top: 35%;
+    width: 15%;
+    height: 48%;
+  }
 }
 
 @media (max-width: 375px) and (orientation: portrait) {
-  .safePlacement { top: 12%; }
+  .safePlacement {
+    top: 12%;
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
   @keyframes props-pulse {
-    0%, 100% { scale: 1; }
-    35% { scale: 1.03; }
+    0%,
+    100% {
+      scale: 1;
+    }
+    35% {
+      scale: 1.03;
+    }
   }
   :global([data-active="true"][data-playing="true"]) > .props {
     animation: props-pulse 650ms cubic-bezier(0.25, 0.1, 0.25, 1) both;

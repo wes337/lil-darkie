@@ -1,6 +1,6 @@
 {
   "desk": {
-    "src": "/images/red-game/computer-back-wall/props/desk-simple.png",
+    "src": "/images/red-game/computer-back-wall/props/desk-simple.webp",
     "width": 1625,
     "height": 968,
     "bounds": [
@@ -12,7 +12,7 @@
     "label": "desk"
   },
   "computer-monitor": {
-    "src": "/images/red-game/computer-back-wall/props/computer-monitor-simple.png",
+    "src": "/images/red-game/computer-back-wall/props/computer-monitor-simple.webp",
     "width": 1254,
     "height": 1254,
     "bounds": [
@@ -24,7 +24,7 @@
     "label": "computer monitor"
   },
   "computer-tower": {
-    "src": "/images/red-game/computer-back-wall/props/computer-tower-simple.png",
+    "src": "/images/red-game/computer-back-wall/props/computer-tower-simple.webp",
     "width": 1254,
     "height": 1254,
     "bounds": [
@@ -36,7 +36,7 @@
     "label": "computer tower"
   },
   "desk-lamp-on": {
-    "src": "/images/red-game/computer-back-wall/props/desk-lamp-on-simple.png",
+    "src": "/images/red-game/computer-back-wall/props/desk-lamp-on-simple.webp",
     "width": 1235,
     "height": 1274,
     "bounds": [
@@ -48,7 +48,7 @@
     "label": "desk lamp on"
   },
   "floor-lamp-off": {
-    "src": "/images/red-game/computer-back-wall/props/floor-lamp-off-simple.png",
+    "src": "/images/red-game/computer-back-wall/props/floor-lamp-off-simple.webp",
     "width": 1024,
     "height": 1536,
     "bounds": [
@@ -60,7 +60,7 @@
     "label": "floor lamp off"
   },
   "thread-spool": {
-    "src": "/images/red-game/computer-back-wall/props/thread-spool.png",
+    "src": "/images/red-game/computer-back-wall/props/thread-spool.webp",
     "width": 1254,
     "height": 1254,
     "bounds": [
@@ -72,7 +72,7 @@
     "label": "thread spool"
   },
   "desk-note": {
-    "src": "/images/red-game/computer-back-wall/props/desk-note.png",
+    "src": "/images/red-game/computer-back-wall/props/desk-note.webp",
     "width": 1254,
     "height": 1254,
     "bounds": [
@@ -84,7 +84,7 @@
     "label": "desk note"
   },
   "keyboard": {
-    "src": "/images/red-game/computer-back-wall/props/keyboard-simple.png",
+    "src": "/images/red-game/computer-back-wall/props/keyboard-simple.webp",
     "width": 1983,
     "height": 793,
     "bounds": [
@@ -96,7 +96,7 @@
     "label": "keyboard"
   },
   "mouse": {
-    "src": "/images/red-game/computer-back-wall/props/mouse.png",
+    "src": "/images/red-game/computer-back-wall/props/mouse.webp",
     "width": 1254,
     "height": 1254,
     "bounds": [
@@ -108,7 +108,7 @@
     "label": "mouse"
   },
   "safe-interior-empty": {
-    "src": "/images/red-game/safe-right-wall/props/safe-interior-empty-simple.png",
+    "src": "/images/red-game/safe-right-wall/props/safe-interior-empty-simple.webp",
     "width": 1536,
     "height": 1024,
     "bounds": [
@@ -120,7 +120,7 @@
     "label": "safe interior empty"
   },
   "safe-door": {
-    "src": "/images/red-game/safe-right-wall/props/safe-door-no-white.png",
+    "src": "/images/red-game/safe-right-wall/props/safe-door-no-white.webp",
     "width": 1536,
     "height": 1024,
     "bounds": [
@@ -132,7 +132,7 @@
     "label": "safe door"
   },
   "safe-handle": {
-    "src": "/images/red-game/safe-right-wall/props/safe-handle-simple.png",
+    "src": "/images/red-game/safe-right-wall/props/safe-handle-simple.webp",
     "width": 1254,
     "height": 1254,
     "bounds": [
@@ -144,7 +144,7 @@
     "label": "safe handle"
   },
   "safe-keypad": {
-    "src": "/images/red-game/safe-right-wall/props/safe-keypad-simple.png",
+    "src": "/images/red-game/safe-right-wall/props/safe-keypad-simple.webp",
     "width": 1145,
     "height": 1374,
     "bounds": [
@@ -156,7 +156,7 @@
     "label": "safe keypad"
   },
   "stool": {
-    "src": "/images/red-game/safe-right-wall/props/stool-simple.png",
+    "src": "/images/red-game/safe-right-wall/props/stool-simple.webp",
     "width": 947,
     "height": 1661,
     "bounds": [
@@ -168,7 +168,7 @@
     "label": "stool"
   },
   "flower-wilted": {
-    "src": "/images/red-game/safe-right-wall/props/flower-wilted-remade.png",
+    "src": "/images/red-game/safe-right-wall/props/flower-wilted-remade.webp",
     "width": 1312,
     "height": 1199,
     "bounds": [
@@ -180,7 +180,7 @@
     "label": "flower wilted"
   },
   "mouse-hole": {
-    "src": "/images/red-game/safe-right-wall/props/mouse-hole-no-white.png",
+    "src": "/images/red-game/safe-right-wall/props/mouse-hole-no-white.webp",
     "width": 1254,
     "height": 1254,
     "bounds": [
@@ -192,7 +192,7 @@
     "label": "mouse hole"
   },
   "footprints": {
-    "src": "/images/red-game/safe-right-wall/props/footprints-outward-simple.png",
+    "src": "/images/red-game/safe-right-wall/props/footprints-outward-simple.webp",
     "width": 1254,
     "height": 1254,
     "bounds": [
@@ -204,7 +204,7 @@
     "label": "footprints"
   },
   "sink": {
-    "src": "/images/red-game/sink-left-wall/props/sink-simple.png",
+    "src": "/images/red-game/sink-left-wall/props/sink-simple.webp",
     "width": 1024,
     "height": 1536,
     "bounds": [
@@ -216,7 +216,7 @@
     "label": "sink"
   },
   "cracked-mirror": {
-    "src": "/images/red-game/sink-left-wall/props/cracked-mirror-simple.png",
+    "src": "/images/red-game/sink-left-wall/props/cracked-mirror-simple.webp",
     "width": 1024,
     "height": 1536,
     "bounds": [
@@ -228,7 +228,7 @@
     "label": "cracked mirror"
   },
   "wall-light": {
-    "src": "/images/red-game/sink-left-wall/props/wall-light-simple.png",
+    "src": "/images/red-game/sink-left-wall/props/wall-light-simple.webp",
     "width": 1983,
     "height": 793,
     "bounds": [
@@ -240,7 +240,7 @@
     "label": "wall light"
   },
   "bear-ripped": {
-    "src": "/images/red-game/sink-left-wall/props/bear-ripped-painted-face.png",
+    "src": "/images/red-game/sink-left-wall/props/bear-ripped-painted-face.webp",
     "width": 1254,
     "height": 1254,
     "bounds": [
@@ -252,7 +252,7 @@
     "label": "bear ripped"
   },
   "imaginary-friend": {
-    "src": "/images/red-game/inventory/imaginary-friend.png",
+    "src": "/images/red-game/inventory/imaginary-friend.webp",
     "width": 1254,
     "height": 1254,
     "bounds": [
@@ -264,7 +264,7 @@
     "label": "imaginary friend"
   },
   "glass-empty": {
-    "src": "/images/red-game/inventory/glass-empty-simple.png",
+    "src": "/images/red-game/inventory/glass-empty-simple.webp",
     "width": 1254,
     "height": 1254,
     "bounds": [
@@ -276,7 +276,7 @@
     "label": "glass empty"
   },
   "usb-stick": {
-    "src": "/images/red-game/inventory/usb-stick.png",
+    "src": "/images/red-game/inventory/usb-stick.webp",
     "width": 1254,
     "height": 1254,
     "bounds": [
@@ -288,7 +288,7 @@
     "label": "usb stick"
   },
   "key": {
-    "src": "/images/red-game/inventory/key-simple.png",
+    "src": "/images/red-game/inventory/key-simple.webp",
     "width": 1254,
     "height": 1254,
     "bounds": [
@@ -300,7 +300,7 @@
     "label": "key"
   },
   "cd": {
-    "src": "/images/red-game/inventory/cd-simple.png",
+    "src": "/images/red-game/inventory/cd-simple.webp",
     "width": 1774,
     "height": 887,
     "bounds": [
@@ -312,7 +312,7 @@
     "label": "cd"
   },
   "needle": {
-    "src": "/images/red-game/inventory/needle-simple.png",
+    "src": "/images/red-game/inventory/needle-simple.webp",
     "width": 1254,
     "height": 1254,
     "bounds": [
@@ -324,7 +324,7 @@
     "label": "needle"
   },
   "door-front": {
-    "src": "/images/red-game/main-room/props/door-front.png",
+    "src": "/images/red-game/main-room/props/door-front.webp",
     "width": 1024,
     "height": 1536,
     "bounds": [
@@ -336,7 +336,7 @@
     "label": "door front"
   },
   "floor-lamp-on": {
-    "src": "/images/red-game/computer-back-wall/props/floor-lamp-on-simple.png",
+    "src": "/images/red-game/computer-back-wall/props/floor-lamp-on-simple.webp",
     "width": 1024,
     "height": 1536,
     "bounds": [
@@ -348,7 +348,7 @@
     "label": "floor lamp on"
   },
   "flower-blooming": {
-    "src": "/images/red-game/safe-right-wall/props/flower-blooming-remade.png",
+    "src": "/images/red-game/safe-right-wall/props/flower-blooming-remade.webp",
     "width": 1246,
     "height": 1263,
     "bounds": [
@@ -360,7 +360,7 @@
     "label": "flower blooming"
   },
   "bear-repaired": {
-    "src": "/images/red-game/sink-left-wall/props/bear-repaired-painted-face.png",
+    "src": "/images/red-game/sink-left-wall/props/bear-repaired-painted-face.webp",
     "width": 1254,
     "height": 1254,
     "bounds": [
@@ -372,7 +372,7 @@
     "label": "bear repaired"
   },
   "glass-half-full": {
-    "src": "/images/red-game/inventory/glass-half-full-simple.png",
+    "src": "/images/red-game/inventory/glass-half-full-simple.webp",
     "width": 1254,
     "height": 1254,
     "bounds": [
@@ -384,7 +384,7 @@
     "label": "glass half full"
   },
   "needle-and-thread": {
-    "src": "/images/red-game/inventory/needle-and-thread-simple.png",
+    "src": "/images/red-game/inventory/needle-and-thread-simple.webp",
     "width": 1254,
     "height": 1254,
     "bounds": [
@@ -396,7 +396,7 @@
     "label": "needle and thread"
   },
   "mouse-hole-closeup": {
-    "src": "/images/red-game/safe-right-wall/props/mouse-hole.png",
+    "src": "/images/red-game/safe-right-wall/props/mouse-hole.webp",
     "width": 1254,
     "height": 1254,
     "bounds": [
@@ -408,7 +408,7 @@
     "label": "mouse hole close-up"
   },
   "door-floor-light": {
-    "src": "/images/red-game/main-room/props/door-floor-light.png",
+    "src": "/images/red-game/main-room/props/door-floor-light.webp",
     "width": 1683,
     "height": 935,
     "bounds": [

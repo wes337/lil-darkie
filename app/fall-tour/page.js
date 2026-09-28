@@ -103,7 +103,7 @@ export default function FallTour() {
                   {soldOut && <div className="sold-out">Sold out!</div>}
                 </Link>
               );
-            }
+            },
           )}
         </div>
         <div className="copyright">

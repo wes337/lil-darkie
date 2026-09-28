@@ -25,12 +25,14 @@ export const metadata = {
     title: "Lil Darkie",
     description: "The Official Lil Darkie Website",
     type: "website",
-    images: [{
-      url: "/images/social/lil-darkie-red-logo.png",
-      width: 1200,
-      height: 630,
-      alt: "Lil Darkie red logo on a black background",
-    }],
+    images: [
+      {
+        url: "/images/social/lil-darkie-red-logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Lil Darkie red logo on a black background",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",

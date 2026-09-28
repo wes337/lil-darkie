@@ -9,8 +9,15 @@ import "@/styles/nav.scss";
 
 export default function Nav() {
   const pathname = usePathname();
-  const { navOpen, setNavOpen, sticky, setSticky, setScroll, setFlashing, gameStarted } =
-    useStore();
+  const {
+    navOpen,
+    setNavOpen,
+    sticky,
+    setSticky,
+    setScroll,
+    setFlashing,
+    gameStarted,
+  } = useStore();
 
   useEffect(() => {
     setNavOpen(false);
@@ -48,7 +55,16 @@ export default function Nav() {
         onClick={() => setNavOpen(true)}
       >
         {/* The landing page uses a copy recolored to the red game's painted palette. */}
-        <Image src={pathname === "/" ? "/images/red-game/navigation/menu.png" : ASSETS.menu} alt="Menu" width={98} height={66} />
+        <Image
+          src={
+            pathname === "/"
+              ? "/images/red-game/navigation/menu.webp"
+              : ASSETS.menu
+          }
+          alt="Menu"
+          width={98}
+          height={66}
+        />
       </button>
       <div className={`nav${navOpen ? " open" : ""}`} inert={!navOpen}>
         <div className="nav-header">

@@ -10,8 +10,14 @@ import styles from "@/styles/top-bar.module.scss";
 
 export default function TopBar() {
   const pathname = usePathname();
-  const { lightMode, peachMode, sticky, setBloodTransition, setNavOpen, gameStarted } =
-    useStore();
+  const {
+    lightMode,
+    peachMode,
+    sticky,
+    setBloodTransition,
+    setNavOpen,
+    gameStarted,
+  } = useStore();
 
   const transitionTo = (url) => {
     if (pathname === url) {
@@ -41,7 +47,11 @@ export default function TopBar() {
 
   if (pathname === "/") {
     return (
-      <header className={styles["game-header"]} data-playing={gameStarted} aria-hidden={gameStarted}>
+      <header
+        className={styles["game-header"]}
+        data-playing={gameStarted}
+        aria-hidden={gameStarted}
+      >
         <img
           src="/images/greatest-show-in-human-history/lil-darkie.png"
           alt="Lil Darkie"

@@ -18,7 +18,9 @@
     pointer-events: none;
   }
 
-  button { touch-action: manipulation; }
+  button {
+    touch-action: manipulation;
+  }
 }
 
 .view {
@@ -60,7 +62,11 @@
   width: max-content;
   max-width: calc(100% - 32px);
 
-  p { color: #fff; max-width: 28rem; font-size: 12px; }
+  p {
+    color: #fff;
+    max-width: 28rem;
+    font-size: 12px;
+  }
 }
 
 .play {
@@ -98,20 +104,37 @@
     text-shadow: 4px 4px 0 #000;
   }
 
-  span { position: relative; }
-  .playYellow { opacity: 0; }
-  .playRed { opacity: 1; }
-  &:disabled { opacity: 0.6; cursor: wait; }
+  span {
+    position: relative;
+  }
+  .playYellow {
+    opacity: 0;
+  }
+  .playRed {
+    opacity: 1;
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
   &:enabled:is(:hover, :focus-visible, :active) {
     scale: 1.15;
     rotate: -2deg;
     filter: drop-shadow(3px 5px 3px #0009);
-    .playYellow { opacity: 1; }
-    .playRed { opacity: 0; }
+    .playYellow {
+      opacity: 1;
+    }
+    .playRed {
+      opacity: 0;
+    }
   }
 }
 
-.navigation { position: absolute; inset: 0; pointer-events: none; }
+.navigation {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
 
 .arrow {
   position: absolute;
@@ -125,7 +148,12 @@
   filter: drop-shadow(2px 3px 2px #0006);
   -webkit-tap-highlight-color: transparent;
 
-  img { display: block; width: 100%; height: 100%; pointer-events: none; }
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
   &:enabled:active {
     scale: 1.08;
     rotate: var(--hover-tilt, -5deg);
@@ -138,17 +166,31 @@
       filter: brightness(1.12) drop-shadow(3px 5px 3px #0009);
     }
   }
-  &:disabled { cursor: default; }
+  &:disabled {
+    cursor: default;
+  }
 }
 
-.play:focus-visible, .arrow:focus-visible {
+.play:focus-visible,
+.arrow:focus-visible {
   outline: 2px solid #fff0a1;
   outline-offset: 5px;
 }
 
-.left { left: max(1.5vw, env(safe-area-inset-left)); top: 44%; }
-.right { --hover-tilt: 5deg; right: max(1.5vw, env(safe-area-inset-right)); top: 44%; }
-.up { left: 50%; top: max(1svh, env(safe-area-inset-top)); translate: -50% 0; }
+.left {
+  left: max(1.5vw, env(safe-area-inset-left));
+  top: 44%;
+}
+.right {
+  --hover-tilt: 5deg;
+  right: max(1.5vw, env(safe-area-inset-right));
+  top: 44%;
+}
+.up {
+  left: 50%;
+  top: max(1svh, env(safe-area-inset-top));
+  translate: -50% 0;
+}
 
 .srOnly {
   position: absolute;
@@ -162,13 +204,26 @@
 }
 
 @media (max-width: 700px) and (orientation: portrait) {
-  .arrow { width: 76px; height: 76px; }
-  .left, .right { top: auto; bottom: max(12px, env(safe-area-inset-bottom)); }
-  .left { left: max(4px, env(safe-area-inset-left)); }
-  .right { right: max(4px, env(safe-area-inset-right)); }
+  .arrow {
+    width: 76px;
+    height: 76px;
+  }
+  .left,
+  .right {
+    top: auto;
+    bottom: max(12px, env(safe-area-inset-bottom));
+  }
+  .left {
+    left: max(4px, env(safe-area-inset-left));
+  }
+  .right {
+    right: max(4px, env(safe-area-inset-right));
+  }
   // The inventory sits between the arrows in this row (see .inventory in game-ui.module.scss).
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .curtain { display: none; }
+  .curtain {
+    display: none;
+  }
 }

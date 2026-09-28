@@ -4,27 +4,54 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import useStore from "@/app/store";
 import RoomScene from "./room-scene";
 import PropCloseup from "./prop-closeup";
-import useGame from './use-game';
-import GameDialog from './game-dialog';
-import Inventory from './inventory';
-import GameSequence from './game-sequence';
+import useGame from "./use-game";
+import GameDialog from "./game-dialog";
+import Inventory from "./inventory";
+import GameSequence from "./game-sequence";
 import { ROOMS } from "./rooms";
+import { artSources } from "./art";
 import styles from "@/styles/red-game.module.scss";
 
 const ROOM_FADE_MS = 240;
 // Landing-screen mouse parallax (and its slight zoom). Set to false to drop the effect entirely.
 const PARALLAX_ENABLED = true;
-const PARALLAX_MEDIA = '(prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine)';
-const NAVIGATION_TARGETS = ['desk', 'door-front', 'safe-keypad', 'computer-monitor', 'desk-note', 'peephole'];
-const SPARKLE_SOUNDS = ['Sparkle_C_1 (99Sounds)', 'Sparkle_C_2 (99Sounds)', 'Sparkle_G_1 (99Sounds)', 'Sparkle_G_2 (99Sounds)'];
+const PARALLAX_MEDIA =
+  "(prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine)";
+const NAVIGATION_TARGETS = [
+  "desk",
+  "door-front",
+  "safe-keypad",
+  "computer-monitor",
+  "desk-note",
+  "peephole",
+];
+const SPARKLE_SOUNDS = [
+  "Sparkle_C_1 (99Sounds)",
+  "Sparkle_C_2 (99Sounds)",
+  "Sparkle_G_1 (99Sounds)",
+  "Sparkle_G_2 (99Sounds)",
+];
 const EXTRA_SOUNDS = {
-  'usb-in': 'mp3', 'cd-in': 'mp3', 'computer-activate': 'mp3',
-  'computer-nav': 'mp3', 'computer-beep': 'mp3', 'computer-click': 'mp3',
-  'computer-click-download': 'mp3', 'computer-click-back': 'mp3',
-  success: 'mp3', 'click-no': 'mp3', 'item-inv-2': 'mp3', 'click-soft': 'mp3',
-  'item-mystery-3': 'mp3', 'item-mystery-4': 'mp3', 'click-glass': 'mp3',
-  text: 'mp3', 'bear-repaired': 'mp3', 'door-open': 'mp3', 'computer-hum': 'mp3',
-  ...Object.fromEntries(SPARKLE_SOUNDS.map((id) => [id, 'mp3'])),
+  "usb-in": "mp3",
+  "cd-in": "mp3",
+  "computer-activate": "mp3",
+  "computer-nav": "mp3",
+  "computer-beep": "mp3",
+  "computer-click": "mp3",
+  "computer-click-download": "mp3",
+  "computer-click-back": "mp3",
+  success: "mp3",
+  "click-no": "mp3",
+  "item-inv-2": "mp3",
+  "click-soft": "mp3",
+  "item-mystery-3": "mp3",
+  "item-mystery-4": "mp3",
+  "click-glass": "mp3",
+  text: "mp3",
+  "bear-repaired": "mp3",
+  "door-open": "mp3",
+  "computer-hum": "mp3",
+  ...Object.fromEntries(SPARKLE_SOUNDS.map((id) => [id, "mp3"])),
 };
 
 function playSound(sound) {
@@ -75,11 +102,17 @@ export default function RedGame({ onExit }) {
   const extraSounds = useRef({});
   const humRef = useRef(null);
   const playCue = useCallback((id) => {
-    if (id === 'sparkle') {
-      SPARKLE_SOUNDS.forEach((soundId) => extraSounds.current[soundId]?.pause());
+    if (id === "sparkle") {
+      SPARKLE_SOUNDS.forEach((soundId) =>
+        extraSounds.current[soundId]?.pause(),
+      );
       id = SPARKLE_SOUNDS[Math.floor(Math.random() * SPARKLE_SOUNDS.length)];
     }
-    playSound(id === 'item-mystery' ? itemMysterySoundRef.current : extraSounds.current[id]);
+    playSound(
+      id === "item-mystery"
+        ? itemMysterySoundRef.current
+        : extraSounds.current[id],
+    );
   }, []);
   const focusAfterMove = useRef(null);
   const focusOnStart = useRef(false);
@@ -92,25 +125,39 @@ export default function RedGame({ onExit }) {
   }, []);
 
   const inspecting = inspectionHistory.length > 0;
-  const dialogCloseup = dialog?.sourceTarget === 'mouse-hole';
+  const dialogCloseup = dialog?.sourceTarget === "mouse-hole";
   const currentView = inspectionHistory.at(-1);
-  const humming = gameStarted && game.progress.usbInserted && !sequence &&
-    ['desk', 'computer-monitor', 'password-document'].includes(currentView);
+  const humming =
+    gameStarted &&
+    game.progress.usbInserted &&
+    !sequence &&
+    ["desk", "computer-monitor", "password-document"].includes(currentView);
   // Landing parallax: feed the mouse position (-1..1 from center) to the room layers' CSS.
   useEffect(() => {
     const element = gameRef.current;
-    if (!PARALLAX_ENABLED || gameStarted || !window.matchMedia(PARALLAX_MEDIA).matches) return;
-    element.dataset.parallax = 'on';
+    if (
+      !PARALLAX_ENABLED ||
+      gameStarted ||
+      !window.matchMedia(PARALLAX_MEDIA).matches
+    )
+      return;
+    element.dataset.parallax = "on";
     const move = (event) => {
-      if (event.pointerType !== 'mouse') return;
-      element.style.setProperty('--parallax-x', (event.clientX / window.innerWidth * 2 - 1).toFixed(3));
-      element.style.setProperty('--parallax-y', (event.clientY / window.innerHeight * 2 - 1).toFixed(3));
+      if (event.pointerType !== "mouse") return;
+      element.style.setProperty(
+        "--parallax-x",
+        ((event.clientX / window.innerWidth) * 2 - 1).toFixed(3),
+      );
+      element.style.setProperty(
+        "--parallax-y",
+        ((event.clientY / window.innerHeight) * 2 - 1).toFixed(3),
+      );
     };
-    window.addEventListener('pointermove', move);
+    window.addEventListener("pointermove", move);
     return () => {
-      window.removeEventListener('pointermove', move);
-      element.style.removeProperty('--parallax-x');
-      element.style.removeProperty('--parallax-y');
+      window.removeEventListener("pointermove", move);
+      element.style.removeProperty("--parallax-x");
+      element.style.removeProperty("--parallax-y");
       delete element.dataset.parallax;
     };
   }, [gameStarted]);
@@ -120,11 +167,14 @@ export default function RedGame({ onExit }) {
     if (!humming) return;
     hum.volume = 0.3;
     playSound(hum);
-    return () => { hum.pause(); hum.currentTime = 0; };
+    return () => {
+      hum.pause();
+      hum.currentTime = 0;
+    };
   }, [humming]);
   // The tower's one-shot hum is only for its text box.
   useEffect(() => {
-    const towerHum = extraSounds.current['computer-hum'];
+    const towerHum = extraSounds.current["computer-hum"];
     if (dialog || !towerHum) return;
     towerHum.pause();
     towerHum.currentTime = 0;
@@ -132,89 +182,131 @@ export default function RedGame({ onExit }) {
 
   function inspect(id) {
     if (moving || inspectionHistory.at(-1) === id) return;
-    if (['door-front', 'safe-keypad', 'desk'].includes(id)) playSound(movementSoundRef.current);
-    if (id === 'peephole') playSound(doorHoleSoundRef.current);
-    if (id === 'desk-note') playSound(noteSoundRef.current);
-    if (id === 'computer-monitor') playCue('computer-nav');
-    if (id === 'password-document') playCue('computer-click');
+    if (["door-front", "safe-keypad", "desk"].includes(id))
+      playSound(movementSoundRef.current);
+    if (id === "peephole") playSound(doorHoleSoundRef.current);
+    if (id === "desk-note") playSound(noteSoundRef.current);
+    if (id === "computer-monitor") playCue("computer-nav");
+    if (id === "password-document") playCue("computer-click");
     if (!inspecting) inspectionOriginRef.current = document.activeElement;
-    nextViewRef.current = { roomIndex, inspectionHistory: [...inspectionHistory, id] };
+    nextViewRef.current = {
+      roomIndex,
+      inspectionHistory: [...inspectionHistory, id],
+    };
     setTransition("out");
   }
 
   function target(id) {
     if (blocked) return;
-    if (NAVIGATION_TARGETS.includes(id) && (!game.selected || ['desk', 'door-front'].includes(id))) {
+    if (
+      NAVIGATION_TARGETS.includes(id) &&
+      (!game.selected || ["desk", "door-front"].includes(id))
+    ) {
       inspect(id);
       return;
     }
     const result = game.act(id);
-    if (result?.sound !== 'item-mystery') playCue(result?.sound);
-    if (result?.sound === 'usb-in') playCue('computer-activate');
-    if (result?.sound === 'door-locked') playSound(doorLockedSoundRef.current);
-    if (result?.sound === 'door-bottom') playSound(doorBottomSoundRef.current);
-    if (result?.sound === 'item-mystery') playSound(itemMysterySoundRef.current);
-    if (result?.sound === 'peaking-guy') playSound(giantSoundRef.current);
-    if (result?.sound === 'item-mystery-2') playSound(holeSoundRef.current);
-    if (result?.sound === 'item-mystery-5') playSound(holeReminderSoundRef.current);
-    if (result?.sound === 'you') playSound(figureSoundRef.current);
-    if (result?.sound === 'plant-2') playSound(plantSoundRef.current);
-    if (result?.sound === 'plant-1') playSound(threadSoundRef.current);
-    if (result?.sound === 'detection-click-2') playSound(stoolSoundRef.current);
-    if (result?.sound === 'safe-open') playSound(safeOpenSoundRef.current);
-    if (result?.sound === 'lamp-on' || result?.sound === 'lamp-off') {
+    if (result?.sound !== "item-mystery") playCue(result?.sound);
+    if (result?.sound === "usb-in") playCue("computer-activate");
+    if (result?.sound === "door-locked") playSound(doorLockedSoundRef.current);
+    if (result?.sound === "door-bottom") playSound(doorBottomSoundRef.current);
+    if (result?.sound === "item-mystery")
+      playSound(itemMysterySoundRef.current);
+    if (result?.sound === "peaking-guy") playSound(giantSoundRef.current);
+    if (result?.sound === "item-mystery-2") playSound(holeSoundRef.current);
+    if (result?.sound === "item-mystery-5")
+      playSound(holeReminderSoundRef.current);
+    if (result?.sound === "you") playSound(figureSoundRef.current);
+    if (result?.sound === "plant-2") playSound(plantSoundRef.current);
+    if (result?.sound === "plant-1") playSound(threadSoundRef.current);
+    if (result?.sound === "detection-click-2") playSound(stoolSoundRef.current);
+    if (result?.sound === "safe-open") playSound(safeOpenSoundRef.current);
+    if (result?.sound === "lamp-on" || result?.sound === "lamp-off") {
       lampOnSoundRef.current?.pause();
       lampOffSoundRef.current?.pause();
-      playSound(result.sound === 'lamp-on' ? lampOnSoundRef.current : lampOffSoundRef.current);
+      playSound(
+        result.sound === "lamp-on"
+          ? lampOnSoundRef.current
+          : lampOffSoundRef.current,
+      );
     }
-    if (result?.sound === 'zap-1') playSound(zapSoundRef.current);
-    if (result?.sound === 'zap-2') playSound(wallLightSoundRef.current);
+    if (result?.sound === "zap-1") playSound(zapSoundRef.current);
+    if (result?.sound === "zap-2") playSound(wallLightSoundRef.current);
     if (result?.view) inspect(result.view);
   }
 
   const backFromInspection = useCallback(() => {
     if (blocked || !inspectionHistory.length) return;
-    if (['computer-monitor', 'password-document'].includes(inspectionHistory.at(-1))) playCue('computer-click-back');
+    if (
+      ["computer-monitor", "password-document"].includes(
+        inspectionHistory.at(-1),
+      )
+    )
+      playCue("computer-click-back");
     else playSound(movementSoundRef.current);
-    nextViewRef.current = { roomIndex, inspectionHistory: inspectionHistory.slice(0, -1) };
+    nextViewRef.current = {
+      roomIndex,
+      inspectionHistory: inspectionHistory.slice(0, -1),
+    };
     focusAfterMove.current = inspectionOriginRef.current;
     setTransition("out");
   }, [blocked, roomIndex, inspectionHistory, playCue]);
 
   useEffect(() => {
-    if (!gameStarted || dialog || sequence || (!selected && !inspecting)) return;
+    if (!gameStarted || dialog || sequence || (!selected && !inspecting))
+      return;
     const onKeyDown = (event) => {
       if (event.key === "Escape") {
         event.preventDefault();
-        if (selected) { playCue('click-soft'); deselect(); }
-        else if (inspecting) backFromInspection();
+        if (selected) {
+          playCue("click-soft");
+          deselect();
+        } else if (inspecting) backFromInspection();
       }
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [gameStarted, inspecting, backFromInspection, dialog, sequence, selected, deselect, playCue]);
+  }, [
+    gameStarted,
+    inspecting,
+    backFromInspection,
+    dialog,
+    sequence,
+    selected,
+    deselect,
+    playCue,
+  ]);
 
   useEffect(() => {
     if (transition === "idle") return;
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     // Hold at black for one frame before replacing the view underneath the curtain.
     const duration = transition === "out" ? ROOM_FADE_MS + 40 : 650;
-    const timer = window.setTimeout(() => {
-      if (transition === "out") {
-        setRoomIndex(nextViewRef.current.roomIndex);
-        setInspectionHistory(nextViewRef.current.inspectionHistory);
-        setTransition("in");
-      } else {
-        setTransition("idle");
-      }
-    }, reduceMotion ? 0 : duration);
+    const timer = window.setTimeout(
+      () => {
+        if (transition === "out") {
+          setRoomIndex(nextViewRef.current.roomIndex);
+          setInspectionHistory(nextViewRef.current.inspectionHistory);
+          setTransition("in");
+        } else {
+          setTransition("idle");
+        }
+      },
+      reduceMotion ? 0 : duration,
+    );
     return () => window.clearTimeout(timer);
   }, [transition]);
 
   useEffect(() => {
     if (gameStarted && !moving && !game.dialog && !game.sequence) {
-      const target = inspecting ? inspectionBackRef.current : focusOnStart.current ? rightArrowRef.current : focusAfterMove.current;
+      const target = inspecting
+        ? inspectionBackRef.current
+        : focusOnStart.current
+          ? rightArrowRef.current
+          : focusAfterMove.current;
       target?.focus({ preventScroll: true });
       focusOnStart.current = false;
       focusAfterMove.current = null;
@@ -241,8 +333,11 @@ export default function RedGame({ onExit }) {
   }
 
   function finishSequence() {
-    if (game.sequence?.type === 'ending') { onExit(); return; }
-    if (game.sequence?.type === 'repair') {
+    if (game.sequence?.type === "ending") {
+      onExit();
+      return;
+    }
+    if (game.sequence?.type === "repair") {
       setRoomIndex(3);
       setInspectionHistory([]);
       focusAfterMove.current = rightArrowRef.current;
@@ -251,9 +346,13 @@ export default function RedGame({ onExit }) {
   }
 
   function answerTopic(topic) {
-    if (game.dialog?.kind !== 'conversation') return;
+    if (game.dialog?.kind !== "conversation") return;
     answerTwoSoundRef.current?.pause();
-    playSound(topic === 'help' ? itemMysterySoundRef.current : answerTwoSoundRef.current);
+    playSound(
+      topic === "help"
+        ? itemMysterySoundRef.current
+        : answerTwoSoundRef.current,
+    );
     game.talk(topic);
   }
 
@@ -271,7 +370,11 @@ export default function RedGame({ onExit }) {
       sound = movementSoundRef.current;
     } else if (element.closest('[data-game-sound="keypad-button"]')) {
       sound = keypadButtonSoundRef.current;
-    } else if (!element.closest('button, a, input, textarea, select, summary, dialog, aside')) {
+    } else if (
+      !element.closest(
+        "button, a, input, textarea, select, summary, dialog, aside",
+      )
+    ) {
       sound = detectionSoundRef.current;
     }
     playSound(sound);
@@ -289,32 +392,156 @@ export default function RedGame({ onExit }) {
       data-dialog-source={dialog?.art?.roomProp}
       style={{ "--room-fade-duration": `${ROOM_FADE_MS}ms` }}
     >
-      <audio ref={detectionSoundRef} src="/red-game/sounds/detection-click-1.mp3" preload="auto" hidden />
-      <audio ref={movementSoundRef} src="/red-game/sounds/move-2.mp3" preload="auto" hidden />
-      <audio ref={keypadButtonSoundRef} src="/red-game/sounds/keypad-button.mp3" preload="auto" hidden />
-      <audio ref={doorLockedSoundRef} src="/red-game/sounds/door-locked.mp3" preload="auto" hidden />
-      <audio ref={doorBottomSoundRef} src="/red-game/sounds/door-bottom.mp3" preload="auto" hidden />
-      <audio ref={doorHoleSoundRef} src="/red-game/sounds/door-hole.mp3" preload="auto" hidden />
-      <audio ref={textCloseSoundRef} src="/red-game/sounds/click-close.mp3" preload="auto" hidden />
-      <audio ref={itemMysterySoundRef} src="/red-game/sounds/item-mystery.mp3" preload="auto" hidden />
-      <audio ref={giantSoundRef} src="/red-game/sounds/peaking-guy.mp3" preload="auto" hidden />
-      <audio ref={holeSoundRef} src="/red-game/sounds/item-mystery-2.mp3" preload="auto" hidden />
-      <audio ref={holeReminderSoundRef} src="/red-game/sounds/item-mystery-5.mp3" preload="auto" hidden />
-      <audio ref={answerTwoSoundRef} src="/red-game/sounds/answer-2.mp3" preload="auto" hidden />
-      <audio ref={figureSoundRef} src="/red-game/sounds/you.mp3?v=2" preload="auto" hidden />
-      <audio ref={plantSoundRef} src="/red-game/sounds/plant-2.mp3" preload="auto" hidden />
-      <audio ref={threadSoundRef} src="/red-game/sounds/plant-1.mp3" preload="auto" hidden />
-      <audio ref={noteSoundRef} src="/red-game/sounds/note.mp3" preload="auto" hidden />
-      <audio ref={stoolSoundRef} src="/red-game/sounds/detection-click-2.mp3" preload="auto" hidden />
-      <audio ref={safeOpenSoundRef} src="/red-game/sounds/safe-open.mp3" preload="auto" hidden />
-      <audio ref={lampOnSoundRef} src="/red-game/sounds/lamp-on.mp3" preload="auto" hidden />
-      <audio ref={lampOffSoundRef} src="/red-game/sounds/lamp-off.mp3" preload="auto" hidden />
-      <audio ref={zapSoundRef} src="/red-game/sounds/zap-1.mp3" preload="auto" hidden />
-      <audio ref={wallLightSoundRef} src="/red-game/sounds/zap-2.mp3" preload="auto" hidden />
-      <audio ref={humRef} src="/red-game/sounds/computer-hum.mp3" preload="auto" loop hidden />
-      {Object.entries(EXTRA_SOUNDS).map(([id, extension]) => <audio key={id}
-        ref={(element) => { extraSounds.current[id] = element; }}
-        src={`/red-game/sounds/${id}.${extension}`} preload="auto" hidden />)}
+      <audio
+        ref={detectionSoundRef}
+        src="/red-game/sounds/detection-click-1.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={movementSoundRef}
+        src="/red-game/sounds/move-2.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={keypadButtonSoundRef}
+        src="/red-game/sounds/keypad-button.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={doorLockedSoundRef}
+        src="/red-game/sounds/door-locked.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={doorBottomSoundRef}
+        src="/red-game/sounds/door-bottom.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={doorHoleSoundRef}
+        src="/red-game/sounds/door-hole.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={textCloseSoundRef}
+        src="/red-game/sounds/click-close.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={itemMysterySoundRef}
+        src="/red-game/sounds/item-mystery.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={giantSoundRef}
+        src="/red-game/sounds/peaking-guy.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={holeSoundRef}
+        src="/red-game/sounds/item-mystery-2.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={holeReminderSoundRef}
+        src="/red-game/sounds/item-mystery-5.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={answerTwoSoundRef}
+        src="/red-game/sounds/answer-2.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={figureSoundRef}
+        src="/red-game/sounds/you.mp3?v=2"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={plantSoundRef}
+        src="/red-game/sounds/plant-2.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={threadSoundRef}
+        src="/red-game/sounds/plant-1.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={noteSoundRef}
+        src="/red-game/sounds/note.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={stoolSoundRef}
+        src="/red-game/sounds/detection-click-2.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={safeOpenSoundRef}
+        src="/red-game/sounds/safe-open.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={lampOnSoundRef}
+        src="/red-game/sounds/lamp-on.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={lampOffSoundRef}
+        src="/red-game/sounds/lamp-off.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={zapSoundRef}
+        src="/red-game/sounds/zap-1.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={wallLightSoundRef}
+        src="/red-game/sounds/zap-2.mp3"
+        preload="auto"
+        hidden
+      />
+      <audio
+        ref={humRef}
+        src="/red-game/sounds/computer-hum.mp3"
+        preload="auto"
+        loop
+        hidden
+      />
+      {Object.entries(EXTRA_SOUNDS).map(([id, extension]) => (
+        <audio
+          key={id}
+          ref={(element) => {
+            extraSounds.current[id] = element;
+          }}
+          src={`/red-game/sounds/${id}.${extension}`}
+          preload="auto"
+          hidden
+        />
+      ))}
       {/* Keep decoded layers mounted so every turn is immediate. */}
       {ROOMS.map((view) => (
         <div
@@ -335,19 +562,21 @@ export default function RedGame({ onExit }) {
           />
         </div>
       ))}
-      {(inspecting || dialogCloseup) && <PropCloseup
-        history={dialogCloseup ? ['mouse-hole'] : inspectionHistory}
-        hideBack={dialogCloseup}
-        room={room}
-        moving={blocked}
-        backRef={inspectionBackRef}
-        onInspect={target}
-        onNavigate={inspect}
-        onBack={backFromInspection}
-        game={game}
-        onSound={playCue}
-        onSubmitCode={(code) => playCue(game.submitCode(code)?.sound)}
-      />}
+      {(inspecting || dialogCloseup) && (
+        <PropCloseup
+          history={dialogCloseup ? ["mouse-hole"] : inspectionHistory}
+          hideBack={dialogCloseup}
+          room={room}
+          moving={blocked}
+          backRef={inspectionBackRef}
+          onInspect={target}
+          onNavigate={inspect}
+          onBack={backFromInspection}
+          game={game}
+          onSound={playCue}
+          onSubmitCode={(code) => playCue(game.submitCode(code)?.sound)}
+        />
+      )}
       <div className={styles.curtain} aria-hidden="true" />
 
       {!gameStarted ? (
@@ -355,7 +584,7 @@ export default function RedGame({ onExit }) {
           <button className={styles.play} onClick={startGame} disabled={!ready}>
             <img
               className={styles.playYellow}
-              src="/images/red-game/buttons/paint-yellow.png"
+              {...artSources("/images/red-game/buttons/paint-yellow.webp")}
               alt=""
               width={2172}
               height={724}
@@ -363,7 +592,7 @@ export default function RedGame({ onExit }) {
             />
             <img
               className={styles.playRed}
-              src="/images/red-game/buttons/paint-red.png"
+              {...artSources("/images/red-game/buttons/paint-red.webp")}
               alt=""
               width={2172}
               height={724}
@@ -371,46 +600,91 @@ export default function RedGame({ onExit }) {
             />
             <span>Play the Game</span>
           </button>
-          {failed && <p role="alert">The room artwork couldn’t load. Please refresh to try again.</p>}
+          {failed && (
+            <p role="alert">
+              The room artwork couldn’t load. Please refresh to try again.
+            </p>
+          )}
         </div>
       ) : (
         <>
-          <p className={styles.srOnly} role="status">{!inspecting && room.name}</p>
-          {!inspecting && !dialogCloseup && <nav className={styles.navigation} aria-label="Room views" aria-busy={moving}>
-            <button
-              className={`${styles.arrow} ${styles.left}`}
-              aria-label="Turn left"
-              data-game-sound="move"
-              onClick={(event) => turn(-1, event.currentTarget)}
-              disabled={blocked}
+          <p className={styles.srOnly} role="status">
+            {!inspecting && room.name}
+          </p>
+          {!inspecting && !dialogCloseup && (
+            <nav
+              className={styles.navigation}
+              aria-label="Room views"
+              aria-busy={moving}
             >
-              <img src="/images/red-game/navigation/arrow-left.png" alt="" width={1254} height={1254} draggable={false} />
-            </button>
-            <button
-              ref={rightArrowRef}
-              className={`${styles.arrow} ${styles.right}`}
-              aria-label="Turn right"
-              data-game-sound="move"
-              onClick={(event) => turn(1, event.currentTarget)}
-              disabled={blocked}
-            >
-              <img src="/images/red-game/navigation/arrow-right.png" alt="" width={1254} height={1254} draggable={false} />
-            </button>
-            {room.id === "computer" && (
               <button
-                className={`${styles.arrow} ${styles.up}`}
-                aria-label="Look at the sky"
+                className={`${styles.arrow} ${styles.left}`}
+                aria-label="Turn left"
                 data-game-sound="move"
-                onClick={() => target('sky')}
+                onClick={(event) => turn(-1, event.currentTarget)}
                 disabled={blocked}
               >
-                <img src="/images/red-game/navigation/arrow-up.png" alt="" width={1254} height={1254} draggable={false} />
+                <img
+                  {...artSources("/images/red-game/navigation/arrow-left.webp")}
+                  alt=""
+                  width={1254}
+                  height={1254}
+                  draggable={false}
+                />
               </button>
-            )}
-          </nav>}
+              <button
+                ref={rightArrowRef}
+                className={`${styles.arrow} ${styles.right}`}
+                aria-label="Turn right"
+                data-game-sound="move"
+                onClick={(event) => turn(1, event.currentTarget)}
+                disabled={blocked}
+              >
+                <img
+                  {...artSources(
+                    "/images/red-game/navigation/arrow-right.webp",
+                  )}
+                  alt=""
+                  width={1254}
+                  height={1254}
+                  draggable={false}
+                />
+              </button>
+              {room.id === "computer" && (
+                <button
+                  className={`${styles.arrow} ${styles.up}`}
+                  aria-label="Look at the sky"
+                  data-game-sound="move"
+                  onClick={() => target("sky")}
+                  disabled={blocked}
+                >
+                  <img
+                    {...artSources("/images/red-game/navigation/arrow-up.webp")}
+                    alt=""
+                    width={1254}
+                    height={1254}
+                    draggable={false}
+                  />
+                </button>
+              )}
+            </nav>
+          )}
           <Inventory game={game} disabled={blocked} onSound={playCue} />
-          {game.dialog && <GameDialog game={game} onClose={closeDialog} onTalk={answerTopic} onSound={playCue} />}
-          {game.sequence && <GameSequence type={game.sequence.type} onFinish={finishSequence} onSound={playCue} />}
+          {game.dialog && (
+            <GameDialog
+              game={game}
+              onClose={closeDialog}
+              onTalk={answerTopic}
+              onSound={playCue}
+            />
+          )}
+          {game.sequence && (
+            <GameSequence
+              type={game.sequence.type}
+              onFinish={finishSequence}
+              onSound={playCue}
+            />
+          )}
         </>
       )}
     </section>

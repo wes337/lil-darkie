@@ -21,7 +21,10 @@
       display: block;
     }
 
-    transition: transform 650ms cubic-bezier(0.4, 0, 0.2, 1), opacity 650ms ease, visibility 0s;
+    transition:
+      transform 650ms cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 650ms ease,
+      visibility 0s;
 
     &[data-game-playing="true"] {
       transform: translateX(calc(100% + 32px));
