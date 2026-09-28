@@ -12,6 +12,9 @@ import { ROOMS } from "./rooms";
 import styles from "@/styles/red-game.module.scss";
 
 const ROOM_FADE_MS = 240;
+// Landing-screen mouse parallax (and its slight zoom). Set to false to drop the effect entirely.
+const PARALLAX_ENABLED = true;
+const PARALLAX_MEDIA = '(prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine)';
 const NAVIGATION_TARGETS = ['desk', 'door-front', 'safe-keypad', 'computer-monitor', 'desk-note', 'peephole'];
 const SPARKLE_SOUNDS = ['Sparkle_C_1 (99Sounds)', 'Sparkle_C_2 (99Sounds)', 'Sparkle_G_1 (99Sounds)', 'Sparkle_G_2 (99Sounds)'];
 const EXTRA_SOUNDS = {
@@ -43,6 +46,7 @@ export default function RedGame({ onExit }) {
   const moving = transition !== "idle";
   const blocked = moving || Boolean(game.dialog) || Boolean(game.sequence);
   const nextViewRef = useRef({ roomIndex: 0, inspectionHistory: [] });
+  const gameRef = useRef(null);
   const rightArrowRef = useRef(null);
   const inspectionBackRef = useRef(null);
   const inspectionOriginRef = useRef(null);
@@ -92,6 +96,25 @@ export default function RedGame({ onExit }) {
   const currentView = inspectionHistory.at(-1);
   const humming = gameStarted && game.progress.usbInserted && !sequence &&
     ['desk', 'computer-monitor', 'password-document'].includes(currentView);
+  // Landing parallax: feed the mouse position (-1..1 from center) to the room layers' CSS.
+  useEffect(() => {
+    const element = gameRef.current;
+    if (!PARALLAX_ENABLED || gameStarted || !window.matchMedia(PARALLAX_MEDIA).matches) return;
+    element.dataset.parallax = 'on';
+    const move = (event) => {
+      if (event.pointerType !== 'mouse') return;
+      element.style.setProperty('--parallax-x', (event.clientX / window.innerWidth * 2 - 1).toFixed(3));
+      element.style.setProperty('--parallax-y', (event.clientY / window.innerHeight * 2 - 1).toFixed(3));
+    };
+    window.addEventListener('pointermove', move);
+    return () => {
+      window.removeEventListener('pointermove', move);
+      element.style.removeProperty('--parallax-x');
+      element.style.removeProperty('--parallax-y');
+      delete element.dataset.parallax;
+    };
+  }, [gameStarted]);
+
   useEffect(() => {
     const hum = humRef.current;
     if (!humming) return;
@@ -256,6 +279,7 @@ export default function RedGame({ onExit }) {
 
   return (
     <section
+      ref={gameRef}
       className={styles.game}
       aria-label="Red Game"
       onContextMenu={(event) => event.preventDefault()}

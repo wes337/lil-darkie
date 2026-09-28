@@ -264,14 +264,14 @@
     "label": "imaginary friend"
   },
   "glass-empty": {
-    "src": "/images/red-game/inventory/glass-empty.png",
+    "src": "/images/red-game/inventory/glass-empty-simple.png",
     "width": 1254,
     "height": 1254,
     "bounds": [
-      215,
-      78,
-      1032,
-      1182
+      241,
+      115,
+      1014,
+      1155
     ],
     "label": "glass empty"
   },
@@ -312,14 +312,14 @@
     "label": "cd"
   },
   "needle": {
-    "src": "/images/red-game/inventory/needle.png",
+    "src": "/images/red-game/inventory/needle-simple.png",
     "width": 1254,
     "height": 1254,
     "bounds": [
-      85,
-      104,
-      1201,
-      1196
+      88,
+      103,
+      1222,
+      1188
     ],
     "label": "needle"
   },
@@ -372,26 +372,26 @@
     "label": "bear repaired"
   },
   "glass-half-full": {
-    "src": "/images/red-game/inventory/glass-half-full.png",
+    "src": "/images/red-game/inventory/glass-half-full-simple.png",
     "width": 1254,
     "height": 1254,
     "bounds": [
-      216,
-      78,
-      1032,
-      1184
+      241,
+      115,
+      1014,
+      1155
     ],
     "label": "glass half full"
   },
   "needle-and-thread": {
-    "src": "/images/red-game/inventory/needle-and-thread.png",
+    "src": "/images/red-game/inventory/needle-and-thread-simple.png",
     "width": 1254,
     "height": 1254,
     "bounds": [
-      85,
-      104,
-      1226,
-      1196
+      88,
+      103,
+      1222,
+      1188
     ],
     "label": "needle and thread"
   },

@@ -8,6 +8,9 @@ const [backupRoot, palettePath, outputRoot] = process.argv.slice(2);
 if (!backupRoot || !palettePath || !outputRoot) throw new Error('Usage: node scripts/color-correct-art.cjs BACKUP PALETTE_JSON OUTPUT');
 const palette = JSON.parse(fs.readFileSync(palettePath, 'utf8'));
 const manifest = JSON.parse(fs.readFileSync(path.join(backupRoot, 'manifest.json'), 'utf8').replace(/^\uFEFF/, ''));
+// Palette samples are keyed by prop name, which can differ from the file name (desk -> desk-simple.png).
+const assets = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../components/red-game/prop-assets.json'), 'utf8'));
+const assetNames = Object.fromEntries(Object.entries(assets).map(([name, asset]) => [asset.src.slice('/images/red-game/'.length), name]));
 const hash = buffer => crypto.createHash('sha256').update(buffer).digest('hex').toUpperCase();
 const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
 const smooth = (low, high, value) => {
@@ -53,8 +56,10 @@ function calibration(name, room) {
     channels[1].push([0,0],[13,0],[r,interpolate(referencePoints(1),r)-g],[255,0]);
     channels[2].push([0,0],[13,0],[r,interpolate(referencePoints(2),r)-b],[255,0]);
   }
+  // Pull black paint to the original figure's 13,13,13. The Sept 27 pass capped this at ±3 (±6 for
+  // stars/giant); black props painted far darker or lighter need the full shift.
   const neutralShift = source.dark
-    ? source.dark.median.map(value => clamp(13-value, -3, /stars|peeking-giant/.test(name) ? 6 : 3))
+    ? source.dark.median.map(value => clamp(13-value, -12, 12))
     : [0,0,0];
   return { channels, neutralShift: room ? [0,0,0] : neutralShift };
 }
@@ -70,7 +75,7 @@ function calibration(name, room) {
       continue;
     }
     const room = relative.endsWith('/room.png');
-    const name = room ? relative.split('/')[0] : relative.endsWith('/stars.png') ? relative.slice(0,-4) : path.basename(relative,'.png');
+    const name = room ? relative.split('/')[0] : relative.endsWith('/stars.png') ? relative.slice(0,-4) : assetNames[relative] ?? path.basename(relative,'.png');
     if (!palette[name]) throw new Error(`Missing palette sample: ${name}`);
     const input = fs.readFileSync(path.join(backupRoot,file.Path));
     if (hash(input) !== file.SHA256) throw new Error(`Backup hash changed: ${relative}`);

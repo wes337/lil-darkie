@@ -38,13 +38,16 @@
   }
 }
 
+// Individual properties, leaving `transform` free for the landing parallax.
 @keyframes stars-enter {
   from {
-    transform: translateY(-0.7svh) scale(1.035);
+    translate: 0 -0.7svh;
+    scale: 1.035;
   }
 
   to {
-    transform: none;
+    translate: 0 0;
+    scale: 1;
   }
 }
 
@@ -107,6 +110,22 @@
     .figure { --explore-scale: 1.035; }
   }
 }
+
+// Landing parallax (toggle: PARALLAX_ENABLED in red-game.jsx). RedGame sets --parallax-x/y (-1..1) from the mouse until play starts;
+// each layer drifts against the cursor by its --depth, nearer layers further.
+// `transform` is free here: the entrance and explore animations use `translate` and `scale`.
+.stars, .room, .giantBack, .giantHand, .figure {
+  transform: var(--layer-base, ) translate(calc(var(--parallax-x, 0) * var(--depth) * -1), calc(var(--parallax-y, 0) * var(--depth) * -1));
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.stars { --depth: 1px; }
+.giantBack, .giantHand { --depth: 2px; }
+.room { --depth: 3px; }
+.figure { --depth: 5.5px; }
+// Zoom the whole scene slightly so drifting layers never expose its edges. Scaling the
+// scene as one keeps the giant's hand aligned with the wall. RedGame sets data-parallax while active.
+.scene { transition: scale 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
+:global([data-parallax="on"]) .scene[data-playing="false"] { scale: 1.015; }
 
 .stars {
   z-index: 0;
@@ -221,6 +240,6 @@
     right: auto;
     bottom: 4svh;
     left: 60%;
-    transform: translateX(-70%);
+    --layer-base: translateX(-70%);
   }
 }

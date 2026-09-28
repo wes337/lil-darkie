@@ -92,6 +92,11 @@
     user-select: none;
   }
 
+  @media (min-width: 701px) {
+    width: clamp(420px, 44vw, 640px);
+    font-size: clamp(32px, 3.4vw, 48px);
+  }
+
   span { position: relative; }
   .playYellow { opacity: 0; }
   .playRed { opacity: 1; }
