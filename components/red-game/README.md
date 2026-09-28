@@ -47,7 +47,7 @@ The board specifies no game menu or saving, so neither is included. Progress sta
 - Exhaust the three hole conversation topics, request help, and put Imaginary Friend into the bear.
 - Find Needle above the doorframe and use it on the desk thread. This can happen before speaking to Bambi.
 - Use Needle and Thread on the inhabited bear. The repair sequence awards Bambi and returns to the sink wall with the bear removed.
-- Return Bambi to the hole for Empty Glass. Fill it at the sink, water the flower, and insert its USB reward into the tower.
+- Return Bambi to the hole for Empty Glass. Clicking the hole while holding him returns him without selecting him. Fill it at the sink, water the flower, and insert its USB reward into the tower.
 - USB unlocks `psswrd` and `prjct`. The password document contains the authored riddle.
 - Safe code `100698` always works, including before any other puzzle. The handle then opens the safe. Key and CD are independent pickups.
 - CD insertion requires USB and unlocks `xtra`.

@@ -128,7 +128,7 @@ export default function Landing() {
       <TourDates />
       <div className={styles.footer}>
         <div className={styles.copyright}>
-          Copyright © 2025 Lil Darkie® All Rights Reserved
+          Copyright © 2026 Lil Darkie® All Rights Reserved
         </div>
       </div>
     </div>

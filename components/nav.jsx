@@ -47,7 +47,8 @@ export default function Nav() {
         aria-hidden={gamePlaying}
         onClick={() => setNavOpen(true)}
       >
-        <Image src={ASSETS.menu} alt="Menu" width={98} height={66} />
+        {/* The landing page uses a copy recolored to the red game's painted palette. */}
+        <Image src={pathname === "/" ? "/images/red-game/navigation/menu.png" : ASSETS.menu} alt="Menu" width={98} height={66} />
       </button>
       <div className={`nav${navOpen ? " open" : ""}`} inert={!navOpen}>
         <div className="nav-header">
@@ -166,28 +167,9 @@ export default function Nav() {
             <span>The Lost Songs</span>
           </Link>
           <div className="nav-copyright">
-            Copyright © 2025 Lil Darkie® - All Rights Reserved.
+            Copyright © 2026 Lil Darkie® - All Rights Reserved.
           </div>
         </div>
-      </div>
-      <div className={`mushroom${navOpen ? " open" : ""}`}>
-        <Image src={ASSETS.mushroom} alt="" width={867} height={1076} />
-      </div>
-      <div className={`planes${navOpen ? " open" : ""}`}>
-        <Image
-          className="plane-one"
-          src={ASSETS.plane2}
-          alt=""
-          width={800}
-          height={547}
-        />
-        <Image
-          className="plane-two"
-          src={ASSETS.plane1}
-          alt=""
-          width={688}
-          height={516}
-        />
       </div>
     </>
   );

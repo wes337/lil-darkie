@@ -82,6 +82,8 @@ export function interact(progress, target, item = null) {
     case 'sink': return { ...say('dreadful'), sound: 'detection-click-2' };
     case 'bear-ripped': return { ...say(progress.bear === 'inhabited' ? 'he is here, waiting' : 'you feel you should know it'), sound: 'item-mystery-3' };
     case 'mouse-hole':
+      // Holding the mended bear, clicking the hole returns him without selecting him first.
+      if (inventory(progress).includes('bambi')) return interact(progress, 'mouse-hole', 'bambi');
       if (progress.friend === 'returned') return { ...say('it is quiet. your friend is gone'), sound: 'item-mystery-2' };
       if (progress.friend === 'searching') return { ...say('i have to find his body, and bring him back here'), sound: 'item-mystery-5' };
       return { progress, conversation: true, sound: 'item-mystery-2' };

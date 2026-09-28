@@ -76,7 +76,7 @@
   color: #fff;
   font-family: inherit;
   font-size: clamp(24px, 2.5vw, 32px);
-  font-weight: 400;
+  font-weight: 700;
   text-transform: uppercase;
   text-shadow: 2px 2px 0 #000;
   line-height: 1.1;
@@ -95,6 +95,7 @@
   @media (min-width: 701px) {
     width: clamp(420px, 44vw, 640px);
     font-size: clamp(32px, 3.4vw, 48px);
+    text-shadow: 4px 4px 0 #000;
   }
 
   span { position: relative; }

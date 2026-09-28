@@ -29,7 +29,8 @@ test('complete authored route unlocks both rewards and the optional ending', () 
   g.act('thread-spool', 'needle');
   assert.equal(g.act('bear-ripped', 'needle-and-thread').sequence, 'repair');
   assert.deepEqual(g.items, ['bambi']);
-  g.act('mouse-hole', 'bambi');
+  // Bambi goes back automatically; no need to select him.
+  g.act('mouse-hole');
   assert.deepEqual(g.items, ['glass-empty']);
   g.act('sink', 'glass-empty');
   g.act('flower-wilted', 'glass-half-full');

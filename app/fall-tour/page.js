@@ -107,7 +107,7 @@ export default function FallTour() {
           )}
         </div>
         <div className="copyright">
-          Copyright © 2025 Lil Darkie®
+          Copyright © 2026 Lil Darkie®
           <br />
           All Rights Reserved
         </div>

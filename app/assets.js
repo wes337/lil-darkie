@@ -97,15 +97,6 @@ export const ASSETS = {
   dashIcon: USE_IPFS
     ? "https://bafybeieh52n2jlhxezbwcoeq436dctgwt4355dxdvs2jweoog5qbsko6hq.ipfs.w3s.link/dash.png"
     : `${CDN_URL}/icons/dash.png`,
-  mushroom: USE_IPFS
-    ? "https://bafybeielrogk7tevky4xmiwtdbvbczawkv4whk5oqrz5ro4q6nhvm5kaoe.ipfs.w3s.link/mushroom-small.png"
-    : `${CDN_URL}/mushroom-small.png`,
-  plane1: USE_IPFS
-    ? "https://bafybeicgvbqgs6frb4arm3454vs3ir7j76nztj6m56cjknvysuhrizyage.ipfs.w3s.link/plane-1-small.png"
-    : `${CDN_URL}/plane-1-small.png`,
-  plane2: USE_IPFS
-    ? "https://bafybeic4tgbjxxik7y5nxjg27mziveq3emqmuy24bc5fdi4bpaxlplhahm.ipfs.w3s.link/plane-2-small.png"
-    : `${CDN_URL}/plane-2-small.png`,
   frameLeft: USE_IPFS
     ? "https://bafybeicnzhlaniy2xnhgyhhbdispwbjhoeft2nm7qf2mlr7mbbmm3xamle.ipfs.w3s.link/frame-left-small.png"
     : `${CDN_URL}/frame-left-small.png`,

@@ -8,7 +8,7 @@ export default function Posters() {
       <h1>Posters</h1>
       <Swiper items={POSTERS} />
       <div className="copyright">
-        Copyright © 2025 Lil Darkie® All Rights Reserved
+        Copyright © 2026 Lil Darkie® All Rights Reserved
       </div>
     </div>
   );
