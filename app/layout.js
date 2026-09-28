@@ -13,7 +13,12 @@ import "@/styles/globals.scss";
 const martianMono = Martian_Mono({ subsets: ["latin"] });
 
 export const metadata = {
-  metadataBase: new URL("https://www.lildarkie.com"),
+  // Preview deploys serve share images from their own URL; production isn't guaranteed to have them yet.
+  metadataBase: new URL(
+    process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "https://www.lildarkie.com",
+  ),
   title: "Lil Darkie",
   description: "The Official Lil Darkie Website",
   openGraph: {
