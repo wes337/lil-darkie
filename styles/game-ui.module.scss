@@ -22,6 +22,16 @@
     z-index: -1;
     background: #100909f5;
   }
+  &::after {
+    content: "";
+    position: absolute;
+    inset: calc(-1 * var(--frame-width));
+    border: var(--frame-width) solid transparent;
+    border-image: var(--game-frame-image) 32% 14% stretch;
+    filter: grayscale(1) brightness(1.8);
+    opacity: 0.5;
+    pointer-events: none;
+  }
   p {
     margin: 0;
     line-height: 1.55;
@@ -53,6 +63,7 @@
 }
 .close {
   position: absolute;
+  z-index: 1;
   top: -12px;
   right: -12px;
   width: 48px;
@@ -140,10 +151,10 @@
 .inventory {
   pointer-events: none;
   box-sizing: border-box;
-  width: 72%;
+  width: calc(100% - 2 * (clamp(44px, 11cqw, 88px) + 2cqw));
   position: absolute;
   z-index: 4;
-  bottom: 1.5%;
+  bottom: 6px;
   left: 50%;
   translate: -50% 0;
   display: flex;
@@ -170,11 +181,12 @@
   min-height: 44px;
   aspect-ratio: 1;
   padding: 4px;
+  overflow: clip;
   display: grid;
   place-items: center;
   border: 0;
   background: #00000033;
-  color: #fff4d4;
+  color: #fff;
   font: inherit;
   cursor: pointer;
   &:hover {

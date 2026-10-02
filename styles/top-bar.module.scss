@@ -11,18 +11,9 @@
   -webkit-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
-  transition:
-    transform 650ms cubic-bezier(0.4, 0, 0.2, 1),
-    visibility 0s;
-
   &[data-playing="true"] {
-    transform: translateY(-100%);
-    visibility: hidden;
-    transition: none;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
+    height: var(--game-header-height);
+    img { width: min(42vw, 180px); }
   }
 
   img {

@@ -13,7 +13,7 @@
 .code {
   display: grid;
   place-items: center;
-  color: #cff8b0;
+  color: #fff;
   font-size: clamp(16px, 4cqw, 38px);
   letter-spacing: 0.22em;
   pointer-events: none;
@@ -66,7 +66,7 @@
   flex-direction: column;
   padding: 4%;
   background: #090909;
-  color: #fff4d4;
+  color: #fff;
   overflow: auto;
   overscroll-behavior: contain;
   font-size: clamp(12px, 2.5cqw, 22px);
@@ -75,7 +75,7 @@
 .screenHeader {
   font-size: 0.8em;
   padding-bottom: 12px;
-  border-bottom: 1px solid #fff4d450;
+  border-bottom: 1px solid #ffffff50;
 }
 .login {
   margin: auto;
@@ -105,7 +105,7 @@
   font: inherit;
   text-decoration: none;
   cursor: pointer;
-  &:hover { color: #ffd333; }
+  &:hover { background: #ffffff0d; }
 }
 .documentIcon {
   box-sizing: border-box;

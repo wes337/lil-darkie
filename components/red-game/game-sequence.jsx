@@ -22,7 +22,7 @@ export default function GameSequence({ type, onFinish, onSound }) {
   finish.current = onFinish;
 
   useEffect(() => {
-    root.current.focus();
+    root.current.focus({ preventScroll: true });
     setReducedMotion(
       window.matchMedia("(prefers-reduced-motion: reduce)").matches,
     );
@@ -69,7 +69,7 @@ export default function GameSequence({ type, onFinish, onSound }) {
   }, [type, step]);
 
   useEffect(() => {
-    if (step === 6) returnButton.current?.focus();
+    if (step === 6) returnButton.current?.focus({ preventScroll: true });
   }, [step]);
 
   useEffect(() => {
@@ -180,7 +180,7 @@ export default function GameSequence({ type, onFinish, onSound }) {
               className={styles.return}
               onClick={onFinish}
             >
-              END
+              EXIT
             </button>
           )}
         </>

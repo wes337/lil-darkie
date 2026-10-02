@@ -1,13 +1,18 @@
 .game {
   position: relative;
-  --game-size: min(100vw, 100svh);
+  --frame-width: clamp(10px, 1.6vmin, 14px);
+  --game-frame-image: url("/images/red-game/buttons/paint-red.webp");
+  --controls-height: clamp(56px, 10vmin, 80px);
+  --game-size: min(
+    calc(100vw - 2 * (var(--game-edge-gap) + var(--frame-width))),
+    calc(100svh - var(--game-header-height) - 2 * (var(--game-edge-gap) + var(--frame-width)) - var(--controls-height) - env(safe-area-inset-bottom))
+  );
   width: var(--game-size);
-  height: var(--game-size);
+  height: calc(var(--game-size) + var(--controls-height));
   flex-shrink: 0;
-  aspect-ratio: 1;
   container-type: size;
   isolation: isolate;
-  overflow: hidden;
+  overflow: visible;
   -webkit-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
@@ -18,7 +23,22 @@
   &[data-playing="false"] {
     width: 100%;
     height: 100%;
-    aspect-ratio: auto;
+    overflow: hidden;
+  }
+
+  // Nine-slice the existing brush stroke into a frame without tinting the game.
+  &[data-playing="true"]::after {
+    content: "";
+    position: absolute;
+    top: calc(-1 * var(--frame-width));
+    left: calc(-1 * var(--frame-width));
+    width: var(--game-size);
+    height: var(--game-size);
+    border: var(--frame-width) solid transparent;
+    border-image: var(--game-frame-image) 32% 14% stretch;
+    filter: grayscale(1) brightness(1.8);
+    z-index: 11;
+    pointer-events: none;
   }
 
   img {
@@ -52,7 +72,7 @@
 .curtain {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 12;
   background: #080808;
   opacity: 0;
   pointer-events: none;
@@ -215,22 +235,23 @@
 
 .left {
   left: 1%;
-  bottom: 1%;
+  bottom: 6px;
 }
 
-// Keep floor objects clear of the controls while preserving the square render.
+// Keep the controls below the framed square on every screen size.
 .game[data-playing="true"] .view {
-  inset: 0 7% 14%;
+  inset: 0 0 auto;
+  height: var(--game-size);
 }
 .game > .detailScene {
-  inset: 0 7% 14%;
-  width: 86%;
-  height: 86%;
+  inset: 0 0 auto;
+  width: 100%;
+  height: var(--game-size);
 }
 .right {
   --hover-tilt: 5deg;
   right: 1%;
-  bottom: 1%;
+  bottom: 6px;
 }
 .up {
   left: 50%;
@@ -250,25 +271,8 @@
 }
 
 @media (max-width: 700px) {
-  .game[data-playing="true"] {
-    --controls-height: clamp(56px, 14vmin, 98px);
-    --game-size: min(100vw, calc(100svh - var(--controls-height)));
-    height: calc(var(--game-size) + var(--controls-height));
-
-    .view {
-      inset: 0 0 var(--controls-height);
-    }
-  }
-
-  .game > .detailScene {
-    inset: 0 0 auto;
-    width: 100%;
-    height: var(--game-size);
-  }
-
-  .left,
-  .right {
-    bottom: 6px;
+  .game {
+    --game-frame-image: url("/images/red-game/buttons/paint-red-mobile.webp");
   }
 }
 

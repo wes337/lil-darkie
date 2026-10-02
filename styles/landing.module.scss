@@ -1,4 +1,5 @@
 .landing {
+  --game-edge-gap: clamp(8px, 1.6vmin, 16px);
   position: relative;
   display: flex;
   align-items: center;
@@ -6,8 +7,43 @@
   box-sizing: border-box;
   width: 100%;
   height: 100svh;
-  overflow: hidden;
+  overflow: clip;
   background: #080808;
+
+  &[data-playing="true"] {
+    padding: calc(var(--game-header-height) + var(--game-edge-gap))
+      var(--game-edge-gap) max(var(--game-edge-gap), env(safe-area-inset-bottom));
+  }
+}
+
+.exit {
+  position: fixed;
+  top: calc((var(--game-header-height) - 44px) / 2);
+  right: max(var(--game-edge-gap), env(safe-area-inset-right));
+  z-index: 6;
+  isolation: isolate;
+  width: clamp(64px, 12vw, 88px);
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  font: inherit;
+  font-size: clamp(12px, 1.5vw, 15px);
+  text-shadow: 2px 3px 0 #000;
+  cursor: pointer;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: url("/images/red-game/buttons/paint-red-mobile.webp") center / 100% 100% no-repeat;
+    filter: grayscale(1) brightness(1.8);
+  }
+
+  &:hover::before { filter: grayscale(1) brightness(2.4); }
+  &:focus-visible { outline: 2px solid #fff0a1; outline-offset: 3px; }
 }
 
 .footer {

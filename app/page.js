@@ -7,8 +7,13 @@ import styles from "@/styles/landing.module.scss";
 
 export default function Landing() {
   const { setLightMode, setNoScroll, setGameStarted, gameStarted } = useStore();
-  // Bumped when the game ends so RedGame remounts with fresh state.
+  // Either exit button remounts the game with fresh state.
   const [gameRun, setGameRun] = useState(0);
+
+  function exitGame() {
+    setGameStarted(false);
+    setGameRun((run) => run + 1);
+  }
 
   useEffect(() => {
     setLightMode(false);
@@ -23,14 +28,13 @@ export default function Landing() {
   }, [setLightMode, setNoScroll, setGameStarted]);
 
   return (
-    <main className={styles.landing}>
-      <RedGame
-        key={gameRun}
-        onExit={() => {
-          setGameStarted(false);
-          setGameRun((run) => run + 1);
-        }}
-      />
+    <main className={styles.landing} data-playing={gameStarted}>
+      {gameStarted && (
+        <button className={styles.exit} onClick={exitGame}>
+          EXIT
+        </button>
+      )}
+      <RedGame key={gameRun} onExit={exitGame} />
       <footer
         className={styles.footer}
         data-playing={gameStarted}

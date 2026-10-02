@@ -1,6 +1,6 @@
 # Red Game
 
-After Play the Game, the game uses the 1080 × 1080 renders from the artist's Final export. The game artwork stays square on desktop, portrait phones, and landscape phones. At the mobile breakpoint it fills the available width, limited by the viewport height, with a separate control strip underneath. Desktop keeps the inset artwork. The controls stay clear of floor objects.
+After Play the Game, the game uses the 1080 × 1080 renders from the artist's Final export. The artwork stays square on desktop, portrait phones, and landscape phones, with a small screen margin and a grayscale frame made from the Play button's paint texture. The arrows and inventory sit below the square. The logo stays centered at the top, with Exit at the top right.
 
 ## Assets
 
@@ -14,9 +14,9 @@ Music begins from the Play the Game click, loops across rooms and the ending, pa
 
 ## Playing
 
-Click or tap an object to explore. Select an inventory item, then its target. Selecting the same item again puts it away. Escape closes the current message, deselects an item, or returns from a close-up. Room turns and close-ups fade through black. Keyboard focus stays on the active view.
+Click or tap an object to explore. Select an inventory item, then its target. Selecting the same item again puts it away. Escape closes the current message, deselects an item, or returns from a close-up. Room turns and close-ups fade through black, including entering and leaving prop detail views. Prop text appears after the artwork fades in. Keyboard focus stays on the active view.
 
-The landing page fills the viewport with the original layered painting, its responsive desktop/mobile artwork, entrance animation, and mouse parallax. It shows the logo, menu, and footer. Starting play fades the entire page to dark, switches to the square Final artwork and hides the website controls under cover, then fades the game in. Reduced motion skips the fade. Progress belongs to the current game only. Refreshing or pressing END returns to the painting and starts a fresh game.
+The landing page fills the viewport with the original layered painting, its responsive desktop/mobile artwork, entrance animation, and mouse parallax. It shows the logo, menu, and footer. Starting play fades the entire page to dark, switches to the framed Final artwork and replaces the menu with Exit under cover, then fades the game in. Reduced motion skips the fade. Progress belongs to the current game only. Either EXIT button or a page refresh returns to the painting and resets the game. Exiting also stops the music.
 
 ## Puzzle rules
 
@@ -27,7 +27,7 @@ The landing page fills the viewport with the original layered painting, its resp
 - USB unlocks `psswrd` and `prjct`. The password document contains the authored riddle.
 - Safe code `100698` always works. After entering it, return to the safe and turn its handle. Key and CD are independent pickups.
 - CD insertion requires USB and unlocks `xtra`.
-- Key on the doorknob plays the supplied escape film, followed by YOU ARE FREE, YOU ALWAYS HAVE BEEN, and RED. END returns to the landing screen.
+- Key on the doorknob plays the supplied escape film, followed by YOU ARE FREE, YOU ALWAYS HAVE BEEN, and RED. EXIT returns to the landing screen.
 
 Invalid item use preserves the item and deselects it. Rewards cannot be collected twice. Wrong safe codes clear the input and permit another attempt. The development build has a Skip animation button; production does not.
 

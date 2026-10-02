@@ -59,7 +59,7 @@ const EXTRA_SOUNDS = {
   ...Object.fromEntries(SPARKLE_SOUNDS.map((id) => [id, "mp3"])),
 };
 
-// `onExit` runs when the player clicks END after the ending; the page remounts the game to reset it.
+// `onExit` runs from the ending's EXIT button; the page remounts the game to reset it.
 export default function RedGame({ onExit }) {
   const { gameStarted, setGameStarted, setNavOpen } = useStore();
   const game = useGame();
@@ -71,7 +71,7 @@ export default function RedGame({ onExit }) {
   const moving = transition !== "idle";
   const starting = transition === "start-out" || transition === "start-in";
   const blocked = moving || Boolean(game.dialog) || Boolean(game.sequence);
-  const nextViewRef = useRef({ roomIndex: 0, inspectionHistory: [] });
+  const transitionActionRef = useRef(null);
   const gameRef = useRef(null);
   const rightArrowRef = useRef(null);
   const inspectionBackRef = useRef(null);
@@ -173,10 +173,8 @@ export default function RedGame({ onExit }) {
     if (id === "computer-monitor") playCue("computer-nav");
     if (id === "password-document") playCue("computer-click");
     if (!inspecting) inspectionOriginRef.current = document.activeElement;
-    nextViewRef.current = {
-      roomIndex,
-      inspectionHistory: [...inspectionHistory, id],
-    };
+    transitionActionRef.current = () =>
+      setInspectionHistory([...inspectionHistory, id]);
     setTransition("out");
   }
 
@@ -189,6 +187,16 @@ export default function RedGame({ onExit }) {
       inspect(id);
       return;
     }
+    if (dialogImage(id, game.progress)) {
+      focusAfterMove.current = document.activeElement;
+      transitionActionRef.current = () => interactWithProp(id);
+      setTransition("out");
+      return;
+    }
+    interactWithProp(id);
+  }
+
+  function interactWithProp(id) {
     const result = game.act(id);
     if (result?.sound !== "item-mystery") playCue(result?.sound);
     if (result?.sound === "usb-in") playCue("computer-activate");
@@ -228,16 +236,14 @@ export default function RedGame({ onExit }) {
     )
       playCue("computer-click-back");
     else playSound(movementSoundRef.current);
-    nextViewRef.current = {
-      roomIndex,
-      inspectionHistory: inspectionHistory.slice(0, -1),
-    };
+    transitionActionRef.current = () =>
+      setInspectionHistory(inspectionHistory.slice(0, -1));
     focusAfterMove.current = inspectionOriginRef.current;
     setTransition("out");
-  }, [blocked, roomIndex, inspectionHistory, playCue]);
+  }, [blocked, inspectionHistory, playCue]);
 
   useEffect(() => {
-    if (!gameStarted || dialog || sequence || (!selected && !inspecting))
+    if (!gameStarted || moving || dialog || sequence || (!selected && !inspecting))
       return;
     const onKeyDown = (event) => {
       if (event.key === "Escape") {
@@ -252,6 +258,7 @@ export default function RedGame({ onExit }) {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [
     gameStarted,
+    moving,
     inspecting,
     backFromInspection,
     dialog,
@@ -279,8 +286,9 @@ export default function RedGame({ onExit }) {
           setGameStarted(true);
           setTransition("start-in");
         } else if (transition === "out") {
-          setRoomIndex(nextViewRef.current.roomIndex);
-          setInspectionHistory(nextViewRef.current.inspectionHistory);
+          const action = transitionActionRef.current;
+          transitionActionRef.current = null;
+          action?.();
           setTransition("in");
         } else {
           setTransition("idle");
@@ -317,9 +325,9 @@ export default function RedGame({ onExit }) {
   function turn(direction, button) {
     if (blocked) return;
     focusAfterMove.current = button;
-    nextViewRef.current = {
-      roomIndex: (roomIndex + direction + ROOMS.length) % ROOMS.length,
-      inspectionHistory: [],
+    transitionActionRef.current = () => {
+      setRoomIndex((roomIndex + direction + ROOMS.length) % ROOMS.length);
+      setInspectionHistory([]);
     };
     setTransition("out");
   }
@@ -349,8 +357,13 @@ export default function RedGame({ onExit }) {
   }
 
   function closeDialog() {
-    if (!game.dialog) return;
+    if (!game.dialog || moving) return;
     playSound(textCloseSoundRef.current);
+    if (dialogCloseup) {
+      transitionActionRef.current = game.closeDialog;
+      setTransition("out");
+      return;
+    }
     game.closeDialog();
   }
 
@@ -679,7 +692,8 @@ export default function RedGame({ onExit }) {
             </nav>
           )}
           <Inventory game={game} disabled={blocked} onSound={playCue} />
-          {game.dialog && (
+          {/* Native modal dialogs sit above the curtain, so open after the reveal. */}
+          {game.dialog && !moving && (
             <GameDialog
               game={game}
               onClose={closeDialog}

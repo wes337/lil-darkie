@@ -50,7 +50,6 @@ export default function TopBar() {
       <header
         className={styles["game-header"]}
         data-playing={gameStarted}
-        aria-hidden={gameStarted}
       >
         <img
           src="/images/greatest-show-in-human-history/lil-darkie.png"
