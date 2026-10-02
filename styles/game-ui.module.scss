@@ -1,8 +1,8 @@
 .dialog {
   box-sizing: border-box;
-  width: min(600px, calc(100% - 56px));
+  width: min(600px, calc(var(--game-size) - 48px));
   margin: auto;
-  padding: clamp(22px, 4vw, 36px);
+  padding: clamp(16px, 3cqw, 30px);
   overflow: visible;
   text-align: center;
   border: 0;
@@ -10,7 +10,7 @@
   isolation: isolate;
   color: #fff;
   font: inherit;
-  font-size: 21px;
+  font-size: clamp(12px, 2.4cqw, 20px);
   &::backdrop {
     background: #08080865;
   }
@@ -24,7 +24,7 @@
   }
   p {
     margin: 0;
-    line-height: 1.7;
+    line-height: 1.55;
     white-space: pre-line;
     outline: 0;
   }
@@ -36,8 +36,8 @@
   left: 50%;
   top: 50%;
   translate: -50% -50%;
-  width: 125%;
-  height: max(190%, 320px);
+  width: 90%;
+  height: calc(var(--game-size) * 0.8);
   container-type: size;
   display: grid;
   place-items: center;
@@ -45,13 +45,9 @@
   > span {
     width: min(100cqw, calc(100cqh * var(--prop-ratio)));
   }
-  @media (min-width: 701px) {
-    width: 170%;
-    height: min(max(300%, 620px), 92svh);
-  }
 }
 .dialogBody {
-  max-height: 74svh;
+  max-height: calc(var(--game-size) - 100px);
   overflow-y: auto;
   overscroll-behavior: contain;
 }
@@ -81,14 +77,14 @@
   display: inline-grid;
   place-items: center;
   width: min(340px, calc(100% - 8px));
-  min-height: 60px;
-  padding: 14px 28px;
+  min-height: 44px;
+  padding: 10px 18px;
   border: 0;
   background: url("/images/red-game/buttons/paint-red.webp") center / 100% 100%
     no-repeat;
   color: #fff;
   font: inherit;
-  font-size: 16px;
+  font-size: clamp(10px, 2.2cqw, 16px);
   font-weight: 400;
   line-height: 1.4;
   text-transform: uppercase;
@@ -133,7 +129,7 @@
   flex-direction: column;
   align-items: center;
   gap: 0;
-  margin-top: 20px;
+  margin-top: 12px;
 }
 .close:focus-visible,
 .textButton:focus-visible,
@@ -142,33 +138,38 @@
   outline-offset: 3px;
 }
 .inventory {
+  pointer-events: none;
   box-sizing: border-box;
-  width: max-content;
+  width: 72%;
   position: absolute;
   z-index: 4;
-  bottom: max(10px, env(safe-area-inset-bottom));
+  bottom: 1.5%;
   left: 50%;
   translate: -50% 0;
-  max-width: calc(100% - 24px);
   display: flex;
   gap: 8px;
 }
 // Each tile carries its own tint, so the gaps between them show the room.
 .items {
   min-width: 0;
+  width: 100%;
   display: flex;
   overflow-x: auto;
-  align-items: stretch;
+  align-items: center;
+  justify-content: safe center;
   gap: 3px;
   scrollbar-width: thin;
   scrollbar-color: #784c40 transparent;
 }
 .item {
+  pointer-events: auto;
   box-sizing: border-box;
-  flex: 0 0 82px;
-  width: 82px;
-  min-height: 82px;
-  padding: 6px;
+  flex: 0 1 clamp(44px, 10cqw, 72px);
+  width: 10cqw;
+  min-width: 38px;
+  min-height: 44px;
+  aspect-ratio: 1;
+  padding: 4px;
   display: grid;
   place-items: center;
   border: 0;
@@ -184,8 +185,9 @@
   }
 }
 .itemArt {
-  width: 45px;
-  height: 44px;
+  width: min(48px, 100%);
+  height: auto;
+  aspect-ratio: 1;
   display: grid;
   place-items: center;
   container-type: size;
@@ -220,41 +222,9 @@
   width: min(100cqw, calc(100cqh * var(--prop-ratio)));
   height: auto;
 }
+
 @media (max-width: 700px) {
-  // Shares the bottom row with the 76px nav arrows (red-game.module.scss): sits between them, vertically centered.
   .inventory {
-    bottom: calc(max(12px, env(safe-area-inset-bottom)) + 6px);
-    left: calc(max(4px, env(safe-area-inset-left)) + 84px);
-    right: calc(max(4px, env(safe-area-inset-right)) + 84px);
-    translate: none;
-    width: auto;
-    max-width: none;
-  }
-  .items {
-    flex: 1;
-    justify-content: safe center;
-    align-items: center;
-  }
-  // Square tiles that shrink from 64px so the most you can hold (4) fits beside the arrows.
-  .item {
-    flex: 0 1 64px;
-    width: auto;
-    min-width: 32px;
-    min-height: 0;
-    aspect-ratio: 1;
-    padding: 4px;
-  }
-  .itemArt {
-    width: min(44px, 100%);
-    height: auto;
-    aspect-ratio: 1;
-  }
-  .dialog {
-    font-size: 16px;
-  }
-  .textButton[data-topic="escape"] {
-    font-size: clamp(10px, 3.2vw, 14px);
-    padding-inline: 16px;
-    white-space: nowrap;
+    bottom: 6px;
   }
 }

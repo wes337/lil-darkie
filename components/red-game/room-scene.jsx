@@ -1,136 +1,55 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import RoomProps from "./room-props";
-import { randomizeHoverTilt } from "./hover-motion";
-import { artSources } from "./art";
+import { useEffect, useRef } from "react";
+import FinalImage, { Hotspot } from "./final-image";
+import { FINAL_ART, ROOM_TARGETS, roomImage } from "./final-art.mjs";
 import styles from "@/styles/room-scene.module.scss";
 
-export default function RoomScene({
-  room,
-  active,
-  playing,
-  moving,
-  onReady,
-  onInspect,
-  progress,
-}) {
-  const assetPath = `/images/red-game/${room.assets}`;
-  const isMain = room.id === "main";
-  const sceneRef = useRef(null);
-  const [ready, setReady] = useState(false);
-
+export default function RoomScene({ room, active, playing, moving, onReady, onInspect, progress }) {
+  const video = useRef(null);
+  const image = useRef(null);
+  const imageName = roomImage(room.id, progress);
   useEffect(() => {
     let cancelled = false;
-    const images = [...sceneRef.current.querySelectorAll("img")];
-
-    // Decode every layer before exposing the view, so turns never reveal partial artwork.
-    Promise.allSettled(images.map((image) => image.decode())).then(() => {
-      if (!cancelled) {
-        setReady(true);
-        onReady(
-          room.id,
-          images.every((image) => image.naturalWidth > 0),
-        );
-      }
-    });
-
-    return () => {
-      cancelled = true;
+    image.current.decode().then(
+      () => { if (!cancelled) onReady(room.id, true); },
+      () => { if (!cancelled) onReady(room.id, false); },
+    );
+    return () => { cancelled = true; };
+  }, [imageName, room.id, onReady]);
+  useEffect(() => {
+    const element = video.current;
+    if (!element) return;
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => {
+      if (active && !document.hidden && !motion.matches) element.play().catch(() => {});
+      else element.pause();
     };
-  }, [room, onReady]);
+    update();
+    motion.addEventListener("change", update);
+    document.addEventListener("visibilitychange", update);
+    return () => {
+      element.pause();
+      motion.removeEventListener("change", update);
+      document.removeEventListener("visibilitychange", update);
+    };
+  }, [active]);
 
   return (
-    <div
-      ref={sceneRef}
-      className={styles.scene}
-      data-ready={ready}
-      data-room={room.id}
-      data-framing={room.framing}
-      data-active={active}
-      data-playing={playing}
-      role="group"
-      aria-label={room.description}
-    >
-      {room.framing === "room" && (
-        <img
-          className={styles.stars}
-          {...artSources(`${assetPath}/stars.webp`)}
-          alt=""
-          width={1254}
-          height={1254}
-          draggable={false}
-        />
-      )}
-      {isMain && (
-        <div className={styles.giantBack}>
-          <img
-            {...artSources(`${assetPath}/peeking-giant.webp`)}
-            alt=""
-            width={1254}
-            height={1254}
-            draggable={false}
-          />
-          <button
-            className={styles.giantHotspot}
-            aria-label="Look at the giant"
-            disabled={!active || !playing || moving}
-            onPointerEnter={(event) =>
-              randomizeHoverTilt(event, sceneRef.current)
-            }
-            onClick={() => onInspect("giant")}
-          />
-        </div>
-      )}
-      <img
-        className={styles.room}
-        {...artSources(`${assetPath}/room.webp`)}
-        alt=""
-        width={1254}
-        height={1254}
-        fetchPriority={isMain ? "high" : "low"}
-        draggable={false}
+    <div className={styles.scene} data-room={room.id} role="group" aria-label={room.description}>
+      <FinalImage
+        ref={image}
+        name={imageName}
+        fetchPriority={room.id === "main" ? "high" : "auto"}
       />
-      {/* The same cutout places the hand over the wall while the head stays behind it. */}
-      {isMain && (
-        <>
-          <div className={styles.giantHand} aria-hidden="true">
-            <img
-              {...artSources(`${assetPath}/peeking-giant.webp`)}
-              alt=""
-              width={1254}
-              height={1254}
-              draggable={false}
-            />
-          </div>
-          <div
-            className={styles.figure}
-            onPointerEnter={
-              active && playing && !moving ? randomizeHoverTilt : undefined
-            }
-          >
-            <img
-              {...artSources(`${assetPath}/room-figure.webp`)}
-              alt=""
-              width={1254}
-              height={1254}
-              draggable={false}
-            />
-            <button
-              className={styles.figureHotspot}
-              aria-label="Look at yourself"
-              disabled={!active || !playing || moving}
-              onClick={() => onInspect("figure")}
-            />
-          </div>
-        </>
+      {room.id === "main" && (
+        <video ref={video} className={styles.idle} src={`${FINAL_ART}room-idle.mp4`} muted loop playsInline preload="none" aria-hidden="true" />
       )}
-      <RoomProps
-        room={room}
-        interactive={active && playing && !moving}
-        onInspect={onInspect}
-        progress={progress}
-      />
+      {ROOM_TARGETS[room.id]
+        .filter(([target]) => target !== "bear-ripped" || progress.bear !== "collected")
+        .map(([target, label, ...rect]) => (
+          <Hotspot key={target} target={target} label={label} rect={rect} onInspect={onInspect} disabled={!active || !playing || moving} />
+        ))}
     </div>
   );
 }

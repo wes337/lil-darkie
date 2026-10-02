@@ -1,140 +1,79 @@
 "use client";
 
-import { Desk, Prop, SafeInterior } from "./room-props";
-import assets from "./prop-assets.json";
 import { artSources } from "./art";
-import {
-  ComputerScreen,
-  DoorView,
-  KeypadView,
-  NoteView,
-  PeepholeView,
-} from "./puzzle-views";
+import FinalImage, { Hotspot } from "./final-image";
+import { roomImage, safeImage } from "./final-art.mjs";
+import { ComputerScreen, DoorView, KeypadView, NoteView, PeepholeView } from "./puzzle-views";
 import styles from "@/styles/prop-closeup.module.scss";
 
 const TITLES = {
   desk: "Computer desk",
-  "mouse-hole": "Hole in the wall",
+  "safe-front": "Safe",
   "safe-interior": "Inside the safe",
   "computer-monitor": "Computer screen",
   "password-document": "Password document",
   peephole: "View outside",
   "safe-keypad": "Safe keypad close-up",
   "door-front": "Doorway",
-  "desk-note":
-    "anagram: way to do the proof! PS: don't poke yourself PPS: buy wd40 for hinges",
+  "desk-note": "Desk note",
 };
 
 export default function PropCloseup({
-  history,
-  room,
-  moving,
-  backRef,
-  onInspect,
-  onNavigate,
-  onBack,
-  game,
-  onSound,
-  onSubmitCode,
-  hideBack = false,
+  history, room, moving, backRef, onInspect, onNavigate, onBack, game, onSound, onSubmitCode,
 }) {
   const view = history.at(-1);
-  const title = TITLES[view] || "Close-up";
-  const special = [
-    "computer-monitor",
-    "password-document",
-    "desk-note",
-    "peephole",
-  ].includes(view);
-
-  const layoutAsset =
-    assets[
-      view === "safe-interior"
-        ? "safe-interior-empty"
-        : view === "mouse-hole"
-          ? "mouse-hole-closeup"
-          : view
-    ];
-  // The assembled desk is square; the empty table's image is much wider.
-  const ratio =
-    view !== "desk" && layoutAsset
-      ? (layoutAsset.bounds[2] - layoutAsset.bounds[0] + 1) /
-        (layoutAsset.bounds[3] - layoutAsset.bounds[1] + 1)
-      : 1;
+  const progress = game.progress;
+  const hotspot = (target, label, rect) => (
+    <Hotspot target={target} label={label} rect={rect} onInspect={onInspect} disabled={moving} />
+  );
 
   return (
-    <fieldset
-      className={styles.view}
-      aria-label={title}
-      aria-busy={moving}
-      disabled={moving}
-      inert={moving}
-    >
+    <fieldset className={styles.view} aria-label={TITLES[view] || "Close-up"} aria-busy={moving} disabled={moving} inert={moving}>
       <div className={styles.canvas} data-view={view}>
-        <img
-          className={styles.wall}
-          {...artSources(`/images/red-game/${room.assets}/room.webp`)}
-          width={1254}
-          height={1254}
-          alt=""
-          draggable={false}
-        />
-        {!special && (
-          <div className={styles.content}>
-            <div className={styles.subject} style={{ "--asset-ratio": ratio }}>
-              {view === "desk" && (
-                <Desk onInspect={onInspect} progress={game.progress} />
-              )}
-              {view === "mouse-hole" && <Prop asset="mouse-hole-closeup" />}
-              {view === "safe-interior" && (
-                <SafeInterior onInspect={onInspect} progress={game.progress} />
-              )}
-              {view === "door-front" && <DoorView onTarget={onInspect} />}
-              {view === "safe-keypad" && (
-                <KeypadView
-                  onSubmit={onSubmitCode}
-                  selected={game.selected}
-                  onItemUse={onInspect}
-                  unlocked={game.progress.safeUnlocked}
-                />
-              )}
-            </div>
-          </div>
+        {view === "desk" && (
+          <>
+            <FinalImage name={roomImage("computer", progress)} className={styles.desk} />
+            {hotspot("computer-monitor", "Inspect computer screen", [12, 43, 36, 28])}
+            {hotspot("computer-tower", "Inspect computer tower", [49, 47, 14, 25])}
+            {hotspot("desk-lamp-on", "Inspect desk lamp", [76, 38, 17, 36])}
+            {hotspot("desk-note", "Read the note", [65, 51, 12, 23])}
+            {!["threaded", "used"].includes(progress.sewing) &&
+              hotspot("thread-spool", "Inspect sewing thread", [75, 66, 14, 15])}
+          </>
+        )}
+        {view === "door-front" && <DoorView onTarget={onInspect} />}
+        {view === "safe-front" && (
+          <>
+            <FinalImage name={progress.safeUnlocked ? "safe-unlocked" : "safe-locked"} />
+            {hotspot("safe-handle", "Turn safe handle", [7, 38, 41, 34])}
+            {hotspot("safe-keypad", "Inspect the keypad", [60, 35, 25, 36])}
+          </>
+        )}
+        {view === "safe-keypad" && (
+          <KeypadView onSubmit={onSubmitCode} selected={game.selected} onItemUse={onInspect} unlocked={progress.safeUnlocked} />
+        )}
+        {view === "safe-interior" && (
+          <>
+            <FinalImage name={safeImage(progress)} />
+            {!progress.keyTaken && hotspot("key", "Pick up the key", [57, 38, 20, 15])}
+            {!progress.cdTaken && hotspot("cd", "Pick up the CD", [12, 60, 28, 16])}
+          </>
         )}
         {["computer-monitor", "password-document"].includes(view) && (
-          <ComputerScreen
-            progress={game.progress}
-            selected={game.selected}
-            onTarget={onInspect}
-            onNavigate={onNavigate}
-            onSound={onSound}
-            document={view === "password-document"}
-          />
+          <ComputerScreen progress={progress} selected={game.selected} onTarget={onInspect} onNavigate={onNavigate} onSound={onSound} document={view === "password-document"} />
         )}
         {view === "desk-note" && <NoteView />}
         {view === "peephole" && <PeepholeView onTarget={onInspect} />}
       </div>
-      {!hideBack && (
-        <button
-          ref={backRef}
-          className={styles.back}
-          aria-label={
-            history.length > 1
-              ? "Back to previous view"
-              : `Back to ${room.name}`
-          }
-          onClick={onBack}
-          disabled={moving}
-        >
-          <img
-            {...artSources("/images/red-game/navigation/arrow-left.webp")}
-            width={1254}
-            height={1254}
-            alt=""
-            draggable={false}
-          />
-        </button>
-      )}
+      <button
+        ref={backRef}
+        className={styles.back}
+        aria-label={history.length > 1 ? "Back to previous view" : `Back to ${room.name}`}
+        onClick={onBack}
+        disabled={moving}
+      >
+        <img {...artSources("/images/red-game/navigation/arrow-left.webp")} width={1254} height={1254} alt="" draggable={false} />
+      </button>
     </fieldset>
   );
 }

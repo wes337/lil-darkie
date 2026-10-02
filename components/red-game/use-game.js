@@ -10,34 +10,20 @@ import {
 } from "./game-model.mjs";
 import { GREETING, ITEMS } from "./game-content.mjs";
 
-// Props drawn large behind the text box when they open it, by source target.
-// Their room copies hide meanwhile (see `data-dialog-source` in red-game.jsx).
-const PROP_ART = {
-  "flower-wilted": (progress) =>
-    progress.water === "spent" ? "flower-blooming" : "flower-wilted",
-  // Once threaded onto the needle, the spool is gone from the desk.
-  "thread-spool": (progress) =>
-    ["threaded", "used"].includes(progress.sewing) ? null : "thread-spool",
-  "desk-lamp-on": () => "desk-lamp-on",
-  "bear-ripped": (progress) =>
-    progress.bear === "collected" ? null : "bear-ripped",
-};
-
-// Art for the text box: a newly gained item wins (shown from `itemPage`), else the inspected prop.
-function dialogArt(before, result, sourceTarget) {
+// Show the supplied inventory render when the player receives an item.
+function dialogArt(before, result) {
   const had = inventory(before);
   const gained = inventory(result.progress).find((id) => !had.includes(id));
   if (gained)
     return { asset: ITEMS[gained].asset, fromPage: result.itemPage ?? 0 };
-  const asset = PROP_ART[sourceTarget]?.(result.progress);
-  return asset ? { asset, fromPage: 0, roomProp: sourceTarget } : null;
+  return null;
 }
 
 function createGameStore() {
   return createStore((set, get) => {
     const apply = (result, sourceTarget = get().dialog?.sourceTarget) => {
       if (!result) return null;
-      const art = dialogArt(get().progress, result, sourceTarget);
+      const art = dialogArt(get().progress, result);
       set({
         progress: result.progress,
         selected: null,

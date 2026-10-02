@@ -1,157 +1,81 @@
-.door,
-.keypad {
-  position: relative;
-  width: 100%;
-}
-// Attach the narrow end to the threshold and let the painted beam widen over the floor.
-.door > .doorLight {
-  position: absolute;
-  top: 97.2%;
-  left: -55%;
-  width: 210%;
-  height: 35%;
-  opacity: 0.95;
-  pointer-events: none;
-}
-.door button,
-.keys button {
-  position: absolute;
-  border: 0;
-  padding: 0;
-  background: transparent;
-  cursor: pointer;
-  &:focus-visible {
-    outline: 2px solid #ffd333;
-    outline-offset: 3px;
-  }
-}
-.peephole {
-  width: 12%;
-  height: 6%;
-  left: 44%;
-  top: 25.5%;
-  border-radius: 50%;
-  min-width: 32px;
-  min-height: 32px;
-}
-.knob {
-  width: 18%;
-  height: 13%;
-  left: 69%;
-  top: 49%;
-  border-radius: 50%;
-}
-.frame {
-  width: 66%;
-  height: 4%;
-  left: 17%;
-  top: 0;
-  min-height: 20px;
-}
-.crack {
-  width: 70%;
-  height: 5%;
-  left: 15%;
-  bottom: 0;
-  min-height: 24px;
-}
+.keypad { position: absolute; inset: 0; }
+
 .code,
 .codeInput {
   box-sizing: border-box;
   position: absolute;
-  left: 9%;
-  top: 7%;
-  width: 81%;
-  height: 11%;
+  left: 28%;
+  top: 15%;
+  width: 44%;
+  height: 13%;
   padding: 0;
 }
 .code {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.3em;
+  display: grid;
+  place-items: center;
+  color: #cff8b0;
+  font-size: clamp(16px, 4cqw, 38px);
+  letter-spacing: 0.22em;
   pointer-events: none;
-  color: #fff;
-  font-size: clamp(20px, 3.5svh, 34px);
-  text-shadow: 2px 2px 0 #000;
-  span {
-    width: 0.8em;
-    text-align: center;
-  }
-  span[data-filled="false"] {
-    opacity: 0.45;
-  }
 }
-// Invisible but focusable, so physical keyboards and screen readers still type into it.
 .codeInput {
   border: 0;
   background: transparent;
   color: transparent;
   caret-color: transparent;
-  font: inherit;
-  &:focus-visible {
-    outline: 2px solid #ffd333;
-  }
+  font-size: 16px;
+}
+.codeInput:focus-visible,
+.keys button:focus-visible,
+.file:focus-visible,
+.login:focus-visible {
+  outline: 2px solid #ffd333;
+  outline-offset: 2px;
 }
 .keys {
   position: absolute;
-  left: 9%;
-  right: 9%;
-  top: 26.2%;
-  bottom: 6.5%;
+  left: 30.5%;
+  right: 29%;
+  top: 32%;
+  bottom: 12%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(4, 1fr);
-  gap: 6% 8%;
 }
 .keys button {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  color: #fff;
-  font: inherit;
-  font-size: clamp(22px, 4svh, 42px);
-  text-shadow: 2px 2px 0 #000;
-  -webkit-tap-highlight-color: transparent;
-  &:active {
-    scale: 1.08;
-    rotate: -5deg;
-  }
-  @media (hover: hover) {
-    &:hover {
-      scale: 1.08;
-      rotate: -5deg;
-    }
-  }
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.monitor {
+  width: 185%;
+  height: 185%;
+  left: -9%;
+  top: -38%;
+  max-width: none;
 }
 .computerScreen {
+  box-sizing: border-box;
   position: absolute;
-  inset: 12px 12px -60px;
+  left: 7%;
+  right: 3%;
+  top: 9%;
+  bottom: 18%;
   display: flex;
   flex-direction: column;
-  padding: clamp(18px, 3vw, 36px);
-  border: clamp(40px, 6vw, 88px) solid #242222;
-  border-bottom-width: clamp(56px, 8vw, 116px);
-  border-radius: 42px;
-  border-top-width: clamp(76px, 6vw, 88px);
-  border-color: #302c2b #211e1e #191717 #292525;
-  box-shadow:
-    inset 0 0 0 5px #080909,
-    inset 0 0 40px #000,
-    0 10px 0 #0b0909,
-    0 0 0 3px #4b3432;
-  background: #0b0e0c;
-  color: #e4e9cf;
+  padding: 4%;
+  background: #090909;
+  color: #fff4d4;
   overflow: auto;
   overscroll-behavior: contain;
-  font-family: inherit;
+  font-size: clamp(12px, 2.5cqw, 22px);
+  &[data-powered="true"] { background: #d82704; }
 }
 .screenHeader {
-  font-size: 12px;
-  letter-spacing: 0.16em;
-  opacity: 0.6;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #c7cdb52b;
+  font-size: 0.8em;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #fff4d450;
 }
 .login {
   margin: auto;
@@ -166,15 +90,14 @@
   display: flex;
   flex-wrap: wrap;
   align-content: start;
-  gap: clamp(20px, 5vw, 60px);
-  padding: 32px 0;
+  gap: 4cqw;
 }
 .file {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  min-width: 66px;
+  min-width: 52px;
   padding: 8px;
   background: none;
   border: 0;
@@ -182,69 +105,43 @@
   font: inherit;
   text-decoration: none;
   cursor: pointer;
-}
-.file:focus-visible,
-.login:focus-visible {
-  outline: 2px solid #ffd333;
-  outline-offset: 4px;
-}
-.file:hover {
-  color: #ffd333;
+  &:hover { color: #ffd333; }
 }
 .documentIcon {
   box-sizing: border-box;
-  width: 44px;
-  height: 54px;
+  width: 34px;
+  height: 44px;
   border: 2px solid currentColor;
-  font-size: 32px;
-  line-height: 44px;
+  font-size: 28px;
+  line-height: 34px;
   text-align: center;
 }
 .folderIcon {
   position: relative;
-  width: 60px;
-  height: 40px;
+  width: 44px;
+  height: 30px;
   border: 2px solid currentColor;
   margin-top: 10px;
-}
-.folderIcon::before {
-  content: "";
-  position: absolute;
-  width: 24px;
-  height: 8px;
-  top: -10px;
-  left: -2px;
-  border: 2px solid currentColor;
-  border-bottom: 0;
+  &::before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 8px;
+    top: -10px;
+    left: -2px;
+    border: 2px solid currentColor;
+    border-bottom: 0;
+  }
 }
 .document {
-  flex: 1;
+  min-height: 0;
   overflow: auto;
   white-space: pre-wrap;
-  margin: 22px 0 0;
+  margin: 12px 0 0;
   font: inherit;
-  font-size: clamp(13px, 1.5vw, 18px);
-  line-height: 1.7;
-}
-.note {
-  position: absolute;
-  left: 50%;
-  top: 46%;
-  translate: -50% -50%;
-  width: min(940px, 90%);
-  box-sizing: border-box;
-  padding: clamp(48px, 8vw, 100px);
-  color: #261615;
-  background: #dfcca5;
-  box-shadow: 4px 9px 5px #17070750;
-  rotate: -1deg;
-  clip-path: polygon(1% 1%, 96% 0, 100% 3%, 99% 97%, 3% 100%, 0 93%);
-}
-.note p {
-  white-space: pre-line;
-  font-size: clamp(20px, 2.5vw, 30px);
-  line-height: 1.7;
-  margin: 0;
+  font-size: clamp(11px, 2.5cqw, 20px);
+  line-height: 1.65;
+  &:focus-visible { outline: 2px solid #ffd333; }
 }
 .outdoors {
   position: absolute;
@@ -253,73 +150,13 @@
   height: 100%;
   border: 0;
   padding: 0;
-  background: #090808;
+  background: #080808;
   cursor: pointer;
-}
-.outdoors img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 60% center;
-}
-.outdoors::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at center, transparent 30%, #000 73%);
-  pointer-events: none;
-}
-@media (max-width: 700px), (max-height: 500px) and (pointer: coarse) {
-  .note {
-    width: 120vw;
-    padding: clamp(40px, 8svh, 80px) calc(10vw + 24px);
-  }
-  .note p {
-    font-size: clamp(18px, 5vw, 24px);
-    line-height: 1.6;
-  }
-  .computerScreen {
-    inset: 4px 4px -48px;
-    padding: 20px 14px calc(96px + env(safe-area-inset-bottom));
-    border-width: clamp(16px, 4vw, 24px);
-    border-top-width: calc(64px + env(safe-area-inset-top));
-    border-bottom-width: 48px;
-    border-radius: 24px;
-    font-size: 15px;
-  }
-  .files {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 28px 12px;
-    padding: 12px 0;
-  }
-  .file {
-    min-width: 0;
-    min-height: 80px;
-  }
-  .document {
-    min-height: 0;
-    font-size: 15px;
-    line-height: 1.6;
-    overflow-wrap: anywhere;
-  }
-}
-@media (max-height: 500px) and (pointer: coarse) {
-  .files {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-@media (prefers-reduced-motion: no-preference) {
-  @keyframes blink {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.25;
-    }
-  }
-  .login {
-    animation: blink 3s ease-in-out infinite;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 26%, #000 69%);
+    pointer-events: none;
   }
 }

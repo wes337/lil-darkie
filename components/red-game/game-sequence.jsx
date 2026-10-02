@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Prop } from "./room-props";
-import { artSources } from "./art";
+import { playSound } from "./audio";
 import styles from "@/styles/game-sequence.module.scss";
 
 const CAN_SKIP_ANIMATION = process.env.NODE_ENV === "development";
@@ -13,69 +12,80 @@ const ENDING_SOUNDS = {
 export default function GameSequence({ type, onFinish, onSound }) {
   const [step, setStep] = useState(0);
   const [ready, setReady] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(null);
   const root = useRef(null);
+  const video = useRef(null);
+  const doorSoundPlayed = useRef(false);
   const returnButton = useRef(null);
   const endingSounds = useRef({});
   const finish = useRef(onFinish);
   finish.current = onFinish;
+
   useEffect(() => {
-    let cancelled = false;
     root.current.focus();
-    Promise.allSettled(
-      [...root.current.querySelectorAll("img")].map((img) => img.decode()),
-    ).then(() => {
-      if (!cancelled) setReady(true);
-    });
+    setReducedMotion(
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    );
+  }, []);
+
+  useEffect(() => {
+    if (type !== "repair") return;
+    // A missing or stalled image must not keep the inventory award locked.
+    const timer = window.setTimeout(() => setReady(true), 3000);
+    return () => window.clearTimeout(timer);
+  }, [type]);
+
+  useEffect(() => {
+    if (type !== "repair" || !ready) return;
+    onSound("bear-repaired");
+    const timer = window.setTimeout(() => finish.current(), 1800);
+    return () => window.clearTimeout(timer);
+  }, [type, ready, onSound]);
+
+  useEffect(() => {
+    if (type !== "ending" || step !== 0 || reducedMotion === null) return;
+    if (reducedMotion) {
+      setStep(4);
+      return;
+    }
+
+    let cancelled = false;
+    const showTitles = () => {
+      if (!cancelled) setStep((current) => Math.max(current, 4));
+    };
+    video.current.play().catch(showTitles);
+    // The film lasts about ten seconds. Continue if playback stalls entirely.
+    const timer = window.setTimeout(showTitles, 30000);
     return () => {
       cancelled = true;
+      window.clearTimeout(timer);
     };
-  }, []);
+  }, [type, step, reducedMotion]);
+
   useEffect(() => {
-    if (!ready) return;
-    const reduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    const times =
-      type === "repair"
-        ? [900, 1400, 3200]
-        : [1700, 3200, 5500, 7600, 11300, 15000];
-    const timers = times.map((time, index) =>
-      window.setTimeout(
-        () => {
-          if (type === "repair" && index === times.length - 1) finish.current();
-          else setStep((current) => (current >= 6 ? current : index + 1));
-        },
-        reduced
-          ? Math.min(time, (index + 1) * (type === "repair" ? 450 : 1900))
-          : time,
-      ),
-    );
-    return () => timers.forEach(window.clearTimeout);
-  }, [type, ready]);
+    if (type !== "ending" || step < 4 || step >= 6) return;
+    const timer = window.setTimeout(() => setStep(step + 1), 3700);
+    return () => window.clearTimeout(timer);
+  }, [type, step]);
+
   useEffect(() => {
     if (step === 6) returnButton.current?.focus();
   }, [step]);
+
   useEffect(() => {
     if (type !== "ending") return;
     const sound = endingSounds.current[step];
     if (!sound) return;
-    sound.currentTime = 0;
-    sound.play().catch(() => {});
-    return () => {
-      sound.pause();
-    };
+    playSound(sound);
+    return () => sound.pause();
   }, [type, step]);
-  useEffect(() => {
-    if (type === "repair" && step === 2) onSound("bear-repaired");
-    if (type === "ending" && step === 1) onSound("door-open");
-  }, [type, step, onSound]);
+
   return (
     <section
       ref={root}
       className={styles.sequence}
       data-type={type}
       data-step={step}
-      data-ready={ready}
       tabIndex={-1}
       aria-label={type === "repair" ? "Mending Bambi" : "Leaving the room"}
       onKeyDown={
@@ -90,21 +100,14 @@ export default function GameSequence({ type, onFinish, onSound }) {
       }
     >
       {type === "repair" ? (
-        <>
-          <img
-            className={styles.repairWall}
-            {...artSources("/images/red-game/sink-left-wall/room.webp")}
-            alt=""
-            draggable={false}
-          />
-          <div className={styles.bear} hidden={step >= 2}>
-            <Prop asset="bear-ripped" />
-          </div>
-          <div className={styles.bear} hidden={step < 2}>
-            <Prop asset="bear-repaired" />
-          </div>
-          <div className={styles.repairFade} />
-        </>
+        <img
+          className={styles.scene}
+          src="/red-game/final/sink-teddy.webp"
+          alt="Bambi sits upright with his belly mended."
+          draggable={false}
+          onLoad={() => setReady(true)}
+          onError={() => setReady(true)}
+        />
       ) : (
         <>
           {Object.entries(ENDING_SOUNDS).map(([soundStep, filename]) => (
@@ -119,23 +122,43 @@ export default function GameSequence({ type, onFinish, onSound }) {
             />
           ))}
           <img
-            className={styles.field}
-            {...artSources("/images/red-game/outdoors/field.webp")}
+            className={styles.scene}
+            src="/red-game/final/ending-end.webp"
+            aria-hidden={step < 4}
             alt={
-              step >= 6
+              step === 6
                 ? "The field and sky turn red."
-                : "A bright field opens out beneath a blue sky."
+                : "A bright field beneath a blue sky."
             }
             draggable={false}
           />
-          <div className={styles.doorStage}>
-            <div className={styles.door}>
-              <Prop asset="door-front" />
-              <div className={styles.key}>
-                <Prop asset="key" />
-              </div>
-            </div>
-          </div>
+          {step === 0 && (
+            <img
+              className={styles.scene}
+              src="/red-game/final/ending-start.webp"
+              alt="The door opens onto a bright field."
+              draggable={false}
+            />
+          )}
+          {reducedMotion === false && step === 0 && (
+            <video
+              ref={video}
+              className={styles.scene}
+              src="/red-game/final/ending.mp4"
+              poster="/red-game/final/ending-start.webp"
+              muted
+              playsInline
+              preload="auto"
+              aria-label="The door opens and you step outside into the field."
+              onPlay={() => {
+                if (doorSoundPlayed.current) return;
+                doorSoundPlayed.current = true;
+                onSound("door-open");
+              }}
+              onEnded={() => setStep((current) => Math.max(current, 4))}
+              onError={() => setStep((current) => Math.max(current, 4))}
+            />
+          )}
           <div className={styles.shade} />
           <p className={styles.endingText} aria-live="polite" key={step}>
             {step === 4

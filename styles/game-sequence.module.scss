@@ -3,120 +3,20 @@
   inset: 0;
   z-index: 10;
   overflow: hidden;
+  container-type: inline-size;
   background: #080808;
   outline: 0;
   color: #fff4d4;
 }
-// Keep the zoom anchored to the same point through every ending step.
-.field {
+
+.scene {
   position: absolute;
   inset: 0;
   width: 100%;
-  height: 130%;
-  object-fit: cover;
-  object-position: 60% 70%;
-  transform: scale(1.05) translateY(0);
-  transform-origin: 55% 15%;
-  opacity: 0;
-  transition:
-    transform 4s ease,
-    opacity 1.4s ease,
-    filter 1.8s ease;
+  height: 100%;
+  object-fit: contain;
 }
-.doorStage {
-  position: absolute;
-  inset: 0;
-  perspective: 1100px;
-  transition: opacity 1.4s;
-}
-.doorStage::before {
-  content: "";
-  position: absolute;
-  width: 230%;
-  height: 210%;
-  left: -72%;
-  top: -60%;
-  background: url("/images/red-game/main-room/room.webp") 0 0 / 100% 100%;
-  transition: opacity 1.5s ease;
-}
-// Mobile art set (see components/red-game/art.js).
-@media (max-width: 700px) {
-  .doorStage::before {
-    background-image: url("/images/red-game/main-room/room-mobile.webp");
-  }
-}
-.door {
-  position: absolute;
-  height: 90%;
-  aspect-ratio: 670 / 1342;
-  left: 50%;
-  top: 5%;
-  translate: -50% 0;
-  transform-origin: 0 50%;
-  transition: transform 1.5s ease-in;
-}
-// Anchor the existing inventory key to the painted knob in the door's coordinates.
-.key {
-  position: absolute;
-  left: 78%;
-  top: 55%;
-  width: 40%;
-  translate: -6% -82%;
-  transform-origin: 6% 82%;
-  opacity: 0;
-}
-.key > span {
-  scale: -1 1;
-}
-.sequence[data-ready="true"] .key {
-  animation: turn-key 1.7s ease-in-out both;
-}
-@keyframes turn-key {
-  0% {
-    transform: translate(35%, 20%) rotate(8deg);
-    opacity: 0;
-  }
-  40%,
-  65% {
-    transform: none;
-    opacity: 1;
-  }
-  80% {
-    transform: rotate(-15deg);
-    opacity: 1;
-  }
-  100% {
-    transform: rotate(-15deg) scale(0.85);
-    opacity: 0;
-  }
-}
-.sequence:not([data-step="0"]) .door {
-  transform: rotateY(-80deg);
-}
-.sequence:not([data-step="0"]) .doorStage::before {
-  opacity: 0;
-}
-.sequence:not([data-step="0"]) .field {
-  opacity: 1;
-}
-.sequence:not([data-step="0"]):not([data-step="1"]) {
-  .doorStage {
-    opacity: 0;
-    pointer-events: none;
-  }
-  .field {
-    transform: scale(1.15) translateY(-4%);
-  }
-}
-.sequence[data-type="ending"]:is(
-    [data-step="3"],
-    [data-step="4"],
-    [data-step="5"],
-    [data-step="6"]
-  )
-  .field {
-  transform: scale(1.55) translateY(0);
-}
+
 .shade {
   position: absolute;
   inset: 0;
@@ -124,21 +24,24 @@
   opacity: 0;
   mix-blend-mode: multiply;
   transition:
-    opacity 2s,
+    opacity 1.8s ease,
     background-color 1.8s ease;
 }
+
 .sequence[data-step="4"] .shade,
 .sequence[data-step="5"] .shade {
   opacity: 0.4;
 }
-// Keep the painted detail visible while the final title turns the scene red.
-.sequence[data-step="6"] .field {
+
+.sequence[data-step="6"] .scene {
   filter: grayscale(1);
 }
+
 .sequence[data-step="6"] .shade {
   background: #e52c38;
   opacity: 1;
 }
+
 .endingText {
   position: absolute;
   inset: 0;
@@ -147,15 +50,17 @@
   display: grid;
   place-items: center;
   text-align: center;
-  font-size: clamp(24px, 5vw, 64px);
+  font-size: clamp(20px, 6cqw, 64px);
   letter-spacing: 0.12em;
   text-shadow: 2px 2px 4px #0008;
   animation: text-fade 3.7s ease both;
 }
+
 .sequence[data-step="6"] .endingText {
-  font-size: clamp(72px, 16vw, 180px);
+  font-size: clamp(64px, 18cqw, 180px);
   animation: title-in 1.8s ease both;
 }
+
 @keyframes text-fade {
   0%,
   100% {
@@ -166,6 +71,7 @@
     opacity: 1;
   }
 }
+
 @keyframes title-in {
   from {
     opacity: 0;
@@ -174,6 +80,7 @@
     opacity: 1;
   }
 }
+
 .skip,
 .return {
   position: absolute;
@@ -185,76 +92,33 @@
   padding: 12px 18px;
   cursor: pointer;
 }
+
 .skip {
   right: 16px;
   bottom: max(16px, env(safe-area-inset-bottom));
   font-size: 11px;
 }
+
 .return {
-  bottom: max(10svh, env(safe-area-inset-bottom));
+  bottom: max(10%, env(safe-area-inset-bottom));
   left: 50%;
   translate: -50% 0;
   white-space: nowrap;
   text-decoration: underline;
   text-underline-offset: 6px;
 }
+
 .skip:focus-visible,
 .return:focus-visible {
   outline: 2px solid #ffd333;
 }
-.repairWall {
-  position: absolute;
-  width: 230%;
-  height: 210%;
-  left: -72%;
-  top: -60%;
-}
-.bear {
-  position: absolute;
-  height: 70%;
-  aspect-ratio: 992 / 1219;
-  left: 50%;
-  top: 12%;
-  translate: -50% 0;
-}
-.repairFade {
-  position: absolute;
-  inset: 0;
-  background: #000;
-  opacity: 0;
-  transition: opacity 450ms;
-}
-.sequence[data-step="1"] .repairFade {
-  opacity: 1;
-}
-@media (max-width: 700px) and (orientation: portrait) {
-  .door {
-    height: 75%;
-    top: 12%;
-    max-width: 95%;
-  }
-  .bear {
-    height: auto;
-    width: 75%;
-    top: 20%;
-  }
-}
+
 @media (prefers-reduced-motion: reduce) {
-  .sequence *,
-  .sequence[data-ready="true"] .key {
+  .sequence * {
     animation: none;
     transition: none;
   }
-  .sequence .door {
-    transform: none;
-  }
-  .sequence .key {
-    display: none;
-  }
   .endingText {
     opacity: 1;
-  }
-  .field {
-    transform: none !important;
   }
 }

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:game": "node --test components/red-game/game-model.test.mjs"
+    "test:game": "node --test components/red-game/*.test.mjs"
   },
   "engines": {
     "node": ">=22"

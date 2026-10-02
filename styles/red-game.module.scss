@@ -1,7 +1,11 @@
 .game {
   position: relative;
-  width: 100%;
-  height: 100%;
+  --game-size: min(100vw, 100svh);
+  width: var(--game-size);
+  height: var(--game-size);
+  flex-shrink: 0;
+  aspect-ratio: 1;
+  container-type: size;
   isolation: isolate;
   overflow: hidden;
   -webkit-user-select: none;
@@ -73,7 +77,7 @@
   position: relative;
   display: grid;
   place-items: center;
-  width: clamp(310px, 38vw, 420px);
+  width: 70cqw;
   max-width: 100%;
   aspect-ratio: 3.7;
   padding: 0;
@@ -81,7 +85,7 @@
   background: none;
   color: #fff;
   font-family: inherit;
-  font-size: clamp(24px, 2.5vw, 32px);
+  font-size: clamp(18px, 4cqw, 40px);
   font-weight: 700;
   text-transform: uppercase;
   text-shadow: 2px 2px 0 #000;
@@ -96,12 +100,6 @@
     height: 100%;
     pointer-events: none;
     user-select: none;
-  }
-
-  @media (min-width: 701px) {
-    width: clamp(420px, 44vw, 640px);
-    font-size: clamp(32px, 3.4vw, 48px);
-    text-shadow: 4px 4px 0 #000;
   }
 
   span {
@@ -138,8 +136,8 @@
 
 .arrow {
   position: absolute;
-  width: clamp(72px, 9vw, 132px);
-  height: clamp(72px, 9vw, 132px);
+  width: clamp(44px, 11cqw, 88px);
+  height: clamp(44px, 11cqw, 88px);
   padding: 0;
   border: 0;
   background: none;
@@ -178,17 +176,27 @@
 }
 
 .left {
-  left: max(1.5vw, env(safe-area-inset-left));
-  top: 44%;
+  left: 1%;
+  bottom: 1%;
+}
+
+// Keep floor objects clear of the controls while preserving the square render.
+.game[data-playing="true"] .view {
+  inset: 0 7% 14%;
+}
+.game > .detailScene {
+  inset: 0 7% 14%;
+  width: 86%;
+  height: 86%;
 }
 .right {
   --hover-tilt: 5deg;
-  right: max(1.5vw, env(safe-area-inset-right));
-  top: 44%;
+  right: 1%;
+  bottom: 1%;
 }
 .up {
   left: 50%;
-  top: max(1svh, env(safe-area-inset-top));
+  top: 1%;
   translate: -50% 0;
 }
 
@@ -203,23 +211,27 @@
   white-space: nowrap;
 }
 
-@media (max-width: 700px) and (orientation: portrait) {
-  .arrow {
-    width: 76px;
-    height: 76px;
+@media (max-width: 700px) {
+  .game[data-playing="true"] {
+    --controls-height: clamp(56px, 14vmin, 98px);
+    --game-size: min(100vw, calc(100svh - var(--controls-height)));
+    height: calc(var(--game-size) + var(--controls-height));
+
+    .view {
+      inset: 0 0 var(--controls-height);
+    }
   }
+
+  .game > .detailScene {
+    inset: 0 0 auto;
+    width: 100%;
+    height: var(--game-size);
+  }
+
   .left,
   .right {
-    top: auto;
-    bottom: max(12px, env(safe-area-inset-bottom));
+    bottom: 6px;
   }
-  .left {
-    left: max(4px, env(safe-area-inset-left));
-  }
-  .right {
-    right: max(4px, env(safe-area-inset-right));
-  }
-  // The inventory sits between the arrows in this row (see .inventory in game-ui.module.scss).
 }
 
 @media (prefers-reduced-motion: reduce) {

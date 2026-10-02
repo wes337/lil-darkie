@@ -1,308 +1,35 @@
 .scene {
-  position: relative;
-  // The desktop room widens independently of the character cutouts.
-  width: max(100%, 100svh);
-  height: 100svh;
-  flex-shrink: 0;
+  position: absolute;
+  inset: 0;
   overflow: hidden;
-  isolation: isolate;
   background: #080808;
-  user-select: none;
-  opacity: 0;
-
-  &[data-ready="true"] {
-    opacity: 1;
-  }
-
-  > img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  img {
-    display: block;
-    pointer-events: none;
-  }
 }
 
-// Translate keeps the entrance separate from the phone figure's horizontal transform.
-@keyframes rise-in {
-  from {
-    translate: 0 var(--enter-offset);
-  }
-
-  to {
-    translate: 0 0;
-  }
-}
-
-// Individual properties, leaving `transform` free for the landing parallax.
-@keyframes stars-enter {
-  from {
-    translate: 0 -0.7svh;
-    scale: 1.035;
-  }
-
-  to {
-    translate: 0 0;
-    scale: 1;
-  }
-}
-
-@keyframes giant-breathe {
-  0%,
-  100% {
-    transform: none;
-  }
-
-  50% {
-    transform: translateY(-1px) scale(1.008, 1.018);
-  }
-}
-
-// Separate scale from the existing entrance and breathing transforms.
-@keyframes explore-pulse {
-  0%,
-  100% {
-    scale: 1;
-  }
-  35% {
-    scale: var(--explore-scale);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .scene[data-ready="true"][data-playing="false"] {
-    .stars {
-      animation: stars-enter 2.8s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-
-    .room {
-      --enter-offset: clamp(16px, 2.8svh, 30px);
-      animation: rise-in 1.8s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-
-    .giantBack,
-    .giantHand {
-      --enter-offset: clamp(20px, 4.5svh, 42px);
-      animation: rise-in 1.9s cubic-bezier(0.22, 1, 0.36, 1) 0.22s both;
-    }
-
-    .figure {
-      --enter-offset: clamp(20px, 4svh, 40px);
-      animation: rise-in 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.36s both;
-    }
-  }
-
-  .scene[data-ready="true"] {
-    // Both copies breathe on the same clock, around the head's contact with the wall.
-    .giantBack img,
-    .giantHand img {
-      transform-origin: 75% 24%;
-      animation: giant-breathe 7.5s ease-in-out 2.8s infinite;
-    }
-  }
-
-  .scene[data-active="true"][data-playing="true"] {
-    .stars,
-    .room,
-    .giantBack,
-    .giantHand,
-    .figure {
-      animation: explore-pulse 650ms cubic-bezier(0.25, 0.1, 0.25, 1) both;
-    }
-    .stars {
-      --explore-scale: 1.012;
-    }
-    .room {
-      --explore-scale: 1.022;
-    }
-    .giantBack,
-    .giantHand {
-      --explore-scale: 1.03;
-    }
-    .figure {
-      --explore-scale: 1.035;
-    }
-  }
-}
-
-// Landing parallax (toggle: PARALLAX_ENABLED in red-game.jsx). RedGame sets --parallax-x/y (-1..1) from the mouse until play starts;
-// each layer drifts against the cursor by its --depth, nearer layers further.
-// `transform` is free here: the entrance and explore animations use `translate` and `scale`.
-.stars,
-.room,
-.giantBack,
-.giantHand,
-.figure {
-  transform: var(--layer-base,)
-    translate(
-      calc(var(--parallax-x, 0) * var(--depth) * -1),
-      calc(var(--parallax-y, 0) * var(--depth) * -1)
-    );
-  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.stars {
-  --depth: 1px;
-}
-.giantBack,
-.giantHand {
-  --depth: 2px;
-}
-.room {
-  --depth: 3px;
-}
-.figure {
-  --depth: 5.5px;
-}
-// Zoom the whole scene slightly so drifting layers never expose its edges. Scaling the
-// scene as one keeps the giant's hand aligned with the wall. RedGame sets data-parallax while active.
-.scene {
-  transition: scale 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-}
-:global([data-parallax="on"]) .scene[data-playing="false"] {
-  scale: 1.015;
-}
-
-.stars {
-  z-index: 0;
-  object-fit: cover;
-}
-
-// Anchor the giant to the back wall's right corner without stretching the cutout.
-.giantBack,
-.giantHand {
+.render,
+.idle {
   position: absolute;
-  top: 0;
-  right: calc(14% - 14svh);
-  width: 100svh;
-  height: 100svh;
-}
-
-.giantBack {
-  z-index: 1;
-}
-
-.room {
-  z-index: 2;
-}
-
-.giantHand {
-  z-index: 3;
-  clip-path: inset(14% 34% 69% 43%);
-}
-
-// Keep both giant passes aligned with the transparent padding in the source PNG.
-.giantBack img,
-.giantHand img {
-  position: absolute;
-  width: 85%;
-  height: 85%;
-  left: 11.3%;
-  top: -2.4%;
-}
-
-.scene > .figure {
-  position: absolute;
-  z-index: 4;
-  top: 2.4%;
-  left: calc(70% - 70svh);
-  width: 100svh;
-  height: 100svh;
-}
-
-.figure > img {
+  inset: 0;
   width: 100%;
   height: 100%;
-  transform-origin: 50% 70%;
+  object-fit: contain;
+  pointer-events: none;
 }
-.giantHotspot,
-.figureHotspot {
+
+.hotspot {
   position: absolute;
-  border: 0;
   padding: 0;
-  background: none;
+  border: 0;
+  background: transparent;
   cursor: pointer;
   pointer-events: auto;
-  &:disabled {
-    pointer-events: none;
-  }
+  touch-action: manipulation;
+  &:disabled { pointer-events: none; }
   &:focus-visible {
     outline: 2px solid #ffd333;
-  }
-}
-.giantHotspot {
-  left: 38%;
-  top: 0;
-  width: 48%;
-  height: 19%;
-}
-.figureHotspot {
-  left: 29%;
-  top: 39%;
-  width: 43%;
-  height: 53%;
-}
-@media (hover: hover) {
-  // Both giant layers use the same tilt so the hand stays aligned with the head.
-  .scene:has(.giantHotspot:enabled:hover) :is(.giantBack, .giantHand) img,
-  .figure:has(.figureHotspot:enabled:hover) img {
-    scale: 1.01;
-    rotate: var(--hover-tilt, 0deg);
-    filter: drop-shadow(3px 5px 3px #0002);
+    outline-offset: 2px;
   }
 }
 
-// Crop into the existing central wall. Its top edge sits above the viewport,
-// while the wall/floor seam stays near 80% of the screen.
-.scene[data-framing="wall"] > .room {
-  width: 200%;
-  height: 190%;
-  left: -56%;
-  top: -50%;
-}
-
-@media (max-width: 700px) and (orientation: portrait) {
-  .scene {
-    --giant-size: 130vw;
-    --room-shift: 7vw;
-
-    width: 100%;
-  }
-
-  // Keep the back wall near center, nudged right to reveal more of the door.
-  .scene > .room {
-    width: 125%;
-    left: calc(-23.125% + var(--room-shift));
-  }
-
-  .scene:not([data-room="main"]) > .room {
-    left: -17.5%;
-  }
-
-  .scene[data-framing="wall"] > .room {
-    width: 200%;
-    left: -56%;
-  }
-
-  // Match the mobile giant's wall contact point to the room's top and right corner.
-  .giantBack,
-  .giantHand {
-    width: var(--giant-size);
-    height: var(--giant-size);
-    top: calc(20.6svh - var(--giant-size) * 0.206);
-    right: calc(15.625% - var(--giant-size) * 0.14 - var(--room-shift));
-  }
-
-  .scene > .figure {
-    width: min(160vw, 76svh);
-    height: min(160vw, 76svh);
-    top: auto;
-    right: auto;
-    bottom: 4svh;
-    left: 60%;
-    --layer-base: translateX(-70%);
-  }
+@media (prefers-reduced-motion: reduce) {
+  .idle { display: none; }
 }

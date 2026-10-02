@@ -10,16 +10,16 @@ import Inventory from "./inventory";
 import GameSequence from "./game-sequence";
 import { ROOMS } from "./rooms";
 import { artSources } from "./art";
+import { FINAL_ART, dialogImage } from "./final-art.mjs";
+import FinalImage from "./final-image";
+import { MUSIC_VOLUME, SOUND_EFFECT_VOLUME, playSound } from "./audio";
 import styles from "@/styles/red-game.module.scss";
 
 const ROOM_FADE_MS = 240;
-// Landing-screen mouse parallax (and its slight zoom). Set to false to drop the effect entirely.
-const PARALLAX_ENABLED = true;
-const PARALLAX_MEDIA =
-  "(prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine)";
 const NAVIGATION_TARGETS = [
   "desk",
   "door-front",
+  "safe-front",
   "safe-keypad",
   "computer-monitor",
   "desk-note",
@@ -53,13 +53,6 @@ const EXTRA_SOUNDS = {
   "computer-hum": "mp3",
   ...Object.fromEntries(SPARKLE_SOUNDS.map((id) => [id, "mp3"])),
 };
-
-function playSound(sound) {
-  if (!sound) return;
-  sound.currentTime = 0;
-  // A blocked or failed sound should never interrupt gameplay.
-  sound.play().catch(() => {});
-}
 
 // `onExit` runs when the player clicks END after the ending; the page remounts the game to reset it.
 export default function RedGame({ onExit }) {
@@ -101,6 +94,7 @@ export default function RedGame({ onExit }) {
   const wallLightSoundRef = useRef(null);
   const extraSounds = useRef({});
   const humRef = useRef(null);
+  const musicRef = useRef(null);
   const playCue = useCallback((id) => {
     if (id === "sparkle") {
       SPARKLE_SOUNDS.forEach((soundId) =>
@@ -125,48 +119,32 @@ export default function RedGame({ onExit }) {
   }, []);
 
   const inspecting = inspectionHistory.length > 0;
-  const dialogCloseup = dialog?.sourceTarget === "mouse-hole";
+  const dialogCloseup = dialogImage(dialog?.sourceTarget, game.progress);
   const currentView = inspectionHistory.at(-1);
   const humming =
     gameStarted &&
     game.progress.usbInserted &&
     !sequence &&
     ["desk", "computer-monitor", "password-document"].includes(currentView);
-  // Landing parallax: feed the mouse position (-1..1 from center) to the room layers' CSS.
+  // Pause in background tabs and stop when this game instance ends.
   useEffect(() => {
-    const element = gameRef.current;
-    if (
-      !PARALLAX_ENABLED ||
-      gameStarted ||
-      !window.matchMedia(PARALLAX_MEDIA).matches
-    )
-      return;
-    element.dataset.parallax = "on";
-    const move = (event) => {
-      if (event.pointerType !== "mouse") return;
-      element.style.setProperty(
-        "--parallax-x",
-        ((event.clientX / window.innerWidth) * 2 - 1).toFixed(3),
-      );
-      element.style.setProperty(
-        "--parallax-y",
-        ((event.clientY / window.innerHeight) * 2 - 1).toFixed(3),
-      );
+    const music = musicRef.current;
+    if (!gameStarted) return;
+    const update = () => {
+      if (document.hidden) music.pause();
+      else music.play().catch(() => {});
     };
-    window.addEventListener("pointermove", move);
+    document.addEventListener("visibilitychange", update);
     return () => {
-      window.removeEventListener("pointermove", move);
-      element.style.removeProperty("--parallax-x");
-      element.style.removeProperty("--parallax-y");
-      delete element.dataset.parallax;
+      document.removeEventListener("visibilitychange", update);
+      music.pause();
     };
   }, [gameStarted]);
 
   useEffect(() => {
     const hum = humRef.current;
     if (!humming) return;
-    hum.volume = 0.3;
-    playSound(hum);
+    playSound(hum, SOUND_EFFECT_VOLUME * 0.3);
     return () => {
       hum.pause();
       hum.currentTime = 0;
@@ -200,7 +178,7 @@ export default function RedGame({ onExit }) {
     if (blocked) return;
     if (
       NAVIGATION_TARGETS.includes(id) &&
-      (!game.selected || ["desk", "door-front"].includes(id))
+      (!game.selected || ["desk", "door-front", "safe-front"].includes(id))
     ) {
       inspect(id);
       return;
@@ -315,6 +293,8 @@ export default function RedGame({ onExit }) {
 
   function startGame() {
     if (!ready) return;
+    // Start from the click, before effects run, to unlock audio on mobile Safari.
+    playSound(musicRef.current, MUSIC_VOLUME);
     playSound(movementSoundRef.current);
     focusOnStart.current = true;
     setNavOpen(false);
@@ -388,10 +368,12 @@ export default function RedGame({ onExit }) {
       onContextMenu={(event) => event.preventDefault()}
       onClick={playClickSound}
       data-transition={transition}
+      data-playing={gameStarted}
       data-holding-item={Boolean(game.selected)}
       data-dialog-source={dialog?.art?.roomProp}
       style={{ "--room-fade-duration": `${ROOM_FADE_MS}ms` }}
     >
+      <audio ref={musicRef} src={`${FINAL_ART}music.m4a`} preload="auto" loop hidden />
       <audio
         ref={detectionSoundRef}
         src="/red-game/sounds/detection-click-1.mp3"
@@ -562,10 +544,9 @@ export default function RedGame({ onExit }) {
           />
         </div>
       ))}
-      {(inspecting || dialogCloseup) && (
+      {inspecting && (
         <PropCloseup
-          history={dialogCloseup ? ["mouse-hole"] : inspectionHistory}
-          hideBack={dialogCloseup}
+          history={inspectionHistory}
           room={room}
           moving={blocked}
           backRef={inspectionBackRef}
@@ -577,6 +558,7 @@ export default function RedGame({ onExit }) {
           onSubmitCode={(code) => playCue(game.submitCode(code)?.sound)}
         />
       )}
+      {dialogCloseup && <FinalImage name={dialogCloseup} className={styles.detailScene} />}
       <div className={styles.curtain} aria-hidden="true" />
 
       {!gameStarted ? (
