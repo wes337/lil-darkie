@@ -1,0 +1,15 @@
+.sprite {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  user-select: none;
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+  }
+}

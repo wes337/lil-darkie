@@ -3,15 +3,21 @@
 import { useEffect } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { ASSETS, CDN_URL } from "@/app/assets";
+import { ASSETS } from "@/app/assets";
 import { preloadUrls } from "@/app/utils";
 import useStore from "@/app/store";
 import styles from "@/styles/top-bar.module.scss";
 
 export default function TopBar() {
   const pathname = usePathname();
-  const { lightMode, peachMode, sticky, setBloodTransition, setNavOpen } =
-    useStore();
+  const {
+    lightMode,
+    peachMode,
+    sticky,
+    setBloodTransition,
+    setNavOpen,
+    gameStarted,
+  } = useStore();
 
   const transitionTo = (url) => {
     if (pathname === url) {
@@ -25,6 +31,10 @@ export default function TopBar() {
   const hideTopBarLogo = false;
 
   useEffect(() => {
+    if (pathname === "/") {
+      return;
+    }
+
     preloadUrls([
       "/comics",
       "/sampler",
@@ -33,7 +43,24 @@ export default function TopBar() {
       "/blog",
       "/the-lost-songs",
     ]);
-  }, []);
+  }, [pathname]);
+
+  if (pathname === "/") {
+    return (
+      <header
+        className={styles["game-header"]}
+        data-playing={gameStarted}
+      >
+        <img
+          src="/images/greatest-show-in-human-history/lil-darkie.png"
+          alt="Lil Darkie"
+          width={841}
+          height={231}
+          draggable={false}
+        />
+      </header>
+    );
+  }
 
   return (
     <>
@@ -50,33 +77,27 @@ export default function TopBar() {
           <Image src={ASSETS.skullIcon} alt="" width={48} height={48} />
           <span>Sampler</span>
         </button>
-        {pathname === "/" ? (
-          <button className={`${styles["top-bar-logo"]} ${styles.head}`}>
-            <img src={`${CDN_URL}/greatest/lil-darkie.png`} alt="Lil Darkie" />
-          </button>
-        ) : (
-          <button
-            onClick={() => transitionTo("/")}
-            className={`${styles["top-bar-logo"]} ${
-              sticky ? ` ${styles.sticky}` : ""
-            } ${hideTopBarLogo ? ` ${styles.hide}` : ""}`}
-          >
-            <Image
-              className={`${styles["logo-yellow"]}`}
-              src={ASSETS.logoYellow}
-              alt="Lil Darkie"
-              width={254}
-              height={68}
-            />
-            <Image
-              className={`${styles["logo-primary"]}`}
-              src={ASSETS.logo}
-              alt="Lil Darkie"
-              width={254}
-              height={68}
-            />
-          </button>
-        )}
+        <button
+          onClick={() => transitionTo("/")}
+          className={`${styles["top-bar-logo"]} ${
+            sticky ? ` ${styles.sticky}` : ""
+          } ${hideTopBarLogo ? ` ${styles.hide}` : ""}`}
+        >
+          <Image
+            className={`${styles["logo-yellow"]}`}
+            src={ASSETS.logoYellow}
+            alt="Lil Darkie"
+            width={254}
+            height={68}
+          />
+          <Image
+            className={`${styles["logo-primary"]}`}
+            src={ASSETS.logo}
+            alt="Lil Darkie"
+            width={254}
+            height={68}
+          />
+        </button>
 
         <button onClick={() => transitionTo("/comics")}>
           <Image src={ASSETS.graveIcon} alt="" width={48} height={48} />
@@ -90,7 +111,7 @@ export default function TopBar() {
       <div
         className={`${styles["top-bar-back"]} ${
           sticky ? ` ${styles.sticky}` : ""
-        }${pathname === "/" ? ` ${styles.black}` : ""}`}
+        }`}
       />
     </>
   );

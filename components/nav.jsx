@@ -9,8 +9,15 @@ import "@/styles/nav.scss";
 
 export default function Nav() {
   const pathname = usePathname();
-  const { navOpen, setNavOpen, sticky, setSticky, setScroll, setFlashing } =
-    useStore();
+  const {
+    navOpen,
+    setNavOpen,
+    sticky,
+    setSticky,
+    setScroll,
+    setFlashing,
+    gameStarted,
+  } = useStore();
 
   useEffect(() => {
     setNavOpen(false);
@@ -28,8 +35,10 @@ export default function Nav() {
 
     window.addEventListener("scroll", onScroll);
 
-    return () => window.removeEventListener("scoll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, [setScroll, setSticky]);
+
+  const gamePlaying = pathname === "/" && gameStarted;
 
   return (
     <>
@@ -39,11 +48,25 @@ export default function Nav() {
       />
       <button
         className={`mobile-nav-button${sticky ? " sticky" : ""}`}
+        data-game-landing={pathname === "/"}
+        data-game-playing={gamePlaying}
+        disabled={gamePlaying}
+        aria-hidden={gamePlaying}
         onClick={() => setNavOpen(true)}
       >
-        <Image src={ASSETS.menu} alt="Menu" width={98} height={66} />
+        {/* The landing page uses a copy recolored to the red game's painted palette. */}
+        <Image
+          src={
+            pathname === "/"
+              ? "/images/red-game/navigation/menu.webp"
+              : ASSETS.menu
+          }
+          alt="Menu"
+          width={98}
+          height={66}
+        />
       </button>
-      <div className={`nav${navOpen ? " open" : ""}`}>
+      <div className={`nav${navOpen ? " open" : ""}`} inert={!navOpen}>
         <div className="nav-header">
           <Image
             className="nav-logo"
@@ -160,28 +183,9 @@ export default function Nav() {
             <span>The Lost Songs</span>
           </Link>
           <div className="nav-copyright">
-            Copyright © 2025 Lil Darkie® - All Rights Reserved.
+            Copyright © 2026 Lil Darkie® - All Rights Reserved.
           </div>
         </div>
-      </div>
-      <div className={`mushroom${navOpen ? " open" : ""}`}>
-        <Image src={ASSETS.mushroom} alt="" width={867} height={1076} />
-      </div>
-      <div className={`planes${navOpen ? " open" : ""}`}>
-        <Image
-          className="plane-one"
-          src={ASSETS.plane2}
-          alt=""
-          width={800}
-          height={547}
-        />
-        <Image
-          className="plane-two"
-          src={ASSETS.plane1}
-          alt=""
-          width={688}
-          height={516}
-        />
       </div>
     </>
   );

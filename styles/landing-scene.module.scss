@@ -1,0 +1,141 @@
+.backdrop {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.scene {
+  position: relative;
+  width: max(100%, 100svh);
+  height: 100svh;
+  flex-shrink: 0;
+  overflow: hidden;
+  isolation: isolate;
+  background: #080808;
+  opacity: 0;
+  transition: scale 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+
+  &[data-ready="true"] { opacity: 1; }
+  &[data-parallax="on"] { scale: 1.015; }
+
+  > img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  img { display: block; }
+}
+
+@keyframes rise-in {
+  from { translate: 0 var(--enter-offset); }
+  to { translate: 0 0; }
+}
+
+@keyframes stars-enter {
+  from { translate: 0 -0.7svh; scale: 1.035; }
+  to { translate: 0 0; scale: 1; }
+}
+
+@keyframes giant-breathe {
+  0%, 100% { transform: none; }
+  50% { transform: translateY(-1px) scale(1.008, 1.018); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .scene[data-ready="true"] {
+    .stars { animation: stars-enter 2.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .room {
+      --enter-offset: clamp(16px, 2.8svh, 30px);
+      animation: rise-in 1.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .giantBack, .giantHand {
+      --enter-offset: clamp(20px, 4.5svh, 42px);
+      animation: rise-in 1.9s cubic-bezier(0.22, 1, 0.36, 1) 0.22s both;
+    }
+    .figure {
+      --enter-offset: clamp(20px, 4svh, 40px);
+      animation: rise-in 1.95s cubic-bezier(0.22, 1, 0.36, 1) 0.36s both;
+    }
+    .giantBack img, .giantHand img {
+      transform-origin: 75% 24%;
+      animation: giant-breathe 7.5s ease-in-out 2.8s infinite;
+    }
+  }
+}
+
+// Keep parallax separate from the entrance and breathing animations.
+.stars, .room, .giantBack, .giantHand, .figure {
+  transform: var(--layer-base,)
+    translate(
+      calc(var(--parallax-x, 0) * var(--depth) * -1),
+      calc(var(--parallax-y, 0) * var(--depth) * -1)
+    );
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.stars { --depth: 1px; z-index: 0; object-fit: cover; }
+.room { --depth: 3px; z-index: 2; }
+.figure { --depth: 5.5px; }
+
+// Anchor both copies of the giant to the back wall without stretching them.
+.giantBack, .giantHand {
+  --depth: 2px;
+  position: absolute;
+  top: 0;
+  right: calc(14% - 14svh);
+  width: 100svh;
+  height: 100svh;
+}
+
+.giantBack { z-index: 1; }
+.giantHand { z-index: 3; clip-path: inset(14% 34% 69% 43%); }
+
+.giantBack img, .giantHand img {
+  position: absolute;
+  width: 85%;
+  height: 85%;
+  left: 11.3%;
+  top: -2.4%;
+}
+
+.figure {
+  position: absolute;
+  z-index: 4;
+  top: 2.4%;
+  left: calc(70% - 70svh);
+  width: 100svh;
+  height: 100svh;
+
+  > img { width: 100%; height: 100%; }
+}
+
+@media (max-width: 700px) and (orientation: portrait) {
+  .scene {
+    --giant-size: 130vw;
+    --room-shift: 7vw;
+    width: 100%;
+  }
+
+  .scene > .room { width: 125%; left: calc(-23.125% + var(--room-shift)); }
+
+  .giantBack, .giantHand {
+    width: var(--giant-size);
+    height: var(--giant-size);
+    top: calc(20.6svh - var(--giant-size) * 0.206);
+    right: calc(15.625% - var(--giant-size) * 0.14 - var(--room-shift));
+  }
+
+  .figure {
+    width: min(160vw, 76svh);
+    height: min(160vw, 76svh);
+    top: auto;
+    bottom: 4svh;
+    left: 60%;
+    --layer-base: translateX(-70%);
+  }
+}

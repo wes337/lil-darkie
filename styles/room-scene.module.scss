@@ -1,0 +1,35 @@
+.scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #080808;
+}
+
+.render,
+.idle {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.hotspot {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  touch-action: manipulation;
+  &:disabled { pointer-events: none; }
+  &:focus-visible {
+    outline: 2px solid #ffd333;
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .idle { display: none; }
+}

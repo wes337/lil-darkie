@@ -1,5 +1,31 @@
 @import "./variables.scss";
 
+.game-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 5;
+  height: clamp(4rem, 10svh, 6.5rem);
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  &[data-playing="true"] {
+    height: var(--game-header-height);
+    img { width: min(42vw, 180px); }
+  }
+
+  img {
+    display: block;
+    width: clamp(140px, 23svh, 200px);
+    height: auto;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+}
+
 .top-bar {
   position: fixed;
   top: 32px;
@@ -145,8 +171,12 @@
     a,
     button:not(.top-bar-logo) {
       color: $color-yellow;
-      text-shadow: -1px -1px 0 $color-black, 1px -1px 0 $color-black,
-        -1px 1px 0 $color-black, 1px 1px 0 $color-black, 2px 2px $color-black;
+      text-shadow:
+        -1px -1px 0 $color-black,
+        1px -1px 0 $color-black,
+        -1px 1px 0 $color-black,
+        1px 1px 0 $color-black,
+        2px 2px $color-black;
 
       &:hover,
       &:focus,

@@ -1,0 +1,571 @@
+{
+  "version": 1,
+  "source": "Final",
+  "assets": {
+    "door": {
+      "src": "/red-game/final/door.webp",
+      "source": "Output Stage 3/Main Room Door/Main Room0001.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 345880
+    },
+    "door-lock": {
+      "src": "/red-game/final/door-lock.webp",
+      "source": "Output Stage 3/Main Room Door/Main Room0002.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 343876
+    },
+    "door-upper": {
+      "src": "/red-game/final/door-upper.webp",
+      "source": "Output Stage 3/Main Room Door/Main Room0003.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 336488
+    },
+    "door-upper-alternate": {
+      "src": "/red-game/final/door-upper-alternate.webp",
+      "source": "Output Stage 3/Main Room Door/Main Room0004.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 350896
+    },
+    "door-bottom": {
+      "src": "/red-game/final/door-bottom.webp",
+      "source": "Output Stage 3/Main Room Door/Main Room0005.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 350704
+    },
+    "room-computer-thread": {
+      "src": "/red-game/final/room-computer-thread.webp",
+      "source": "Output Stage 3/Computer/computer0000.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 281614
+    },
+    "room-computer-thread-lit": {
+      "src": "/red-game/final/room-computer-thread-lit.webp",
+      "source": "Output Stage 3/Computer/computer0001.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 291268
+    },
+    "room-computer": {
+      "src": "/red-game/final/room-computer.webp",
+      "source": "Output Stage 3/Computer/computer0002.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 281374
+    },
+    "room-computer-lit": {
+      "src": "/red-game/final/room-computer-lit.webp",
+      "source": "Output Stage 3/Computer/computer0003.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 291090
+    },
+    "room-computer-on": {
+      "src": "/red-game/final/room-computer-on.webp",
+      "source": "Output Stage 3/Computer/computer0004.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 285348
+    },
+    "room-computer-on-lit": {
+      "src": "/red-game/final/room-computer-on-lit.webp",
+      "source": "Output Stage 3/Computer/computer0005.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 294234
+    },
+    "desk-thread": {
+      "src": "/red-game/final/desk-thread.webp",
+      "source": "Output Stage 3/Computer/computer0006.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 388988
+    },
+    "thread-closeup": {
+      "src": "/red-game/final/thread-closeup.webp",
+      "source": "Output Stage 3/Computer/computer0007.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 397182
+    },
+    "computer-off": {
+      "src": "/red-game/final/computer-off.webp",
+      "source": "Output Stage 3/Computer/computer0008.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 297320
+    },
+    "computer-on": {
+      "src": "/red-game/final/computer-on.webp",
+      "source": "Output Stage 3/Computer/computer0009.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 344852
+    },
+    "note": {
+      "src": "/red-game/final/note.webp",
+      "source": "Output Stage 3/Computer/computer0010.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 266702
+    },
+    "lamp-off": {
+      "src": "/red-game/final/lamp-off.webp",
+      "source": "Output Stage 3/Computer/computer0011.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 280534
+    },
+    "lamp-on": {
+      "src": "/red-game/final/lamp-on.webp",
+      "source": "Output Stage 3/Computer/computer0012.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 316438
+    },
+    "room-safe": {
+      "src": "/red-game/final/room-safe.webp",
+      "source": "Output Stage 3/Safe/safe0000.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 378676
+    },
+    "room-safe-bloomed": {
+      "src": "/red-game/final/room-safe-bloomed.webp",
+      "source": "Output Stage 3/Safe/safe0001.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 379868
+    },
+    "keypad": {
+      "src": "/red-game/final/keypad.webp",
+      "source": "Output Stage 3/Safe/safe0002.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 358712
+    },
+    "flower-wilted": {
+      "src": "/red-game/final/flower-wilted.webp",
+      "source": "Output Stage 3/Safe/safe0003.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 360340
+    },
+    "flower-bloomed": {
+      "src": "/red-game/final/flower-bloomed.webp",
+      "source": "Output Stage 3/Safe/safe0004.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 382668
+    },
+    "flower-usb": {
+      "src": "/red-game/final/flower-usb.webp",
+      "source": "Output Stage 3/Safe/safe0005.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 383580
+    },
+    "safe-locked": {
+      "src": "/red-game/final/safe-locked.webp",
+      "source": "Output Stage 3/Safe/safe0006.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 425860
+    },
+    "safe-unlocked": {
+      "src": "/red-game/final/safe-unlocked.webp",
+      "source": "Output Stage 3/Safe/safe0007.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 427848
+    },
+    "safe-open": {
+      "src": "/red-game/final/safe-open.webp",
+      "source": "Output Stage 3/Safe/safe0008.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 429110
+    },
+    "key-closeup-disc": {
+      "src": "/red-game/final/key-closeup-disc.webp",
+      "source": "Output Stage 3/Safe/safe0009.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 434980
+    },
+    "key-closeup": {
+      "src": "/red-game/final/key-closeup.webp",
+      "source": "Output Stage 3/Safe/safe0010.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 433930
+    },
+    "safe-disc": {
+      "src": "/red-game/final/safe-disc.webp",
+      "source": "Output Stage 3/Safe/safe0011.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 428496
+    },
+    "disc-closeup-key": {
+      "src": "/red-game/final/disc-closeup-key.webp",
+      "source": "Output Stage 3/Safe/safe0012.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 384526
+    },
+    "disc-closeup": {
+      "src": "/red-game/final/disc-closeup.webp",
+      "source": "Output Stage 3/Safe/safe0013.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 384364
+    },
+    "safe-key": {
+      "src": "/red-game/final/safe-key.webp",
+      "source": "Output Stage 3/Safe/safe0014.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 428678
+    },
+    "safe-empty": {
+      "src": "/red-game/final/safe-empty.webp",
+      "source": "Output Stage 3/Safe/safe0015.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 426504
+    },
+    "mousehole": {
+      "src": "/red-game/final/mousehole.webp",
+      "source": "Output Stage 3/Safe/safe0016.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 295154
+    },
+    "mousehole-teddy": {
+      "src": "/red-game/final/mousehole-teddy.webp",
+      "source": "Output Stage 3/Safe/safe0017.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 325412
+    },
+    "item-key": {
+      "src": "/red-game/final/item-key.webp",
+      "source": "Output Stage 3/Safe/safe0018.png",
+      "width": 302,
+      "height": 427,
+      "crop": {
+        "left": 373,
+        "top": 343,
+        "width": 302,
+        "height": 427
+      },
+      "sourceWidth": 1080,
+      "sourceHeight": 1080,
+      "bytes": 20446
+    },
+    "item-disc": {
+      "src": "/red-game/final/item-disc.webp",
+      "source": "Output Stage 3/Safe/safe0019.png",
+      "width": 625,
+      "height": 640,
+      "crop": {
+        "left": 198,
+        "top": 184,
+        "width": 654,
+        "height": 670
+      },
+      "sourceWidth": 1080,
+      "sourceHeight": 1080,
+      "bytes": 40080
+    },
+    "item-water": {
+      "src": "/red-game/final/item-water.webp",
+      "source": "Output Stage 3/Safe/safe0020.png",
+      "width": 366,
+      "height": 640,
+      "crop": {
+        "left": 336,
+        "top": 205,
+        "width": 407,
+        "height": 711
+      },
+      "sourceWidth": 1080,
+      "sourceHeight": 1080,
+      "bytes": 102430
+    },
+    "item-glass": {
+      "src": "/red-game/final/item-glass.webp",
+      "source": "Output Stage 3/Safe/safe0021.png",
+      "width": 366,
+      "height": 640,
+      "crop": {
+        "left": 336,
+        "top": 205,
+        "width": 407,
+        "height": 711
+      },
+      "sourceWidth": 1080,
+      "sourceHeight": 1080,
+      "bytes": 105574
+    },
+    "item-teddy": {
+      "src": "/red-game/final/item-teddy.webp",
+      "source": "Output Stage 3/Safe/safe0022.png",
+      "width": 486,
+      "height": 640,
+      "crop": {
+        "left": 214,
+        "top": 142,
+        "width": 660,
+        "height": 870
+      },
+      "sourceWidth": 1080,
+      "sourceHeight": 1080,
+      "bytes": 70224
+    },
+    "item-teddy-torn": {
+      "src": "/red-game/final/item-teddy-torn.webp",
+      "source": "Output Stage 3/Safe/safe0023.png",
+      "width": 522,
+      "height": 640,
+      "crop": {
+        "left": 175,
+        "top": 103,
+        "width": 723,
+        "height": 886
+      },
+      "sourceWidth": 1080,
+      "sourceHeight": 1080,
+      "bytes": 66914
+    },
+    "item-needle": {
+      "src": "/red-game/final/item-needle.webp",
+      "source": "Output Stage 3/Safe/safe0024.png",
+      "width": 350,
+      "height": 552,
+      "crop": {
+        "left": 347,
+        "top": 271,
+        "width": 350,
+        "height": 552
+      },
+      "sourceWidth": 1080,
+      "sourceHeight": 1080,
+      "bytes": 2290
+    },
+    "item-thread": {
+      "src": "/red-game/final/item-thread.webp",
+      "source": "Output Stage 3/Safe/safe0025.png",
+      "width": 359,
+      "height": 593,
+      "crop": {
+        "left": 377,
+        "top": 230,
+        "width": 359,
+        "height": 593
+      },
+      "sourceWidth": 1080,
+      "sourceHeight": 1080,
+      "bytes": 44310
+    },
+    "item-needle-thread": {
+      "src": "/red-game/final/item-needle-thread.webp",
+      "source": "Output Stage 3/Safe/safe0026.png",
+      "width": 406,
+      "height": 603,
+      "crop": {
+        "left": 353,
+        "top": 232,
+        "width": 406,
+        "height": 603
+      },
+      "sourceWidth": 1080,
+      "sourceHeight": 1080,
+      "bytes": 47870
+    },
+    "item-usb": {
+      "src": "/red-game/final/item-usb.webp",
+      "source": "Output Stage 3/Safe/safe0027.png",
+      "width": 600,
+      "height": 253,
+      "crop": {
+        "left": 228,
+        "top": 400,
+        "width": 600,
+        "height": 253
+      },
+      "sourceWidth": 1080,
+      "sourceHeight": 1080,
+      "bytes": 40430
+    },
+    "room-sink": {
+      "src": "/red-game/final/room-sink.webp",
+      "source": "Output Stage 3/Sink/Sink0000.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 375896
+    },
+    "room-sink-teddy": {
+      "src": "/red-game/final/room-sink-teddy.webp",
+      "source": "Output Stage 3/Sink/Sink0001.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 382672
+    },
+    "room-sink-teddy-torn": {
+      "src": "/red-game/final/room-sink-teddy-torn.webp",
+      "source": "Output Stage 3/Sink/Sink0002.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 380314
+    },
+    "sink-floor": {
+      "src": "/red-game/final/sink-floor.webp",
+      "source": "Output Stage 3/Sink/Sink0003.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 314910
+    },
+    "sink-teddy": {
+      "src": "/red-game/final/sink-teddy.webp",
+      "source": "Output Stage 3/Sink/Sink0004.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 340612
+    },
+    "sink-teddy-torn": {
+      "src": "/red-game/final/sink-teddy-torn.webp",
+      "source": "Output Stage 3/Sink/Sink0005.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 324926
+    },
+    "sink-off": {
+      "src": "/red-game/final/sink-off.webp",
+      "source": "Output Stage 3/Sink/Sink0006.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 394640
+    },
+    "sink-on": {
+      "src": "/red-game/final/sink-on.webp",
+      "source": "Output Stage 3/Sink/Sink0007.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 396434
+    },
+    "sink-corner": {
+      "src": "/red-game/final/sink-corner.webp",
+      "source": "Output Stage 3/Sink/Sink0008.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 327900
+    },
+    "sink-corner-teddy": {
+      "src": "/red-game/final/sink-corner-teddy.webp",
+      "source": "Output Stage 3/Sink/Sink0009.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 386624
+    },
+    "sink-corner-teddy-torn": {
+      "src": "/red-game/final/sink-corner-teddy-torn.webp",
+      "source": "Output Stage 3/Sink/Sink0010.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 356764
+    },
+    "room-idle": {
+      "src": "/red-game/final/room-idle.webp",
+      "source": "Output Stage 3/Main Room/Main Room0000.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 287150
+    },
+    "ending-start": {
+      "src": "/red-game/final/ending-start.webp",
+      "source": "Output Stage 3/end cutscene/Main Room0006.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 340454
+    },
+    "ending-end": {
+      "src": "/red-game/final/ending-end.webp",
+      "source": "Output Stage 3/end cutscene/Main Room0250.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 231988
+    },
+    "outside": {
+      "src": "/red-game/final/outside.webp",
+      "source": "Output Stage 3/end cutscene/Main Room0116.png",
+      "width": 1080,
+      "height": 1080,
+      "bytes": 382662
+    },
+    "room-idle-video": {
+      "src": "/red-game/final/room-idle.mp4",
+      "source": "Output Stage 3/Main Room/Main Room0000-0176.png",
+      "width": 1080,
+      "height": 1080,
+      "fps": 24,
+      "frames": 177,
+      "duration": 7.375,
+      "bytes": 805694
+    },
+    "ending-video": {
+      "src": "/red-game/final/ending.mp4",
+      "source": "Output Stage 3/end cutscene/Main Room0006-0250.png",
+      "width": 1080,
+      "height": 1080,
+      "fps": 24,
+      "frames": 245,
+      "duration": 10.208333333333334,
+      "bytes": 7496900
+    },
+    "wisp": {
+      "src": "/red-game/final/wisp.webp",
+      "source": "Output Stage 3/Wisp INV/WISP0000-0250.png",
+      "width": 128,
+      "height": 238,
+      "fps": 12,
+      "frames": 126,
+      "duration": 10.499,
+      "crop": {
+        "left": 368,
+        "top": 145,
+        "width": 359,
+        "height": 667
+      },
+      "sourceWidth": 1080,
+      "sourceHeight": 1080,
+      "bytes": 943324
+    },
+    "wisp-still": {
+      "src": "/red-game/final/wisp-still.webp",
+      "source": "Output Stage 3/Wisp INV/WISP0120.png",
+      "width": 256,
+      "height": 476,
+      "crop": {
+        "left": 368,
+        "top": 145,
+        "width": 359,
+        "height": 667
+      },
+      "sourceWidth": 1080,
+      "sourceHeight": 1080,
+      "bytes": 28966
+    },
+    "music": {
+      "src": "/red-game/final/music.m4a",
+      "source": "josh website demo.m4a",
+      "bytes": 1034432
+    }
+  }
+}

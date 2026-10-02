@@ -1,6 +1,8 @@
 import { create } from "zustand";
 
 const useStore = create((set) => ({
+  gameStarted: false,
+  setGameStarted: (gameStarted) => set({ gameStarted }),
   navOpen: false,
   setNavOpen: (navOpen) => {
     if (navOpen) {

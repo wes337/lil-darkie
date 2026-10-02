@@ -69,7 +69,7 @@ export default function Landing() {
           style={{
             transform: `translateY(-${Math.max(
               scroll * 0.3,
-              0
+              0,
             )}%) scale(${Math.max(1, 1 + scroll * 0.001)})`,
           }}
         >
@@ -128,7 +128,7 @@ export default function Landing() {
       <TourDates />
       <div className={styles.footer}>
         <div className={styles.copyright}>
-          Copyright © 2025 Lil Darkie® All Rights Reserved
+          Copyright © 2026 Lil Darkie® All Rights Reserved
         </div>
       </div>
     </div>
@@ -182,7 +182,7 @@ function TourDates() {
                 />
               </Link>
             );
-          }
+          },
         )}
       </div>
     </div>

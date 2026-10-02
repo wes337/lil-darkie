@@ -29,7 +29,7 @@ export default function Blog() {
         style={{
           opacity: `${100 - scrollPercentage * 4}%`,
           transform: `translate(-${Math.floor(scroll / 2)}px, ${Math.floor(
-            scroll / 10
+            scroll / 10,
           )}px)`,
         }}
       >
@@ -51,14 +51,14 @@ export default function Blog() {
         style={{
           opacity: isMobileSizedScreen() ? 1 : `${scrollPercentage * 2}%`,
           transform: `translate(${Math.floor(scroll / 5)}px, ${Math.floor(
-            scroll / 10
+            scroll / 10,
           )}px)`,
         }}
       >
         <Image src={ASSETS.billion} alt="" width={1000} height={1000} />
       </div>
       <div className="copyright">
-        Copyright © 2025 Lil Darkie® All Rights Reserved
+        Copyright © 2026 Lil Darkie® All Rights Reserved
       </div>
     </div>
   );

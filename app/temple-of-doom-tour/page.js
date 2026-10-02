@@ -54,12 +54,12 @@ export default function TempleOfDoomTour() {
                   {soldOut && <div className="sold-out">Sold out!</div>}
                 </Link>
               );
-            }
+            },
           )}
         </div>
       </div>
       <div className="copyright">
-        Copyright © 2025 Lil Darkie® All Rights Reserved
+        Copyright © 2026 Lil Darkie® All Rights Reserved
       </div>
     </div>
   );

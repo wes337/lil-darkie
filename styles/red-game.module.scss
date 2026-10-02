@@ -1,0 +1,283 @@
+.game {
+  position: relative;
+  --frame-width: clamp(10px, 1.6vmin, 14px);
+  --game-frame-image: url("/images/red-game/buttons/paint-red.webp");
+  --controls-height: clamp(56px, 10vmin, 80px);
+  --game-size: min(
+    calc(100vw - 2 * (var(--game-edge-gap) + var(--frame-width))),
+    calc(100svh - var(--game-header-height) - 2 * (var(--game-edge-gap) + var(--frame-width)) - var(--controls-height) - env(safe-area-inset-bottom))
+  );
+  width: var(--game-size);
+  height: calc(var(--game-size) + var(--controls-height));
+  flex-shrink: 0;
+  container-type: size;
+  isolation: isolate;
+  overflow: visible;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  overscroll-behavior: contain;
+
+  &[data-playing="false"] {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  // Nine-slice the existing brush stroke into a frame without tinting the game.
+  &[data-playing="true"]::after {
+    content: "";
+    position: absolute;
+    top: calc(-1 * var(--frame-width));
+    left: calc(-1 * var(--frame-width));
+    width: var(--game-size);
+    height: var(--game-size);
+    border: var(--frame-width) solid transparent;
+    border-image: var(--game-frame-image) 32% 14% stretch;
+    filter: grayscale(1) brightness(1.8);
+    z-index: 11;
+    pointer-events: none;
+  }
+
+  img {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    pointer-events: none;
+  }
+
+  button {
+    touch-action: manipulation;
+  }
+}
+
+.view {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  &[data-active="true"] {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.curtain {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  background: #080808;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--room-fade-duration) ease-in-out;
+}
+
+.game[data-transition="out"] .curtain {
+  opacity: 1;
+}
+
+@keyframes start-darken {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes start-reveal {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.startCurtain {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: #080808;
+  animation: start-darken var(--start-out) ease-in-out both;
+
+  &[data-phase="start-in"] {
+    animation: start-reveal var(--start-in) ease-in-out var(--start-hold) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none !important;
+  }
+}
+
+.start {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: max-content;
+  max-width: calc(100% - 32px);
+
+  p {
+    color: #fff;
+    max-width: 28rem;
+    font-size: 12px;
+  }
+}
+
+.play {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(310px, 38vw, 420px);
+  max-width: 100%;
+  aspect-ratio: 3.7;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  font-family: inherit;
+  font-size: clamp(24px, 2.5vw, 32px);
+  font-weight: 700;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0 #000;
+  line-height: 1.1;
+  filter: drop-shadow(3px 4px 2px #08080880);
+  cursor: pointer;
+
+  @media (min-width: 701px) {
+    width: clamp(420px, 44vw, 640px);
+    font-size: clamp(32px, 3.4vw, 48px);
+    text-shadow: 4px 4px 0 #000;
+  }
+
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  span {
+    position: relative;
+  }
+  .playYellow {
+    opacity: 0;
+  }
+  .playRed {
+    opacity: 1;
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+  &:enabled:is(:hover, :focus-visible, :active) {
+    scale: 1.15;
+    rotate: -2deg;
+    filter: drop-shadow(3px 5px 3px #0009);
+    .playYellow {
+      opacity: 1;
+    }
+    .playRed {
+      opacity: 0;
+    }
+  }
+}
+
+.navigation {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.arrow {
+  position: absolute;
+  width: clamp(44px, 11cqw, 88px);
+  height: clamp(44px, 11cqw, 88px);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  pointer-events: auto;
+  filter: drop-shadow(2px 3px 2px #0006);
+  -webkit-tap-highlight-color: transparent;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  &:enabled:active {
+    scale: 1.08;
+    rotate: var(--hover-tilt, -5deg);
+    filter: brightness(1.12) drop-shadow(3px 5px 3px #0009);
+  }
+  @media (hover: hover) {
+    &:enabled:hover {
+      scale: 1.08;
+      rotate: var(--hover-tilt, -5deg);
+      filter: brightness(1.12) drop-shadow(3px 5px 3px #0009);
+    }
+  }
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.play:focus-visible,
+.arrow:focus-visible {
+  outline: 2px solid #fff0a1;
+  outline-offset: 5px;
+}
+
+.left {
+  left: 1%;
+  bottom: 6px;
+}
+
+// Keep the controls below the framed square on every screen size.
+.game[data-playing="true"] .view {
+  inset: 0 0 auto;
+  height: var(--game-size);
+}
+.game > .detailScene {
+  inset: 0 0 auto;
+  width: 100%;
+  height: var(--game-size);
+}
+.right {
+  --hover-tilt: 5deg;
+  right: 1%;
+  bottom: 6px;
+}
+.up {
+  left: 50%;
+  top: 1%;
+  translate: -50% 0;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  .game {
+    --game-frame-image: url("/images/red-game/buttons/paint-red-mobile.webp");
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .curtain {
+    display: none;
+  }
+}

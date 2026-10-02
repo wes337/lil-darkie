@@ -103,11 +103,11 @@ export default function FallTour() {
                   {soldOut && <div className="sold-out">Sold out!</div>}
                 </Link>
               );
-            }
+            },
           )}
         </div>
         <div className="copyright">
-          Copyright © 2025 Lil Darkie®
+          Copyright © 2026 Lil Darkie®
           <br />
           All Rights Reserved
         </div>

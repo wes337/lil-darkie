@@ -13,8 +13,33 @@ import "@/styles/globals.scss";
 const martianMono = Martian_Mono({ subsets: ["latin"] });
 
 export const metadata = {
+  // Preview deploys serve share images from their own URL; production isn't guaranteed to have them yet.
+  metadataBase: new URL(
+    process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "https://www.lildarkie.com",
+  ),
   title: "Lil Darkie",
   description: "The Official Lil Darkie Website",
+  openGraph: {
+    title: "Lil Darkie",
+    description: "The Official Lil Darkie Website",
+    type: "website",
+    images: [
+      {
+        url: "/images/social/lil-darkie-red-logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Lil Darkie red logo on a black background",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lil Darkie",
+    description: "The Official Lil Darkie Website",
+    images: ["/images/social/lil-darkie-red-logo.png"],
+  },
 };
 
 export default function RootLayout({ children }) {
