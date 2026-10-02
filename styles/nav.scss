@@ -31,7 +31,7 @@
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition-delay: 0s, 0s, 650ms;
+      transition: none;
     }
 
     @media (prefers-reduced-motion: reduce) {

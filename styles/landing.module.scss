@@ -29,7 +29,7 @@
   &[data-playing="true"] {
     transform: translateY(100%);
     visibility: hidden;
-    transition-delay: 0s, 650ms;
+    transition: none;
   }
 
   @media (prefers-reduced-motion: reduce) {

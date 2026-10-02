@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:game": "node --test components/red-game/*.test.mjs"
+    "test:game": "node --test components/red-game/*.test.mjs",
+    "test:preview": "node --test lib/preview-access.test.mjs"
   },
   "engines": {
     "node": ">=22"

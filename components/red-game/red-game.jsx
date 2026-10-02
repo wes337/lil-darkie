@@ -1,8 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import useStore from "@/app/store";
 import RoomScene from "./room-scene";
+import LandingScene from "./landing-scene";
 import PropCloseup from "./prop-closeup";
 import useGame from "./use-game";
 import GameDialog from "./game-dialog";
@@ -16,6 +18,9 @@ import { MUSIC_VOLUME, SOUND_EFFECT_VOLUME, playSound } from "./audio";
 import styles from "@/styles/red-game.module.scss";
 
 const ROOM_FADE_MS = 240;
+const START_FADE_OUT_MS = 450;
+const START_HOLD_MS = 100;
+const START_FADE_IN_MS = 650;
 const NAVIGATION_TARGETS = [
   "desk",
   "door-front",
@@ -64,6 +69,7 @@ export default function RedGame({ onExit }) {
   const [transition, setTransition] = useState("idle");
   const [inspectionHistory, setInspectionHistory] = useState([]);
   const moving = transition !== "idle";
+  const starting = transition === "start-out" || transition === "start-in";
   const blocked = moving || Boolean(game.dialog) || Boolean(game.sequence);
   const nextViewRef = useRef({ roomIndex: 0, inspectionHistory: [] });
   const gameRef = useRef(null);
@@ -261,11 +267,18 @@ export default function RedGame({ onExit }) {
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    // Hold at black for one frame before replacing the view underneath the curtain.
-    const duration = transition === "out" ? ROOM_FADE_MS + 40 : 650;
+    // Change artwork and layout only once the curtain is fully dark.
+    const duration = transition === "start-out"
+      ? START_FADE_OUT_MS + 50
+      : transition === "start-in"
+        ? START_HOLD_MS + START_FADE_IN_MS
+        : transition === "out" ? ROOM_FADE_MS + 40 : 650;
     const timer = window.setTimeout(
       () => {
-        if (transition === "out") {
+        if (transition === "start-out") {
+          setGameStarted(true);
+          setTransition("start-in");
+        } else if (transition === "out") {
           setRoomIndex(nextViewRef.current.roomIndex);
           setInspectionHistory(nextViewRef.current.inspectionHistory);
           setTransition("in");
@@ -276,7 +289,7 @@ export default function RedGame({ onExit }) {
       reduceMotion ? 0 : duration,
     );
     return () => window.clearTimeout(timer);
-  }, [transition]);
+  }, [transition, setGameStarted]);
 
   useEffect(() => {
     if (gameStarted && !moving && !game.dialog && !game.sequence) {
@@ -292,14 +305,13 @@ export default function RedGame({ onExit }) {
   }, [gameStarted, moving, inspecting, game.dialog, game.sequence]);
 
   function startGame() {
-    if (!ready) return;
+    if (!ready || moving) return;
     // Start from the click, before effects run, to unlock audio on mobile Safari.
     playSound(musicRef.current, MUSIC_VOLUME);
     playSound(movementSoundRef.current);
     focusOnStart.current = true;
     setNavOpen(false);
-    setTransition("starting");
-    setGameStarted(true);
+    setTransition("start-out");
   }
 
   function turn(direction, button) {
@@ -524,18 +536,19 @@ export default function RedGame({ onExit }) {
           hidden
         />
       ))}
-      {/* Keep decoded layers mounted so every turn is immediate. */}
+      {!gameStarted && <LandingScene />}
+      {/* Decode game views in advance, but only reveal them after Play. */}
       {ROOMS.map((view) => (
         <div
           key={view.id}
           className={styles.view}
-          data-active={view.id === room.id && !inspecting}
-          aria-hidden={view.id !== room.id || inspecting}
+          data-active={gameStarted && view.id === room.id && !inspecting}
+          aria-hidden={!gameStarted || view.id !== room.id || inspecting}
           inert={blocked || view.id !== room.id || inspecting || !gameStarted}
         >
           <RoomScene
             room={view}
-            active={view.id === room.id && !inspecting}
+            active={gameStarted && view.id === room.id && !inspecting}
             playing={gameStarted}
             moving={blocked}
             onReady={onRoomReady}
@@ -560,10 +573,24 @@ export default function RedGame({ onExit }) {
       )}
       {dialogCloseup && <FinalImage name={dialogCloseup} className={styles.detailScene} />}
       <div className={styles.curtain} aria-hidden="true" />
+      {/* Stay above the website header and outside the game's changing square bounds. */}
+      {starting && createPortal(
+        <div
+          className={styles.startCurtain}
+          data-phase={transition}
+          aria-hidden="true"
+          style={{
+            "--start-out": `${START_FADE_OUT_MS}ms`,
+            "--start-hold": `${START_HOLD_MS}ms`,
+            "--start-in": `${START_FADE_IN_MS}ms`,
+          }}
+        />,
+        document.body,
+      )}
 
       {!gameStarted ? (
         <div className={styles.start}>
-          <button className={styles.play} onClick={startGame} disabled={!ready}>
+          <button className={styles.play} onClick={startGame} disabled={!ready || moving}>
             <img
               className={styles.playYellow}
               {...artSources("/images/red-game/buttons/paint-yellow.webp")}

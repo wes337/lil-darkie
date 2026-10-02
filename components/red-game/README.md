@@ -1,6 +1,6 @@
 # Red Game
 
-The game uses the 1080 × 1080 renders from the artist's Final export. The artwork stays square on desktop, portrait phones, and landscape phones. At the mobile breakpoint it fills the available width, limited by the viewport height, with a separate control strip underneath. Desktop keeps the inset artwork. The controls stay clear of floor objects.
+After Play the Game, the game uses the 1080 × 1080 renders from the artist's Final export. The game artwork stays square on desktop, portrait phones, and landscape phones. At the mobile breakpoint it fills the available width, limited by the viewport height, with a separate control strip underneath. Desktop keeps the inset artwork. The controls stay clear of floor objects.
 
 ## Assets
 
@@ -16,7 +16,7 @@ Music begins from the Play the Game click, loops across rooms and the ending, pa
 
 Click or tap an object to explore. Select an inventory item, then its target. Selecting the same item again puts it away. Escape closes the current message, deselects an item, or returns from a close-up. Room turns and close-ups fade through black. Keyboard focus stays on the active view.
 
-The landing page shows the logo, menu, and footer. Starting play hides them. Progress belongs to the current game only. Refreshing or pressing END starts a fresh game.
+The landing page fills the viewport with the original layered painting, its responsive desktop/mobile artwork, entrance animation, and mouse parallax. It shows the logo, menu, and footer. Starting play fades the entire page to dark, switches to the square Final artwork and hides the website controls under cover, then fades the game in. Reduced motion skips the fade. Progress belongs to the current game only. Refreshing or pressing END returns to the painting and starts a fresh game.
 
 ## Puzzle rules
 
