@@ -8,7 +8,7 @@ import "@/styles/spotify.scss";
 
 export default function Spotify() {
   const pathname = usePathname();
-  const { navOpen, sticky, lightMode } = useStore();
+  const { navOpen, sticky } = useStore();
   if (pathname === "/") {
     return null;
   }
@@ -19,21 +19,12 @@ export default function Spotify() {
       href="https://open.spotify.com/artist/62F9BiUmjqeXbBztCwiX1U"
       target="_blank"
     >
-      {lightMode ? (
-        <Image
-          src={ASSETS.spotifyGreenIcon}
-          alt="Spotify"
-          width={64}
-          height={64}
-        />
-      ) : (
-        <Image
-          src={ASSETS.spotifyWhiteIcon}
-          alt="Spotify"
-          width={64}
-          height={64}
-        />
-      )}
+      <Image
+        src={ASSETS.spotifyWhiteIcon}
+        alt="Spotify"
+        width={64}
+        height={64}
+      />
     </Link>
   );
 }

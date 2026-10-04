@@ -1,0 +1,256 @@
+@import "./variables.scss";
+
+// Styles for pages drawn from CMS records. Colors and font come from the
+// --cms-* variables that the page wrapper sets from the theme.
+
+.page {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding-top: 120px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--cms-bg);
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: var(--cms-text);
+  font-family: var(--cms-font);
+  font-size: $font-size-sm;
+  line-height: 1.6;
+
+  @include for-phone-only {
+    padding-top: 96px;
+    // Fixed backgrounds jump on mobile browsers.
+    background-attachment: scroll;
+  }
+
+  a {
+    color: var(--cms-accent);
+  }
+}
+
+.footer {
+  margin-top: auto;
+  padding: $space-xl $space-md $space-md;
+  text-align: center;
+  font-size: $font-size-xs;
+  font-weight: 300;
+}
+
+.block {
+  padding: $space-sm $space-md;
+  background-size: cover;
+  background-position: center;
+
+  &[data-filled="true"] {
+    padding: $space-xl $space-md;
+  }
+}
+
+.block-inner {
+  max-width: 800px;
+  margin: 0 auto;
+
+  [data-width="full"] > & {
+    max-width: none;
+  }
+}
+
+.heading {
+  margin: $space-md 0 $space-sm;
+  color: var(--cms-heading, var(--cms-accent));
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.prose {
+  overflow-wrap: break-word;
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    line-height: 1.3;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  blockquote {
+    margin-left: 0;
+    padding-left: $space-md;
+    border-left: 4px solid var(--cms-accent);
+    font-style: italic;
+  }
+}
+
+.image {
+  margin: 0;
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  figcaption {
+    margin-top: $space-sm;
+    font-size: $font-size-xs;
+    text-align: center;
+  }
+}
+
+.embed {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+
+.button {
+  display: inline-block;
+  padding: $space-sm $space-lg;
+  background-color: var(--cms-accent);
+  // The button label takes the page background color for contrast.
+  color: var(--cms-bg) !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 1px;
+
+  &:hover,
+  &:focus-visible {
+    filter: brightness(1.15);
+  }
+}
+
+.spacer {
+  height: $space-xl;
+
+  &[data-size="sm"] {
+    height: $space-md;
+  }
+
+  &[data-size="lg"] {
+    height: 96px;
+  }
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xl;
+}
+
+.post {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+}
+
+.post-date {
+  align-self: flex-start;
+  padding: $space-sm;
+  background-color: var(--cms-accent);
+  color: var(--cms-bg) !important;
+  font-size: $font-size-lg;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.post-body {
+  padding: $space-md;
+  border: 2px solid currentColor;
+  border-radius: 16px;
+  font-weight: 300;
+
+  h2 {
+    margin: 0 0 $space-md;
+  }
+}
+
+.slideshow {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+}
+
+.slideshow-main {
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  img {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+  }
+
+  button {
+    all: unset;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 15%;
+    min-width: 44px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    color: var(--cms-accent);
+    font-size: 64px;
+    text-shadow: 2px 2px 0 $color-black;
+    user-select: none;
+
+    &:first-of-type {
+      left: 0;
+    }
+
+    &:last-of-type {
+      right: 0;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background-color: rgba($color-black, 0.2);
+    }
+  }
+}
+
+.slideshow-thumbs {
+  display: flex;
+  gap: $space-sm;
+  overflow-x: auto;
+  padding-bottom: $space-sm;
+
+  button {
+    all: unset;
+    flex: none;
+    cursor: pointer;
+    border: 2px solid transparent;
+    opacity: 0.5;
+
+    &[aria-current="true"] {
+      border-color: var(--cms-accent);
+      opacity: 1;
+    }
+  }
+
+  img {
+    display: block;
+    width: 120px;
+    height: 80px;
+    object-fit: cover;
+  }
+}

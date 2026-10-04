@@ -9,3 +9,19 @@ The gate covers pages and local assets, except the logo on the password screen. 
 Vercel's own Deployment Protection must be disabled for testers to reach this screen without a Vercel account.
 
 Run `npm run test:preview` to check access, password errors, session expiry, and redirect handling.
+
+## Editable content
+
+The nav, the content pages and the blog posts live in Redis and are edited at `/admin`. The game on `/` and `/sampler` are code. `/admin/help` explains the record format and the API, and `/api/schema` serves the same guide as JSON.
+
+Secrets, all server-only:
+
+- `ADMIN_PASSWORD` unlocks `/admin` and is the bearer token for API saves. With it unset, nothing can be saved.
+- `REDIS_URL` is the one Redis database. Keys are prefixed `prod:` on the production deploy and `dev:` everywhere else, so local and preview edits never touch the live site.
+- `BUNNY_STORAGE_KEY` is for uploads, which go to the `lil-darkie/cms` folder of the storage zone.
+
+Commands:
+
+- `node --env-file=.env.local seed/seed.ts dev` fills a namespace with the starting content. It skips records that already exist unless you add `--force`.
+- `node --env-file=.env.local seed/copy.ts dev prod` copies every record from one namespace to another.
+- `npm run test:cms` checks record validation and admin auth.

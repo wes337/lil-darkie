@@ -1,0 +1,376 @@
+// Styles for /admin. Plain and functional on purpose.
+
+.admin {
+  --line: #3a3a3a;
+  --panel: #161616;
+  --red: #e00910;
+
+  background: #0c0c0c;
+  color: #eee;
+  font-family: system-ui, sans-serif;
+  font-size: 14px;
+
+  a {
+    color: #f6c601;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 20px;
+  }
+
+  h2 {
+    margin: 24px 0 8px;
+    font-size: 16px;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    font: inherit;
+    color: inherit;
+    background: #222;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 6px 8px;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  input[type="color"] {
+    flex: none;
+    width: 36px;
+    height: 32px;
+    padding: 2px;
+  }
+
+  textarea {
+    resize: vertical;
+    font-family: ui-monospace, monospace;
+  }
+
+  button {
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover:not(:disabled) {
+      border-color: #888;
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    &.primary {
+      background: var(--red);
+      border-color: var(--red);
+      font-weight: 600;
+    }
+
+    &.danger {
+      color: #ff8d89;
+    }
+
+    &[aria-pressed="true"] {
+      background: #444;
+    }
+  }
+
+  fieldset {
+    margin: 0 0 12px;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--panel);
+    min-width: 0;
+  }
+
+  legend {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 6px;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+
+  details {
+    margin-top: 8px;
+
+    summary {
+      cursor: pointer;
+      color: #aaa;
+    }
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 10px;
+    flex: 1;
+    min-width: 0;
+
+    > span:first-child {
+      color: #aaa;
+      font-size: 12px;
+    }
+  }
+
+  .check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .row-controls {
+    display: flex;
+    gap: 4px;
+
+    button {
+      padding: 2px 8px;
+    }
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .thumb {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .badge {
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: #444;
+    font-size: 12px;
+  }
+
+  .saved {
+    color: #7dd67d;
+  }
+
+  .issues {
+    margin: 0;
+    padding: 10px 16px 10px 32px;
+    background: #3a1212;
+    color: #ffb3b0;
+  }
+
+  .login {
+    max-width: 320px;
+    margin: 20vh auto 0;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .dashboard {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 16px 64px;
+
+    header {
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    ul {
+      padding: 0;
+      list-style: none;
+    }
+
+    li {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    small {
+      color: #999;
+    }
+  }
+
+  .help {
+    line-height: 1.6;
+
+    table {
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 4px 10px;
+      border: 1px solid var(--line);
+      text-align: left;
+    }
+
+    pre,
+    code {
+      background: #222;
+      border-radius: 4px;
+    }
+
+    pre {
+      padding: 12px;
+      overflow-x: auto;
+    }
+
+    // The guide's lists are real lists, unlike the dashboard's.
+    div ul {
+      padding-left: 20px;
+      list-style: disc;
+    }
+
+    div li {
+      display: list-item;
+      border: 0;
+      padding: 2px 0;
+    }
+  }
+
+  .editor {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .editor-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .editor-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(360px, 1fr) 1.4fr;
+    min-height: 0;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .editor-form {
+    padding: 16px;
+    overflow-y: auto;
+    border-right: 1px solid var(--line);
+  }
+
+  .editor-preview {
+    overflow-y: auto;
+
+    // The preview is a scrolling pane, not the viewport.
+    > main {
+      min-height: 100%;
+      padding-top: 24px;
+      background-attachment: scroll;
+    }
+  }
+
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+  }
+
+  .json {
+    height: 70vh;
+    font-size: 12px;
+  }
+
+  .history {
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--line);
+    }
+  }
+
+  .nav-preview {
+    padding: 0 32px;
+  }
+
+  .dialog-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .dialog {
+    width: min(900px, 92vw);
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 16px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+
+    > .row {
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+  }
+
+  .media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 8px;
+    margin-top: 16px;
+
+    button {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 6px;
+      min-width: 0;
+    }
+
+    img,
+    button > span {
+      width: 100%;
+      height: 90px;
+      object-fit: cover;
+      display: grid;
+      place-items: center;
+    }
+
+    small {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 11px;
+    }
+  }
+}

@@ -7,7 +7,7 @@ import "@/styles/backdrop.scss";
 
 export default function Backdrop() {
   const pathname = usePathname();
-  const { lightMode, flashing, setFlashing, flashingEnabled } = useStore();
+  const { flashing, setFlashing, flashingEnabled } = useStore();
   const subtle = pathname === "/";
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function Backdrop() {
 
   return (
     <div
-      className={`backdrop${flashing || lightMode ? " flashing" : ""}${
+      className={`backdrop${flashing ? " flashing" : ""}${
         subtle ? " subtle" : ""
       }`}
     />

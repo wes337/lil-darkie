@@ -15,16 +15,6 @@ body {
   background-color: $color-black;
   color: $color-white;
 
-  &.light {
-    background-color: $color-white;
-    color: $color-black;
-  }
-
-  &.peach {
-    background-color: $color-peach;
-    color: $color-black;
-  }
-
   &.no-scroll {
     overflow: hidden;
   }

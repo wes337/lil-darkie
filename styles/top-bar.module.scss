@@ -53,28 +53,6 @@
       height: auto;
     }
 
-    &.head {
-      width: 200px;
-      filter: drop-shadow(2px 2px 0px rgba(0, 0, 0, 1));
-
-      img {
-        object-fit: contain;
-        max-height: 100px;
-      }
-
-      @include for-short-screens {
-        img {
-          max-height: 72px;
-        }
-      }
-
-      @include for-phone-only {
-        img {
-          max-height: 40px;
-        }
-      }
-    }
-
     .logo-primary {
       position: absolute;
       top: 0;
@@ -102,10 +80,6 @@
       .logo-yellow {
         opacity: 1;
       }
-    }
-
-    &.hide {
-      opacity: 0;
     }
   }
 
@@ -162,30 +136,6 @@
       object-fit: contain;
     }
   }
-
-  &.light {
-    @include for-phone-only {
-      background-color: transparent;
-    }
-
-    a,
-    button:not(.top-bar-logo) {
-      color: $color-yellow;
-      text-shadow:
-        -1px -1px 0 $color-black,
-        1px -1px 0 $color-black,
-        -1px 1px 0 $color-black,
-        1px 1px 0 $color-black,
-        2px 2px $color-black;
-
-      &:hover,
-      &:focus,
-      &:active {
-        color: $color-yellow;
-        text-shadow: 2px 3px $color-black;
-      }
-    }
-  }
 }
 
 .top-bar-back {
@@ -197,10 +147,6 @@
   z-index: 4;
   transition: transform 0.2s ease;
   transform: translateY(-100%);
-
-  &.black {
-    background-color: rgba($color-black, 0.75);
-  }
 
   &.sticky {
     transform: translateY(0);

@@ -13,16 +13,12 @@ const useStore = create((set) => ({
 
     set(() => ({ navOpen }));
   },
-  setCookies: (cookies) => set(() => ({ cookies })),
-  cookies: false,
   flashingEnabled: false,
   setFlashingEnabled: (flashingEnabled) => set(() => ({ flashingEnabled })),
   flashing: false,
   setFlashing: (flashing) => set(() => ({ flashing })),
   sticky: false,
   setSticky: (sticky) => set(() => ({ sticky })),
-  bloodTransition: false,
-  setBloodTransition: (bloodTransition) => set(() => ({ bloodTransition })),
   scroll: 0,
   setScroll: (scroll) => set(() => ({ scroll })),
   noScroll: false,
@@ -36,34 +32,6 @@ const useStore = create((set) => ({
     }
 
     set(() => ({ noScroll }));
-  },
-  lightMode: false,
-  setLightMode: (lightMode) => {
-    if (lightMode) {
-      document.body.classList.add("light");
-    } else {
-      document.body.classList.remove("light");
-    }
-
-    set(() => ({ lightMode }));
-  },
-  peachMode: false,
-  setPeachMode: (peachMode) => {
-    if (peachMode) {
-      document.body.classList.add("peach");
-    } else {
-      document.body.classList.remove("peach");
-    }
-
-    set(() => ({ peachMode }));
-  },
-  setHideScroll: (hide) => {
-    if (hide) {
-      document.body.classList.add("no-scroll");
-      window.scrollTo(0, 0);
-    } else {
-      document.body.classList.remove("no-scroll");
-    }
   },
   kick: false,
   playedKick: (kick) => set(() => ({ kick })),
