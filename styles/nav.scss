@@ -1,4 +1,5 @@
 @import "./variables.scss";
+@import "./wesware.scss";
 
 .mobile-nav-button {
   all: unset;
@@ -52,7 +53,8 @@
 
 .nav {
   position: fixed;
-  background-color: darken($color-red, 5%);
+  background: linear-gradient(to bottom left, var(--t-panel-from), var(--t-panel-via), var(--t-panel-to));
+  border-left: 1px solid var(--t-panel-border);
   top: 0;
   right: 0;
   width: 100vw;
@@ -70,42 +72,24 @@
   &.open {
     transform: translateX(0);
 
-    @include for-desktop {
-      box-shadow: -8px 4px 0px darken($color-red, 25%);
-    }
   }
 
   @include for-desktop {
-    width: 40vw;
+    width: 360px;
   }
 
+  // Logo and close button on one row, the social icons on the next.
   .nav-header {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    padding: $space-md $space-lg;
+    padding: $space-md;
     gap: $space-md;
     user-select: none;
 
-    .social-media-links {
-      display: flex;
-      align-items: center;
-      gap: $space-md;
-      margin-left: $space-sm;
-
-      img {
-        width: 32px;
-        height: auto;
-        object-fit: contain;
-      }
-    }
-
     .nav-logo {
-      height: 48px;
+      height: 32px;
       width: auto;
-
-      @include for-phone-only {
-        height: 32px;
-      }
     }
 
     .nav-close {
@@ -114,13 +98,24 @@
       margin-left: auto;
 
       img {
-        max-width: 40px;
+        display: block;
+        width: 28px;
         height: auto;
       }
+    }
 
-      &:hover,
-      &:focus {
-        transform: scale(1.2);
+    .social-media-links {
+      order: 1;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: $space-md;
+
+      img {
+        display: block;
+        width: 28px;
+        height: auto;
+        object-fit: contain;
       }
     }
   }
@@ -128,72 +123,33 @@
   .nav-links {
     display: flex;
     flex-direction: column;
-    padding: 16px;
-    padding-left: 32px;
-    gap: 24px;
+    padding: $space-md;
+    gap: $space-sm;
 
     a {
       all: unset;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 8px 0;
-      font-size: 18px;
+      box-sizing: border-box;
+      font-size: $font-size-sm;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
-      font-weight: 600;
-      text-shadow: 2px 3px $color-black;
       cursor: pointer;
       user-select: none;
-      color: $color-white;
-
-      .new {
-        font-style: italic;
-        color: $color-yellow;
-        font-size: 14px;
-      }
+      color: var(--t-text);
+      @include list-row;
 
       &:hover,
-      &:focus,
-      &:active {
-        color: $color-yellow;
-
-        .new {
-          color: $color-blue;
-        }
-
-        background-color: $color-red;
-
-        span {
-          transform: scale(1.2);
-        }
+      &:focus-visible {
+        color: var(--t-accent);
       }
     }
   }
 
   .nav-copyright {
-    width: 100%;
+    margin-top: auto;
+    padding: $space-md;
     text-align: center;
-    font-size: 10px;
-    font-weight: 300;
-    letter-spacing: -0.5px;
-    text-shadow: 2px 3px $color-black;
-    margin-top: 80px;
-    color: $color-white;
-
-    @include for-desktop {
-      position: fixed;
-      bottom: $space-md;
-      font-size: $font-size-sm;
-    }
-
-    @include for-phone-only {
-      position: fixed;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      bottom: $space-md;
-    }
+    font-size: $font-size-xs;
+    color: var(--t-text-muted);
   }
 }
 

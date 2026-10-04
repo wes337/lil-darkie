@@ -4,8 +4,8 @@ import { FONTS, type BlockStyle, type Site, type Theme } from "./schema.ts";
 // Pure helpers shared by the public pages and the editor preview.
 
 const BASE_THEME = {
-  backgroundColor: "#000000",
-  textColor: "#ffffff",
+  backgroundColor: "#0a0a0a",
+  textColor: "#e4e4e7",
   accentColor: "#f6c601",
   font: "martian-mono",
   backgroundFocus: "center",

@@ -62,7 +62,7 @@ Every block needs a `type` and an `id` that is unique within the page.
 | posts | `collection`, optional `limit` |
 | html | `html` (raw HTML, may include a style tag) |
 
-Every block also accepts an optional `style`: `textColor`, `backgroundColor`, `backgroundImage`, `align` (left, center, right) and `width` (narrow or full).
+Every block also accepts an optional `style`: `textColor`, `backgroundColor`, `backgroundImage` and `align` (left, center, right).
 
 Image and link fields take a path on this site (`/images/gallery/1.png`, `/comics`) or a full URL.
 

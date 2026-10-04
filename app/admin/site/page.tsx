@@ -26,14 +26,10 @@ export default function SiteEditor() {
       }
       preview={
         <PageShell site={site}>
-          <section className={styles.block}>
-            <div className={styles["block-inner"]}>
-              <h1 className={styles.heading}>Heading</h1>
-              <p>
-                Text <a href="#">Link</a>
-              </p>
-            </div>
-          </section>
+          <h1 className={styles.heading}>Heading</h1>
+          <p>
+            Text <a href="#">Link</a>
+          </p>
         </PageShell>
       }
     />

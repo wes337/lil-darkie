@@ -91,12 +91,6 @@ function StyleFields({
         options={["left", "center", "right"]}
         onChange={(align) => onChange({ ...style, align })}
       />
-      <SelectField
-        label="Width"
-        value={style.width}
-        options={["narrow", "full"]}
-        onChange={(width) => onChange({ ...style, width })}
-      />
       <ColorField
         label="Text color"
         value={style.textColor}

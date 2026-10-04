@@ -1,22 +1,27 @@
 @import "./variables.scss";
+@import "./wesware.scss";
 
-// Styles for pages drawn from CMS records. Colors and font come from the
-// --cms-* variables that the page wrapper sets from the theme.
+// Styles for pages drawn from CMS records: one WesWare panel holding the
+// page's blocks. Page colors and font come from the --cms-* variables that
+// the page wrapper sets from the theme.
 
 .page {
   min-height: 100vh;
   box-sizing: border-box;
-  padding-top: 120px;
+  padding: 120px $space-md 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
   background-color: var(--cms-bg);
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
   color: var(--cms-text);
+  // Links, buttons and bylines follow the page's accent.
+  --t-accent: var(--cms-accent);
   font-family: var(--cms-font);
   font-size: $font-size-sm;
-  line-height: 1.6;
+  line-height: 1.5;
 
   @include for-phone-only {
     padding-top: 96px;
@@ -25,60 +30,98 @@
   }
 
   a {
-    color: var(--cms-accent);
+    color: var(--t-accent);
+  }
+}
+
+.panel {
+  width: 100%;
+  max-width: 720px;
+  box-sizing: border-box;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  @include panel;
+
+  @include for-phone-only {
+    padding: $space-md;
   }
 }
 
 .footer {
   margin-top: auto;
-  padding: $space-xl $space-md $space-md;
+  padding: $space-xl $space-md 20px;
   text-align: center;
-  font-size: $font-size-xs;
-  font-weight: 300;
+  font-size: 12px;
+  color: var(--t-text-muted);
+
+  small {
+    display: block;
+    font-size: 9px;
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
 }
 
 .block {
-  padding: $space-sm $space-md;
   background-size: cover;
   background-position: center;
 
   &[data-filled="true"] {
-    padding: $space-xl $space-md;
-  }
-}
-
-.block-inner {
-  max-width: 800px;
-  margin: 0 auto;
-
-  [data-width="full"] > & {
-    max-width: none;
+    padding: 20px;
+    border: 1px solid var(--t-panel-border);
+    border-radius: 2px;
   }
 }
 
 .heading {
-  margin: $space-md 0 $space-sm;
-  color: var(--cms-heading, var(--cms-accent));
+  margin: 0;
+  color: var(--cms-heading, inherit);
+  font-weight: 800;
   text-transform: uppercase;
   line-height: 1.2;
+  text-shadow: 2px 2px 0 var(--t-heading-shadow);
+}
+
+h1.heading {
+  font-size: $font-size-xl;
+}
+
+h2.heading {
+  font-size: $font-size-lg;
+}
+
+h3.heading {
+  font-size: $font-size-sm;
 }
 
 .prose {
   overflow-wrap: break-word;
 
-  > :first-child {
-    margin-top: 0;
+  > * {
+    margin: 0;
   }
 
-  > :last-child {
-    margin-bottom: 0;
+  > * + * {
+    margin-top: $space-md;
   }
 
   h1,
   h2,
   h3,
   h4 {
+    font-weight: 700;
     line-height: 1.3;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  h3,
+  h4 {
+    font-size: 1.1rem;
   }
 
   img {
@@ -86,11 +129,32 @@
     height: auto;
   }
 
+  ul,
+  ol {
+    padding-left: 20px;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--t-panel-border);
+  }
+
   blockquote {
-    margin-left: 0;
-    padding-left: $space-md;
-    border-left: 4px solid var(--cms-accent);
+    padding: 10px;
+    background: var(--t-input-bg);
+    border: 1px solid var(--t-panel-border);
+    border-radius: 4px;
+    color: var(--t-text-muted);
     font-style: italic;
+    @include inset-shadow;
+
+    > * {
+      margin: 0;
+    }
+
+    > * + * {
+      margin-top: $space-sm;
+    }
   }
 }
 
@@ -102,12 +166,15 @@
     max-width: 100%;
     height: auto;
     margin: 0 auto;
+    border-radius: 2px;
   }
 
   figcaption {
-    margin-top: $space-sm;
-    font-size: $font-size-xs;
-    text-align: center;
+    margin-top: 10px;
+    font-size: 12px;
+    font-style: italic;
+    text-align: right;
+    color: var(--t-text-muted);
   }
 }
 
@@ -115,67 +182,70 @@
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
-  border: 0;
+  border: 1px solid var(--t-panel-border);
+  border-radius: 2px;
 }
 
 .button {
-  display: inline-block;
-  padding: $space-sm $space-lg;
-  background-color: var(--cms-accent);
-  // The button label takes the page background color for contrast.
-  color: var(--cms-bg) !important;
-  font-weight: 700;
-  text-transform: uppercase;
-  text-decoration: none;
-  letter-spacing: 1px;
-
-  &:hover,
-  &:focus-visible {
-    filter: brightness(1.15);
-  }
+  font-size: $font-size-sm;
+  @include btn;
 }
 
 .spacer {
-  height: $space-xl;
+  height: $space-md;
 
   &[data-size="sm"] {
-    height: $space-md;
+    height: 0;
   }
 
   &[data-size="lg"] {
-    height: 96px;
+    height: $space-xl * 2;
   }
 }
 
 .posts {
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 
 // A blog entry: title, body, then who posted it and when.
 .post {
-  padding: $space-lg 0;
-
   & + & {
-    border-top: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+    padding-top: 20px;
+    border-top: 1px solid var(--t-panel-border);
   }
 
   h2 {
-    margin: 0 0 $space-sm;
-    font-size: $font-size-lg;
+    margin: 0 0 $space-xs;
+    font-size: $font-size-md;
+    font-weight: 700;
   }
 
   footer {
-    margin-top: $space-md;
+    margin-top: $space-sm;
     font-size: 12px;
-    opacity: 0.8;
+    color: var(--t-text-muted);
+
+    strong,
+    a {
+      color: var(--t-accent);
+    }
+
+    a {
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }
 
 .slideshow {
   display: flex;
   flex-direction: column;
-  gap: $space-md;
+  gap: 10px;
 }
 
 // A fixed-shape stage, so portrait and landscape images don't move the page.
@@ -184,41 +254,36 @@
   width: 100%;
   aspect-ratio: 4 / 3;
   max-height: 70vh;
+  background: var(--t-input-bg);
+  border: 1px solid var(--t-panel-border);
+  border-radius: 2px;
+  @include inset-shadow;
 
   img {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+    inset: 10px;
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
     object-fit: contain;
   }
 
   button {
-    all: unset;
     position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 15%;
-    min-width: 44px;
-    display: grid;
-    place-items: center;
-    cursor: pointer;
-    color: var(--cms-accent);
-    font-size: 64px;
-    text-shadow: 2px 2px 0 $color-black;
-    user-select: none;
+    top: 50%;
+    translate: 0 -50%;
+    width: 32px;
+    height: 44px;
+    font-family: inherit;
+    font-size: $font-size-lg;
+    @include btn;
+    padding: 0;
 
     &:first-of-type {
-      left: 0;
+      left: 8px;
     }
 
     &:last-of-type {
-      right: 0;
-    }
-
-    &:hover,
-    &:focus-visible {
-      background-color: rgba($color-black, 0.2);
+      right: 8px;
     }
   }
 }
@@ -234,18 +299,19 @@
     all: unset;
     flex: none;
     cursor: pointer;
-    border: 2px solid transparent;
+    border: 1px solid var(--t-panel-border);
+    border-radius: 2px;
     opacity: 0.5;
 
     &[aria-current="true"] {
-      border-color: var(--cms-accent);
+      border-color: var(--t-accent);
       opacity: 1;
     }
   }
 
   img {
     display: block;
-    width: clamp(72px, 18vw, 120px);
+    width: clamp(64px, 16vw, 96px);
     aspect-ratio: 3 / 2;
     object-fit: cover;
   }

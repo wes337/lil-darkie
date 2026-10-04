@@ -45,7 +45,6 @@ const blockStyle = z.strictObject({
   backgroundColor: color.optional(),
   backgroundImage: url.optional(),
   align: z.enum(["left", "center", "right"]).optional(),
-  width: z.enum(["narrow", "full"]).optional(),
 });
 
 const base = { id: z.string().min(1), style: blockStyle.optional() };

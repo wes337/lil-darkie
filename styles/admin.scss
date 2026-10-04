@@ -1,13 +1,14 @@
-// Styles for /admin. Plain and functional on purpose.
+@import "./wesware.scss";
+
+// Styles for /admin, in the same WesWare look as the public site.
 
 .admin {
-  --line: #3a3a3a;
-  --panel: #161616;
-  --red: #e00910;
+  --line: var(--t-panel-border);
+  --panel: var(--t-panel-via);
 
-  background: #0c0c0c;
-  color: #eee;
-  font-family: system-ui, sans-serif;
+  background: var(--t-bg);
+  color: var(--t-text);
+  font-family: Tahoma, Verdana, sans-serif;
   font-size: 14px;
   // The tab bar on top, the current view filling the rest.
   display: flex;
@@ -15,7 +16,7 @@
   height: 100vh;
 
   a {
-    color: #f6c601;
+    color: var(--t-accent);
   }
 
   h1 {
@@ -30,14 +31,9 @@
 
   input,
   select,
-  textarea,
-  button {
+  textarea {
     font: inherit;
-    color: inherit;
-    background: #222;
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 6px 8px;
+    @include input;
   }
 
   input[type="text"],
@@ -60,12 +56,11 @@
   }
 
   button {
-    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
     white-space: nowrap;
-
-    &:hover:not(:disabled) {
-      border-color: #888;
-    }
+    @include btn;
+    padding: 6px 10px;
 
     &:disabled {
       opacity: 0.4;
@@ -73,9 +68,8 @@
     }
 
     &.primary {
-      background: var(--red);
-      border-color: var(--red);
-      font-weight: 600;
+      @include submit-btn;
+      padding: 6px 14px;
     }
 
     &.danger {
@@ -83,17 +77,16 @@
     }
 
     &[aria-pressed="true"] {
-      background: #444;
+      background: var(--t-btn-hover);
+      border-color: var(--t-accent);
     }
   }
 
   fieldset {
     margin: 0 0 12px;
     padding: 12px;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    background: var(--panel);
     min-width: 0;
+    @include panel;
   }
 
   legend {
@@ -110,7 +103,7 @@
 
     summary {
       cursor: pointer;
-      color: #aaa;
+      color: var(--t-text-muted);
     }
   }
 
@@ -123,7 +116,7 @@
     min-width: 0;
 
     > span:first-child {
-      color: #aaa;
+      color: var(--t-text-muted);
       font-size: 12px;
     }
   }
@@ -179,7 +172,7 @@
   .badge {
     padding: 2px 6px;
     border-radius: 4px;
-    background: #444;
+    background: var(--t-btn-hover);
     font-size: 12px;
   }
 
@@ -206,30 +199,29 @@
   .admin-tabs {
     flex: none;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 4px;
-    padding: 8px 16px;
-    border-bottom: 1px solid var(--line);
-    background: var(--panel);
+    gap: 8px;
+    margin: 10px;
+    padding: 10px;
+    @include panel;
 
     strong {
-      margin-right: 16px;
+      margin-right: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 0 var(--t-heading-shadow);
     }
 
     a {
-      padding: 6px 12px;
-      border-radius: 4px;
-      color: #ccc;
-      text-decoration: none;
-
-      &:hover {
-        background: #2a2a2a;
-      }
+      font-size: 12px;
+      @include btn;
+      color: var(--t-text);
 
       &[aria-current="page"] {
-        background: var(--red);
-        color: #fff;
-        font-weight: 600;
+        background: var(--t-btn-hover);
+        border-color: var(--t-accent);
+        color: var(--t-accent);
       }
     }
   }
@@ -257,32 +249,30 @@
     }
 
     small {
-      color: #999;
+      color: var(--t-text-muted);
     }
   }
 
   a.button {
-    padding: 6px 12px;
-    border-radius: 4px;
-    color: #fff;
-    text-decoration: none;
+    font-size: 13px;
+    @include btn;
 
     &.primary {
-      background: var(--red);
-      font-weight: 600;
+      @include submit-btn;
     }
   }
 
   .list {
-    padding: 0;
+    margin: 0;
+    padding: 10px;
     list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    @include panel;
 
     li {
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--line);
+      @include list-row;
     }
   }
 
@@ -347,7 +337,7 @@
     padding: 12px;
     border: 1px solid var(--line);
     border-radius: 0 0 4px 4px;
-    background: #222;
+    background: var(--t-input-bg);
     line-height: 1.6;
     outline: none;
 
@@ -409,16 +399,18 @@
   }
 
   .nav-links {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    @include panel;
+
     > div {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--line);
+      @include list-row;
     }
 
     small {
-      color: #999;
+      color: var(--t-text-muted);
     }
   }
 

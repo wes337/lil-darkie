@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { PageShell, PostView } from "@/components/cms/page-view";
 import { getPosts, getSite } from "@/lib/cms/content";
 import { formatPosted } from "@/lib/cms/render";
-import styles from "@/styles/cms.module.scss";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -26,11 +25,7 @@ export default async function PostPage(props: Props) {
 
   return (
     <PageShell site={site}>
-      <section className={styles.block}>
-        <div className={styles["block-inner"]}>
-          <PostView post={post} />
-        </div>
-      </section>
+      <PostView post={post} />
     </PageShell>
   );
 }

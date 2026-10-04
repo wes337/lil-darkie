@@ -106,8 +106,8 @@ export default function Nav({ site }: { site: Site }) {
               <span>{label}</span>
             </SiteLink>
           ))}
-          <div className="nav-copyright">{site.copyright}</div>
         </div>
+        <div className="nav-copyright">{site.copyright}</div>
       </div>
     </>
   );

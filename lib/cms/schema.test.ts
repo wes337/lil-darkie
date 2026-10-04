@@ -9,7 +9,7 @@ const page = {
   blocks: [
     { id: "a", type: "heading", level: 1, text: "Comics" },
     { id: "b", type: "slideshow", images: ["/images/1.png", "https://cdn.example/2.png"] },
-    { id: "c", type: "text", markdown: "Hi", style: { align: "center", width: "full" } },
+    { id: "c", type: "text", markdown: "Hi", style: { align: "center" } },
   ],
 };
 

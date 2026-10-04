@@ -104,8 +104,11 @@ export function PageShell({
 }) {
   return (
     <main className={styles.page} style={themeStyle(site, theme)}>
-      {children}
-      <footer className={styles.footer}>{site.copyright}</footer>
+      <div className={styles.panel}>{children}</div>
+      <footer className={styles.footer}>
+        {site.copyright}
+        <small>Powered by WesWare 2.1 (PRO Edition)</small>
+      </footer>
     </main>
   );
 }
@@ -127,15 +130,12 @@ export default function PageView({
         <section
           key={block.id}
           className={styles.block}
-          data-width={block.style?.width ?? "narrow"}
           data-filled={Boolean(
             block.style?.backgroundColor || block.style?.backgroundImage,
           )}
           style={blockStyleCss(block.style)}
         >
-          <div className={styles["block-inner"]}>
-            <BlockContent block={block} posts={posts} />
-          </div>
+          <BlockContent block={block} posts={posts} />
         </section>
       ))}
     </PageShell>
