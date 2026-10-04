@@ -38,7 +38,7 @@ const site: Site = {
     { platform: "soundcloud", href: "https://soundcloud.com/lildvrkie" },
     { platform: "youtube", href: "https://www.youtube.com/channel/UCy1PnulzEixUtsR-w-Pgd4w" },
   ],
-  copyright: "Copyright © 2026 Lil Darkie® All Rights Reserved",
+  copyright: "© 2026 Lil Darkie® All Rights Reserved",
   theme: {},
 };
 

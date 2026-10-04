@@ -91,7 +91,7 @@ A post with `"published": false` is a draft. Only the admin can see it.
       ],
       "homeButtons": [{ "label": "Tour tickets", "href": "https://example.com/tickets" }],
       "social": [{ "platform": "spotify", "href": "https://open.spotify.com/artist/..." }],
-      "copyright": "Copyright © 2026 Lil Darkie® All Rights Reserved",
+      "copyright": "© 2026 Lil Darkie® All Rights Reserved",
       "theme": {}
     }
 

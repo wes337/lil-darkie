@@ -156,7 +156,7 @@ export type Doc<K extends Kind> = z.infer<(typeof SCHEMAS)[K]>;
 export const DEFAULT_SITE: Site = {
   nav: [],
   social: [],
-  copyright: "Copyright © 2026 Lil Darkie® All Rights Reserved",
+  copyright: "© 2026 Lil Darkie® All Rights Reserved",
   theme: {},
 };
 

@@ -148,8 +148,7 @@
     margin-top: auto;
     padding: $space-md $space-sm;
     text-align: center;
-    // Shrinks on narrow phones so the line never wraps.
-    font-size: min(#{$font-size-xs}, 2.6vw);
+    font-size: $font-size-xs;
     white-space: nowrap;
     color: var(--t-text-muted);
   }
