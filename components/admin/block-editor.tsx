@@ -19,6 +19,7 @@ import {
   TextField,
   replaceAt,
 } from "./fields";
+import CollectionField from "./collection-field";
 import { MediaDialog } from "./media";
 
 const FONT_NAMES = Object.keys(FONTS) as (keyof typeof FONTS)[];
@@ -302,10 +303,8 @@ function BlockFields({ block, onChange }: { block: Block; onChange: (block: Bloc
       );
     case "posts":
       return (
-        <TextField
-          label="Collection"
+        <CollectionField
           value={block.collection}
-          list="collections"
           onChange={(collection) => onChange({ ...block, collection })}
         />
       );

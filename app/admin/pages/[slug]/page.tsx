@@ -25,8 +25,6 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
   const page = record.doc;
   if (!page) return <p>Loading...</p>;
 
-  const collections = [...new Set(posts.map((post) => post.collection))];
-
   return (
     <Editor
       title={page.title}
@@ -63,11 +61,6 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
                 onChange={(theme) => record.setDoc({ ...page, theme })}
               />
             )}
-            <datalist id="collections">
-              {collections.map((collection) => (
-                <option key={collection} value={collection} />
-              ))}
-            </datalist>
           </>
         ),
       }}

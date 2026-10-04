@@ -1,9 +1,10 @@
 "use client";
 import { use } from "react";
+import CollectionField from "@/components/admin/collection-field";
 import Editor from "@/components/admin/editor";
 import { Field, OptionalTextField, TextField } from "@/components/admin/fields";
 import RichEditor from "@/components/admin/rich-editor";
-import { useFetched, useRecord } from "@/components/admin/use-record";
+import { useRecord } from "@/components/admin/use-record";
 import { DEFAULT_AUTHOR, postSchema, type Post } from "@/lib/cms/schema";
 
 // What a datetime-local input shows for a stored post time, in the editor's
@@ -25,11 +26,8 @@ export default function PostEditor({ params }: { params: Promise<{ slug: string 
     body: "",
     published: false,
   }));
-  const posts = useFetched<Post[]>("/api/posts") ?? [];
   const post = record.doc;
   if (!post) return <p>Loading...</p>;
-
-  const collections = [...new Set(posts.map((other) => other.collection))];
 
   return (
     <Editor
@@ -67,17 +65,10 @@ export default function PostEditor({ params }: { params: Promise<{ slug: string 
                 }}
               />
             </Field>
-            <TextField
-              label="Collection"
+            <CollectionField
               value={post.collection}
-              list="collections"
               onChange={(collection) => record.setDoc({ ...post, collection })}
             />
-            <datalist id="collections">
-              {collections.map((collection) => (
-                <option key={collection} value={collection} />
-              ))}
-            </datalist>
             <label className="check">
               <input
                 type="checkbox"

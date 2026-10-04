@@ -11,21 +11,18 @@ export const slugify = (text: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 
-// The "new page" and "new post" screens. Asks for a title and a URL, creates
-// the record and opens its editor. The URL follows the title until it's
+// The "new page" and "new post" screens. Asks for a title and a slug, creates
+// the record and opens its editor. The slug follows the title until it's
 // edited by hand. `children` are any extra fields the record needs.
 export default function CreateForm<T>({
   heading,
   kind,
-  urlPrefix,
   titleLabel,
   build,
   children,
 }: {
   heading: string;
   kind: "pages" | "posts";
-  // Shown before the slug so the full address is clear.
-  urlPrefix: string;
   titleLabel: string;
   // Makes the record to save from what was typed.
   build: (title: string, slug: string) => T;
@@ -35,15 +32,16 @@ export default function CreateForm<T>({
   const [title, setTitle] = useState("");
   const [typedSlug, setTypedSlug] = useState<string>();
   const [issues, setIssues] = useState<string[]>([]);
-  const slug = typedSlug ?? slugify(title);
+  // Typed by hand it wins; cleared, it goes back to following the title.
+  const slug = typedSlug === undefined ? slugify(title) : slugify(typedSlug);
 
   async function submit(event: FormEvent) {
     event.preventDefault();
     const path = `/api/${kind}/${slug}`;
-    if (!slug) return setIssues(["Give it a URL."]);
+    if (!slug) return setIssues(["Give it a slug."]);
     // /admin/<kind>/new is this screen.
-    if (slug === "new") return setIssues(['The URL can\'t be "new".']);
-    if ((await fetch(path)).ok) return setIssues(["That URL is already taken."]);
+    if (slug === "new") return setIssues(['The slug can\'t be "new".']);
+    if ((await fetch(path)).ok) return setIssues(["That slug is already taken."]);
 
     const response = await fetch(path, {
       method: "PUT",
@@ -62,9 +60,12 @@ export default function CreateForm<T>({
       <form onSubmit={submit}>
         <TextField label={titleLabel} value={title} onChange={setTitle} />
         <TextField
-          label={`URL: ${urlPrefix}${slug || "..."}`}
-          value={slug}
-          onChange={(value) => setTypedSlug(slugify(value))}
+          label="Slug"
+          value={typedSlug ?? slug}
+          // Kept loose while typing so a dash can be entered; cleaned on use.
+          onChange={(value) =>
+            setTypedSlug(value === "" ? undefined : value.toLowerCase().replace(/[^a-z0-9-]+/g, "-"))
+          }
         />
         {children}
         <Issues issues={issues} />

@@ -7,7 +7,6 @@ export default function NewPage() {
     <CreateForm<Page>
       heading="New page"
       kind="pages"
-      urlPrefix="/"
       titleLabel="Title"
       build={(title, slug) => ({ slug, title: title || slug, theme: {}, blocks: [] })}
     />
