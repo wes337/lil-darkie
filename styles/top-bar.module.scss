@@ -68,10 +68,6 @@
       opacity: 0;
     }
 
-    &:hover {
-      transform: rotate(-5deg) scale(1.2);
-    }
-
     &.sticky {
       .logo-primary {
         opacity: 0;
