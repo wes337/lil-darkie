@@ -39,22 +39,22 @@ async function save(kind: Kind, slug: string, request: NextRequest) {
 }
 
 // Drafts are the only records the public can't read.
-const hidden = (doc: object, request: NextRequest) =>
-  "published" in doc && !doc.published && !isAdmin(request);
+const isDraft = (doc: object) => "published" in doc && !doc.published;
 
 // GET, PUT and DELETE for one page or post, addressed by slug.
 export function docRoutes(kind: "page" | "post") {
   return {
     async GET(request: NextRequest, { params }: SlugContext) {
       const doc = await store.get(kind, (await params).slug);
-      return !doc || hidden(doc, request) ? notFound() : NextResponse.json(doc);
+      if (!doc || (isDraft(doc) && !(await isAdmin(request)))) return notFound();
+      return NextResponse.json(doc);
     },
     async PUT(request: NextRequest, { params }: SlugContext) {
-      if (!isAdmin(request)) return unauthorized();
+      if (!(await isAdmin(request))) return unauthorized();
       return save(kind, (await params).slug, request);
     },
     async DELETE(request: NextRequest, { params }: SlugContext) {
-      if (!isAdmin(request)) return unauthorized();
+      if (!(await isAdmin(request))) return unauthorized();
       const removed = await store.remove(kind, (await params).slug);
       revalidateTag(CMS_TAG, { expire: 0 });
       return removed ? NextResponse.json({ deleted: true }) : notFound();
@@ -66,9 +66,10 @@ export function docRoutes(kind: "page" | "post") {
 export function listRoute(kind: "page" | "post") {
   return async function GET(request: NextRequest) {
     const collection = request.nextUrl.searchParams.get("collection");
+    const admin = await isAdmin(request);
     const docs = (await store.list(kind)).filter(
       (doc) =>
-        !hidden(doc, request) &&
+        (admin || !isDraft(doc)) &&
         (!collection || !("collection" in doc) || doc.collection === collection),
     );
     return NextResponse.json(docs);
@@ -78,7 +79,7 @@ export function listRoute(kind: "page" | "post") {
 // GET for the last saved versions of a record, newest first. Admin only.
 export function versionsRoute(kind: "page" | "post") {
   return async function GET(request: NextRequest, { params }: SlugContext) {
-    if (!isAdmin(request)) return unauthorized();
+    if (!(await isAdmin(request))) return unauthorized();
     return NextResponse.json(await store.versions(kind, (await params).slug));
   };
 }
@@ -86,11 +87,11 @@ export function versionsRoute(kind: "page" | "post") {
 export const siteRoutes = {
   GET: async () => NextResponse.json(await store.getSite()),
   async PUT(request: NextRequest) {
-    if (!isAdmin(request)) return unauthorized();
+    if (!(await isAdmin(request))) return unauthorized();
     return save("site", "site", request);
   },
   async versions(request: NextRequest) {
-    if (!isAdmin(request)) return unauthorized();
+    if (!(await isAdmin(request))) return unauthorized();
     return NextResponse.json(await store.versions("site", "site"));
   },
 };

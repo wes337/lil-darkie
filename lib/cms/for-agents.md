@@ -16,6 +16,8 @@ Reading is public. Saving and deleting need the admin password in a header:
 
     Authorization: Bearer <password>
 
+The password is the one used to log in to the admin.
+
 | Method | Path | What it does |
 | --- | --- | --- |
 | GET, PUT | /api/site | Read or replace the site record |

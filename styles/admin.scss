@@ -195,6 +195,12 @@
     color: #ffb3b0;
   }
 
+  // A one-line error, not a list.
+  p.issues {
+    padding: 10px 16px;
+    margin-bottom: 10px;
+  }
+
   .login {
     max-width: 320px;
     margin: 20vh auto 0;

@@ -2,37 +2,61 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { NextRequest } from "next/server.js";
 import { createSession } from "../preview-access.ts";
-import { ADMIN_COOKIE, createAdminSession, isAdmin } from "./auth.ts";
+import { ADMIN_COOKIE, createAuth, hashPassword } from "./auth.ts";
 
-process.env.ADMIN_PASSWORD = "test-password";
+process.env.ADMIN_PASSWORD = "env-password";
 
 const request = (headers: Record<string, string> = {}) =>
   new NextRequest("https://site.example/api/pages/comics", { headers });
+const bearer = (password: string) => request({ authorization: `Bearer ${password}` });
 
-test("accepts the password as a bearer token", () => {
-  assert.equal(isAdmin(request({ authorization: "Bearer test-password" })), true);
+// No password saved in the database: the env var is the password.
+const envOnly = createAuth(async () => null);
+// A password changed in the admin.
+const changed = createAuth(async () => STORED);
+const STORED = hashPassword("new-password");
+
+test("accepts the env password as a bearer token", async () => {
+  assert.equal(await envOnly.isAdmin(bearer("env-password")), true);
 });
 
-test("rejects a missing, wrong or malformed password", () => {
-  assert.equal(isAdmin(request()), false);
-  assert.equal(isAdmin(request({ authorization: "Bearer wrong" })), false);
-  assert.equal(isAdmin(request({ authorization: "test-password" })), false);
-  assert.equal(isAdmin(request({ authorization: "Bearer " })), false);
+test("rejects a missing, wrong or malformed password", async () => {
+  assert.equal(await envOnly.isAdmin(request()), false);
+  assert.equal(await envOnly.isAdmin(bearer("wrong")), false);
+  assert.equal(await envOnly.isAdmin(request({ authorization: "env-password" })), false);
+  assert.equal(await envOnly.isAdmin(request({ authorization: "Bearer " })), false);
 });
 
-test("accepts the admin session cookie", () => {
-  const cookie = `${ADMIN_COOKIE}=${createAdminSession()}`;
-  assert.equal(isAdmin(request({ cookie })), true);
+test("accepts the admin session cookie", async () => {
+  const cookie = `${ADMIN_COOKIE}=${await envOnly.createAdminSession()}`;
+  assert.equal(await envOnly.isAdmin(request({ cookie })), true);
 });
 
-test("rejects a preview session, even when the passwords match", () => {
-  const cookie = `${ADMIN_COOKIE}=${createSession("test-password")}`;
-  assert.equal(isAdmin(request({ cookie })), false);
+test("rejects a preview session, even when the passwords match", async () => {
+  const cookie = `${ADMIN_COOKIE}=${createSession("env-password")}`;
+  assert.equal(await envOnly.isAdmin(request({ cookie })), false);
 });
 
-test("nobody is admin when no password is configured", () => {
+test("nobody is admin when no password is configured anywhere", async () => {
   process.env.ADMIN_PASSWORD = "";
-  assert.equal(isAdmin(request({ authorization: "Bearer " })), false);
-  assert.equal(isAdmin(request({ authorization: "Bearer test-password" })), false);
-  process.env.ADMIN_PASSWORD = "test-password";
+  assert.equal(await envOnly.isAdmin(request({ authorization: "Bearer " })), false);
+  assert.equal(await envOnly.isAdmin(bearer("env-password")), false);
+  process.env.ADMIN_PASSWORD = "env-password";
+});
+
+test("a saved password replaces the env password", async () => {
+  assert.equal(await changed.isAdmin(bearer("new-password")), true);
+  assert.equal(await changed.isAdmin(bearer("env-password")), false);
+  assert.equal(await changed.isAdmin(bearer("wrong")), false);
+});
+
+test("changing the password ends sessions made before it", async () => {
+  const before = `${ADMIN_COOKIE}=${await envOnly.createAdminSession()}`;
+  const after = `${ADMIN_COOKIE}=${await changed.createAdminSession()}`;
+  assert.equal(await changed.isAdmin(request({ cookie: before })), false);
+  assert.equal(await changed.isAdmin(request({ cookie: after })), true);
+});
+
+test("the same password hashes differently each time", () => {
+  assert.notEqual(hashPassword("new-password"), hashPassword("new-password"));
 });

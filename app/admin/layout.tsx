@@ -16,7 +16,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   return (
     <html lang="en">
       <body className="admin">
-        {isAdminSession(session) ? (
+        {(await isAdminSession(session)) ? (
           <>
             <Shell />
             {children}

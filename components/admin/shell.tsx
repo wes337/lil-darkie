@@ -38,6 +38,9 @@ export default function Shell() {
       <a href="/" target="_blank">
         View site
       </a>
+      <Link href="/admin/password" aria-current={pathname === "/admin/password" ? "page" : undefined}>
+        Password
+      </Link>
       <button type="button" onClick={logOut}>
         Log out
       </button>

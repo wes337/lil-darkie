@@ -5,11 +5,11 @@ import { ADMIN_COOKIE, createAdminSession, isAdminPassword } from "@/lib/cms/aut
 // Trades the admin password for the session cookie the admin UI uses.
 export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => null);
-  if (!isAdminPassword(body?.password)) {
+  if (!(await isAdminPassword(body?.password))) {
     return NextResponse.json({ error: "Incorrect password" }, { status: 401 });
   }
   const response = NextResponse.json({ ok: true });
-  response.cookies.set(ADMIN_COOKIE, createAdminSession(), {
+  response.cookies.set(ADMIN_COOKIE, await createAdminSession(), {
     httpOnly: true,
     secure: request.nextUrl.protocol === "https:",
     sameSite: "lax",

@@ -16,7 +16,7 @@ The nav, the content pages and the blog posts live in Redis and are edited at `/
 
 Secrets, all server-only:
 
-- `ADMIN_PASSWORD` unlocks `/admin` and is the bearer token for API saves. With it unset, nothing can be saved.
+- `ADMIN_PASSWORD` unlocks `/admin` and is the bearer token for API saves, until the password is changed in the admin. A changed password is stored as a hash in Redis and replaces this one. With neither set, nothing can be saved.
 - `REDIS_URL` is the one Redis database. Keys are prefixed `prod:` on the production deploy and `dev:` everywhere else, so local and preview edits never touch the live site.
 - `BUNNY_STORAGE_KEY` is for uploads, which go to the `lil-darkie/cms` folder of the storage zone.
 
@@ -24,4 +24,5 @@ Commands:
 
 - `node --env-file=.env.local seed/seed.ts dev` fills a namespace with the starting content. It skips records that already exist unless you add `--force`.
 - `node --env-file=.env.local seed/copy.ts dev prod` copies every record from one namespace to another.
+- `node --env-file=.env.local seed/reset-password.ts prod` forgets a password changed in the admin, so `ADMIN_PASSWORD` works again.
 - `npm run test:cms` checks record validation and admin auth.
