@@ -3,7 +3,7 @@ import { useState } from "react";
 import { TOP_BAR_ICONS, type Page, type Site } from "@/lib/cms/schema";
 import Dialog from "./dialog";
 import { Issues } from "./editor";
-import { Field, RowControls, SelectField, TextField, replaceAt } from "./fields";
+import { Field, MoveButtons, RemoveButton, SelectField, TextField, replaceAt } from "./fields";
 import type { RecordState } from "./use-record";
 
 // Nav links carry top bar options; home page buttons are just label and href.
@@ -122,6 +122,9 @@ export default function LinkList({
       <div className="nav-links">
         {links.map((link, i) => (
           <div key={`${link.label}-${i}`}>
+            <span className="row-controls">
+              <MoveButtons items={links} index={i} onChange={saveLinks} />
+            </span>
             <strong>{link.label}</strong>
             <small>
               {link.href}
@@ -132,7 +135,7 @@ export default function LinkList({
               <button type="button" onClick={() => setEditing(i)}>
                 Edit
               </button>
-              <RowControls items={links} index={i} onChange={saveLinks} />
+              <RemoveButton items={links} index={i} onChange={saveLinks} />
             </span>
           </div>
         ))}

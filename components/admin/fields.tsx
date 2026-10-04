@@ -160,16 +160,10 @@ export function ImageField({
   );
 }
 
-// Up, down and remove buttons for one row of an ordered list.
-export function RowControls<T>({
-  items,
-  index,
-  onChange,
-}: {
-  items: T[];
-  index: number;
-  onChange: (items: T[]) => void;
-}) {
+type RowProps<T> = { items: T[]; index: number; onChange: (items: T[]) => void };
+
+// Up and down buttons for one row of an ordered list.
+export function MoveButtons<T>({ items, index, onChange }: RowProps<T>) {
   const move = (to: number) => {
     const next = [...items];
     const [item] = next.splice(index, 1);
@@ -177,7 +171,7 @@ export function RowControls<T>({
     onChange(next);
   };
   return (
-    <span className="row-controls">
+    <>
       <button type="button" disabled={index === 0} onClick={() => move(index - 1)} aria-label="Move up">
         ↑
       </button>
@@ -189,13 +183,28 @@ export function RowControls<T>({
       >
         ↓
       </button>
-      <button
-        type="button"
-        onClick={() => onChange(items.filter((_, i) => i !== index))}
-        aria-label="Remove"
-      >
-        ✕
-      </button>
+    </>
+  );
+}
+
+export function RemoveButton<T>({ items, index, onChange }: RowProps<T>) {
+  return (
+    <button
+      type="button"
+      onClick={() => onChange(items.filter((_, i) => i !== index))}
+      aria-label="Remove"
+    >
+      ✕
+    </button>
+  );
+}
+
+// Up, down and remove buttons together.
+export function RowControls<T>(props: RowProps<T>) {
+  return (
+    <span className="row-controls">
+      <MoveButtons {...props} />
+      <RemoveButton {...props} />
     </span>
   );
 }
