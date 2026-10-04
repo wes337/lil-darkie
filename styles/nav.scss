@@ -30,9 +30,15 @@
     }
   }
 
+  // Scrolled: sit smaller, centered in the 60px red bar.
   &.sticky {
     filter: grayscale(1) brightness(5);
-    top: 16px;
+    top: 30px;
+    translate: 0 -50%;
+
+    img {
+      max-height: 28px;
+    }
   }
 
   img {
