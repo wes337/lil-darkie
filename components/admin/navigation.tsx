@@ -67,7 +67,7 @@ function LinkDialog({
             checked={link.topBar ?? false}
             onChange={(event) => setLink({ ...link, topBar: event.target.checked })}
           />
-          Also show in the top bar (up to 3)
+          Show in top bar
         </label>
       )}
       {topBarOptions && link.topBar && (

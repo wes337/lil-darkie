@@ -64,7 +64,6 @@ export default function SiteEditor() {
           </button>
 
           <TextField label="Copyright line" value={site.copyright} onChange={(copyright) => set({ copyright })} />
-          <p>Pages use this theme unless they set their own.</p>
           <ThemeFields theme={site.theme} onChange={(theme) => set({ theme })} />
         </>
       }
@@ -74,8 +73,7 @@ export default function SiteEditor() {
             <div className={styles["block-inner"]}>
               <h1 className={styles.heading}>Heading</h1>
               <p>
-                This is how text looks on a page that doesn&apos;t set its own
-                theme. <a href="#">Links look like this.</a>
+                Text <a href="#">Link</a>
               </p>
             </div>
           </section>

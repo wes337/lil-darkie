@@ -28,7 +28,7 @@ export default function NewPost() {
       })}
     >
       <TextField
-        label="Collection (pages show posts by collection)"
+        label="Collection"
         value={collection}
         list="collections"
         onChange={setCollection}

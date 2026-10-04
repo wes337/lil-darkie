@@ -139,7 +139,6 @@ export function ImageField({
           <input
             type="text"
             value={value ?? ""}
-            placeholder="/images/... or https://..."
             onChange={(event) => onChange(orUndefined(event.target.value))}
           />
           <button type="button" onClick={() => setPicking(true)}>

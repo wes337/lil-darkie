@@ -50,7 +50,7 @@ export function ThemeFields({
         onChange={(backgroundImage) => onChange({ ...theme, backgroundImage })}
       />
       <SelectField
-        label="Background image focus"
+        label="Background position"
         value={theme.backgroundFocus}
         options={["center", "top", "bottom", "left", "right"]}
         onChange={(backgroundFocus) => onChange({ ...theme, backgroundFocus })}
@@ -61,7 +61,7 @@ export function ThemeFields({
         onChange={(textColor) => onChange({ ...theme, textColor })}
       />
       <ColorField
-        label="Accent color (headings, links, buttons)"
+        label="Accent color"
         value={theme.accentColor}
         onChange={(accentColor) => onChange({ ...theme, accentColor })}
       />
@@ -182,7 +182,7 @@ function BlockFields({ block, onChange }: { block: Block; onChange: (block: Bloc
     case "text":
       return (
         <TextField
-          label="Text (Markdown)"
+          label="Text"
           rows={8}
           value={block.markdown}
           onChange={(markdown) => onChange({ ...block, markdown })}
@@ -192,9 +192,9 @@ function BlockFields({ block, onChange }: { block: Block; onChange: (block: Bloc
       return (
         <>
           <ImageField label="Image" value={block.src} onChange={(src) => onChange({ ...block, src: src ?? "" })} />
-          <OptionalTextField label="Description for screen readers" value={block.alt} onChange={(alt) => onChange({ ...block, alt })} />
+          <OptionalTextField label="Alt text" value={block.alt} onChange={(alt) => onChange({ ...block, alt })} />
           <OptionalTextField label="Caption" value={block.caption} onChange={(caption) => onChange({ ...block, caption })} />
-          <OptionalTextField label="Link when clicked" value={block.href} onChange={(href) => onChange({ ...block, href })} />
+          <OptionalTextField label="Link" value={block.href} onChange={(href) => onChange({ ...block, href })} />
         </>
       );
     case "slideshow":
@@ -202,7 +202,7 @@ function BlockFields({ block, onChange }: { block: Block; onChange: (block: Bloc
     case "embed":
       return (
         <TextField
-          label="Spotify, SoundCloud or YouTube link"
+          label="Link"
           value={block.url}
           onChange={(url) => onChange({ ...block, url })}
         />
@@ -230,7 +230,7 @@ function BlockFields({ block, onChange }: { block: Block; onChange: (block: Bloc
     case "posts":
       return (
         <TextField
-          label="Collection to show"
+          label="Collection"
           value={block.collection}
           list="collections"
           onChange={(collection) => onChange({ ...block, collection })}

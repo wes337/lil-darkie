@@ -13,10 +13,6 @@ export default function LandingView() {
       <header className="row">
         <h1>Landing</h1>
       </header>
-      <p>
-        The buttons on the home page, shown in order under &quot;Play the
-        Game&quot;. Changes here are live at once.
-      </p>
       <Issues issues={record.state.issues} />
       <LinkList record={record} field="homeButtons" pages={pages} />
     </main>

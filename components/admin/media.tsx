@@ -23,7 +23,7 @@ export function MediaLibrary({ onPick }: { onPick?: (url: string) => void }) {
 
   async function upload(file: File) {
     if (file.size > MAX_UPLOAD_BYTES) {
-      setMessage("That file is over 4 MB. Shrink it and try again.");
+      setMessage("File is over 4 MB");
       return;
     }
     setMessage("Uploading...");
@@ -43,7 +43,7 @@ export function MediaLibrary({ onPick }: { onPick?: (url: string) => void }) {
   function choose(url: string) {
     if (onPick) return onPick(url);
     navigator.clipboard.writeText(url);
-    setMessage(`Copied ${url}`);
+    setMessage("Copied");
   }
 
   return (

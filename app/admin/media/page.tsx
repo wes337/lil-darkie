@@ -7,7 +7,6 @@ export default function MediaView() {
       <header className="row">
         <h1>Media</h1>
       </header>
-      <p>Upload images and files here. Click one to copy its URL.</p>
       <MediaLibrary />
     </main>
   );

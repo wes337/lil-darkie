@@ -33,7 +33,7 @@ export default function PostEditor({ params }: { params: Promise<{ slug: string 
       form={
         <>
           <OptionalTextField
-            label="Title (optional)"
+            label="Title"
             value={post.title}
             onChange={(title) => record.setDoc({ ...post, title })}
           />
@@ -45,7 +45,7 @@ export default function PostEditor({ params }: { params: Promise<{ slug: string 
             />
           </Field>
           <TextField
-            label="Collection (pages show posts by collection)"
+            label="Collection"
             value={post.collection}
             list="collections"
             onChange={(collection) => record.setDoc({ ...post, collection })}
@@ -61,10 +61,10 @@ export default function PostEditor({ params }: { params: Promise<{ slug: string 
               checked={post.published}
               onChange={(event) => record.setDoc({ ...post, published: event.target.checked })}
             />
-            Published. Unticked posts are drafts only you can see.
+            Published
           </label>
           <TextField
-            label="Body (Markdown)"
+            label="Body"
             rows={20}
             value={post.body}
             onChange={(body) => record.setDoc({ ...post, body })}

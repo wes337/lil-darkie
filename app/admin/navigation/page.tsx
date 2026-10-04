@@ -13,7 +13,6 @@ export default function NavigationView() {
       <header className="row">
         <h1>Navigation</h1>
       </header>
-      <p>The links in the site menu, in order. Changes here are live at once.</p>
       <Issues issues={record.state.issues} />
       <LinkList record={record} field="nav" pages={pages} />
     </main>

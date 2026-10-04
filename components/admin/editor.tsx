@@ -20,7 +20,7 @@ function JsonEditor<T>({ record }: { record: RecordState<T> }) {
     try {
       parsed = JSON.parse(next);
     } catch {
-      setProblems(["This isn't valid JSON yet."]);
+      setProblems(["Invalid JSON"]);
       return;
     }
     const result = (record.schema as z.ZodType<T>).safeParse(parsed);
@@ -54,7 +54,7 @@ function History<T>({ record, onLoad }: { record: RecordState<T>; onLoad: () => 
         <li key={version.savedAt}>
           <span>
             {new Date(version.savedAt).toLocaleString()}
-            {i === 0 && " (live)"}
+            {i === 0 && " (current)"}
           </span>
           <button
             type="button"
@@ -63,7 +63,7 @@ function History<T>({ record, onLoad }: { record: RecordState<T>; onLoad: () => 
               onLoad();
             }}
           >
-            Load into editor
+            Restore
           </button>
         </li>
       ))}
@@ -120,9 +120,8 @@ export default function Editor<T>({
       <header className="editor-header">
         {backHref && <Link href={backHref}>← Back</Link>}
         <h1>{title}</h1>
-        {!record.exists && <span className="badge">not saved yet</span>}
         <span className="spacer" />
-        {state.saved && <span className="saved">Saved. It&apos;s live.</span>}
+        {state.saved && <span className="saved">Saved</span>}
         {viewHref && record.exists && (
           <a href={viewHref} target="_blank">
             View
