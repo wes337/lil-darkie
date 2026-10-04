@@ -10,7 +10,7 @@ import type { Site } from "@/lib/cms/schema";
 import "@/styles/nav.scss";
 
 const SOCIAL_ICONS = {
-  spotify: ASSETS.spotifyWhiteIcon,
+  spotify: ASSETS.spotifyIcon,
   apple: ASSETS.appleIcon,
   soundcloud: ASSETS.soundcloudIcon,
   youtube: ASSETS.youtubeIcon,

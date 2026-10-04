@@ -11,7 +11,7 @@ export const ASSETS = {
   face6: `${CDN_URL}/face/face-6.png`,
   face7: `${CDN_URL}/face/face-7.png`,
   menu: `${CDN_URL}/menu.png`,
-  spotifyWhiteIcon: `${CDN_URL}/icons/Spotify_Icon_RGB_White.png`,
+  spotifyIcon: `${CDN_URL}/icons/spotify.png`,
   appleIcon: `${CDN_URL}/icons/apple.png`,
   soundcloudIcon: `${CDN_URL}/icons/soundcloud.png`,
   youtubeIcon: `${CDN_URL}/icons/youtube.png`,
