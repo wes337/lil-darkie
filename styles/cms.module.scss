@@ -58,9 +58,14 @@
     padding: $space-md;
   }
 
-  // A page with a slideshow uses the full width of the window.
+  // A page with a slideshow uses most of the window, with room at the sides.
   &:has(.slideshow) {
-    max-width: none;
+    max-width: calc(100vw - 2 * clamp(#{$space-md}, 8vw, 160px));
+
+    // Phones keep the usual narrow gutter.
+    @include for-small-phone-only {
+      max-width: none;
+    }
   }
 
   // A feed's posts are boxes of their own, so the page's box steps aside.
@@ -295,44 +300,54 @@ h3.heading {
   gap: 10px;
 }
 
-// A stage sized to the window, not the image, so portrait and landscape
-// images don't move the page. The 320px is everything else on screen with
-// it: the header, the page heading, the thumbnails and the panel's padding.
+// The image with an arrow on each side. The stage is sized to the window,
+// not the image, so portrait and landscape images don't move the page. The
+// 410px is everything else on screen with it: the header, the page heading,
+// the thumbnails, the panel's padding and the footer.
 .slideshow-main {
-  position: relative;
-  width: 100%;
-  height: calc(100svh - 320px);
+  display: flex;
+  align-items: stretch;
+  height: calc(100svh - 410px);
   min-height: 240px;
-  background: var(--t-input-bg);
-  border: 1px solid var(--t-panel-border);
-  border-radius: 2px;
-  @include inset-shadow;
+  // Sideways drags are swipes; up and down still scrolls the page.
+  touch-action: pan-y;
 
   img {
-    position: absolute;
-    inset: 10px;
-    width: calc(100% - 20px);
-    height: calc(100% - 20px);
+    flex: 1;
+    min-width: 0;
+    height: 100%;
     object-fit: contain;
+    user-select: none;
   }
 
+  // Bare arrows whose click area runs the full height of the stage.
   button {
-    position: absolute;
-    top: 50%;
-    translate: 0 -50%;
-    width: 32px;
-    height: 44px;
-    font-family: inherit;
-    font-size: $font-size-lg;
-    @include btn;
-    padding: 0;
+    all: unset;
+    flex: none;
+    width: clamp(48px, 8%, 96px);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    color: var(--cms-text);
+    font-size: 40px;
+    user-select: none;
+    opacity: 0.6;
 
-    &:first-of-type {
-      left: 8px;
+    &:hover,
+    &:focus-visible {
+      opacity: 1;
+      color: var(--cms-link);
     }
+  }
 
-    &:last-of-type {
-      right: 8px;
+  // Phones swipe instead of using arrows, and the stage is never taller than
+  // it is wide, so a landscape image isn't lost in empty space.
+  @include for-small-phone-only {
+    height: min(100vw - 64px, 100svh - 410px);
+    min-height: 0;
+
+    button {
+      display: none;
     }
   }
 }

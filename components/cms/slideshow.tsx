@@ -2,10 +2,15 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "@/styles/cms.module.scss";
 
-// One large image with previous and next buttons and a strip of thumbnails.
+// A swipe has to travel this far sideways to change the image.
+const SWIPE_PX = 40;
+
+// One large image and a strip of thumbnails. Change images with the arrow
+// buttons, by swiping on a touch screen, or by picking a thumbnail.
 export default function Slideshow({ images }: { images: string[] }) {
   const [selected, setSelected] = useState(0);
   const thumbs = useRef<HTMLDivElement>(null);
+  const touchStart = useRef<number>(null);
   // The editor can remove images while one past the new end is selected.
   const current = Math.min(selected, images.length - 1);
   const step = (by: number) =>
@@ -24,17 +29,29 @@ export default function Slideshow({ images }: { images: string[] }) {
 
   return (
     <div className={styles.slideshow}>
-      <div className={styles["slideshow-main"]}>
-        <img src={images[current]} alt="" />
+      <div
+        className={styles["slideshow-main"]}
+        onTouchStart={(event) => {
+          touchStart.current = event.touches[0]?.clientX ?? null;
+        }}
+        onTouchEnd={(event) => {
+          const end = event.changedTouches[0]?.clientX;
+          if (touchStart.current === null || end === undefined) return;
+          const moved = end - touchStart.current;
+          if (Math.abs(moved) >= SWIPE_PX && images.length > 1) step(moved < 0 ? 1 : -1);
+          touchStart.current = null;
+        }}
+      >
         {images.length > 1 && (
-          <>
-            <button aria-label="Previous image" onClick={() => step(-1)}>
-              ‹
-            </button>
-            <button aria-label="Next image" onClick={() => step(1)}>
-              ›
-            </button>
-          </>
+          <button aria-label="Previous image" onClick={() => step(-1)}>
+            ‹
+          </button>
+        )}
+        <img src={images[current]} alt="" draggable={false} />
+        {images.length > 1 && (
+          <button aria-label="Next image" onClick={() => step(1)}>
+            ›
+          </button>
         )}
       </div>
       {images.length > 1 && (
