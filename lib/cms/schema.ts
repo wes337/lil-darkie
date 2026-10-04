@@ -100,8 +100,14 @@ const themeSchema = z.strictObject({
   backgroundImage: url.optional(),
   // Which part of the background image stays visible when it's cropped.
   backgroundFocus: z.enum(["center", "top", "bottom", "left", "right"]).optional(),
+  // The box the page's content sits in.
+  panelColor: color.optional(),
   textColor: color.optional(),
-  accentColor: color.optional(),
+  headingColor: color.optional(),
+  linkColor: color.optional(),
+  linkHoverColor: color.optional(),
+  buttonColor: color.optional(),
+  buttonTextColor: color.optional(),
   font: font.optional(),
 });
 

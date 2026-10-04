@@ -17,8 +17,8 @@
   background-attachment: fixed;
   background-repeat: no-repeat;
   color: var(--cms-text);
-  // Links, buttons and bylines follow the page's accent.
-  --t-accent: var(--cms-accent);
+  // Bylines and selected thumbnails follow the link color.
+  --t-accent: var(--cms-link);
   font-family: var(--cms-font);
   font-size: $font-size-sm;
   line-height: 1.5;
@@ -29,8 +29,13 @@
     background-attachment: scroll;
   }
 
-  a {
-    color: var(--t-accent);
+  // :where keeps this from outranking classes like .button.
+  :where(a) {
+    color: var(--cms-link);
+
+    &:hover {
+      color: var(--cms-link-hover);
+    }
   }
 }
 
@@ -43,6 +48,11 @@
   flex-direction: column;
   gap: 20px;
   @include panel;
+  // A chosen panel color replaces the gradient.
+  background: var(
+    --cms-panel,
+    linear-gradient(to bottom left, var(--t-panel-from), var(--t-panel-via), var(--t-panel-to))
+  );
 
   @include for-phone-only {
     padding: $space-md;
@@ -111,6 +121,7 @@ h3.heading {
   h2,
   h3,
   h4 {
+    color: var(--cms-heading, inherit);
     font-weight: 700;
     line-height: 1.3;
   }
@@ -189,6 +200,18 @@ h3.heading {
 .button {
   font-size: $font-size-sm;
   @include btn;
+
+  // The theme's button colors, when set, replace the defaults.
+  &,
+  &:hover {
+    background: var(--cms-button-bg, var(--t-btn-bg));
+    color: var(--cms-button-text, var(--cms-link));
+  }
+
+  &:hover,
+  &:focus-visible {
+    filter: brightness(1.2) drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.5));
+  }
 }
 
 .spacer {
@@ -218,6 +241,7 @@ h3.heading {
 
   h2 {
     margin: 0 0 $space-xs;
+    color: var(--cms-heading, inherit);
     font-size: $font-size-md;
     font-weight: 700;
   }

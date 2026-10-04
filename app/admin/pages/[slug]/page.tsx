@@ -5,6 +5,7 @@ import Editor from "@/components/admin/editor";
 import { TextField } from "@/components/admin/fields";
 import { useFetched, useRecord } from "@/components/admin/use-record";
 import PageView from "@/components/cms/page-view";
+import { resolveTheme } from "@/lib/cms/render";
 import { DEFAULT_SITE, pageSchema, type Page, type Post, type Site } from "@/lib/cms/schema";
 
 export default function PageEditor({ params }: { params: Promise<{ slug: string }> }) {
@@ -36,7 +37,11 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
             value={page.title}
             onChange={(title) => record.setDoc({ ...page, title })}
           />
-          <ThemeFields theme={page.theme} onChange={(theme) => record.setDoc({ ...page, theme })} />
+          <ThemeFields
+            theme={page.theme}
+            inherited={resolveTheme(site.theme)}
+            onChange={(theme) => record.setDoc({ ...page, theme })}
+          />
           <BlockEditor blocks={page.blocks} onChange={(blocks) => record.setDoc({ ...page, blocks })} />
           <datalist id="collections">
             {collections.map((collection) => (

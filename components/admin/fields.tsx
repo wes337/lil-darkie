@@ -66,10 +66,14 @@ export function OptionalTextField(
 export function ColorField({
   label,
   value,
+  fallback,
   onChange,
 }: {
   label: string;
   value: string | undefined;
+  // The color in use while nothing is set. Shown in the swatch and as the
+  // placeholder.
+  fallback?: string;
   onChange: (value: string | undefined) => void;
 }) {
   return (
@@ -77,13 +81,13 @@ export function ColorField({
       <span className="row">
         <input
           type="color"
-          value={value?.slice(0, 7) ?? "#000000"}
+          value={(value ?? fallback)?.slice(0, 7) ?? "#000000"}
           onChange={(event) => onChange(event.target.value)}
         />
         <input
           type="text"
           value={value ?? ""}
-          placeholder="default"
+          placeholder={fallback ?? "default"}
           onChange={(event) => onChange(orUndefined(event.target.value))}
         />
       </span>

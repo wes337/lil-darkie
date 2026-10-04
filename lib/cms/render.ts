@@ -3,31 +3,53 @@ import { FONTS, type BlockStyle, type Site, type Theme } from "./schema.ts";
 
 // Pure helpers shared by the public pages and the editor preview.
 
-const BASE_THEME = {
+// What a page looks like when neither it nor the site theme says otherwise.
+export const BASE_THEME = {
   backgroundColor: "#0a0a0a",
-  textColor: "#e4e4e7",
-  accentColor: "#ff1010",
-  font: "martian-mono",
   backgroundFocus: "center",
+  panelColor: "#181818",
+  textColor: "#e4e4e7",
+  headingColor: "#e4e4e7",
+  linkColor: "#ff1010",
+  linkHoverColor: "#ff6b6b",
+  buttonColor: "#1c1c1c",
+  buttonTextColor: "#ff1010",
+  font: "martian-mono",
 } satisfies Theme;
 
-// Page theme over site theme over the built-in defaults, as CSS variables for
-// the page wrapper.
-export function themeStyle(site: Site, theme: Theme = {}): CSSProperties {
-  const merged = { ...BASE_THEME };
-  for (const layer of [site.theme, theme]) {
+// Page theme over site theme over the built-in defaults. Unset and empty
+// values fall through to the layer below.
+export function resolveTheme(...layers: Theme[]): Theme & typeof BASE_THEME {
+  const merged: Theme & typeof BASE_THEME = { ...BASE_THEME };
+  for (const layer of layers) {
     for (const [key, value] of Object.entries(layer)) {
       if (value !== undefined && value !== "") Object.assign(merged, { [key]: value });
     }
   }
-  const { backgroundImage } = { ...site.theme, ...theme };
+  return merged;
+}
+
+// The resolved theme as CSS variables for the page wrapper. Colors nobody
+// set are left out so the stylesheet's own defaults apply, such as the
+// panel's gradient and headings following the text color.
+export function themeStyle(site: Site, theme: Theme = {}): CSSProperties {
+  const merged = resolveTheme(site.theme, theme);
+  const chosen = { ...site.theme, ...theme };
+  const optional = (name: string, value: string | undefined) =>
+    value ? { [name]: value } : {};
+
   return {
     "--cms-bg": merged.backgroundColor,
     "--cms-text": merged.textColor,
-    "--cms-accent": merged.accentColor,
+    "--cms-link": merged.linkColor,
+    "--cms-link-hover": merged.linkHoverColor,
     "--cms-font": FONTS[merged.font],
-    ...(backgroundImage && {
-      backgroundImage: `url("${backgroundImage}")`,
+    ...optional("--cms-panel", chosen.panelColor),
+    ...optional("--cms-heading", chosen.headingColor),
+    ...optional("--cms-button-bg", chosen.buttonColor),
+    ...optional("--cms-button-text", chosen.buttonTextColor),
+    ...(merged.backgroundImage && {
+      backgroundImage: `url("${merged.backgroundImage}")`,
       backgroundPosition: merged.backgroundFocus,
     }),
   } as CSSProperties;

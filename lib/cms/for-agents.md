@@ -42,7 +42,15 @@ PUT takes the full record as JSON. The slug comes from the URL. To restore an ol
       ]
     }
 
-Theme fields are all optional: `backgroundColor`, `backgroundImage`, `backgroundFocus` (center, top, bottom, left, right), `textColor`, `accentColor` (headings, links, buttons), `font`. Anything left out falls back to the site theme. Colors are hex, like `#e00910`.
+Theme fields are all optional. Anything left out falls back to the site theme. Colors are hex, like `#e00910`.
+
+| Field | What it colors |
+| --- | --- |
+| `backgroundColor`, `backgroundImage`, `backgroundFocus` (center, top, bottom, left, right) | The page behind the content |
+| `panelColor` | The box the content sits in |
+| `textColor`, `headingColor`, `font` | Body text and headings |
+| `linkColor`, `linkHoverColor` | Links |
+| `buttonColor`, `buttonTextColor` | Button blocks |
 
 Fonts: `martian-mono`, `sf-fedora`, `sf-fedora-titles`, `simple-letter`.
 

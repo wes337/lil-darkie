@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { FONTS, type Block, type BlockStyle, type Theme } from "@/lib/cms/schema";
+import type { resolveTheme } from "@/lib/cms/render";
 import {
   ColorField,
   Field,
@@ -14,6 +15,16 @@ import {
 import { MediaDialog } from "./media";
 
 const FONT_NAMES = Object.keys(FONTS) as (keyof typeof FONTS)[];
+
+type ColorKey =
+  | "backgroundColor"
+  | "panelColor"
+  | "textColor"
+  | "headingColor"
+  | "linkColor"
+  | "linkHoverColor"
+  | "buttonColor"
+  | "buttonTextColor";
 
 // What a freshly added block of each type starts as.
 const NEW_BLOCKS: { [T in Block["type"]]: Omit<Extract<Block, { type: T }>, "id"> } = {
@@ -29,49 +40,66 @@ const NEW_BLOCKS: { [T in Block["type"]]: Omit<Extract<Block, { type: T }>, "id"
 };
 const BLOCK_TYPES = Object.keys(NEW_BLOCKS) as Block["type"][];
 
+// The theme form, in groups. `inherited` is what each setting falls back to
+// when left empty, so the swatches show the color actually in use.
 export function ThemeFields({
   theme,
+  inherited,
   onChange,
 }: {
   theme: Theme;
+  inherited: ReturnType<typeof resolveTheme>;
   onChange: (theme: Theme) => void;
 }) {
+  const color = (label: string, key: ColorKey) => (
+    <ColorField
+      label={label}
+      value={theme[key]}
+      fallback={inherited[key]}
+      onChange={(value) => onChange({ ...theme, [key]: value })}
+    />
+  );
+
   return (
-    <fieldset>
-      <legend>Theme</legend>
-      <ColorField
-        label="Background color"
-        value={theme.backgroundColor}
-        onChange={(backgroundColor) => onChange({ ...theme, backgroundColor })}
-      />
-      <ImageField
-        label="Background image"
-        value={theme.backgroundImage}
-        onChange={(backgroundImage) => onChange({ ...theme, backgroundImage })}
-      />
-      <SelectField
-        label="Background position"
-        value={theme.backgroundFocus}
-        options={["center", "top", "bottom", "left", "right"]}
-        onChange={(backgroundFocus) => onChange({ ...theme, backgroundFocus })}
-      />
-      <ColorField
-        label="Text color"
-        value={theme.textColor}
-        onChange={(textColor) => onChange({ ...theme, textColor })}
-      />
-      <ColorField
-        label="Accent color"
-        value={theme.accentColor}
-        onChange={(accentColor) => onChange({ ...theme, accentColor })}
-      />
-      <SelectField
-        label="Font"
-        value={theme.font}
-        options={FONT_NAMES}
-        onChange={(font) => onChange({ ...theme, font })}
-      />
-    </fieldset>
+    <>
+      <fieldset>
+        <legend>Background</legend>
+        {color("Color", "backgroundColor")}
+        <ImageField
+          label="Image"
+          value={theme.backgroundImage}
+          onChange={(backgroundImage) => onChange({ ...theme, backgroundImage })}
+        />
+        <SelectField
+          label="Image position"
+          value={theme.backgroundFocus}
+          options={["center", "top", "bottom", "left", "right"]}
+          onChange={(backgroundFocus) => onChange({ ...theme, backgroundFocus })}
+        />
+        {color("Panel color", "panelColor")}
+      </fieldset>
+      <fieldset>
+        <legend>Text</legend>
+        {color("Text color", "textColor")}
+        {color("Heading color", "headingColor")}
+        <SelectField
+          label="Font"
+          value={theme.font}
+          options={FONT_NAMES}
+          onChange={(font) => onChange({ ...theme, font })}
+        />
+      </fieldset>
+      <fieldset>
+        <legend>Links</legend>
+        {color("Color", "linkColor")}
+        {color("Hover color", "linkHoverColor")}
+      </fieldset>
+      <fieldset>
+        <legend>Buttons</legend>
+        {color("Color", "buttonColor")}
+        {color("Text color", "buttonTextColor")}
+      </fieldset>
+    </>
   );
 }
 
