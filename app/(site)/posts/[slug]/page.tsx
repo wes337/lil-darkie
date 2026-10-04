@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PageShell, PostView } from "@/components/cms/page-view";
 import { getPosts, getSite } from "@/lib/cms/content";
-import { formatPostDate } from "@/lib/cms/render";
+import { formatPosted } from "@/lib/cms/render";
 import styles from "@/styles/cms.module.scss";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -15,7 +15,7 @@ const findPost = async ({ params }: Props) => {
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const post = await findPost(props);
   return post
-    ? { title: `Lil Darkie ${post.title ?? formatPostDate(post.date)}` }
+    ? { title: `Lil Darkie ${post.title ?? formatPosted(post.date)}` }
     : {};
 }
 

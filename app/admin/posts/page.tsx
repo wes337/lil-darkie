@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useFetched } from "@/components/admin/use-record";
-import { formatPostDate } from "@/lib/cms/render";
+import { formatPosted } from "@/lib/cms/render";
 import type { Post } from "@/lib/cms/schema";
 
 // Posts under a heading per collection, newest first within each.
@@ -29,9 +29,10 @@ export default function PostsView() {
               .map((post) => (
                 <li key={post.slug}>
                   <Link href={`/admin/posts/${post.slug}`}>
-                    {post.title ?? formatPostDate(post.date)}
+                    {post.title ?? formatPosted(post.date)}
                   </Link>
-                  {post.title && <small>{formatPostDate(post.date)}</small>}
+                  {post.title && <small>{formatPosted(post.date)}</small>}
+                  <small>{post.author}</small>
                   {!post.published && <span className="badge">draft</span>}
                 </li>
               ))}

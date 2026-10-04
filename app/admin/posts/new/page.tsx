@@ -3,7 +3,7 @@ import { useState } from "react";
 import CreateForm from "@/components/admin/create";
 import { TextField } from "@/components/admin/fields";
 import { useFetched } from "@/components/admin/use-record";
-import type { Post } from "@/lib/cms/schema";
+import { DEFAULT_AUTHOR, type Post } from "@/lib/cms/schema";
 
 // New posts start as drafts, so nothing shows on the site until the post is
 // marked published in its editor.
@@ -21,7 +21,8 @@ export default function NewPost() {
       build={(title, slug) => ({
         slug,
         title: title || undefined,
-        date: new Date().toISOString().slice(0, 10),
+        author: DEFAULT_AUTHOR,
+        date: new Date().toISOString(),
         collection,
         body: "",
         published: false,

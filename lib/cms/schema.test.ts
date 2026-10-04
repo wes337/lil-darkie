@@ -48,9 +48,11 @@ test("rejects script and data URLs in links and images", () => {
   }
 });
 
-test("posts need a real date and may omit the title", () => {
-  const post = { slug: "hello", date: "2026-04-16", collection: "writings", body: "", published: false };
+test("posts need an author and a real date, and may omit the title", () => {
+  const post = { slug: "hello", author: "Lil Darkie", date: "2026-04-16T22:12:00.000Z", collection: "writings", body: "", published: false };
   assert.equal(postSchema.safeParse(post).success, true);
+  assert.equal(postSchema.safeParse({ ...post, date: "2026-04-16" }).success, true);
+  assert.equal(postSchema.safeParse({ ...post, author: "" }).success, false);
   assert.equal(postSchema.safeParse({ ...post, date: "April 16, 2026" }).success, false);
   assert.equal(postSchema.safeParse({ ...post, date: "2026-02-30" }).success, false);
 });

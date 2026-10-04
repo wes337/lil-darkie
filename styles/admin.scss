@@ -310,6 +310,61 @@
     @media (max-width: 900px) {
       grid-template-columns: 1fr;
     }
+
+    // One centered column when there's no preview pane.
+    &[data-preview="false"] {
+      grid-template-columns: minmax(0, 860px);
+      justify-content: center;
+
+      .editor-form {
+        border-right: 0;
+      }
+    }
+  }
+
+  .rich-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 6px;
+    border: 1px solid var(--line);
+    border-bottom: 0;
+    border-radius: 4px 4px 0 0;
+    background: var(--panel);
+
+    button {
+      min-width: 30px;
+      padding: 3px 8px;
+    }
+
+    .gap {
+      width: 8px;
+    }
+  }
+
+  .rich-content {
+    min-height: 320px;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 0 0 4px 4px;
+    background: #222;
+    line-height: 1.6;
+    outline: none;
+
+    > :first-child {
+      margin-top: 0;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    blockquote {
+      margin-left: 0;
+      padding-left: 12px;
+      border-left: 4px solid #666;
+    }
   }
 
   .editor-form {

@@ -103,7 +103,8 @@ export default function Editor<T>({
   viewHref?: string;
   deletable?: boolean;
   form: ReactNode;
-  preview: ReactNode;
+  // Left out for editors that already show the content as it will look.
+  preview?: ReactNode;
 }) {
   const router = useRouter();
   const [tab, setTab] = useState<(typeof TABS)[number]>("Edit");
@@ -137,7 +138,7 @@ export default function Editor<T>({
         </button>
       </header>
       <Issues issues={state.issues} />
-      <div className="editor-body">
+      <div className="editor-body" data-preview={preview !== undefined}>
         <div className="editor-form">
           <div className="tabs">
             {TABS.map((name) => (
@@ -155,7 +156,7 @@ export default function Editor<T>({
           {tab === "JSON" && <JsonEditor record={record} />}
           {tab === "History" && <History record={record} onLoad={() => setTab("Edit")} />}
         </div>
-        <div className="editor-preview">{preview}</div>
+        {preview !== undefined && <div className="editor-preview">{preview}</div>}
       </div>
     </div>
   );

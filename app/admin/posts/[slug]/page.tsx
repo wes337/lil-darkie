@@ -2,21 +2,29 @@
 import { use } from "react";
 import Editor from "@/components/admin/editor";
 import { Field, OptionalTextField, TextField } from "@/components/admin/fields";
+import RichEditor from "@/components/admin/rich-editor";
 import { useFetched, useRecord } from "@/components/admin/use-record";
-import { PageShell, PostView } from "@/components/cms/page-view";
-import { DEFAULT_SITE, postSchema, type Post, type Site } from "@/lib/cms/schema";
-import styles from "@/styles/cms.module.scss";
+import { DEFAULT_AUTHOR, postSchema, type Post } from "@/lib/cms/schema";
+
+// What a datetime-local input shows for a stored post time, in the editor's
+// own time zone. Old posts that only have a day show midnight.
+function toLocalInput(date: string): string {
+  if (!date.includes("T")) return `${date}T00:00`;
+  const local = new Date(date);
+  local.setMinutes(local.getMinutes() - local.getTimezoneOffset());
+  return local.toISOString().slice(0, 16);
+}
 
 export default function PostEditor({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
   const record = useRecord<Post>(`/api/posts/${slug}`, postSchema, () => ({
     slug,
-    date: new Date().toISOString().slice(0, 10),
+    author: DEFAULT_AUTHOR,
+    date: new Date().toISOString(),
     collection: "writings",
     body: "",
     published: false,
   }));
-  const site = useFetched<Site>("/api/site") ?? DEFAULT_SITE;
   const posts = useFetched<Post[]>("/api/posts") ?? [];
   const post = record.doc;
   if (!post) return <p>Loading...</p>;
@@ -37,11 +45,25 @@ export default function PostEditor({ params }: { params: Promise<{ slug: string 
             value={post.title}
             onChange={(title) => record.setDoc({ ...post, title })}
           />
-          <Field label="Date">
+          <div className="field">
+            <span>Content</span>
+            <RichEditor html={post.body} onChange={(body) => record.setDoc({ ...post, body })} />
+          </div>
+          <TextField
+            label="Author"
+            value={post.author}
+            onChange={(author) => record.setDoc({ ...post, author })}
+          />
+          <Field label="Posted">
             <input
-              type="date"
-              value={post.date}
-              onChange={(event) => record.setDoc({ ...post, date: event.target.value })}
+              type="datetime-local"
+              value={toLocalInput(post.date)}
+              onChange={(event) => {
+                const posted = new Date(event.target.value);
+                if (!Number.isNaN(posted.getTime())) {
+                  record.setDoc({ ...post, date: posted.toISOString() });
+                }
+              }}
             />
           </Field>
           <TextField
@@ -63,22 +85,7 @@ export default function PostEditor({ params }: { params: Promise<{ slug: string 
             />
             Published
           </label>
-          <TextField
-            label="Body"
-            rows={20}
-            value={post.body}
-            onChange={(body) => record.setDoc({ ...post, body })}
-          />
         </>
-      }
-      preview={
-        <PageShell site={site}>
-          <section className={styles.block}>
-            <div className={styles["block-inner"]}>
-              <PostView post={post} />
-            </div>
-          </section>
-        </PageShell>
       }
     />
   );

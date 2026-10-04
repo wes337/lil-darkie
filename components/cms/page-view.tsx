@@ -4,7 +4,7 @@ import { FONTS, type Block, type Page, type Post, type Site, type Theme } from "
 import {
   blockStyleCss,
   embedSource,
-  formatPostDate,
+  formatPosted,
   themeStyle,
 } from "@/lib/cms/render";
 import Slideshow from "./slideshow";
@@ -19,13 +19,12 @@ function Markdown({ source }: { source: string }) {
 export function PostView({ post }: { post: Post }) {
   return (
     <article className={styles.post}>
-      <a className={styles["post-date"]} href={`/posts/${post.slug}`}>
-        {formatPostDate(post.date)}
-      </a>
-      <div className={styles["post-body"]}>
-        {post.title && <h2>{post.title}</h2>}
-        <Markdown source={post.body} />
-      </div>
+      {post.title && <h2>{post.title}</h2>}
+      <div className={styles.prose} dangerouslySetInnerHTML={{ __html: post.body }} />
+      <footer>
+        Posted by <strong>{post.author}</strong> on{" "}
+        <a href={`/posts/${post.slug}`}>{formatPosted(post.date)}</a>
+      </footer>
     </article>
   );
 }

@@ -74,10 +74,27 @@ export function embedSource(link: string): { src: string; height?: number } {
   return { src: link };
 }
 
-// "2026-04-16" becomes "April 16, 2026".
-export function formatPostDate(date: string): string {
-  return new Intl.DateTimeFormat("en-US", {
-    dateStyle: "long",
-    timeZone: "UTC",
-  }).format(new Date(date));
+// Post times are shown in the artist's time zone wherever the page renders.
+const POST_TIME_ZONE = "America/Los_Angeles";
+
+// "2026-04-16T22:12:00Z" becomes "04/16/26 @ 3:12 p.m.". A post that only
+// has a day ("2026-04-16") becomes "04/16/26".
+export function formatPosted(date: string): string {
+  const dayOnly = !date.includes("T");
+  const parts = (options: Intl.DateTimeFormatOptions) =>
+    new Intl.DateTimeFormat("en-US", {
+      timeZone: dayOnly ? "UTC" : POST_TIME_ZONE,
+      ...options,
+    }).formatToParts(new Date(date));
+  const day = parts({ month: "2-digit", day: "2-digit", year: "2-digit" })
+    .map(({ value }) => value)
+    .join("");
+  if (dayOnly) return day;
+
+  const time = parts({ hour: "numeric", minute: "2-digit", hour12: true })
+    .map(({ type, value }) =>
+      type === "dayPeriod" ? (value === "AM" ? "a.m." : "p.m.") : value,
+    )
+    .join("");
+  return `${day} @ ${time}`;
 }

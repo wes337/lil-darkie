@@ -113,11 +113,16 @@ export const pageSchema = z.strictObject({
   blocks: z.array(blockSchema),
 });
 
+export const DEFAULT_AUTHOR = "Lil Darkie";
+
 export const postSchema = z.strictObject({
   slug,
   title: z.string().optional(),
-  date: z.iso.date(),
+  author: z.string().min(1),
+  // When it was posted. Posts from the old blog only have a day.
+  date: z.union([z.iso.datetime(), z.iso.date()]),
   collection: slug,
+  // HTML, written in the admin's rich text editor.
   body: z.string(),
   published: z.boolean(),
 });

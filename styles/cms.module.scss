@@ -150,34 +150,25 @@
 .posts {
   display: flex;
   flex-direction: column;
-  gap: $space-xl;
 }
 
+// A blog entry: title, body, then who posted it and when.
 .post {
-  display: flex;
-  flex-direction: column;
-  gap: $space-md;
-}
+  padding: $space-lg 0;
 
-.post-date {
-  align-self: flex-start;
-  padding: $space-sm;
-  background-color: var(--cms-accent);
-  color: var(--cms-bg) !important;
-  font-size: $font-size-lg;
-  font-weight: 700;
-  text-transform: uppercase;
-  text-decoration: none;
-}
-
-.post-body {
-  padding: $space-md;
-  border: 2px solid currentColor;
-  border-radius: 16px;
-  font-weight: 300;
+  & + & {
+    border-top: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+  }
 
   h2 {
-    margin: 0 0 $space-md;
+    margin: 0 0 $space-sm;
+    font-size: $font-size-lg;
+  }
+
+  footer {
+    margin-top: $space-md;
+    font-size: 12px;
+    opacity: 0.8;
   }
 }
 

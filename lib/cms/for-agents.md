@@ -71,11 +71,14 @@ Image and link fields take a path on this site (`/images/gallery/1.png`, `/comic
     {
       "slug": "2026-04-16",
       "title": "Optional title",
-      "date": "2026-04-16",
+      "author": "Lil Darkie",
+      "date": "2026-04-16T22:12:00.000Z",
       "collection": "writings",
-      "body": "Markdown text.",
+      "body": "<p>HTML text.</p>",
       "published": true
     }
+
+`body` is HTML. `date` is when it was posted, as a UTC timestamp. The site shows "Posted by" with the author and that time.
 
 A post with `"published": false` is a draft. Only the admin can see it.
 

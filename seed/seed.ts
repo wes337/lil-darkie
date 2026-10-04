@@ -103,20 +103,6 @@ const pages: Page[] = [
   },
 ];
 
-// The old blog stored HTML using only these tags.
-function htmlToMarkdown(html: string): string {
-  let item = 0;
-  return html
-    .replace(/<ol>/g, () => ((item = 0), ""))
-    .replace(/<li>/g, () => `${++item}. `)
-    .replace(/<\/li>/g, "\n")
-    .replace(/<\/?i>/g, "*")
-    .replace(/<br\s*\/?>/g, "\n")
-    .replace(/<\/p>|<\/ol>/g, "\n\n")
-    .replace(/<p>/g, "")
-    .trim();
-}
-
 // The old titles were placeholders that the page never showed, so posts are
 // seeded without one.
 const posts: Post[] = (
@@ -125,9 +111,10 @@ const posts: Post[] = (
   const date = new Date(`${entry.date} UTC`).toISOString().slice(0, 10);
   return {
     slug: date,
+    author: "Lil Darkie",
     date,
     collection: "writings",
-    body: htmlToMarkdown(entry.content),
+    body: entry.content,
     published: true,
   };
 });
