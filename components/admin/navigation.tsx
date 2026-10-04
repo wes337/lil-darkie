@@ -1,12 +1,22 @@
 "use client";
 import { useState } from "react";
-import type { Page, Site } from "@/lib/cms/schema";
+import { BUTTON_SIZES, type HomeButton, type Page, type Site } from "@/lib/cms/schema";
 import Dialog from "./dialog";
 import { Issues } from "./editor";
-import { Field, MoveButtons, RemoveButton, TextField, replaceAt } from "./fields";
+import {
+  ColorField,
+  Field,
+  MoveButtons,
+  RemoveButton,
+  SelectField,
+  TextField,
+  replaceAt,
+} from "./fields";
 import type { RecordState } from "./use-record";
 
-type NavLink = Site["nav"][number];
+// Landing buttons are nav links with a few extra, optional looks. One form
+// edits both; the looks only show for buttons.
+type NavLink = HomeButton;
 type LinkField = "nav" | "homeButtons";
 
 type Destination = { href: string; label: string };
@@ -26,12 +36,15 @@ function destinationsFor(field: LinkField, pages: Page[]): Destination[] {
 function LinkDialog({
   initial,
   destinations,
+  looks,
   issues,
   onSave,
   onClose,
 }: {
   initial: NavLink;
   destinations: Destination[];
+  // Whether to offer colors and size.
+  looks: boolean;
   issues: string[];
   onSave: (link: NavLink) => void;
   onClose: () => void;
@@ -40,7 +53,7 @@ function LinkDialog({
   const known = destinations.some((destination) => destination.href === link.href);
 
   return (
-    <Dialog title="Edit link" onClose={onClose} small>
+    <Dialog title={looks ? "Edit button" : "Edit link"} onClose={onClose} small>
       <TextField label="Label" value={link.label} onChange={(label) => setLink({ ...link, label })} />
       <Field label="Goes to">
         <select
@@ -58,6 +71,38 @@ function LinkDialog({
         </select>
       </Field>
       {!known && <TextField label="URL" value={link.href} onChange={(href) => setLink({ ...link, href })} />}
+      {looks && (
+        <>
+          <ColorField
+            label="Text color"
+            value={link.textColor}
+            onChange={(textColor) => setLink({ ...link, textColor })}
+          />
+          {link.backgroundColor !== "transparent" && (
+            <ColorField
+              label="Background color"
+              value={link.backgroundColor}
+              onChange={(backgroundColor) => setLink({ ...link, backgroundColor })}
+            />
+          )}
+          <label className="check">
+            <input
+              type="checkbox"
+              checked={link.backgroundColor === "transparent"}
+              onChange={(event) =>
+                setLink({ ...link, backgroundColor: event.target.checked ? "transparent" : undefined })
+              }
+            />
+            Transparent background
+          </label>
+          <SelectField
+            label="Size"
+            value={link.size}
+            options={BUTTON_SIZES}
+            onChange={(size) => setLink({ ...link, size })}
+          />
+        </>
+      )}
       <Issues issues={issues} />
       <div className="row">
         <button type="button" className="primary" onClick={() => onSave(link)}>
@@ -128,6 +173,7 @@ export default function LinkList({
         <LinkDialog
           initial={editing === "new" ? blank : (links[editing] ?? blank)}
           destinations={destinations}
+          looks={field === "homeButtons"}
           issues={record.state.issues}
           onSave={saveLink}
           onClose={() => setEditing(undefined)}

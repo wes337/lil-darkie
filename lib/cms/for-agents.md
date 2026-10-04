@@ -97,6 +97,6 @@ A post with `"published": false` is a draft. Only the admin can see it.
 
 Nav links appear in the menu in this order. Social platforms: spotify, apple, soundcloud, youtube.
 
-`homeButtons` are extra buttons on the home page, shown in order under "Play the Game". Each has a `label` and an `href`.
+`homeButtons` are extra buttons on the home page, shown in order under "Play the Game". Each has a `label` and an `href`, and optionally a `textColor`, a `backgroundColor` (a hex color or `"transparent"`) and a `size` (small, medium or large).
 
 The rest of the home page (the game) and `/sampler` are built in code and can't be edited here, but nav links can point to them.

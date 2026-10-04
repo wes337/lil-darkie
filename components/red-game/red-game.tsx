@@ -10,6 +10,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import useStore from "@/app/store";
+import type { HomeButton } from "@/lib/cms/schema";
 import RoomScene from "./room-scene";
 import LandingScene from "./landing-scene";
 import PropCloseup from "./prop-closeup";
@@ -74,7 +75,7 @@ export default function RedGame({
   buttons,
 }: {
   onExit: () => void;
-  buttons: { label: string; href: string }[];
+  buttons: HomeButton[];
 }) {
   const { gameStarted, setGameStarted, setNavOpen } = useStore();
   const game = useGame();
@@ -649,9 +650,15 @@ export default function RedGame({
           </button>
           {buttons.length > 0 && (
             <nav className={styles.links} aria-label="Featured links">
-              {buttons.map(({ label, href }) => (
-                <a key={`${label}-${href}`} href={href}>
-                  {label}
+              {buttons.map((button) => (
+                <a
+                  key={`${button.label}-${button.href}`}
+                  href={button.href}
+                  data-size={button.size ?? "medium"}
+                  data-transparent={button.backgroundColor === "transparent"}
+                  style={{ color: button.textColor, background: button.backgroundColor }}
+                >
+                  {button.label}
                 </a>
               ))}
             </nav>

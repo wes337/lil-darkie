@@ -128,11 +128,20 @@ export const postSchema = z.strictObject({
 
 const link = z.strictObject({ label: z.string().min(1), href: url });
 
+export const BUTTON_SIZES = ["small", "medium", "large"] as const;
+
+// A landing page button: a link plus how it looks.
+const homeButton = link.extend({
+  textColor: color.optional(),
+  backgroundColor: z.union([color, z.literal("transparent")]).optional(),
+  size: z.enum(BUTTON_SIZES).optional(),
+});
+
 export const siteSchema = z.strictObject({
   // The menu, in order.
   nav: z.array(link),
   // Extra buttons on the landing page, under "Play the Game".
-  homeButtons: z.array(link).optional(),
+  homeButtons: z.array(homeButton).optional(),
   social: z.array(
     z.strictObject({ platform: z.enum(SOCIAL_PLATFORMS), href: z.url() }),
   ),
@@ -147,6 +156,7 @@ export type Theme = z.infer<typeof themeSchema>;
 export type Page = z.infer<typeof pageSchema>;
 export type Post = z.infer<typeof postSchema>;
 export type Site = z.infer<typeof siteSchema>;
+export type HomeButton = z.infer<typeof homeButton>;
 
 export const SCHEMAS = { site: siteSchema, page: pageSchema, post: postSchema };
 export type Kind = keyof typeof SCHEMAS;

@@ -202,6 +202,23 @@
     text-transform: uppercase;
     @include btn;
     padding: 10px 20px;
+
+    &[data-size="small"] {
+      min-width: min(200px, 100%);
+      font-size: 12px;
+      padding: 6px 14px;
+    }
+
+    &[data-size="large"] {
+      min-width: min(360px, 100%);
+      font-size: clamp(16px, 1.8vw, 22px);
+      padding: 14px 28px;
+    }
+
+    // A see-through button keeps its outline but loses the panel shading.
+    &[data-transparent="true"] {
+      box-shadow: none;
+    }
   }
 }
 
