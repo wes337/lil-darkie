@@ -4,9 +4,9 @@ import { usePathname, useRouter } from "next/navigation";
 
 const TABS = [
   { href: "/admin/landing", label: "Landing" },
+  { href: "/admin/navigation", label: "Navigation" },
   { href: "/admin/pages", label: "Pages" },
   { href: "/admin/posts", label: "Posts" },
-  { href: "/admin/navigation", label: "Navigation" },
   { href: "/admin/media", label: "Media" },
   { href: "/admin/site", label: "Site settings" },
 ];
