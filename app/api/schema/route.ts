@@ -1,5 +1,12 @@
 import { NextResponse } from "next/server";
-import { GUIDE, JSON_SCHEMAS } from "@/lib/cms/guide";
+import { z } from "zod";
+import { pageSchema, postSchema, siteSchema } from "@/lib/cms/schema";
 
-// Everything a person or an AI assistant needs to write valid records.
-export const GET = () => NextResponse.json({ guide: GUIDE, schemas: JSON_SCHEMAS });
+// The exact shape of every record, for agents that want more than the guide
+// in lib/cms/for-agents.md.
+export const GET = () =>
+  NextResponse.json({
+    site: z.toJSONSchema(siteSchema),
+    page: z.toJSONSchema(pageSchema),
+    post: z.toJSONSchema(postSchema),
+  });

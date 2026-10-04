@@ -212,44 +212,6 @@
     }
   }
 
-  .help {
-    line-height: 1.6;
-
-    table {
-      border-collapse: collapse;
-    }
-
-    th,
-    td {
-      padding: 4px 10px;
-      border: 1px solid var(--line);
-      text-align: left;
-    }
-
-    pre,
-    code {
-      background: #222;
-      border-radius: 4px;
-    }
-
-    pre {
-      padding: 12px;
-      overflow-x: auto;
-    }
-
-    // The guide's lists are real lists, unlike the dashboard's.
-    div ul {
-      padding-left: 20px;
-      list-style: disc;
-    }
-
-    div li {
-      display: list-item;
-      border: 0;
-      padding: 2px 0;
-    }
-  }
-
   .editor {
     display: flex;
     flex-direction: column;

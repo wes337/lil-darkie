@@ -55,7 +55,6 @@ export default function AdminHome() {
         <span className="spacer" />
         <Link href="/admin/site">Menu and site settings</Link>
         <Link href="/admin/media">Media</Link>
-        <Link href="/admin/help">Help</Link>
         <button type="button" onClick={logOut}>
           Log out
         </button>

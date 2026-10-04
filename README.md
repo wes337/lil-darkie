@@ -12,7 +12,7 @@ Run `npm run test:preview` to check access, password errors, session expiry, and
 
 ## Editable content
 
-The nav, the content pages and the blog posts live in Redis and are edited at `/admin`. The game on `/` and `/sampler` are code. `/admin/help` explains the record format and the API, and `/api/schema` serves the same guide as JSON.
+The nav, the content pages and the blog posts live in Redis and are edited at `/admin`. The game on `/` and `/sampler` are code. `lib/cms/for-agents.md` explains the record format and the API for AI agents, and `/api/schema` serves the JSON schemas.
 
 Secrets, all server-only:
 
