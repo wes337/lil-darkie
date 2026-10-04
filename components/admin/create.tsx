@@ -70,7 +70,9 @@ export default function CreateForm<T>({
         <Issues issues={issues} />
         <div className="row">
           <button className="primary">Create</button>
-          <Link href={`/admin/${kind}`}>Cancel</Link>
+          <Link className="button dismiss" href={`/admin/${kind}`}>
+            Cancel
+          </Link>
         </div>
       </form>
     </main>

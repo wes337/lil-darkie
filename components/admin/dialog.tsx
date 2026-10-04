@@ -23,7 +23,7 @@ export default function Dialog({
       >
         <div className="row">
           <h2>{title}</h2>
-          <button type="button" onClick={onClose}>
+          <button type="button" className="dismiss" onClick={onClose}>
             Close
           </button>
         </div>

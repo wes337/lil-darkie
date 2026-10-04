@@ -61,6 +61,7 @@
     white-space: nowrap;
     @include btn;
     padding: 6px 10px;
+    color: var(--t-text);
 
     &:disabled {
       opacity: 0.4;
@@ -68,7 +69,7 @@
     }
 
     &.primary {
-      @include submit-btn;
+      @include filled-btn;
       padding: 6px 14px;
     }
 
@@ -76,9 +77,15 @@
       color: #ff8d89;
     }
 
+    // Close and Cancel: the plain button with amber text.
+    &.dismiss {
+      color: var(--t-alt-from);
+    }
+
+    // The selected one of a set of toggles.
     &[aria-pressed="true"] {
-      background: var(--t-btn-hover);
-      border-color: var(--t-accent);
+      @include filled-btn("alt");
+      padding: 6px 10px;
     }
   }
 
@@ -219,10 +226,15 @@
       color: var(--t-text);
 
       &[aria-current="page"] {
-        background: var(--t-btn-hover);
-        border-color: var(--t-accent);
-        color: var(--t-accent);
+        @include filled-btn;
+        font-size: 12px;
       }
+    }
+
+    // Plain buttons in the bar match the tabs.
+    button {
+      font-size: 12px;
+      color: var(--t-text);
     }
   }
 
@@ -258,7 +270,11 @@
     @include btn;
 
     &.primary {
-      @include submit-btn;
+      @include filled-btn;
+    }
+
+    &.dismiss {
+      color: var(--t-alt-from);
     }
   }
 

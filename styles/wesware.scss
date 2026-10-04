@@ -44,26 +44,25 @@
   }
 }
 
-@mixin submit-btn {
-  @include btn;
-  background: linear-gradient(
+// A filled button with white text. `$name` picks the gradient: "submit" is
+// the theme red, "alt" is the amber one.
+@mixin filled-btn($name: "submit") {
+  $fill: linear-gradient(
     to bottom left,
-    var(--t-submit-from),
-    var(--t-submit-via),
-    var(--t-submit-to)
+    var(--t-#{$name}-from),
+    var(--t-#{$name}-via),
+    var(--t-#{$name}-to)
   );
-  border-color: var(--t-submit-border);
+
+  @include btn;
+  background: $fill;
+  border-color: var(--t-#{$name}-border);
   border-radius: 2px;
   color: #fff;
 
   &:hover:not(:disabled),
   &:focus-visible {
-    background: linear-gradient(
-      to bottom left,
-      var(--t-submit-from),
-      var(--t-submit-via),
-      var(--t-submit-to)
-    );
+    background: $fill;
     filter: brightness(1.15) drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.5));
   }
 }

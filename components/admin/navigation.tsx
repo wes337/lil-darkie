@@ -108,7 +108,7 @@ function LinkDialog({
         <button type="button" className="primary" onClick={() => onSave(link)}>
           Save
         </button>
-        <button type="button" onClick={onClose}>
+        <button type="button" className="dismiss" onClick={onClose}>
           Cancel
         </button>
       </div>
