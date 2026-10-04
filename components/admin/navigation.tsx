@@ -146,24 +146,26 @@ export default function LinkList({
 
   return (
     <>
-      <div className="nav-links">
-        {links.map((link, i) => (
-          <div key={`${link.label}-${i}`}>
-            <span className="row-controls">
-              <MoveButtons items={links} index={i} onChange={saveLinks} />
-            </span>
-            <strong>{link.label}</strong>
-            <small>{link.href}</small>
-            <span className="spacer" />
-            <span className="row-controls">
-              <button type="button" onClick={() => setEditing(i)}>
-                Edit
-              </button>
-              <RemoveButton items={links} index={i} onChange={saveLinks} />
-            </span>
-          </div>
-        ))}
-      </div>
+      {links.length > 0 && (
+        <div className="nav-links">
+          {links.map((link, i) => (
+            <div key={`${link.label}-${i}`}>
+              <span className="row-controls">
+                <MoveButtons items={links} index={i} onChange={saveLinks} />
+              </span>
+              <strong>{link.label}</strong>
+              <small>{link.href}</small>
+              <span className="spacer" />
+              <span className="row-controls">
+                <button type="button" onClick={() => setEditing(i)}>
+                  Edit
+                </button>
+                <RemoveButton items={links} index={i} onChange={saveLinks} />
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
       <p>
         <button type="button" onClick={() => setEditing("new")}>
           {field === "nav" ? "Add link" : "Add button"}

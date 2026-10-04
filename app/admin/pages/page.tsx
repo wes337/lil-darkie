@@ -15,16 +15,18 @@ export default function PagesView() {
           New page
         </Link>
       </header>
-      <ul className="list">
-        {pages
-          ?.sort((a, b) => a.title.localeCompare(b.title))
-          .map((page) => (
-            <li key={page.slug}>
-              <Link href={`/admin/pages/${page.slug}`}>{page.title}</Link>
-              <small>/{page.slug}</small>
-            </li>
-          ))}
-      </ul>
+      {pages && pages.length > 0 && (
+        <ul className="list">
+          {pages
+            .sort((a, b) => a.title.localeCompare(b.title))
+            .map((page) => (
+              <li key={page.slug}>
+                <Link href={`/admin/pages/${page.slug}`}>{page.title}</Link>
+                <small>/{page.slug}</small>
+              </li>
+            ))}
+        </ul>
+      )}
       {pages?.length === 0 && <p>No pages yet.</p>}
     </main>
   );
