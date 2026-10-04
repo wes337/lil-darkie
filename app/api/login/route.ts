@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { SESSION_SECONDS } from "@/lib/preview-access.mjs";
+import { SESSION_SECONDS } from "@/lib/preview-access";
 import { ADMIN_COOKIE, createAdminSession, isAdminPassword } from "@/lib/cms/auth";
 
 // Trades the admin password for the session cookie the admin UI uses.

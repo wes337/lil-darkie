@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-import { createSession, matches, validSession } from "../preview-access.mjs";
+import { createSession, matches, validSession } from "../preview-access.ts";
 
 export const ADMIN_COOKIE = "admin-session";
 

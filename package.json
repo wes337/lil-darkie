@@ -8,8 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:game": "node --test components/red-game/*.test.mjs",
-    "test:preview": "node --test lib/preview-access.test.mjs",
+    "test:game": "node --test components/red-game/*.test.ts",
+    "test:preview": "node --test lib/preview-access.test.ts",
     "test:cms": "node --test lib/cms/*.test.ts"
   },
   "engines": {

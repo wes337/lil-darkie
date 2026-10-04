@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { NextRequest } from "next/server.js";
-import { createSession } from "../preview-access.mjs";
+import { createSession } from "../preview-access.ts";
 import { ADMIN_COOKIE, createAdminSession, isAdmin } from "./auth.ts";
 
 process.env.ADMIN_PASSWORD = "test-password";

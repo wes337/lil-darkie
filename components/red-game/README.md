@@ -10,7 +10,7 @@ The optimized assets are checked in, so building and running the game requires n
 
 The source PNG sequences contain no timing metadata, so video runs at 24 fps. The wisp uses every other frame at 12 fps. Reduced motion uses the static room and wisp artwork and advances directly to the ending's story cards.
 
-Music begins from the Play the Game click, loops across rooms and the ending, pauses when the document is hidden, and stops when the game exits. Music plays at 45% volume and sound effects at 15%, with the ambient computer hum softer still. These levels are defined in `audio.js`. The existing interaction sound effects remain in `public/red-game/sounds`.
+Music begins from the Play the Game click, loops across rooms and the ending, pauses when the document is hidden, and stops when the game exits. Music plays at 45% volume and sound effects at 15%, with the ambient computer hum softer still. These levels are defined in `audio.ts`. The existing interaction sound effects remain in `public/red-game/sounds`.
 
 ## Playing
 
@@ -44,11 +44,11 @@ For local files, place the ZIPs in `public/downloads/` and use `/downloads/<file
 
 ## Code and checks
 
-- `game-model.mjs` owns puzzle progress and inventory rules.
-- `final-art.mjs` maps progress to rendered scenes and defines room targets as percentages.
-- `room-scene.jsx`, `prop-closeup.jsx`, and `puzzle-views.jsx` place interactions over the supplied renders.
-- `room-props.jsx` displays the supplied inventory art. Navigation and painted buttons retain the previous UI artwork because Final contains no replacements.
-- `red-game.jsx` handles transitions, audio, input locking, and focus.
-- `game-sequence.jsx` handles repair, the escape video, reduced motion, and playback failures.
+- `game-model.ts` owns puzzle progress and inventory rules.
+- `final-art.ts` maps progress to rendered scenes and defines room targets as percentages.
+- `room-scene.tsx`, `prop-closeup.tsx`, and `puzzle-views.tsx` place interactions over the supplied renders.
+- `room-props.tsx` displays the supplied inventory art. Navigation and painted buttons retain the previous UI artwork because Final contains no replacements.
+- `red-game.tsx` handles transitions, audio, input locking, and focus.
+- `game-sequence.tsx` handles repair, the escape video, reduced motion, and playback failures.
 
 Run `npm run test:game` for puzzle routes and rendered state mappings. Run `npm run build` for the production build.
