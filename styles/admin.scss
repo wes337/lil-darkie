@@ -301,7 +301,7 @@
     flex-direction: column;
   }
 
-  // One row: back, title, the tabs, then the actions on the right.
+  // One row: back and title on the left, the tabs and the actions on the right.
   .editor-header {
     display: flex;
     flex-wrap: wrap;
@@ -402,6 +402,14 @@
   .tabs {
     display: flex;
     gap: 4px;
+  }
+
+  // A thin vertical rule between groups of buttons.
+  .divider {
+    align-self: stretch;
+    width: 1px;
+    margin: 2px 6px;
+    background: var(--line);
   }
 
   .json {

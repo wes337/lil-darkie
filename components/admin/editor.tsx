@@ -126,6 +126,8 @@ export default function Editor<T>({
           </Link>
         )}
         <h1>{title}</h1>
+        <span className="spacer" />
+        {state.saved && <span className="saved">Saved</span>}
         <div className="tabs">
           {names.map((name) => (
             <button
@@ -138,8 +140,7 @@ export default function Editor<T>({
             </button>
           ))}
         </div>
-        <span className="spacer" />
-        {state.saved && <span className="saved">Saved</span>}
+        <span className="divider" />
         {viewHref && record.exists && (
           <a className="button" href={viewHref} target="_blank">
             View
