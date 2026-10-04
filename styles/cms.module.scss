@@ -62,6 +62,15 @@
   &:has(.slideshow) {
     max-width: none;
   }
+
+  // A feed's posts are boxes of their own, so the page's box steps aside.
+  &:has(.posts) {
+    padding: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    filter: none;
+  }
 }
 
 .footer {
@@ -237,11 +246,20 @@ h3.heading {
   gap: 20px;
 }
 
-// A blog entry: title, body, then who posted it and when.
+// A blog entry: title, body, then who posted it and when. In a feed each one
+// is its own panel; on its own page it sits in the page's panel.
 .post {
-  & + & {
-    padding-top: 20px;
-    border-top: 1px solid var(--t-panel-border);
+  .posts & {
+    padding: 20px;
+    @include panel;
+    background: var(
+      --cms-panel,
+      linear-gradient(to bottom left, var(--t-panel-from), var(--t-panel-via), var(--t-panel-to))
+    );
+
+    @include for-phone-only {
+      padding: $space-md;
+    }
   }
 
   h2 {
