@@ -146,9 +146,11 @@
 
   .nav-copyright {
     margin-top: auto;
-    padding: $space-md;
+    padding: $space-md $space-sm;
     text-align: center;
-    font-size: $font-size-xs;
+    // Shrinks on narrow phones so the line never wraps.
+    font-size: min(#{$font-size-xs}, 2.6vw);
+    white-space: nowrap;
     color: var(--t-text-muted);
   }
 }
