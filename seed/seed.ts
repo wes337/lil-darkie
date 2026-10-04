@@ -83,6 +83,26 @@ const pages: Page[] = [
     blocks: [{ id: "feed", type: "posts", collection: "writings" }],
   },
   {
+    slug: "tour",
+    title: "Tour Dates",
+    theme: {},
+    blocks: [
+      heading("Tour Dates"),
+      {
+        id: "shows",
+        type: "tour",
+        shows: [
+          {
+            date: "2026-10-17",
+            city: "San Francisco, CA",
+            venue: "Neck of the Woods",
+            ticketLink: "https://www.neckofthewoodssf.com/tm-event/lil-darkie-album-release-show/",
+          },
+        ],
+      },
+    ],
+  },
+  {
     slug: "the-lost-songs",
     title: "The Lost Songs",
     theme: {},

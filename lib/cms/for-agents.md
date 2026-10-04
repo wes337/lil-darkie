@@ -69,6 +69,7 @@ Every block needs a `type` and an `id` that is unique within the page.
 | spacer | `size` (sm, md or lg) |
 | posts | `collection`, optional `limit` |
 | html | `html` (raw HTML, may include a style tag) |
+| tour | `shows`, a list of `{ "date": "2026-10-17", "city", "venue" }` with optional `ticketLink`, `opener` and `soldOut`. The site sorts them and hides each one once it is over |
 
 Every block also accepts an optional `style`: `textColor`, `backgroundColor`, `backgroundImage` and `align` (left, center, right).
 

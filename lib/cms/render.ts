@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { FONTS, type BlockStyle, type Site, type Theme } from "./schema.ts";
+import { FONTS, type BlockStyle, type Show, type Site, type Theme } from "./schema.ts";
 
 // Pure helpers shared by the public pages and the editor preview.
 
@@ -94,6 +94,28 @@ export function embedSource(link: string): { src: string; height?: number } {
     return { src: player.toString(), height: 300 };
   }
   return { src: link };
+}
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+// The shows still worth listing, soonest first. Dates have no time zone, so
+// a show stays up until two days after its date starts in UTC. That keeps an
+// evening show on the US west coast listed until it's over.
+export function upcomingShows(shows: Show[], now = Date.now()): Show[] {
+  return shows
+    .filter((show) => new Date(show.date).getTime() + 2 * DAY_MS > now)
+    .sort((a, b) => a.date.localeCompare(b.date));
+}
+
+// "2026-10-17" becomes "Sat, Oct 17, 2026".
+export function formatShowDate(date: string): string {
+  return new Intl.DateTimeFormat("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(date));
 }
 
 // Post times are shown in the artist's time zone wherever the page renders.

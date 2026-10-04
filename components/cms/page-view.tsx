@@ -5,6 +5,8 @@ import {
   blockStyleCss,
   embedSource,
   formatPosted,
+  formatShowDate,
+  upcomingShows,
   themeStyle,
 } from "@/lib/cms/render";
 import Slideshow from "./slideshow";
@@ -89,6 +91,33 @@ function BlockContent({ block, posts }: { block: Block; posts: Post[] }) {
       );
     case "html":
       return <div dangerouslySetInnerHTML={{ __html: block.html }} />;
+    case "tour": {
+      const shows = upcomingShows(block.shows);
+      if (shows.length === 0) return <p>No upcoming shows.</p>;
+      return (
+        <ul className={styles.tour}>
+          {shows.map((show) => (
+            <li key={`${show.date}-${show.venue}`}>
+              <time dateTime={show.date}>{formatShowDate(show.date)}</time>
+              <div>
+                <strong>{show.city}</strong>
+                <span>{show.venue}</span>
+                {show.opener && <span>with {show.opener}</span>}
+              </div>
+              {show.soldOut ? (
+                <em>Sold out</em>
+              ) : (
+                show.ticketLink && (
+                  <a className={styles.button} href={show.ticketLink} target="_blank">
+                    Tickets
+                  </a>
+                )
+              )}
+            </li>
+          ))}
+        </ul>
+      );
+    }
   }
 }
 

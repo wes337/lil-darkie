@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { FONTS, type Block, type BlockStyle, type Theme } from "@/lib/cms/schema";
+import { FONTS, type Block, type BlockStyle, type Show, type Theme } from "@/lib/cms/schema";
 import type { resolveTheme } from "@/lib/cms/render";
 import {
   ColorField,
@@ -37,6 +37,7 @@ const NEW_BLOCKS: { [T in Block["type"]]: Omit<Extract<Block, { type: T }>, "id"
   spacer: { type: "spacer", size: "md" },
   posts: { type: "posts", collection: "writings" },
   html: { type: "html", html: "" },
+  tour: { type: "tour", shows: [] },
 };
 const BLOCK_TYPES = Object.keys(NEW_BLOCKS) as Block["type"][];
 
@@ -174,6 +175,46 @@ function SlideshowImages({
   );
 }
 
+// The shows of a tour block. Past ones stay listed here until removed; the
+// site hides them by itself.
+function Shows({ shows, onChange }: { shows: Show[]; onChange: (shows: Show[]) => void }) {
+  const today = new Date().toISOString().slice(0, 10);
+
+  return (
+    <>
+      {shows.map((show, i) => {
+        const set = (changes: Partial<Show>) => onChange(replaceAt(shows, i, { ...show, ...changes }));
+        return (
+          <fieldset key={i}>
+            <legend>
+              {show.city || "Show"}
+              <RowControls items={shows} index={i} onChange={onChange} />
+            </legend>
+            <Field label="Date">
+              <input type="date" value={show.date} onChange={(event) => set({ date: event.target.value })} />
+            </Field>
+            <TextField label="City" value={show.city} onChange={(city) => set({ city })} />
+            <TextField label="Venue" value={show.venue} onChange={(venue) => set({ venue })} />
+            <OptionalTextField label="Ticket link" value={show.ticketLink} onChange={(ticketLink) => set({ ticketLink })} />
+            <OptionalTextField label="Opener" value={show.opener} onChange={(opener) => set({ opener })} />
+            <label className="check">
+              <input
+                type="checkbox"
+                checked={show.soldOut ?? false}
+                onChange={(event) => set({ soldOut: event.target.checked })}
+              />
+              Sold out
+            </label>
+          </fieldset>
+        );
+      })}
+      <button type="button" onClick={() => onChange([...shows, { date: today, city: "", venue: "" }])}>
+        Add show
+      </button>
+    </>
+  );
+}
+
 // The inputs specific to each block type.
 function BlockFields({ block, onChange }: { block: Block; onChange: (block: Block) => void }) {
   switch (block.type) {
@@ -262,6 +303,8 @@ function BlockFields({ block, onChange }: { block: Block; onChange: (block: Bloc
       return (
         <TextField label="HTML" rows={8} value={block.html} onChange={(html) => onChange({ ...block, html })} />
       );
+    case "tour":
+      return <Shows shows={block.shows} onChange={(shows) => onChange({ ...block, shows })} />;
   }
 }
 

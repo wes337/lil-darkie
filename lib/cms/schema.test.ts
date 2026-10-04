@@ -48,6 +48,16 @@ test("rejects script and data URLs in links and images", () => {
   }
 });
 
+test("tour shows need a real date, a city and a venue", () => {
+  const show = { date: "2026-10-17", city: "San Francisco, CA", venue: "Neck of the Woods" };
+  const withShows = (shows: unknown[]) =>
+    pageSchema.safeParse({ ...page, blocks: [{ id: "a", type: "tour", shows }] }).success;
+  assert.equal(withShows([show, { ...show, soldOut: true, opener: "AFOURTEEN" }]), true);
+  assert.equal(withShows([{ ...show, date: "17 October 2026" }]), false);
+  assert.equal(withShows([{ ...show, city: "" }]), false);
+  assert.equal(withShows([{ ...show, ticketLink: "not a url" }]), false);
+});
+
 test("posts need an author and a real date, and may omit the title", () => {
   const post = { slug: "hello", author: "Lil Darkie", date: "2026-04-16T22:12:00.000Z", collection: "writings", body: "", published: false };
   assert.equal(postSchema.safeParse(post).success, true);

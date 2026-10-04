@@ -49,6 +49,16 @@ const blockStyle = z.strictObject({
 
 const base = { id: z.string().min(1), style: blockStyle.optional() };
 
+// One date on a tour, in the shape the old tour pages used.
+const showSchema = z.strictObject({
+  date: z.iso.date(),
+  city: z.string().min(1),
+  venue: z.string().min(1),
+  ticketLink: z.url().optional(),
+  opener: z.string().optional(),
+  soldOut: z.boolean().optional(),
+});
+
 export const blockSchema = z.discriminatedUnion("type", [
   z.strictObject({
     ...base,
@@ -93,6 +103,9 @@ export const blockSchema = z.discriminatedUnion("type", [
     limit: z.number().int().min(1).optional(),
   }),
   z.strictObject({ ...base, type: z.literal("html"), html: z.string() }),
+  // A list of shows. The site sorts them by date and drops each one once
+  // it's over.
+  z.strictObject({ ...base, type: z.literal("tour"), shows: z.array(showSchema) }),
 ]);
 
 const themeSchema = z.strictObject({
@@ -157,6 +170,7 @@ export const siteSchema = z.strictObject({
 });
 
 export type Block = z.infer<typeof blockSchema>;
+export type Show = z.infer<typeof showSchema>;
 export type BlockStyle = z.infer<typeof blockStyle>;
 export type Theme = z.infer<typeof themeSchema>;
 export type Page = z.infer<typeof pageSchema>;

@@ -287,6 +287,61 @@ h3.heading {
   }
 }
 
+// Tour dates: one row per show with the date, the place and the ticket link.
+.tour {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+
+  li {
+    @include list-row;
+    gap: $space-md;
+    padding: 10px $space-md;
+  }
+
+  time {
+    flex: none;
+    width: 180px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  div {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  span {
+    font-size: 12px;
+    color: var(--t-text-muted);
+  }
+
+  em {
+    flex: none;
+    font-style: normal;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--t-text-muted);
+  }
+
+  // On a phone the date sits above the place, with tickets on the right.
+  @include for-small-phone-only {
+    li {
+      flex-wrap: wrap;
+      gap: $space-xs $space-md;
+    }
+
+    time {
+      width: 100%;
+    }
+  }
+}
+
 .slideshow {
   display: flex;
   flex-direction: column;
