@@ -57,6 +57,11 @@
   @include for-phone-only {
     padding: $space-md;
   }
+
+  // A page with a slideshow uses the full width of the window.
+  &:has(.slideshow) {
+    max-width: none;
+  }
 }
 
 .footer {
@@ -272,12 +277,14 @@ h3.heading {
   gap: 10px;
 }
 
-// A fixed-shape stage, so portrait and landscape images don't move the page.
+// A stage sized to the window, not the image, so portrait and landscape
+// images don't move the page. The 320px is everything else on screen with
+// it: the header, the page heading, the thumbnails and the panel's padding.
 .slideshow-main {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  max-height: 70vh;
+  height: calc(100svh - 320px);
+  min-height: 240px;
   background: var(--t-input-bg);
   border: 1px solid var(--t-panel-border);
   border-radius: 2px;
