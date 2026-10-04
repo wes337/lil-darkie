@@ -127,11 +127,12 @@ export default function LinkList({
               {link.href}
               {link.topBar && " · top bar"}
             </small>
+            <span className="spacer" />
             <span className="row-controls">
               <button type="button" onClick={() => setEditing(i)}>
                 Edit
               </button>
-              <RowControls items={links} index={i} onChange={saveLinks} horizontal />
+              <RowControls items={links} index={i} onChange={saveLinks} />
             </span>
           </div>
         ))}

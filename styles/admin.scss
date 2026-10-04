@@ -339,18 +339,12 @@
   }
 
   .nav-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-
     > div {
       display: flex;
-      flex-direction: column;
-      gap: 6px;
-      padding: 8px 10px;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: var(--panel);
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--line);
     }
 
     small {
