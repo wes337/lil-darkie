@@ -25,14 +25,12 @@ export default function Nav({ site }: { site: Site }) {
     sticky,
     setSticky,
     setScroll,
-    setFlashing,
     gameStarted,
   } = useStore();
 
   useEffect(() => {
     setNavOpen(false);
-    setFlashing(false);
-  }, [pathname, setFlashing, setNavOpen]);
+  }, [pathname, setNavOpen]);
 
   useEffect(() => {
     const onScroll = () => {

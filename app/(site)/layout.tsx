@@ -4,8 +4,6 @@ import { Martian_Mono } from "next/font/google";
 import Spotify from "@/components/spotify";
 import TopBar from "@/components/top-bar";
 import Nav from "@/components/nav";
-import Epilepsy from "@/components/epilepsy";
-import Backdrop from "@/components/backdrop";
 import GoogleAnalytics from "@/components/google-analytics";
 import { getSite } from "@/lib/cms/content";
 import "@/styles/globals.scss";
@@ -62,12 +60,10 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
         />
       </head>
       <body className={martianMono.className}>
-        <Epilepsy />
         <Spotify />
         <TopBar site={site} />
         {children}
         <Nav site={site} />
-        <Backdrop />
         <GoogleAnalytics />
       </body>
     </html>

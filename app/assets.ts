@@ -1,7 +1,6 @@
 export const CDN_URL = "https://w-img.b-cdn.net/lil-darkie";
 
 export const ASSETS = {
-  camo: `${CDN_URL}/camo-small.png`,
   logo: `${CDN_URL}/logo-small.png`,
   logoYellow: `${CDN_URL}/logo-yellow.png`,
   face1: `${CDN_URL}/face/face-1.png`,

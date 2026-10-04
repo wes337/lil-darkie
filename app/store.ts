@@ -8,8 +8,6 @@ const useStore = create(
     {
       gameStarted: false,
       navOpen: false,
-      flashingEnabled: false,
-      flashing: false,
       sticky: false,
       scroll: 0,
       noScroll: false,
@@ -36,9 +34,6 @@ const useStore = create(
 
         set(() => ({ navOpen }));
       },
-      setFlashingEnabled: (flashingEnabled: boolean) =>
-        set(() => ({ flashingEnabled })),
-      setFlashing: (flashing: boolean) => set(() => ({ flashing })),
       setSticky: (sticky: boolean) => set(() => ({ sticky })),
       setScroll: (scroll: number) => set(() => ({ scroll })),
       setNoScroll: (noScroll: boolean) => {

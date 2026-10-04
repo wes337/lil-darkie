@@ -47,7 +47,7 @@ const pages: Page[] = [
   {
     slug: "comics",
     title: "Comics",
-    theme: { backgroundColor: "#ffffff", textColor: "#000000" },
+    theme: {},
     blocks: [
       heading("Comics"),
       { id: "comics", type: "slideshow", images: [`${CDN_URL}/comics/0.jpeg`, `${CDN_URL}/comics/1.jpeg`] },
@@ -78,7 +78,7 @@ const pages: Page[] = [
   {
     slug: "blog",
     title: "Writings",
-    theme: { backgroundColor: "#efbf75", textColor: "#000000", accentColor: "#e00910" },
+    theme: {},
     blocks: [{ id: "feed", type: "posts", collection: "writings" }],
   },
   {
