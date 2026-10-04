@@ -7,6 +7,9 @@ import { ASSETS } from "@/app/assets";
 import useStore from "@/app/store";
 import styles from "@/styles/top-bar.module.scss";
 
+// The same logo art on the landing page and everywhere else.
+const LOGO = "/images/greatest-show-in-human-history/lil-darkie.png";
+
 // The page header. The landing page gets the game's logo; every other page
 // gets the site logo, which links home. The menu button lives in Nav.
 export default function TopBar() {
@@ -17,7 +20,7 @@ export default function TopBar() {
     return (
       <header className={styles["game-header"]} data-playing={gameStarted}>
         <img
-          src="/images/greatest-show-in-human-history/lil-darkie.png"
+          src={LOGO}
           alt="Lil Darkie"
           width={841}
           height={231}
@@ -41,12 +44,12 @@ export default function TopBar() {
             width={254}
             height={68}
           />
-          <Image
-            className={`${styles["logo-primary"]}`}
-            src={ASSETS.logo}
+          <img
+            className={styles["logo-primary"]}
+            src={LOGO}
             alt="Lil Darkie"
-            width={254}
-            height={68}
+            width={841}
+            height={231}
           />
         </Link>
       </div>

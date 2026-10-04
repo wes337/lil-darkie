@@ -26,42 +26,42 @@
   }
 }
 
+// The header on every other page. It matches the landing header's box and
+// logo size exactly, so the logo doesn't shift when moving between them.
+// 100vw (not 100%) keeps it centered on the window whether or not the page
+// has a scrollbar.
 .top-bar {
   position: fixed;
-  top: 32px;
+  top: 0;
   left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 32px;
+  width: 100vw;
+  height: clamp(4rem, 10svh, 6.5rem);
+  display: grid;
+  place-items: center;
   user-select: none;
   z-index: 5;
+  pointer-events: none;
+  transition: height 0.2s ease;
 
-  transition: top 0.2s ease;
+  // Scrolled: the logo sits in the 60px red bar.
+  &.sticky {
+    height: 60px;
+  }
 
   .top-bar-logo {
     all: unset;
+    display: grid;
+    width: clamp(140px, 23svh, 200px);
     cursor: pointer;
-    position: relative;
-    max-width: 200px;
-    height: 58px;
+    pointer-events: auto;
 
+    // Both logos share one cell and cross-fade.
     img {
-      pointer-events: none;
+      grid-area: 1 / 1;
+      display: block;
       width: 100%;
       height: auto;
-    }
-
-    .logo-primary {
-      position: absolute;
-      top: 0;
-      left: 0;
-      opacity: 1;
-
-      @include for-phone-only {
-        top: -16px;
-      }
+      pointer-events: none;
     }
 
     .logo-yellow {
@@ -80,14 +80,6 @@
       .logo-yellow {
         opacity: 1;
       }
-    }
-  }
-
-  &.sticky {
-    top: 0px;
-
-    .top-bar-logo {
-      margin-top: 2px;
     }
   }
 }
