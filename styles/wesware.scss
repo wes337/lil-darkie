@@ -59,6 +59,8 @@
   border-color: var(--t-#{$name}-border);
   border-radius: 2px;
   color: #fff;
+  // A hard-edged shadow keeps the white label readable on the gradient.
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.6);
 
   &:hover:not(:disabled),
   &:focus-visible {

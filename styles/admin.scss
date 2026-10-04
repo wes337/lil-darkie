@@ -79,7 +79,7 @@
 
     // Close and Cancel: the plain button with amber text.
     &.dismiss {
-      color: var(--t-alt-from);
+      color: var(--t-alt-text);
     }
 
     // The selected one of a set of toggles.
@@ -276,7 +276,7 @@
     }
 
     &.dismiss {
-      color: var(--t-alt-from);
+      color: var(--t-alt-text);
     }
   }
 
