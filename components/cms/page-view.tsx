@@ -105,10 +105,7 @@ export function PageShell({
   return (
     <main className={styles.page} style={themeStyle(site, theme)}>
       <div className={styles.panel}>{children}</div>
-      <footer className={styles.footer}>
-        {site.copyright}
-        <small>Powered by WesWare 2.1 (PRO Edition)</small>
-      </footer>
+      <footer className={styles.footer}>{site.copyright}</footer>
     </main>
   );
 }
