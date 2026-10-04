@@ -10,7 +10,6 @@ export const FONTS = {
   "simple-letter": '"Simple Letter", sans-serif',
 } as const;
 
-export const TOP_BAR_ICONS = ["gun", "skull", "grave", "knife"] as const;
 export const SOCIAL_PLATFORMS = ["spotify", "apple", "soundcloud", "youtube"] as const;
 
 // Routes owned by code or by Next.js. A page can't take these slugs.
@@ -123,24 +122,13 @@ export const postSchema = z.strictObject({
   published: z.boolean(),
 });
 
-const navLink = z.strictObject({
-  label: z.string().min(1),
-  href: url,
-  topBar: z.boolean().optional(),
-  icon: z.enum(TOP_BAR_ICONS).optional(),
-});
+const link = z.strictObject({ label: z.string().min(1), href: url });
 
 export const siteSchema = z.strictObject({
-  nav: z
-    .array(navLink)
-    .refine(
-      (links) => links.filter((link) => link.topBar).length <= 3,
-      "At most 3 links fit in the top bar",
-    ),
+  // The menu, in order.
+  nav: z.array(link),
   // Extra buttons on the landing page, under "Play the Game".
-  homeButtons: z
-    .array(z.strictObject({ label: z.string().min(1), href: url }))
-    .optional(),
+  homeButtons: z.array(link).optional(),
   social: z.array(
     z.strictObject({ platform: z.enum(SOCIAL_PLATFORMS), href: z.url() }),
   ),

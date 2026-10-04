@@ -4,8 +4,12 @@ import { useFetched } from "@/components/admin/use-record";
 import { formatPostDate } from "@/lib/cms/render";
 import type { Post } from "@/lib/cms/schema";
 
+// Posts under a heading per collection, newest first within each.
 export default function PostsView() {
   const posts = useFetched<Post[]>("/api/posts");
+  const collections = Object.entries(
+    Object.groupBy(posts ?? [], (post) => post.collection),
+  ).sort(([a], [b]) => a.localeCompare(b));
 
   return (
     <main className="view">
@@ -16,21 +20,24 @@ export default function PostsView() {
           New post
         </Link>
       </header>
-      <ul className="list">
-        {posts
-          ?.sort((a, b) => b.date.localeCompare(a.date))
-          .map((post) => (
-            <li key={post.slug}>
-              <Link href={`/admin/posts/${post.slug}`}>
-                {post.title ?? formatPostDate(post.date)}
-              </Link>
-              <small>
-                {post.collection} · {formatPostDate(post.date)}
-              </small>
-              {!post.published && <span className="badge">draft</span>}
-            </li>
-          ))}
-      </ul>
+      {collections.map(([collection, group = []]) => (
+        <section key={collection}>
+          <h2>{collection}</h2>
+          <ul className="list">
+            {group
+              .sort((a, b) => b.date.localeCompare(a.date))
+              .map((post) => (
+                <li key={post.slug}>
+                  <Link href={`/admin/posts/${post.slug}`}>
+                    {post.title ?? formatPostDate(post.date)}
+                  </Link>
+                  {post.title && <small>{formatPostDate(post.date)}</small>}
+                  {!post.published && <span className="badge">draft</span>}
+                </li>
+              ))}
+          </ul>
+        </section>
+      ))}
       {posts?.length === 0 && <p>No posts yet.</p>}
     </main>
   );

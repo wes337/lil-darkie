@@ -1,12 +1,11 @@
 "use client";
 import { useState } from "react";
-import { TOP_BAR_ICONS, type Page, type Site } from "@/lib/cms/schema";
+import type { Page, Site } from "@/lib/cms/schema";
 import Dialog from "./dialog";
 import { Issues } from "./editor";
-import { Field, MoveButtons, RemoveButton, SelectField, TextField, replaceAt } from "./fields";
+import { Field, MoveButtons, RemoveButton, TextField, replaceAt } from "./fields";
 import type { RecordState } from "./use-record";
 
-// Nav links carry top bar options; home page buttons are just label and href.
 type NavLink = Site["nav"][number];
 type LinkField = "nav" | "homeButtons";
 
@@ -22,14 +21,12 @@ const BUILT_IN = [
 function LinkDialog({
   initial,
   pages,
-  topBarOptions,
   issues,
   onSave,
   onClose,
 }: {
   initial: NavLink;
   pages: Page[];
-  topBarOptions: boolean;
   issues: string[];
   onSave: (link: NavLink) => void;
   onClose: () => void;
@@ -60,24 +57,6 @@ function LinkDialog({
         </select>
       </Field>
       {!known && <TextField label="URL" value={link.href} onChange={(href) => setLink({ ...link, href })} />}
-      {topBarOptions && (
-        <label className="check">
-          <input
-            type="checkbox"
-            checked={link.topBar ?? false}
-            onChange={(event) => setLink({ ...link, topBar: event.target.checked })}
-          />
-          Show in top bar
-        </label>
-      )}
-      {topBarOptions && link.topBar && (
-        <SelectField
-          label="Top bar icon"
-          value={link.icon}
-          options={TOP_BAR_ICONS}
-          onChange={(icon) => setLink({ ...link, icon })}
-        />
-      )}
       <Issues issues={issues} />
       <div className="row">
         <button type="button" className="primary" onClick={() => onSave(link)}>
@@ -126,10 +105,7 @@ export default function LinkList({
               <MoveButtons items={links} index={i} onChange={saveLinks} />
             </span>
             <strong>{link.label}</strong>
-            <small>
-              {link.href}
-              {link.topBar && " · top bar"}
-            </small>
+            <small>{link.href}</small>
             <span className="spacer" />
             <span className="row-controls">
               <button type="button" onClick={() => setEditing(i)}>
@@ -149,7 +125,6 @@ export default function LinkList({
         <LinkDialog
           initial={editing === "new" ? { label: "", href: "/" } : (links[editing] ?? { label: "", href: "/" })}
           pages={pages}
-          topBarOptions={field === "nav"}
           issues={record.state.issues}
           onSave={saveLink}
           onClose={() => setEditing(undefined)}

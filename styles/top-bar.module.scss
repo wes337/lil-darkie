@@ -90,52 +90,6 @@
       margin-top: 2px;
     }
   }
-
-  a:not(.top-bar-logo),
-  button:not(.top-bar-logo) {
-    @include for-phone-only {
-      display: none;
-    }
-
-    all: unset;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    font-size: 18px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-weight: 700;
-    text-shadow: 2px 3px $color-black;
-    cursor: pointer;
-    position: relative;
-
-    &:hover,
-    &:focus,
-    &:active {
-      color: $color-yellow;
-
-      &:before {
-        position: absolute;
-        content: " ";
-        background-color: $color-red;
-        width: 120%;
-        margin-left: -5%;
-        height: 100%;
-        box-shadow: 4px 4px 0px darken($color-red, 25%);
-      }
-
-      img,
-      span {
-        transform: scale(1.17);
-      }
-    }
-
-    img {
-      width: 48px;
-      height: 48px;
-      object-fit: contain;
-    }
-  }
 }
 
 .top-bar-back {

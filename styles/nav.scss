@@ -2,11 +2,6 @@
 
 .mobile-nav-button {
   all: unset;
-
-  @include for-desktop {
-    display: none;
-  }
-
   cursor: pointer;
   position: fixed;
   right: 32px;
@@ -15,12 +10,7 @@
   user-select: none;
   transition: all 0.2s ease;
 
-  // The landing page has no top bar, so the menu button shows on desktop too.
   &[data-game-landing="true"] {
-    @include for-desktop {
-      display: block;
-    }
-
     transition:
       transform 650ms cubic-bezier(0.4, 0, 0.2, 1),
       opacity 650ms ease,

@@ -16,9 +16,4 @@ export const ASSETS = {
   soundcloudIcon: `${CDN_URL}/icons/soundcloud.png`,
   youtubeIcon: `${CDN_URL}/icons/youtube.png`,
   closeIcon: `${CDN_URL}/icons/close.png`,
-  gunIcon: `${CDN_URL}/icons/gun.png`,
-  skullIcon: `${CDN_URL}/icons/skull.png`,
-  graveIcon: `${CDN_URL}/icons/grave.png`,
-  boozeIcon: `${CDN_URL}/icons/booze.png`,
-  knifeIcon: `${CDN_URL}/icons/knife.png`,
 };

@@ -24,10 +24,10 @@ const numbered = (count: number, path: (n: number) => string) =>
 
 const site: Site = {
   nav: [
-    { label: "Merch", href: "https://www.smalldarkone.com", topBar: true, icon: "gun" },
-    { label: "Comics", href: "/comics", topBar: true, icon: "grave" },
+    { label: "Merch", href: "https://www.smalldarkone.com" },
+    { label: "Comics", href: "/comics" },
     { label: "Gallery", href: "/gallery" },
-    { label: "Sampler", href: "/sampler", topBar: true, icon: "skull" },
+    { label: "Sampler", href: "/sampler" },
     { label: "Posters", href: "/posters" },
     { label: "Writings", href: "/blog" },
     { label: "The Lost Songs", href: "/the-lost-songs" },

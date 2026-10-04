@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { describeIssues, pageSchema, postSchema, siteSchema } from "./schema.ts";
+import { describeIssues, pageSchema, postSchema } from "./schema.ts";
 
 const page = {
   slug: "comics",
@@ -53,11 +53,4 @@ test("posts need a real date and may omit the title", () => {
   assert.equal(postSchema.safeParse(post).success, true);
   assert.equal(postSchema.safeParse({ ...post, date: "April 16, 2026" }).success, false);
   assert.equal(postSchema.safeParse({ ...post, date: "2026-02-30" }).success, false);
-});
-
-test("the top bar holds at most 3 nav links", () => {
-  const link = { label: "A", href: "/a", topBar: true };
-  const site = { social: [], copyright: "", theme: {} };
-  assert.equal(siteSchema.safeParse({ ...site, nav: [link, link, link] }).success, true);
-  assert.equal(siteSchema.safeParse({ ...site, nav: [link, link, link, link] }).success, false);
 });

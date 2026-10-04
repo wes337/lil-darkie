@@ -7,7 +7,7 @@ type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const page = await getPage((await params).slug);
-  return page ? { title: `${page.title} | Lil Darkie` } : {};
+  return page ? { title: `Lil Darkie ${page.title}` } : {};
 }
 
 // Every page the admin creates is served from here.

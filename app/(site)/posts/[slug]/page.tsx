@@ -15,7 +15,7 @@ const findPost = async ({ params }: Props) => {
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const post = await findPost(props);
   return post
-    ? { title: `${post.title ?? formatPostDate(post.date)} | Lil Darkie` }
+    ? { title: `Lil Darkie ${post.title ?? formatPostDate(post.date)}` }
     : {};
 }
 
