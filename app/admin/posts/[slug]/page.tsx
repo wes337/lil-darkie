@@ -27,6 +27,7 @@ export default function PostEditor({ params }: { params: Promise<{ slug: string 
     <Editor
       title={post.title ?? slug}
       record={record}
+      backHref="/admin/posts"
       viewHref={post.published ? `/posts/${slug}` : undefined}
       deletable
       form={

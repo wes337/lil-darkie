@@ -9,6 +9,10 @@
   color: #eee;
   font-family: system-ui, sans-serif;
   font-size: 14px;
+  // The tab bar on top, the current view filling the rest.
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 
   a {
     color: #f6c601;
@@ -184,27 +188,57 @@
     gap: 16px;
   }
 
-  .dashboard {
+  .admin-tabs {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--line);
+    background: var(--panel);
+
+    strong {
+      margin-right: 16px;
+    }
+
+    a {
+      padding: 6px 12px;
+      border-radius: 4px;
+      color: #ccc;
+      text-decoration: none;
+
+      &:hover {
+        background: #2a2a2a;
+      }
+
+      &[aria-current="page"] {
+        background: var(--red);
+        color: #fff;
+        font-weight: 600;
+      }
+    }
+  }
+
+  // A list or form screen.
+  .view {
+    flex: 1;
+    overflow-y: auto;
+    width: 100%;
     max-width: 900px;
+    box-sizing: border-box;
     margin: 0 auto;
     padding: 24px 16px 64px;
 
+    &.narrow {
+      max-width: 480px;
+    }
+
     header {
-      gap: 16px;
       margin-bottom: 16px;
     }
 
-    ul {
-      padding: 0;
-      list-style: none;
-    }
-
-    li {
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--line);
+    form {
+      margin-top: 16px;
     }
 
     small {
@@ -212,10 +246,36 @@
     }
   }
 
+  a.button {
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: #fff;
+    text-decoration: none;
+
+    &.primary {
+      background: var(--red);
+      font-weight: 600;
+    }
+  }
+
+  .list {
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+  }
+
   .editor {
+    flex: 1;
+    min-height: 0;
     display: flex;
     flex-direction: column;
-    height: 100vh;
   }
 
   .editor-header {
@@ -278,8 +338,24 @@
     }
   }
 
-  .nav-preview {
-    padding: 0 32px;
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+    }
+
+    small {
+      color: #999;
+    }
   }
 
   .dialog-backdrop {
@@ -303,6 +379,14 @@
     > .row {
       justify-content: space-between;
       margin-bottom: 12px;
+    }
+
+    &.small {
+      width: min(440px, 92vw);
+    }
+
+    h2 {
+      margin: 0;
     }
   }
 

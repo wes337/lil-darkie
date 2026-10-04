@@ -161,15 +161,18 @@ export function ImageField({
   );
 }
 
-// Up, down and remove buttons for one row of an ordered list.
+// Move and remove buttons for one item of an ordered list. `horizontal`
+// swaps the arrows for lists laid out in a row.
 export function RowControls<T>({
   items,
   index,
   onChange,
+  horizontal = false,
 }: {
   items: T[];
   index: number;
   onChange: (items: T[]) => void;
+  horizontal?: boolean;
 }) {
   const move = (to: number) => {
     const next = [...items];
@@ -179,16 +182,16 @@ export function RowControls<T>({
   };
   return (
     <span className="row-controls">
-      <button type="button" disabled={index === 0} onClick={() => move(index - 1)} aria-label="Move up">
-        ↑
+      <button type="button" disabled={index === 0} onClick={() => move(index - 1)} aria-label={horizontal ? "Move left" : "Move up"}>
+        {horizontal ? "←" : "↑"}
       </button>
       <button
         type="button"
         disabled={index === items.length - 1}
         onClick={() => move(index + 1)}
-        aria-label="Move down"
+        aria-label={horizontal ? "Move right" : "Move down"}
       >
-        ↓
+        {horizontal ? "→" : "↓"}
       </button>
       <button
         type="button"

@@ -71,7 +71,7 @@ function History<T>({ record, onLoad }: { record: RecordState<T>; onLoad: () => 
   );
 }
 
-function Issues({ issues }: { issues: string[] }) {
+export function Issues({ issues }: { issues: string[] }) {
   if (issues.length === 0) return null;
   return (
     <ul className="issues" role="alert">
@@ -89,6 +89,7 @@ const TABS = ["Edit", "JSON", "History"] as const;
 export default function Editor<T>({
   title,
   record,
+  backHref,
   viewHref,
   deletable = false,
   form,
@@ -96,6 +97,8 @@ export default function Editor<T>({
 }: {
   title: string;
   record: RecordState<T>;
+  // The list this record belongs to. Omitted for the site settings.
+  backHref?: string;
   // Where the saved record can be seen on the public site.
   viewHref?: string;
   deletable?: boolean;
@@ -109,13 +112,13 @@ export default function Editor<T>({
   async function remove() {
     if (!confirm(`Delete "${title}"? This takes it off the site.`)) return;
     await fetch(record.path, { method: "DELETE" });
-    router.push("/admin");
+    router.push(backHref ?? "/admin");
   }
 
   return (
     <div className="editor">
       <header className="editor-header">
-        <Link href="/admin">← All content</Link>
+        {backHref && <Link href={backHref}>← Back</Link>}
         <h1>{title}</h1>
         {!record.exists && <span className="badge">not saved yet</span>}
         <span className="spacer" />
@@ -130,7 +133,7 @@ export default function Editor<T>({
             Delete
           </button>
         )}
-        <button type="button" className="primary" disabled={state.saving} onClick={record.save}>
+        <button type="button" className="primary" disabled={state.saving} onClick={() => record.save()}>
           {state.saving ? "Saving..." : "Save"}
         </button>
       </header>

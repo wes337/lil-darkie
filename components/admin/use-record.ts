@@ -33,11 +33,13 @@ export function useRecord<T>(path: string, schema: z.ZodType<T>, blank: () => T)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path]);
 
-  async function save() {
-    const parsed = schema.safeParse(doc);
+  // Saves the edited record, or `next` when a change should go live at once.
+  // Resolves to whether the save went through.
+  async function save(next: T | undefined = doc): Promise<boolean> {
+    const parsed = schema.safeParse(next);
     if (!parsed.success) {
       setState({ saving: false, saved: false, issues: describeIssues(parsed.error) });
-      return;
+      return false;
     }
     setState({ saving: true, saved: false, issues: [] });
     const response = await fetch(path, {
@@ -47,8 +49,9 @@ export function useRecord<T>(path: string, schema: z.ZodType<T>, blank: () => T)
     });
     if (response.ok) {
       setExists(true);
+      setDoc(parsed.data);
       setState({ saving: false, saved: true, issues: [] });
-      return;
+      return true;
     }
     const body = await response.json().catch(() => ({}));
     setState({
@@ -56,6 +59,7 @@ export function useRecord<T>(path: string, schema: z.ZodType<T>, blank: () => T)
       saved: false,
       issues: body.issues ?? [body.error ?? `Save failed (${response.status})`],
     });
+    return false;
   }
 
   return {

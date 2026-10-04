@@ -26,6 +26,7 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
     <Editor
       title={page.title}
       record={record}
+      backHref="/admin/pages"
       viewHref={`/${slug}`}
       deletable
       form={

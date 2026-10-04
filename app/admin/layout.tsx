@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { cookies } from "next/headers";
 import Login from "@/components/admin/login";
+import Shell from "@/components/admin/shell";
 import { ADMIN_COOKIE, isAdminSession } from "@/lib/cms/auth";
 import "@/styles/globals.scss";
 import "@/styles/admin.scss";
@@ -14,7 +15,16 @@ export default async function AdminLayout({ children }: { children: ReactNode })
 
   return (
     <html lang="en">
-      <body className="admin">{isAdminSession(session) ? children : <Login />}</body>
+      <body className="admin">
+        {isAdminSession(session) ? (
+          <>
+            <Shell />
+            {children}
+          </>
+        ) : (
+          <Login />
+        )}
+      </body>
     </html>
   );
 }

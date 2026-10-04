@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import type { MediaFile } from "@/lib/cms/bunny";
+import Dialog from "./dialog";
 
 // Vercel rejects request bodies over 4.5 MB before they reach the upload route.
 const MAX_UPLOAD_BYTES = 4 * 1024 * 1024;
@@ -79,16 +80,8 @@ export function MediaDialog({
   onClose: () => void;
 }) {
   return (
-    <div className="dialog-backdrop" onClick={onClose}>
-      <div className="dialog" onClick={(event) => event.stopPropagation()}>
-        <div className="row">
-          <h2>Choose a file</h2>
-          <button type="button" onClick={onClose}>
-            Close
-          </button>
-        </div>
-        <MediaLibrary onPick={onPick} />
-      </div>
-    </div>
+    <Dialog title="Choose a file" onClose={onClose}>
+      <MediaLibrary onPick={onPick} />
+    </Dialog>
   );
 }
