@@ -33,15 +33,17 @@ export default function SiteEditor() {
       }}
       preview={
         <PageShell site={site}>
-          <h1 className={styles.heading}>Heading</h1>
-          <p>
-            Text <a href="#">Link</a>
-          </p>
-          <p>
-            <a className={styles.button} href="#">
-              Button
-            </a>
-          </p>
+          <div className={styles.panel}>
+            <h1 className={styles.heading}>Heading</h1>
+            <p>
+              Text <a href="#">Link</a>
+            </p>
+            <p>
+              <a className={styles.button} href="#">
+                Button
+              </a>
+            </p>
+          </div>
         </PageShell>
       }
     />

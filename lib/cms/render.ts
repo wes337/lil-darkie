@@ -44,7 +44,10 @@ export function themeStyle(site: Site, theme: Theme = {}): CSSProperties {
     "--cms-link": merged.linkColor,
     "--cms-link-hover": merged.linkHoverColor,
     "--cms-font": FONTS[merged.font],
-    ...optional("--cms-panel", chosen.panelColor),
+    ...optional(
+      "--cms-panel-image",
+      chosen.panelColor && `linear-gradient(${chosen.panelColor}, ${chosen.panelColor})`,
+    ),
     ...optional("--cms-heading", chosen.headingColor),
     ...optional("--cms-button-bg", chosen.buttonColor),
     ...optional("--cms-button-text", chosen.buttonTextColor),

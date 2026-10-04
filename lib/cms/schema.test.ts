@@ -48,6 +48,15 @@ test("rejects script and data URLs in links and images", () => {
   }
 });
 
+test("a box groups other blocks but not another box", () => {
+  const text = { id: "t", type: "text", markdown: "Hi" };
+  const withBox = (blocks: unknown[]) =>
+    pageSchema.safeParse({ ...page, blocks: [{ id: "b", type: "box", blocks }] }).success;
+  assert.equal(withBox([text, { id: "h", type: "heading", level: 2, text: "Hi" }]), true);
+  assert.equal(withBox([]), true);
+  assert.equal(withBox([{ id: "inner", type: "box", blocks: [text] }]), false);
+});
+
 test("tour shows need a real date, a city and a venue", () => {
   const show = { date: "2026-10-17", city: "San Francisco, CA", venue: "Neck of the Woods" };
   const withShows = (shows: unknown[]) =>

@@ -59,7 +59,7 @@ const showSchema = z.strictObject({
   soldOut: z.boolean().optional(),
 });
 
-export const blockSchema = z.discriminatedUnion("type", [
+const contentBlocks = [
   z.strictObject({
     ...base,
     type: z.literal("heading"),
@@ -106,7 +106,20 @@ export const blockSchema = z.discriminatedUnion("type", [
   // A list of shows. The site sorts them by date and drops each one once
   // it's over.
   z.strictObject({ ...base, type: z.literal("tour"), shows: z.array(showSchema) }),
-]);
+] as const;
+
+// Every block except the box that groups them.
+const contentBlockSchema = z.discriminatedUnion("type", contentBlocks);
+
+// A box: a panel that holds a group of blocks. Blocks outside a box sit
+// straight on the page background. Boxes don't nest.
+const boxSchema = z.strictObject({
+  ...base,
+  type: z.literal("box"),
+  blocks: z.array(contentBlockSchema),
+});
+
+export const blockSchema = z.discriminatedUnion("type", [...contentBlocks, boxSchema]);
 
 const themeSchema = z.strictObject({
   backgroundColor: color.optional(),
@@ -170,6 +183,7 @@ export const siteSchema = z.strictObject({
 });
 
 export type Block = z.infer<typeof blockSchema>;
+export type ContentBlock = z.infer<typeof contentBlockSchema>;
 export type Show = z.infer<typeof showSchema>;
 export type BlockStyle = z.infer<typeof blockStyle>;
 export type Theme = z.infer<typeof themeSchema>;

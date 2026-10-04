@@ -1,6 +1,13 @@
 "use client";
 import { useState } from "react";
-import { FONTS, type Block, type BlockStyle, type Show, type Theme } from "@/lib/cms/schema";
+import {
+  FONTS,
+  type Block,
+  type ContentBlock,
+  type BlockStyle,
+  type Show,
+  type Theme,
+} from "@/lib/cms/schema";
 import type { resolveTheme } from "@/lib/cms/render";
 import {
   ColorField,
@@ -38,8 +45,11 @@ const NEW_BLOCKS: { [T in Block["type"]]: Omit<Extract<Block, { type: T }>, "id"
   posts: { type: "posts", collection: "writings" },
   html: { type: "html", html: "" },
   tour: { type: "tour", shows: [] },
+  box: { type: "box", blocks: [] },
 };
 const BLOCK_TYPES = Object.keys(NEW_BLOCKS) as Block["type"][];
+
+const isContent = (block: Block): block is ContentBlock => block.type !== "box";
 
 // The theme form, in groups. `inherited` is what each setting falls back to
 // when left empty, so the swatches show the color actually in use.
@@ -305,18 +315,31 @@ function BlockFields({ block, onChange }: { block: Block; onChange: (block: Bloc
       );
     case "tour":
       return <Shows shows={block.shows} onChange={(shows) => onChange({ ...block, shows })} />;
+    case "box":
+      return (
+        <BlockEditor
+          nested
+          blocks={block.blocks}
+          onChange={(blocks) => onChange({ ...block, blocks: blocks.filter(isContent) })}
+        />
+      );
   }
 }
 
-// The ordered list of a page's blocks, each with its fields, style overrides
-// and move/remove buttons, plus the menu that adds a new block at the end.
+// An ordered list of blocks, each with its fields, style overrides and
+// move/remove buttons, plus the menu that adds a new block at the end. A box
+// block holds a nested list of its own, which can't contain another box.
 export default function BlockEditor({
   blocks,
   onChange,
+  nested = false,
 }: {
   blocks: Block[];
   onChange: (blocks: Block[]) => void;
+  nested?: boolean;
 }) {
+  const types = nested ? BLOCK_TYPES.filter((type) => type !== "box") : BLOCK_TYPES;
+
   function add(type: Block["type"]) {
     const id = crypto.randomUUID().slice(0, 8);
     onChange([...blocks, { ...NEW_BLOCKS[type], id } as Block]);
@@ -337,16 +360,16 @@ export default function BlockEditor({
           />
         </fieldset>
       ))}
-      <Field label="Add a block">
+      <Field label={nested ? "Add to box" : "Add a block"}>
         <select
           value=""
           onChange={(event) => {
-            const type = BLOCK_TYPES.find((name) => name === event.target.value);
+            const type = types.find((name) => name === event.target.value);
             if (type) add(type);
           }}
         >
           <option value="">Choose a type...</option>
-          {BLOCK_TYPES.map((type) => (
+          {types.map((type) => (
             <option key={type}>{type}</option>
           ))}
         </select>

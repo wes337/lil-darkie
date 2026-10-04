@@ -6,7 +6,7 @@
 // a rerun can't wipe the manager's edits. `--force` overwrites them.
 import { readFileSync } from "node:fs";
 import { createStore, redis } from "../lib/cms/store.ts";
-import type { Block, Page, Post, Site } from "../lib/cms/schema.ts";
+import type { Block, ContentBlock, Page, Post, Site } from "../lib/cms/schema.ts";
 
 const CDN_URL = "https://w-img.b-cdn.net/lil-darkie";
 const read = (file: string) =>
@@ -42,39 +42,40 @@ const site: Site = {
   theme: {},
 };
 
-const heading = (text: string): Block => ({ id: "title", type: "heading", level: 1, text, style: { align: "center" } });
+const heading = (text: string): ContentBlock => ({ id: "title", type: "heading", level: 1, text, style: { align: "center" } });
+const box = (...blocks: ContentBlock[]): Block[] => [{ id: "box", type: "box", blocks }];
 
 const pages: Page[] = [
   {
     slug: "comics",
     title: "Comics",
     theme: {},
-    blocks: [
+    blocks: box(
       heading("Comics"),
       { id: "comics", type: "slideshow", images: [`${CDN_URL}/comics/0.jpeg`, `${CDN_URL}/comics/1.jpeg`] },
-    ],
+    ),
   },
   {
     slug: "gallery",
     title: "Gallery",
     theme: {},
-    blocks: [
+    blocks: box(
       heading("Tour Photos"),
       {
         id: "photos",
         type: "slideshow",
         images: numbered(24, (n) => `/images/gallery/${n}.${n < 10 ? "png" : "webp"}`),
       },
-    ],
+    ),
   },
   {
     slug: "posters",
     title: "Posters",
     theme: {},
-    blocks: [
+    blocks: box(
       heading("Posters"),
       { id: "posters", type: "slideshow", images: numbered(13, (n) => `/images/posters/${n}.webp`) },
-    ],
+    ),
   },
   {
     slug: "blog",
@@ -86,7 +87,7 @@ const pages: Page[] = [
     slug: "tour",
     title: "Tour Dates",
     theme: {},
-    blocks: [
+    blocks: box(
       heading("Tour Dates"),
       {
         id: "shows",
@@ -100,13 +101,13 @@ const pages: Page[] = [
           },
         ],
       },
-    ],
+    ),
   },
   {
     slug: "the-lost-songs",
     title: "The Lost Songs",
     theme: {},
-    blocks: [
+    blocks: box(
       { id: "cover", type: "image", src: `${CDN_URL}/lost-songs/album.jpg`, alt: "Lost Songs album cover" },
       heading("Lost Songs"),
       { id: "out-now", type: "text", markdown: "Out now on all platforms", style: { align: "center" } },
@@ -119,7 +120,7 @@ const pages: Page[] = [
       },
       { id: "notes", type: "text", markdown: read("./lost-songs.md") },
       { id: "player", type: "embed", url: "https://api.soundcloud.com/playlists/1508540197" },
-    ],
+    ),
   },
 ];
 

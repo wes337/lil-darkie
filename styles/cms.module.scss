@@ -39,29 +39,13 @@
   }
 }
 
-.panel {
+// The column a page's blocks sit in.
+.content {
   width: 100%;
   max-width: 720px;
-  box-sizing: border-box;
-  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  @include panel;
-  // A chosen panel color replaces the gradient.
-  background: var(
-    --cms-panel,
-    linear-gradient(to bottom left, var(--t-panel-from), var(--t-panel-via), var(--t-panel-to))
-  );
-
-  @include for-phone-only {
-    padding: $space-md;
-  }
-
-  // A page with no blocks has no box.
-  &:empty {
-    display: none;
-  }
 
   // A page with a slideshow uses most of the window, with room at the sides.
   &:has(.slideshow) {
@@ -72,8 +56,35 @@
       max-width: none;
     }
   }
+}
 
-  // A feed's posts are boxes of their own, so the page's box steps aside.
+// A box: a panel around a group of blocks.
+.panel {
+  box-sizing: border-box;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-size: cover;
+  background-position: center;
+  @include panel;
+  // A chosen panel color replaces the gradient.
+  background-color: transparent;
+  background-image: var(
+    --cms-panel-image,
+    linear-gradient(to bottom left, var(--t-panel-from), var(--t-panel-via), var(--t-panel-to))
+  );
+
+  @include for-phone-only {
+    padding: $space-md;
+  }
+
+  // A box with nothing in it isn't drawn.
+  &:empty {
+    display: none;
+  }
+
+  // A feed's posts are boxes of their own, so a box around a feed steps aside.
   &:has(.posts) {
     padding: 0;
     background: none;
@@ -256,7 +267,7 @@ h3.heading {
     padding: 20px;
     @include panel;
     background: var(
-      --cms-panel,
+      --cms-panel-image,
       linear-gradient(to bottom left, var(--t-panel-from), var(--t-panel-via), var(--t-panel-to))
     );
 

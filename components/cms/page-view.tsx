@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { marked } from "marked";
-import { FONTS, type Block, type Page, type Post, type Site, type Theme } from "@/lib/cms/schema";
+import { FONTS, type ContentBlock, type Page, type Post, type Site, type Theme } from "@/lib/cms/schema";
 import {
   blockStyleCss,
   embedSource,
@@ -31,7 +31,7 @@ export function PostView({ post }: { post: Post }) {
   );
 }
 
-function BlockContent({ block, posts }: { block: Block; posts: Post[] }) {
+function BlockContent({ block, posts }: { block: ContentBlock; posts: Post[] }) {
   switch (block.type) {
     case "heading": {
       const Tag = `h${block.level}` as const;
@@ -121,6 +121,19 @@ function BlockContent({ block, posts }: { block: Block; posts: Post[] }) {
   }
 }
 
+// One block with its own style overrides applied.
+function BlockSection({ block, posts }: { block: ContentBlock; posts: Post[] }) {
+  return (
+    <section
+      className={styles.block}
+      data-filled={Boolean(block.style?.backgroundColor || block.style?.backgroundImage)}
+      style={blockStyleCss(block.style)}
+    >
+      <BlockContent block={block} posts={posts} />
+    </section>
+  );
+}
+
 // The themed wrapper shared by pages and single posts.
 export function PageShell({
   site,
@@ -133,7 +146,7 @@ export function PageShell({
 }) {
   return (
     <main className={styles.page} style={themeStyle(site, theme)}>
-      <div className={styles.panel}>{children}</div>
+      <div className={styles.content}>{children}</div>
       <footer className={styles.footer}>{site.copyright}</footer>
     </main>
   );
@@ -152,18 +165,17 @@ export default function PageView({
 }) {
   return (
     <PageShell site={site} theme={page.theme}>
-      {page.blocks.map((block) => (
-        <section
-          key={block.id}
-          className={styles.block}
-          data-filled={Boolean(
-            block.style?.backgroundColor || block.style?.backgroundImage,
-          )}
-          style={blockStyleCss(block.style)}
-        >
-          <BlockContent block={block} posts={posts} />
-        </section>
-      ))}
+      {page.blocks.map((block) =>
+        block.type === "box" ? (
+          <div key={block.id} className={styles.panel} style={blockStyleCss(block.style)}>
+            {block.blocks.map((child) => (
+              <BlockSection key={child.id} block={child} posts={posts} />
+            ))}
+          </div>
+        ) : (
+          <BlockSection key={block.id} block={block} posts={posts} />
+        ),
+      )}
     </PageShell>
   );
 }

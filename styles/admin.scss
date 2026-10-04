@@ -15,16 +15,17 @@
   flex-direction: column;
   height: 100vh;
 
-  a {
+  // Element rules skip the page preview, which has its own styles.
+  a:not(.editor-preview *) {
     color: var(--t-accent);
   }
 
-  h1 {
+  h1:not(.editor-preview *) {
     margin: 0;
     font-size: 20px;
   }
 
-  h2 {
+  h2:not(.editor-preview *) {
     margin: 24px 0 8px;
     font-size: 16px;
   }
@@ -55,7 +56,7 @@
     font-family: ui-monospace, monospace;
   }
 
-  button {
+  button:not(.editor-preview *) {
     font: inherit;
     font-size: 13px;
     white-space: nowrap;
