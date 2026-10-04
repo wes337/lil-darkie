@@ -137,6 +137,10 @@ export const siteSchema = z.strictObject({
       (links) => links.filter((link) => link.topBar).length <= 3,
       "At most 3 links fit in the top bar",
     ),
+  // Extra buttons on the landing page, under "Play the Game".
+  homeButtons: z
+    .array(z.strictObject({ label: z.string().min(1), href: url }))
+    .optional(),
   social: z.array(
     z.strictObject({ platform: z.enum(SOCIAL_PLATFORMS), href: z.url() }),
   ),

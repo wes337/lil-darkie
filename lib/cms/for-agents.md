@@ -86,6 +86,7 @@ A post with `"published": false` is a draft. Only the admin can see it.
         { "label": "Merch", "href": "https://www.smalldarkone.com", "topBar": true, "icon": "gun" },
         { "label": "Comics", "href": "/comics" }
       ],
+      "homeButtons": [{ "label": "Tour tickets", "href": "https://example.com/tickets" }],
       "social": [{ "platform": "spotify", "href": "https://open.spotify.com/artist/..." }],
       "copyright": "Copyright © 2026 Lil Darkie® All Rights Reserved",
       "theme": {}
@@ -93,4 +94,6 @@ A post with `"published": false` is a draft. Only the admin can see it.
 
 Nav links appear in the menu in this order. Up to 3 can set `topBar` to also show in the desktop header, each with an optional `icon` (gun, skull, grave, knife). Social platforms: spotify, soundcloud, youtube.
 
-The home page (the game) and `/sampler` are built in code and can't be edited here, but nav links can point to them.
+`homeButtons` are extra buttons on the home page, shown in order under "Play the Game". Each has a `label` and an `href`.
+
+The rest of the home page (the game) and `/sampler` are built in code and can't be edited here, but nav links can point to them.

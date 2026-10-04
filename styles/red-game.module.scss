@@ -186,6 +186,39 @@
   }
 }
 
+// The site's extra start-screen links, set in the admin.
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: clamp(16px, 3svh, 32px);
+
+  a {
+    min-width: min(280px, 100%);
+    box-sizing: border-box;
+    padding: 10px 20px;
+    border: 2px solid #fff;
+    background: #080808cc;
+    color: #fff;
+    font-size: clamp(14px, 1.4vw, 18px);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+
+    &::before {
+      content: "> ";
+    }
+
+    &:is(:hover, :focus-visible) {
+      background: #fff;
+      color: #080808;
+      outline: none;
+    }
+  }
+}
+
 .navigation {
   position: absolute;
   inset: 0;

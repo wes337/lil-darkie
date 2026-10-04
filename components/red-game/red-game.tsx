@@ -68,7 +68,14 @@ const EXTRA_SOUNDS = {
 };
 
 // `onExit` runs from the ending's EXIT button; the page remounts the game to reset it.
-export default function RedGame({ onExit }: { onExit: () => void }) {
+// `buttons` are the site's extra links, shown under Play on the start screen.
+export default function RedGame({
+  onExit,
+  buttons,
+}: {
+  onExit: () => void;
+  buttons: { label: string; href: string }[];
+}) {
   const { gameStarted, setGameStarted, setNavOpen } = useStore();
   const game = useGame();
   const { deselect, selected, dialog, sequence } = game;
@@ -640,6 +647,15 @@ export default function RedGame({ onExit }: { onExit: () => void }) {
             />
             <span>Play the Game</span>
           </button>
+          {buttons.length > 0 && (
+            <nav className={styles.links} aria-label="Featured links">
+              {buttons.map(({ label, href }) => (
+                <a key={`${label}-${href}`} href={href}>
+                  {label}
+                </a>
+              ))}
+            </nav>
+          )}
           {failed && (
             <p role="alert">
               The room artwork couldn’t load. Please refresh to try again.

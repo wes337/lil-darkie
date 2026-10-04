@@ -1,18 +1,14 @@
 "use client";
 import { useState } from "react";
-import {
-  DEFAULT_SITE,
-  TOP_BAR_ICONS,
-  siteSchema,
-  type Page,
-  type Site,
-} from "@/lib/cms/schema";
+import { TOP_BAR_ICONS, type Page, type Site } from "@/lib/cms/schema";
 import Dialog from "./dialog";
 import { Issues } from "./editor";
 import { Field, RowControls, SelectField, TextField, replaceAt } from "./fields";
-import { useRecord } from "./use-record";
+import type { RecordState } from "./use-record";
 
+// Nav links carry top bar options; home page buttons are just label and href.
 type NavLink = Site["nav"][number];
+type LinkField = "nav" | "homeButtons";
 
 // Routes that exist in code, offered next to the CMS pages when picking where
 // a nav link goes.
@@ -26,12 +22,14 @@ const BUILT_IN = [
 function LinkDialog({
   initial,
   pages,
+  topBarOptions,
   issues,
   onSave,
   onClose,
 }: {
   initial: NavLink;
   pages: Page[];
+  topBarOptions: boolean;
   issues: string[];
   onSave: (link: NavLink) => void;
   onClose: () => void;
@@ -44,7 +42,7 @@ function LinkDialog({
   const known = destinations.some((destination) => destination.href === link.href);
 
   return (
-    <Dialog title="Menu link" onClose={onClose} small>
+    <Dialog title="Edit link" onClose={onClose} small>
       <TextField label="Label" value={link.label} onChange={(label) => setLink({ ...link, label })} />
       <Field label="Goes to">
         <select
@@ -62,15 +60,17 @@ function LinkDialog({
         </select>
       </Field>
       {!known && <TextField label="URL" value={link.href} onChange={(href) => setLink({ ...link, href })} />}
-      <label className="check">
-        <input
-          type="checkbox"
-          checked={link.topBar ?? false}
-          onChange={(event) => setLink({ ...link, topBar: event.target.checked })}
-        />
-        Also show in the top bar (up to 3)
-      </label>
-      {link.topBar && (
+      {topBarOptions && (
+        <label className="check">
+          <input
+            type="checkbox"
+            checked={link.topBar ?? false}
+            onChange={(event) => setLink({ ...link, topBar: event.target.checked })}
+          />
+          Also show in the top bar (up to 3)
+        </label>
+      )}
+      {topBarOptions && link.topBar && (
         <SelectField
           label="Top bar icon"
           value={link.icon}
@@ -91,27 +91,37 @@ function LinkDialog({
   );
 }
 
-// The menu links, in menu order. Every change here
-// (add, edit, reorder, remove) saves the site record and is live at once.
-export default function Navigation({ pages }: { pages: Page[] }) {
-  const record = useRecord<Site>("/api/site", siteSchema, () => DEFAULT_SITE);
+// One of the site's ordered link lists: the menu (`nav`) or the home page
+// buttons. Every change here (add, edit, reorder, remove) saves the site
+// record and is live at once. Both lists share one `record` so a save from
+// one never overwrites the other with stale data.
+export default function LinkList({
+  record,
+  field,
+  pages,
+}: {
+  record: RecordState<Site>;
+  field: LinkField;
+  pages: Page[];
+}) {
   // Index of the link being edited, or "new" while adding one.
   const [editing, setEditing] = useState<number | "new">();
   const site = record.doc;
   if (!site) return null;
 
-  const saveNav = (nav: NavLink[]) => record.save({ ...site, nav });
+  const links: NavLink[] = site[field] ?? [];
+  const saveLinks = (next: NavLink[]) => record.save({ ...site, [field]: next });
 
   async function saveLink(link: NavLink) {
-    if (!site || editing === undefined) return;
-    const nav = editing === "new" ? [...site.nav, link] : replaceAt(site.nav, editing, link);
-    if (await saveNav(nav)) setEditing(undefined);
+    if (editing === undefined) return;
+    const next = editing === "new" ? [...links, link] : replaceAt(links, editing, link);
+    if (await saveLinks(next)) setEditing(undefined);
   }
 
   return (
     <>
       <div className="nav-links">
-        {site.nav.map((link, i) => (
+        {links.map((link, i) => (
           <div key={`${link.label}-${i}`}>
             <strong>{link.label}</strong>
             <small>
@@ -122,7 +132,7 @@ export default function Navigation({ pages }: { pages: Page[] }) {
               <button type="button" onClick={() => setEditing(i)}>
                 Edit
               </button>
-              <RowControls items={site.nav} index={i} onChange={saveNav} horizontal />
+              <RowControls items={links} index={i} onChange={saveLinks} horizontal />
             </span>
           </div>
         ))}
@@ -132,11 +142,11 @@ export default function Navigation({ pages }: { pages: Page[] }) {
           Add link
         </button>
       </p>
-      {editing === undefined && <Issues issues={record.state.issues} />}
       {editing !== undefined && (
         <LinkDialog
-          initial={editing === "new" ? { label: "", href: "/" } : (site.nav[editing] ?? { label: "", href: "/" })}
+          initial={editing === "new" ? { label: "", href: "/" } : (links[editing] ?? { label: "", href: "/" })}
           pages={pages}
+          topBarOptions={field === "nav"}
           issues={record.state.issues}
           onSave={saveLink}
           onClose={() => setEditing(undefined)}
