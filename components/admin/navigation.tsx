@@ -93,8 +93,7 @@ function LinkDialog({
 
 // One of the site's ordered link lists: the menu (`nav`) or the home page
 // buttons. Every change here (add, edit, reorder, remove) saves the site
-// record and is live at once. Both lists share one `record` so a save from
-// one never overwrites the other with stale data.
+// record and is live at once.
 export default function LinkList({
   record,
   field,
@@ -139,7 +138,7 @@ export default function LinkList({
       </div>
       <p>
         <button type="button" onClick={() => setEditing("new")}>
-          Add link
+          {field === "nav" ? "Add link" : "Add button"}
         </button>
       </p>
       {editing !== undefined && (

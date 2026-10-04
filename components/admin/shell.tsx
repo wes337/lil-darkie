@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 const TABS = [
+  { href: "/admin/landing", label: "Landing" },
   { href: "/admin/pages", label: "Pages" },
   { href: "/admin/posts", label: "Posts" },
   { href: "/admin/navigation", label: "Navigation" },
