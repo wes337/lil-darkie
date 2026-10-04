@@ -3,7 +3,7 @@ import { TOPICS } from "./game-content";
 import type { TopicId } from "./game-model";
 import type { Game } from "./use-game";
 import { Prop } from "./room-props";
-import { artSources } from "./art";
+import { GAME_CDN, artSources } from "./art";
 import styles from "@/styles/game-ui.module.scss";
 
 export default function GameDialog({
@@ -83,7 +83,7 @@ export default function GameDialog({
         onClick={onClose}
       >
         <img
-          {...artSources("/images/red-game/navigation/close-x.webp")}
+          {...artSources(`${GAME_CDN}/navigation/close-x.webp`)}
           alt=""
           width={1254}
           height={1254}

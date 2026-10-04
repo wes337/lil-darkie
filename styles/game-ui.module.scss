@@ -91,7 +91,7 @@
   min-height: 44px;
   padding: 10px 18px;
   border: 0;
-  background: url("/images/red-game/buttons/paint-red.webp") center / 100% 100%
+  background: url("https://w-img.b-cdn.net/lil-darkie/red-game/buttons/paint-red.webp") center / 100% 100%
     no-repeat;
   color: #fff;
   font: inherit;
@@ -106,12 +106,12 @@
     opacity: 0.75;
   }
   &:enabled:is(:focus-visible, :active) {
-    background-image: url("/images/red-game/buttons/paint-yellow.webp");
+    background-image: url("https://w-img.b-cdn.net/lil-darkie/red-game/buttons/paint-yellow.webp");
     opacity: 1;
   }
   @media (hover: hover) {
     &:enabled:hover {
-      background-image: url("/images/red-game/buttons/paint-yellow.webp");
+      background-image: url("https://w-img.b-cdn.net/lil-darkie/red-game/buttons/paint-yellow.webp");
       opacity: 1;
     }
   }
@@ -121,13 +121,13 @@
   }
   // Mobile art set (see components/red-game/art.js).
   @media (max-width: 700px) {
-    background-image: url("/images/red-game/buttons/paint-red-mobile.webp");
+    background-image: url("https://w-img.b-cdn.net/lil-darkie/red-game/buttons/paint-red-mobile.webp");
     &:enabled:is(:focus-visible, :active) {
-      background-image: url("/images/red-game/buttons/paint-yellow-mobile.webp");
+      background-image: url("https://w-img.b-cdn.net/lil-darkie/red-game/buttons/paint-yellow-mobile.webp");
     }
     @media (hover: hover) {
       &:enabled:hover {
-        background-image: url("/images/red-game/buttons/paint-yellow-mobile.webp");
+        background-image: url("https://w-img.b-cdn.net/lil-darkie/red-game/buttons/paint-yellow-mobile.webp");
       }
     }
   }

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { playSound } from "./audio";
 import type { Game } from "./use-game";
 import styles from "@/styles/game-sequence.module.scss";
+import { GAME_CDN } from "./art";
 
 const CAN_SKIP_ANIMATION = process.env.NODE_ENV === "development";
 const ENDING_SOUNDS = {
@@ -113,7 +114,7 @@ export default function GameSequence({
       {type === "repair" ? (
         <img
           className={styles.scene}
-          src="/red-game/final/sink-teddy.webp"
+          src={`${GAME_CDN}/final/sink-teddy.webp`}
           alt="Bambi sits upright with his belly mended."
           draggable={false}
           onLoad={() => setReady(true)}
@@ -127,14 +128,14 @@ export default function GameSequence({
               ref={(element) => {
                 endingSounds.current[soundStep] = element;
               }}
-              src={`/red-game/sounds/${filename}`}
+              src={`${GAME_CDN}/sounds/${filename}`}
               preload="auto"
               hidden
             />
           ))}
           <img
             className={styles.scene}
-            src="/red-game/final/ending-end.webp"
+            src={`${GAME_CDN}/final/ending-end.webp`}
             aria-hidden={step < 4}
             alt={
               step === 6
@@ -146,7 +147,7 @@ export default function GameSequence({
           {step === 0 && (
             <img
               className={styles.scene}
-              src="/red-game/final/ending-start.webp"
+              src={`${GAME_CDN}/final/ending-start.webp`}
               alt="The door opens onto a bright field."
               draggable={false}
             />
@@ -155,8 +156,8 @@ export default function GameSequence({
             <video
               ref={video}
               className={styles.scene}
-              src="/red-game/final/ending.mp4"
-              poster="/red-game/final/ending-start.webp"
+              src={`${GAME_CDN}/final/ending.mp4`}
+              poster={`${GAME_CDN}/final/ending-start.webp`}
               muted
               playsInline
               preload="auto"

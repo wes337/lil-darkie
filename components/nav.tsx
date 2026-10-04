@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { ASSETS } from "@/app/assets";
 import useStore from "@/app/store";
 import SiteLink from "@/components/site-link";
+import { GAME_CDN } from "@/components/red-game/art";
 import type { Site } from "@/lib/cms/schema";
 import "@/styles/nav.scss";
 
@@ -67,7 +68,7 @@ export default function Nav({ site }: { site: Site }) {
         <Image
           src={
             pathname === "/"
-              ? "/images/red-game/navigation/menu.webp"
+              ? `${GAME_CDN}/navigation/menu.webp`
               : ASSETS.menu
           }
           alt="Menu"

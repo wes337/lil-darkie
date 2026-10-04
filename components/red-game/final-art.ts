@@ -1,6 +1,7 @@
+import { GAME_CDN } from "./art.ts";
 import type { Progress } from "./game-model.ts";
 
-export const FINAL_ART = "/red-game/final/";
+export const FINAL_ART = `${GAME_CDN}/final/`;
 
 // The renders and hotspots share the same square coordinates on every screen.
 export function roomImage(room: RoomId, progress: Progress) {

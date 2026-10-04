@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { artSources } from "./art";
+import { GAME_CDN, artSources } from "./art";
 import styles from "@/styles/landing-scene.module.scss";
 
-const ART_PATH = "/images/red-game/main-room/";
+const ART_PATH = `${GAME_CDN}/main-room/`;
 
 // The website keeps the original layered painting; gameplay uses the Final renders.
 export default function LandingScene() {

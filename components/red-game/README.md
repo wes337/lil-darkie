@@ -4,13 +4,13 @@ After Play the Game, the game uses the 1080 × 1080 renders from the artist's Fi
 
 ## Assets
 
-`public/red-game/final/` contains optimized WebP scenes and transparent inventory items, the animated main room and ending as inline MP4s, and the supplied `josh website demo.m4a` as `music.m4a`. `manifest.json` records each source frame, crop, dimensions, and size. Original source files are untouched.
+The CDN folder `lil-darkie/red-game/final/` (see `GAME_CDN` in `art.ts`) contains optimized WebP scenes and transparent inventory items, the animated main room and ending as inline MP4s, and the supplied `josh website demo.m4a` as `music.m4a`. `final-manifest.json` in this folder records each source frame, crop, dimensions, and size. Original source files are untouched.
 
-The optimized assets are checked in, so building and running the game requires no asset conversion or access to the original export. Conversion scripts and preview files stay local. The game uses the manifest for inventory image dimensions.
+The optimized assets are on the CDN, so building and running the game requires no asset conversion or access to the original export. Conversion scripts and preview files stay local. The game uses the manifest for inventory image dimensions.
 
 The source PNG sequences contain no timing metadata, so video runs at 24 fps. The wisp uses every other frame at 12 fps. Reduced motion uses the static room and wisp artwork and advances directly to the ending's story cards.
 
-Music begins from the Play the Game click, loops across rooms and the ending, pauses when the document is hidden, and stops when the game exits. Music plays at 45% volume and sound effects at 15%, with the ambient computer hum softer still. These levels are defined in `audio.ts`. The existing interaction sound effects remain in `public/red-game/sounds`.
+Music begins from the Play the Game click, loops across rooms and the ending, pauses when the document is hidden, and stops when the game exits. Music plays at 45% volume and sound effects at 15%, with the ambient computer hum softer still. These levels are defined in `audio.ts`. The interaction sound effects are in the CDN folder `lil-darkie/red-game/sounds`.
 
 ## Playing
 

@@ -1,4 +1,4 @@
-import manifest from "@/public/red-game/final/manifest.json";
+import manifest from "./final-manifest.json";
 import type { CSSProperties } from "react";
 import { FINAL_ART, ITEM_ART, type ItemArtId } from "./final-art";
 import styles from "@/styles/room-props.module.scss";

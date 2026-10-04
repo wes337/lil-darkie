@@ -1,6 +1,6 @@
 "use client";
 
-import { artSources } from "./art";
+import { GAME_CDN, artSources } from "./art";
 import FinalImage, { Hotspot } from "./final-image";
 import type { RefObject } from "react";
 import { roomImage, safeImage, type Rect } from "./final-art";
@@ -87,7 +87,7 @@ export default function PropCloseup({
         onClick={onBack}
         disabled={moving}
       >
-        <img {...artSources("/images/red-game/navigation/arrow-left.webp")} width={1254} height={1254} alt="" draggable={false} />
+        <img {...artSources(`${GAME_CDN}/navigation/arrow-left.webp`)} width={1254} height={1254} alt="" draggable={false} />
       </button>
     </fieldset>
   );

@@ -2,7 +2,7 @@
 .game {
   position: relative;
   --frame-width: clamp(10px, 1.6vmin, 14px);
-  --game-frame-image: url("/images/red-game/buttons/paint-red.webp");
+  --game-frame-image: url("https://w-img.b-cdn.net/lil-darkie/red-game/buttons/paint-red.webp");
   --controls-height: clamp(56px, 10vmin, 80px);
   --game-size: min(
     calc(100vw - 2 * (var(--game-edge-gap) + var(--frame-width))),
@@ -311,7 +311,7 @@
 
 @media (max-width: 700px) {
   .game {
-    --game-frame-image: url("/images/red-game/buttons/paint-red-mobile.webp");
+    --game-frame-image: url("https://w-img.b-cdn.net/lil-darkie/red-game/buttons/paint-red-mobile.webp");
   }
 }
 

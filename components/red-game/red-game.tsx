@@ -19,7 +19,7 @@ import GameDialog from "./game-dialog";
 import Inventory from "./inventory";
 import GameSequence from "./game-sequence";
 import { ROOMS } from "./rooms";
-import { artSources } from "./art";
+import { GAME_CDN, artSources } from "./art";
 import { FINAL_ART, dialogImage } from "./final-art";
 import type { TopicId } from "./game-model";
 import FinalImage from "./final-image";
@@ -427,139 +427,139 @@ export default function RedGame({
       <audio ref={musicRef} src={`${FINAL_ART}music.m4a`} preload="auto" loop hidden />
       <audio
         ref={detectionSoundRef}
-        src="/red-game/sounds/detection-click-1.mp3"
+        src={`${GAME_CDN}/sounds/detection-click-1.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={movementSoundRef}
-        src="/red-game/sounds/move-2.mp3"
+        src={`${GAME_CDN}/sounds/move-2.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={keypadButtonSoundRef}
-        src="/red-game/sounds/keypad-button.mp3"
+        src={`${GAME_CDN}/sounds/keypad-button.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={doorLockedSoundRef}
-        src="/red-game/sounds/door-locked.mp3"
+        src={`${GAME_CDN}/sounds/door-locked.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={doorBottomSoundRef}
-        src="/red-game/sounds/door-bottom.mp3"
+        src={`${GAME_CDN}/sounds/door-bottom.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={doorHoleSoundRef}
-        src="/red-game/sounds/door-hole.mp3"
+        src={`${GAME_CDN}/sounds/door-hole.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={textCloseSoundRef}
-        src="/red-game/sounds/click-close.mp3"
+        src={`${GAME_CDN}/sounds/click-close.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={itemMysterySoundRef}
-        src="/red-game/sounds/item-mystery.mp3"
+        src={`${GAME_CDN}/sounds/item-mystery.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={giantSoundRef}
-        src="/red-game/sounds/peaking-guy.mp3"
+        src={`${GAME_CDN}/sounds/peaking-guy.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={holeSoundRef}
-        src="/red-game/sounds/item-mystery-2.mp3"
+        src={`${GAME_CDN}/sounds/item-mystery-2.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={holeReminderSoundRef}
-        src="/red-game/sounds/item-mystery-5.mp3"
+        src={`${GAME_CDN}/sounds/item-mystery-5.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={answerTwoSoundRef}
-        src="/red-game/sounds/answer-2.mp3"
+        src={`${GAME_CDN}/sounds/answer-2.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={figureSoundRef}
-        src="/red-game/sounds/you.mp3?v=2"
+        src={`${GAME_CDN}/sounds/you.mp3?v=2`}
         preload="auto"
         hidden
       />
       <audio
         ref={plantSoundRef}
-        src="/red-game/sounds/plant-2.mp3"
+        src={`${GAME_CDN}/sounds/plant-2.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={threadSoundRef}
-        src="/red-game/sounds/plant-1.mp3"
+        src={`${GAME_CDN}/sounds/plant-1.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={noteSoundRef}
-        src="/red-game/sounds/note.mp3"
+        src={`${GAME_CDN}/sounds/note.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={stoolSoundRef}
-        src="/red-game/sounds/detection-click-2.mp3"
+        src={`${GAME_CDN}/sounds/detection-click-2.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={safeOpenSoundRef}
-        src="/red-game/sounds/safe-open.mp3"
+        src={`${GAME_CDN}/sounds/safe-open.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={lampOnSoundRef}
-        src="/red-game/sounds/lamp-on.mp3"
+        src={`${GAME_CDN}/sounds/lamp-on.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={lampOffSoundRef}
-        src="/red-game/sounds/lamp-off.mp3"
+        src={`${GAME_CDN}/sounds/lamp-off.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={zapSoundRef}
-        src="/red-game/sounds/zap-1.mp3"
+        src={`${GAME_CDN}/sounds/zap-1.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={wallLightSoundRef}
-        src="/red-game/sounds/zap-2.mp3"
+        src={`${GAME_CDN}/sounds/zap-2.mp3`}
         preload="auto"
         hidden
       />
       <audio
         ref={humRef}
-        src="/red-game/sounds/computer-hum.mp3"
+        src={`${GAME_CDN}/sounds/computer-hum.mp3`}
         preload="auto"
         loop
         hidden
@@ -570,7 +570,7 @@ export default function RedGame({
           ref={(element) => {
             extraSounds.current[id] = element;
           }}
-          src={`/red-game/sounds/${id}.${extension}`}
+          src={`${GAME_CDN}/sounds/${id}.${extension}`}
           preload="auto"
           hidden
         />
@@ -632,7 +632,7 @@ export default function RedGame({
           <button className={styles.play} onClick={startGame} disabled={!ready || moving}>
             <img
               className={styles.playYellow}
-              {...artSources("/images/red-game/buttons/paint-yellow.webp")}
+              {...artSources(`${GAME_CDN}/buttons/paint-yellow.webp`)}
               alt=""
               width={2172}
               height={724}
@@ -640,7 +640,7 @@ export default function RedGame({
             />
             <img
               className={styles.playRed}
-              {...artSources("/images/red-game/buttons/paint-red.webp")}
+              {...artSources(`${GAME_CDN}/buttons/paint-red.webp`)}
               alt=""
               width={2172}
               height={724}
@@ -688,7 +688,7 @@ export default function RedGame({
                 disabled={blocked}
               >
                 <img
-                  {...artSources("/images/red-game/navigation/arrow-left.webp")}
+                  {...artSources(`${GAME_CDN}/navigation/arrow-left.webp`)}
                   alt=""
                   width={1254}
                   height={1254}
@@ -705,7 +705,7 @@ export default function RedGame({
               >
                 <img
                   {...artSources(
-                    "/images/red-game/navigation/arrow-right.webp",
+                    `${GAME_CDN}/navigation/arrow-right.webp`,
                   )}
                   alt=""
                   width={1254}
@@ -722,7 +722,7 @@ export default function RedGame({
                   disabled={blocked}
                 >
                   <img
-                    {...artSources("/images/red-game/navigation/arrow-up.webp")}
+                    {...artSources(`${GAME_CDN}/navigation/arrow-up.webp`)}
                     alt=""
                     width={1254}
                     height={1254}
