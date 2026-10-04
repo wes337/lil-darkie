@@ -6,7 +6,7 @@ import { FONTS, type BlockStyle, type Site, type Theme } from "./schema.ts";
 const BASE_THEME = {
   backgroundColor: "#0a0a0a",
   textColor: "#e4e4e7",
-  accentColor: "#f6c601",
+  accentColor: "#ff1010",
   font: "martian-mono",
   backgroundFocus: "center",
 } satisfies Theme;
