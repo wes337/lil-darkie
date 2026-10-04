@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-page-custom-font */
 import type { ReactNode } from "react";
 import { Martian_Mono } from "next/font/google";
-import Spotify from "@/components/spotify";
 import TopBar from "@/components/top-bar";
 import Nav from "@/components/nav";
 import GoogleAnalytics from "@/components/google-analytics";
@@ -60,7 +59,6 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
         />
       </head>
       <body className={martianMono.className}>
-        <Spotify />
         <TopBar site={site} />
         {children}
         <Nav site={site} />
