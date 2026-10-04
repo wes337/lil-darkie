@@ -404,6 +404,11 @@
     gap: 4px;
   }
 
+  // Tabs inside a form sit on their own row above what they switch.
+  .editor-form .tabs {
+    margin-bottom: 16px;
+  }
+
   // A thin vertical rule between groups of buttons.
   .divider {
     align-self: stretch;
