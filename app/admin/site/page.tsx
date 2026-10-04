@@ -1,16 +1,11 @@
 "use client";
 import { ThemeFields } from "@/components/admin/block-editor";
 import Editor from "@/components/admin/editor";
-import { Field, RowControls, TextField, replaceAt } from "@/components/admin/fields";
+import { TextField } from "@/components/admin/fields";
 import { useRecord } from "@/components/admin/use-record";
 import { PageShell } from "@/components/cms/page-view";
 import styles from "@/styles/cms.module.scss";
-import {
-  DEFAULT_SITE,
-  SOCIAL_PLATFORMS,
-  siteSchema,
-  type Site,
-} from "@/lib/cms/schema";
+import { DEFAULT_SITE, siteSchema, type Site } from "@/lib/cms/schema";
 
 export default function SiteEditor() {
   const record = useRecord<Site>("/api/site", siteSchema, () => DEFAULT_SITE);
@@ -21,49 +16,11 @@ export default function SiteEditor() {
 
   return (
     <Editor
-      title="Site settings"
+      title="Settings"
       record={record}
       form={
         <>
-          <h2>Social links</h2>
-          {site.social.map((social, i) => (
-            <fieldset key={i}>
-              <legend>
-                {social.platform}
-                <RowControls items={site.social} index={i} onChange={(next) => set({ social: next })} />
-              </legend>
-              <Field label="Platform">
-                <select
-                  value={social.platform}
-                  onChange={(event) =>
-                    set({
-                      social: replaceAt(site.social, i, {
-                        ...social,
-                        platform: event.target.value as typeof social.platform,
-                      }),
-                    })
-                  }
-                >
-                  {SOCIAL_PLATFORMS.map((platform) => (
-                    <option key={platform}>{platform}</option>
-                  ))}
-                </select>
-              </Field>
-              <TextField
-                label="URL"
-                value={social.href}
-                onChange={(href) => set({ social: replaceAt(site.social, i, { ...social, href }) })}
-              />
-            </fieldset>
-          ))}
-          <button
-            type="button"
-            onClick={() => set({ social: [...site.social, { platform: "spotify", href: "https://" }] })}
-          >
-            Add social link
-          </button>
-
-          <TextField label="Copyright line" value={site.copyright} onChange={(copyright) => set({ copyright })} />
+          <TextField label="Copyright" value={site.copyright} onChange={(copyright) => set({ copyright })} />
           <ThemeFields theme={site.theme} onChange={(theme) => set({ theme })} />
         </>
       }

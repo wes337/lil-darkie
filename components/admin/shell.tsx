@@ -5,10 +5,11 @@ import { usePathname, useRouter } from "next/navigation";
 const TABS = [
   { href: "/admin/landing", label: "Landing" },
   { href: "/admin/navigation", label: "Navigation" },
+  { href: "/admin/socials", label: "Socials" },
   { href: "/admin/pages", label: "Pages" },
   { href: "/admin/posts", label: "Posts" },
   { href: "/admin/media", label: "Media" },
-  { href: "/admin/site", label: "Site settings" },
+  { href: "/admin/site", label: "Settings" },
 ];
 
 // The bar across the top of every admin screen: one tab per section.
