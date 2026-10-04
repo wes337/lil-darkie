@@ -128,6 +128,21 @@
     }
   }
 
+  // Label on the left, input on the right.
+  .field.inline {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+
+    > span:first-child {
+      flex: none;
+      width: 120px;
+      color: inherit;
+      font-size: inherit;
+      text-transform: capitalize;
+    }
+  }
+
   .check {
     display: flex;
     align-items: center;
