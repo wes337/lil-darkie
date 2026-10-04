@@ -9,33 +9,34 @@ import type { RecordState } from "./use-record";
 type NavLink = Site["nav"][number];
 type LinkField = "nav" | "homeButtons";
 
-// Routes that exist in code, offered next to the CMS pages when picking where
-// a nav link goes.
-const BUILT_IN = [
-  { href: "/", label: "Home (the game)" },
-  { href: "/sampler", label: "Sampler" },
-];
+type Destination = { href: string; label: string };
+
+// Where a link in each list can go: the site's pages plus the routes that
+// exist in code. A landing page button never points back at the landing page.
+function destinationsFor(field: LinkField, pages: Page[]): Destination[] {
+  return [
+    ...(field === "nav" ? [{ href: "/", label: "Home" }] : []),
+    { href: "/sampler", label: "Sampler" },
+    ...pages.map((page) => ({ href: `/${page.slug}`, label: page.title })),
+  ];
+}
 
 // The form for one nav link. The destination is picked from the site's pages,
 // or typed in when it's an outside URL.
 function LinkDialog({
   initial,
-  pages,
+  destinations,
   issues,
   onSave,
   onClose,
 }: {
   initial: NavLink;
-  pages: Page[];
+  destinations: Destination[];
   issues: string[];
   onSave: (link: NavLink) => void;
   onClose: () => void;
 }) {
   const [link, setLink] = useState(initial);
-  const destinations = [
-    ...BUILT_IN,
-    ...pages.map((page) => ({ href: `/${page.slug}`, label: page.title })),
-  ];
   const known = destinations.some((destination) => destination.href === link.href);
 
   return (
@@ -88,6 +89,8 @@ export default function LinkList({
   if (!site) return null;
 
   const links: NavLink[] = site[field] ?? [];
+  const destinations = destinationsFor(field, pages);
+  const blank: NavLink = { label: "", href: destinations[0]?.href ?? "https://" };
   const saveLinks = (next: NavLink[]) => record.save({ ...site, [field]: next });
 
   async function saveLink(link: NavLink) {
@@ -123,8 +126,8 @@ export default function LinkList({
       </p>
       {editing !== undefined && (
         <LinkDialog
-          initial={editing === "new" ? { label: "", href: "/" } : (links[editing] ?? { label: "", href: "/" })}
-          pages={pages}
+          initial={editing === "new" ? blank : (links[editing] ?? blank)}
+          destinations={destinations}
           issues={record.state.issues}
           onSave={saveLink}
           onClose={() => setEditing(undefined)}
