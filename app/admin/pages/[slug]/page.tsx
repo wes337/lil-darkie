@@ -30,26 +30,30 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
       backHref="/admin/pages"
       viewHref={`/${slug}`}
       deletable
-      form={
-        <>
-          <TextField
-            label="Title"
-            value={page.title}
-            onChange={(title) => record.setDoc({ ...page, title })}
-          />
+      tabs={{
+        Content: (
+          <>
+            <TextField
+              label="Title"
+              value={page.title}
+              onChange={(title) => record.setDoc({ ...page, title })}
+            />
+            <BlockEditor blocks={page.blocks} onChange={(blocks) => record.setDoc({ ...page, blocks })} />
+            <datalist id="collections">
+              {collections.map((collection) => (
+                <option key={collection} value={collection} />
+              ))}
+            </datalist>
+          </>
+        ),
+        Theme: (
           <ThemeFields
             theme={page.theme}
             inherited={resolveTheme(site.theme)}
             onChange={(theme) => record.setDoc({ ...page, theme })}
           />
-          <BlockEditor blocks={page.blocks} onChange={(blocks) => record.setDoc({ ...page, blocks })} />
-          <datalist id="collections">
-            {collections.map((collection) => (
-              <option key={collection} value={collection} />
-            ))}
-          </datalist>
-        </>
-      }
+        ),
+      }}
       preview={
         <PageView
           page={page}

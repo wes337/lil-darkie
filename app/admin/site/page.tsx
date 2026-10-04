@@ -19,16 +19,18 @@ export default function SiteEditor() {
     <Editor
       title="Settings"
       record={record}
-      form={
-        <>
-          <TextField label="Copyright" value={site.copyright} onChange={(copyright) => set({ copyright })} />
-          <ThemeFields
-            theme={site.theme}
-            inherited={resolveTheme()}
-            onChange={(theme) => set({ theme })}
-          />
-        </>
-      }
+      tabs={{
+        Edit: (
+          <>
+            <TextField label="Copyright" value={site.copyright} onChange={(copyright) => set({ copyright })} />
+            <ThemeFields
+              theme={site.theme}
+              inherited={resolveTheme()}
+              onChange={(theme) => set({ theme })}
+            />
+          </>
+        ),
+      }}
       preview={
         <PageShell site={site}>
           <h1 className={styles.heading}>Heading</h1>

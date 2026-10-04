@@ -38,55 +38,57 @@ export default function PostEditor({ params }: { params: Promise<{ slug: string 
       backHref="/admin/posts"
       viewHref={post.published ? `/posts/${slug}` : undefined}
       deletable
-      form={
-        <>
-          <OptionalTextField
-            label="Title"
-            value={post.title}
-            onChange={(title) => record.setDoc({ ...post, title })}
-          />
-          <div className="field">
-            <span>Content</span>
-            <RichEditor html={post.body} onChange={(body) => record.setDoc({ ...post, body })} />
-          </div>
-          <TextField
-            label="Author"
-            value={post.author}
-            onChange={(author) => record.setDoc({ ...post, author })}
-          />
-          <Field label="Posted">
-            <input
-              type="datetime-local"
-              value={toLocalInput(post.date)}
-              onChange={(event) => {
-                const posted = new Date(event.target.value);
-                if (!Number.isNaN(posted.getTime())) {
-                  record.setDoc({ ...post, date: posted.toISOString() });
-                }
-              }}
+      tabs={{
+        Edit: (
+          <>
+            <OptionalTextField
+              label="Title"
+              value={post.title}
+              onChange={(title) => record.setDoc({ ...post, title })}
             />
-          </Field>
-          <TextField
-            label="Collection"
-            value={post.collection}
-            list="collections"
-            onChange={(collection) => record.setDoc({ ...post, collection })}
-          />
-          <datalist id="collections">
-            {collections.map((collection) => (
-              <option key={collection} value={collection} />
-            ))}
-          </datalist>
-          <label className="check">
-            <input
-              type="checkbox"
-              checked={post.published}
-              onChange={(event) => record.setDoc({ ...post, published: event.target.checked })}
+            <div className="field">
+              <span>Content</span>
+              <RichEditor html={post.body} onChange={(body) => record.setDoc({ ...post, body })} />
+            </div>
+            <TextField
+              label="Author"
+              value={post.author}
+              onChange={(author) => record.setDoc({ ...post, author })}
             />
-            Published
-          </label>
-        </>
-      }
+            <Field label="Posted">
+              <input
+                type="datetime-local"
+                value={toLocalInput(post.date)}
+                onChange={(event) => {
+                  const posted = new Date(event.target.value);
+                  if (!Number.isNaN(posted.getTime())) {
+                    record.setDoc({ ...post, date: posted.toISOString() });
+                  }
+                }}
+              />
+            </Field>
+            <TextField
+              label="Collection"
+              value={post.collection}
+              list="collections"
+              onChange={(collection) => record.setDoc({ ...post, collection })}
+            />
+            <datalist id="collections">
+              {collections.map((collection) => (
+                <option key={collection} value={collection} />
+              ))}
+            </datalist>
+            <label className="check">
+              <input
+                type="checkbox"
+                checked={post.published}
+                onChange={(event) => record.setDoc({ ...post, published: event.target.checked })}
+              />
+              Published
+            </label>
+          </>
+        ),
+      }}
     />
   );
 }

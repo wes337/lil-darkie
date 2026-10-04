@@ -82,17 +82,16 @@ export function Issues({ issues }: { issues: string[] }) {
   );
 }
 
-const TABS = ["Edit", "JSON", "History"] as const;
-
-// The frame around every editor: title, Save, the Edit / JSON / History tabs
-// on the left and a live preview on the right.
+// The frame around every editor: title, Save, a row of tabs on the left and
+// a live preview on the right. Each editor supplies its own form tabs; JSON
+// and History are added after them.
 export default function Editor<T>({
   title,
   record,
   backHref,
   viewHref,
   deletable = false,
-  form,
+  tabs,
   preview,
 }: {
   title: string;
@@ -102,12 +101,14 @@ export default function Editor<T>({
   // Where the saved record can be seen on the public site.
   viewHref?: string;
   deletable?: boolean;
-  form: ReactNode;
+  // The form, split into named tabs in the order given.
+  tabs: Record<string, ReactNode>;
   // Left out for editors that already show the content as it will look.
   preview?: ReactNode;
 }) {
   const router = useRouter();
-  const [tab, setTab] = useState<(typeof TABS)[number]>("Edit");
+  const names = [...Object.keys(tabs), "JSON", "History"];
+  const [tab, setTab] = useState(names[0]);
   const { state } = record;
 
   async function remove() {
@@ -119,12 +120,28 @@ export default function Editor<T>({
   return (
     <div className="editor">
       <header className="editor-header">
-        {backHref && <Link href={backHref}>← Back</Link>}
+        {backHref && (
+          <Link className="button" href={backHref}>
+            Back
+          </Link>
+        )}
         <h1>{title}</h1>
+        <div className="tabs">
+          {names.map((name) => (
+            <button
+              type="button"
+              key={name}
+              aria-pressed={tab === name}
+              onClick={() => setTab(name)}
+            >
+              {name}
+            </button>
+          ))}
+        </div>
         <span className="spacer" />
         {state.saved && <span className="saved">Saved</span>}
         {viewHref && record.exists && (
-          <a href={viewHref} target="_blank">
+          <a className="button" href={viewHref} target="_blank">
             View
           </a>
         )}
@@ -140,21 +157,9 @@ export default function Editor<T>({
       <Issues issues={state.issues} />
       <div className="editor-body" data-preview={preview !== undefined}>
         <div className="editor-form">
-          <div className="tabs">
-            {TABS.map((name) => (
-              <button
-                type="button"
-                key={name}
-                aria-pressed={tab === name}
-                onClick={() => setTab(name)}
-              >
-                {name}
-              </button>
-            ))}
-          </div>
-          {tab === "Edit" && form}
           {tab === "JSON" && <JsonEditor record={record} />}
-          {tab === "History" && <History record={record} onLoad={() => setTab("Edit")} />}
+          {tab === "History" && <History record={record} onLoad={() => setTab(names[0])} />}
+          {tab !== undefined && tabs[tab]}
         </div>
         {preview !== undefined && <div className="editor-preview">{preview}</div>}
       </div>
