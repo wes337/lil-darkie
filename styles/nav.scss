@@ -147,6 +147,7 @@
       display: flex;
       align-items: center;
       gap: 16px;
+      padding: 8px 0;
       font-size: 18px;
       text-transform: uppercase;
       letter-spacing: 1.5px;
@@ -173,16 +174,9 @@
 
         background-color: $color-red;
 
-        img,
         span {
           transform: scale(1.2);
         }
-      }
-
-      img {
-        width: 24px;
-        height: 48px;
-        object-fit: contain;
       }
     }
   }

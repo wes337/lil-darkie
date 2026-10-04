@@ -102,13 +102,6 @@ export default function Nav({ site }: { site: Site }) {
         <div className="nav-links">
           {site.nav.map(({ label, href }) => (
             <SiteLink key={`${label}-${href}`} href={href}>
-              <Image
-                src={ASSETS.dashIcon}
-                aria-hidden="true"
-                alt=""
-                width={24}
-                height={48}
-              />
               <span>{label}</span>
             </SiteLink>
           ))}
