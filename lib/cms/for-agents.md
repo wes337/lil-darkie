@@ -92,7 +92,7 @@ A post with `"published": false` is a draft. Only the admin can see it.
       "theme": {}
     }
 
-Nav links appear in the menu in this order. Up to 3 can set `topBar` to also show in the desktop header, each with an optional `icon` (gun, skull, grave, knife). Social platforms: spotify, soundcloud, youtube.
+Nav links appear in the menu in this order. Up to 3 can set `topBar` to also show in the desktop header, each with an optional `icon` (gun, skull, grave, knife). Social platforms: spotify, apple, soundcloud, youtube.
 
 `homeButtons` are extra buttons on the home page, shown in order under "Play the Game". Each has a `label` and an `href`.
 

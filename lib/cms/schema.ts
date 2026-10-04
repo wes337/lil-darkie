@@ -11,7 +11,7 @@ export const FONTS = {
 } as const;
 
 export const TOP_BAR_ICONS = ["gun", "skull", "grave", "knife"] as const;
-export const SOCIAL_PLATFORMS = ["spotify", "soundcloud", "youtube"] as const;
+export const SOCIAL_PLATFORMS = ["spotify", "apple", "soundcloud", "youtube"] as const;
 
 // Routes owned by code or by Next.js. A page can't take these slugs.
 export const RESERVED_SLUGS = [

@@ -11,6 +11,7 @@ import "@/styles/nav.scss";
 
 const SOCIAL_ICONS = {
   spotify: ASSETS.spotifyWhiteIcon,
+  apple: ASSETS.appleIcon,
   soundcloud: ASSETS.soundcloudIcon,
   youtube: ASSETS.youtubeIcon,
 };

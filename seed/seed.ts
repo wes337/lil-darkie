@@ -34,6 +34,7 @@ const site: Site = {
   ],
   social: [
     { platform: "spotify", href: "https://open.spotify.com/artist/62F9BiUmjqeXbBztCwiX1U" },
+    { platform: "apple", href: "https://music.apple.com/us/artist/lil-darkie/1411605197" },
     { platform: "soundcloud", href: "https://soundcloud.com/lildvrkie" },
     { platform: "youtube", href: "https://www.youtube.com/channel/UCy1PnulzEixUtsR-w-Pgd4w" },
   ],
