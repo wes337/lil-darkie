@@ -58,6 +58,11 @@
     padding: $space-md;
   }
 
+  // A page with no blocks has no box.
+  &:empty {
+    display: none;
+  }
+
   // A page with a slideshow uses most of the window, with room at the sides.
   &:has(.slideshow) {
     max-width: calc(100vw - 2 * clamp(#{$space-md}, 8vw, 160px));
