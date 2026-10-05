@@ -1,7 +1,9 @@
 "use client";
 import type { ReactNode } from "react";
+import { createPortal } from "react-dom";
 
-// A modal over the admin screen. Clicking outside it closes it.
+// A modal over the admin screen. Clicking outside it closes it. It renders
+// into the body, because a form panel would otherwise trap it inside itself.
 export default function Dialog({
   title,
   onClose,
@@ -13,7 +15,7 @@ export default function Dialog({
   small?: boolean;
   children: ReactNode;
 }) {
-  return (
+  return createPortal(
     <div className="dialog-backdrop" onClick={onClose}>
       <div
         className={`dialog${small ? " small" : ""}`}
@@ -29,6 +31,7 @@ export default function Dialog({
         </div>
         {children}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

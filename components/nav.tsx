@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { ASSETS } from "@/app/assets";
 import useStore from "@/app/store";
 import SiteLink from "@/components/site-link";
+import { LANDING_LAYOUT } from "@/components/landing/layout";
 import { GAME_CDN } from "@/components/red-game/art";
 import type { Site } from "@/lib/cms/schema";
 import "@/styles/nav.scss";
@@ -49,7 +50,7 @@ export default function Nav({ site }: { site: Site }) {
   }, [setScroll, setSticky]);
 
   const gamePlaying = pathname === "/" && gameStarted;
-  const showMenuButton = pathname !== "/" || site.landingLayout === "painting";
+  const showMenuButton = pathname !== "/" || LANDING_LAYOUT === "painting";
 
   return (
     <>
@@ -79,13 +80,17 @@ export default function Nav({ site }: { site: Site }) {
       </button>}
       <div id="site-menu" className={`nav${navOpen ? " open" : ""}`} inert={!navOpen}>
         <div className="nav-header">
-          <Image
-            className="nav-logo"
-            src={ASSETS.logoYellow}
-            alt="Lil Darkie"
-            width={254}
-            height={68}
-          />
+          {site.logo ? (
+            <img className="nav-logo" src={site.logo} alt="Lil Darkie" />
+          ) : (
+            <Image
+              className="nav-logo"
+              src={ASSETS.logoYellow}
+              alt="Lil Darkie"
+              width={254}
+              height={68}
+            />
+          )}
           <div className="social-media-links">
             {site.social.map(({ platform, href }) => (
               <Link key={href} href={href} target="_blank">

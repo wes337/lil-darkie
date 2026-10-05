@@ -243,6 +243,79 @@
       font-size: 12px;
       color: var(--t-text);
     }
+
+    // On wide screens the menu's links sit straight in the bar.
+    .admin-menu {
+      display: contents;
+    }
+
+    .menu-toggle {
+      display: none;
+    }
+
+    // Only the phone list draws the rule above "View site".
+    hr {
+      display: none;
+    }
+
+    // Phones: the bar is the title and a menu button. Opening the menu grows
+    // the bar to fill the screen, with the links in one column under it.
+    @media (max-width: 900px) {
+      .menu-toggle {
+        display: inline-flex;
+        margin-left: auto;
+        font-size: 16px;
+      }
+
+      .admin-menu {
+        display: none;
+      }
+
+      &[data-open="true"] {
+        position: fixed;
+        inset: 0;
+        z-index: 9;
+        margin: 0;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto 1fr;
+
+        .admin-menu {
+          grid-column: 1 / -1;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          min-height: 0;
+          overflow-y: auto;
+          padding-top: 8px;
+
+          // The rule takes the spacer's job here: its auto margins split the
+          // free space evenly above and below it.
+          .spacer {
+            display: none;
+          }
+
+          hr {
+            display: block;
+            width: 100%;
+            margin: auto 0;
+            // A 1px line with 16px of clear space built in on each side, for
+            // when the list leaves no free space to split.
+            box-sizing: content-box;
+            height: 1px;
+            border: 0;
+            border-block: 16px solid transparent;
+            background: var(--line) padding-box;
+          }
+
+          a,
+          button {
+            padding: 14px;
+            font-size: 16px;
+          }
+        }
+      }
+    }
   }
 
   // A list or form screen.

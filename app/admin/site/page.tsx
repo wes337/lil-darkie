@@ -1,7 +1,8 @@
 "use client";
 import { ThemeFields } from "@/components/admin/block-editor";
 import Editor from "@/components/admin/editor";
-import { TextField } from "@/components/admin/fields";
+import { ImageField, TextField } from "@/components/admin/fields";
+import { FontsContext } from "@/components/admin/font-field";
 import { useRecord } from "@/components/admin/use-record";
 import { PageShell } from "@/components/cms/page-view";
 import { resolveTheme } from "@/lib/cms/render";
@@ -16,6 +17,7 @@ export default function SiteEditor() {
   const set = (changes: Partial<Site>) => record.setDoc({ ...site, ...changes });
 
   return (
+    <FontsContext value={{ fonts: site.fonts ?? [], onChange: (fonts) => set({ fonts }) }}>
     <Editor
       title="Settings"
       record={record}
@@ -23,6 +25,7 @@ export default function SiteEditor() {
         Edit: (
           <>
             <TextField label="Copyright" value={site.copyright} onChange={(copyright) => set({ copyright })} />
+            <ImageField label="Logo" value={site.logo} onChange={(logo) => set({ logo })} />
             <ThemeFields
               theme={site.theme}
               inherited={resolveTheme()}
@@ -47,5 +50,6 @@ export default function SiteEditor() {
         </PageShell>
       }
     />
+    </FontsContext>
   );
 }

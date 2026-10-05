@@ -5,13 +5,15 @@ import useStore from "@/app/store";
 import RedGame from "@/components/red-game/red-game";
 import PaintingLanding from "@/components/landing/painting";
 import SimpleLanding from "@/components/landing/simple";
+import { LANDING_LAYOUT } from "@/components/landing/layout";
 import { DEFAULT_LANDING_BUTTONS, type Site } from "@/lib/cms/schema";
 import styles from "@/styles/landing.module.scss";
 
-// Both home layouts share the same game and keep their own editable buttons.
+// Both home layouts share the same game and keep their own buttons.
+// LANDING_LAYOUT picks which one shows.
 export default function Landing({ site }: { site: Site }) {
   const { setNoScroll, setGameStarted, gameStarted } = useStore();
-  const layout = site.landingLayout ?? "simple";
+  const layout = LANDING_LAYOUT;
   // Either exit button remounts the game with fresh state.
   const [gameRun, setGameRun] = useState(0);
 

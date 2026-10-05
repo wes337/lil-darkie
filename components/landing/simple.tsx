@@ -19,7 +19,7 @@ export default function SimpleLanding({
           {buttons.map((button, index) => (
             <li key={`${button.type}-${index}`}>
               {button.type === "link" ? (
-                <SiteLink href={button.href}>{button.label}</SiteLink>
+                <SiteLink href={button.href} newTab={button.newTab}>{button.label}</SiteLink>
               ) : button.type === "game" ? (
                 <button type="button" onClick={onStart} disabled={disabled}>
                   {button.label}

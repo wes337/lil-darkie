@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import {
-  FONTS,
   type Block,
   type ContentBlock,
   type BlockStyle,
@@ -20,9 +19,8 @@ import {
   replaceAt,
 } from "./fields";
 import CollectionField from "./collection-field";
+import { FontField } from "./font-field";
 import { MediaDialog } from "./media";
-
-const FONT_NAMES = Object.keys(FONTS) as (keyof typeof FONTS)[];
 
 type ColorKey =
   | "backgroundColor"
@@ -94,12 +92,7 @@ export function ThemeFields({
         <legend>Text</legend>
         {color("Text color", "textColor")}
         {color("Heading color", "headingColor")}
-        <SelectField
-          label="Font"
-          value={theme.font}
-          options={FONT_NAMES}
-          onChange={(font) => onChange({ ...theme, font })}
-        />
+        <FontField value={theme.font} onChange={(font) => onChange({ ...theme, font })} />
       </fieldset>
       <fieldset>
         <legend>Links</legend>
@@ -245,12 +238,7 @@ function BlockFields({ block, onChange }: { block: Block; onChange: (block: Bloc
               <option value={3}>Small</option>
             </select>
           </Field>
-          <SelectField
-            label="Font"
-            value={block.font}
-            options={FONT_NAMES}
-            onChange={(font) => onChange({ ...block, font })}
-          />
+          <FontField value={block.font} onChange={(font) => onChange({ ...block, font })} />
         </>
       );
     case "text":

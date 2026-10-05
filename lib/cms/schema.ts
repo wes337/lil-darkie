@@ -4,6 +4,7 @@ import { z } from "zod";
 // against it, the editor gets its types from it, and /api/schema publishes it.
 
 export const FONTS = {
+  arial: "Arial, sans-serif",
   "martian-mono": '"Martian Mono", monospace',
   "sf-fedora": '"SF Fedora", sans-serif',
   "sf-fedora-titles": '"SF Fedora Titles Italic", sans-serif',
@@ -37,7 +38,20 @@ const url = z
   .string()
   .regex(/^(\/|https?:\/\/|mailto:)/, "Use a site path like /comics or a full URL");
 
-const font = z.enum(Object.keys(FONTS) as [keyof typeof FONTS]);
+// A font setting: a FONTS key or the name of an uploaded font. The pattern
+// keeps the name safe to write into CSS.
+const font = z
+  .string()
+  .regex(/^[A-Za-z0-9][A-Za-z0-9 -]*$/, "Use letters, numbers, spaces and dashes")
+  .max(40);
+
+// A font file uploaded in the admin. Pages use it by name.
+const uploadedFont = z.strictObject({
+  name: font.refine((name) => !Object.hasOwn(FONTS, name), "This name is taken by a built-in font"),
+  url: z
+    .string()
+    .regex(/^(\/|https:\/\/)[\w.\/-]+\.(woff2?|ttf|otf)$/i, "Use a .woff2, .woff, .ttf or .otf file"),
+});
 
 // Optional overrides every block accepts.
 const blockStyle = z.strictObject({
@@ -171,7 +185,7 @@ const homeButton = link.extend({
 
 // Simple landing entries either navigate to a URL or run a built-in action.
 const landingButton = z.discriminatedUnion("type", [
-  link.extend({ type: z.literal("link") }),
+  link.extend({ type: z.literal("link"), newTab: z.boolean().optional() }),
   z.strictObject({ type: z.literal("game"), label: z.string().min(1) }),
   z.strictObject({ type: z.literal("menu"), label: z.string().min(1) }),
 ]);
@@ -179,8 +193,10 @@ const landingButton = z.discriminatedUnion("type", [
 export const siteSchema = z.strictObject({
   // The menu, in order.
   nav: z.array(link),
-  // Each layout keeps its own buttons so switching doesn't erase either one.
+  // No longer read. The layout is picked in components/landing/layout.ts.
+  // Kept so records saved with it still validate.
   landingLayout: z.enum(["simple", "painting"]).optional(),
+  // The simple layout's list, in order.
   landingButtons: z.array(landingButton).optional(),
   // Extra buttons on the painting layout, under "Play the Game".
   homeButtons: z.array(homeButton).optional(),
@@ -188,6 +204,16 @@ export const siteSchema = z.strictObject({
     z.strictObject({ platform: z.enum(SOCIAL_PLATFORMS), href: z.url() }),
   ),
   copyright: z.string(),
+  // Replaces the built-in logo in the top bar and the menu.
+  logo: url.optional(),
+  // Fonts uploaded in the admin, offered next to the built-in ones.
+  fonts: z
+    .array(uploadedFont)
+    .refine(
+      (fonts) => new Set(fonts.map((item) => item.name)).size === fonts.length,
+      "Font names must be unique",
+    )
+    .optional(),
   // Defaults that every page inherits unless its own theme overrides them.
   theme: themeSchema,
 });
@@ -200,15 +226,21 @@ export type Theme = z.infer<typeof themeSchema>;
 export type Page = z.infer<typeof pageSchema>;
 export type Post = z.infer<typeof postSchema>;
 export type Site = z.infer<typeof siteSchema>;
-export type HomeButton = z.infer<typeof homeButton>;
+export type UploadedFont = z.infer<typeof uploadedFont>;
+export type HomeButton =z.infer<typeof homeButton>;
 export type LandingButton = z.infer<typeof landingButton>;
 
 // Older site records use the new layout and this list until first edited.
 export const DEFAULT_LANDING_BUTTONS: LandingButton[] = [
   { type: "game", label: "red game" },
   { type: "link", label: "shows", href: "/tour" },
-  { type: "link", label: "merchandise", href: "https://smalldarkone.com" },
-  { type: "link", label: "physical music", href: "https://racingthoughtsrecords.com" },
+  { type: "link", label: "merchandise", href: "https://smalldarkone.com", newTab: true },
+  {
+    type: "link",
+    label: "physical music",
+    href: "https://racingthoughtsrecords.com",
+    newTab: true,
+  },
   { type: "menu", label: "more" },
 ];
 

@@ -13,13 +13,20 @@
   -webkit-touch-callout: none;
   &[data-playing="true"] {
     height: var(--game-header-height);
-    img { width: min(42vw, 180px); }
+    img {
+      width: min(42vw, 180px);
+      max-height: calc(var(--game-header-height) - 8px);
+    }
   }
 
+  // The max-height keeps a tall custom logo inside the header, with a gap
+  // above and below it. The gap is smaller in the compact bars.
   img {
     display: block;
     width: clamp(140px, 23svh, 200px);
     height: auto;
+    max-height: calc(clamp(4rem, 10svh, 6.5rem) - 16px);
+    object-fit: contain;
     -webkit-user-select: none;
     user-select: none;
     -webkit-user-drag: none;
@@ -61,7 +68,13 @@
       display: block;
       width: 100%;
       height: auto;
+      max-height: calc(clamp(4rem, 10svh, 6.5rem) - 16px);
+      object-fit: contain;
       pointer-events: none;
+    }
+
+    &.sticky img {
+      max-height: 52px;
     }
 
     .logo-yellow {

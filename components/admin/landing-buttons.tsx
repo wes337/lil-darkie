@@ -59,8 +59,7 @@ function ButtonDialog({
             <select
               value={known ? button.href : "custom"}
               onChange={(event) => setButton({
-                type: "link",
-                label: button.label,
+                ...button,
                 href: event.target.value === "custom" ? "https://" : event.target.value,
               })}
             >
@@ -74,9 +73,17 @@ function ButtonDialog({
             <TextField
               label="URL"
               value={button.href}
-              onChange={(href) => setButton({ type: "link", label: button.label, href })}
+              onChange={(href) => setButton({ ...button, href })}
             />
           )}
+          <label className="check">
+            <input
+              type="checkbox"
+              checked={button.newTab ?? false}
+              onChange={(event) => setButton({ ...button, newTab: event.target.checked || undefined })}
+            />
+            Opens in new tab
+          </label>
         </>
       )}
       <Issues issues={issues} />

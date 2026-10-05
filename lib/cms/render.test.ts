@@ -1,6 +1,13 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { upcomingShows } from "./render.ts";
+import { fontFamily, upcomingShows } from "./render.ts";
+
+test("a font setting resolves to a built-in stack or an uploaded font's name", () => {
+  assert.equal(fontFamily("arial"), "Arial, sans-serif");
+  assert.equal(fontFamily("Comic Neue"), '"Comic Neue", sans-serif');
+  // Not a built-in, even though every object has one.
+  assert.equal(fontFamily("toString"), '"toString", sans-serif');
+});
 
 const show = (date: string) => ({ date, city: "City", venue: "Venue" });
 const noon = (date: string) => new Date(`${date}T12:00:00Z`).getTime();

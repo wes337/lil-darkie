@@ -1,9 +1,11 @@
 import type { ReactNode } from "react";
 import { marked } from "marked";
-import { FONTS, type ContentBlock, type Page, type Post, type Site, type Theme } from "@/lib/cms/schema";
+import { type ContentBlock, type Page, type Post, type Site, type Theme } from "@/lib/cms/schema";
 import {
   blockStyleCss,
   embedSource,
+  fontFaces,
+  fontFamily,
   formatPosted,
   formatShowDate,
   upcomingShows,
@@ -38,7 +40,7 @@ function BlockContent({ block, posts }: { block: ContentBlock; posts: Post[] }) 
       return (
         <Tag
           className={styles.heading}
-          style={block.font && { fontFamily: FONTS[block.font] }}
+          style={block.font ? { fontFamily: fontFamily(block.font) } : undefined}
         >
           {block.text}
         </Tag>
@@ -134,7 +136,8 @@ function BlockSection({ block, posts }: { block: ContentBlock; posts: Post[] }) 
   );
 }
 
-// The themed wrapper shared by pages and single posts.
+// The themed wrapper shared by pages and single posts. It also loads the
+// site's uploaded fonts.
 export function PageShell({
   site,
   theme,
@@ -144,8 +147,10 @@ export function PageShell({
   theme?: Theme;
   children: ReactNode;
 }) {
+  const faces = fontFaces(site.fonts);
   return (
     <main className={styles.page} style={themeStyle(site, theme)}>
+      {faces && <style dangerouslySetInnerHTML={{ __html: faces }} />}
       <div className={styles.content}>{children}</div>
       <footer className={styles.footer}>{site.copyright}</footer>
     </main>

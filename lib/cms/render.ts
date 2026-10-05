@@ -1,5 +1,12 @@
 import type { CSSProperties } from "react";
-import { FONTS, type BlockStyle, type Show, type Site, type Theme } from "./schema.ts";
+import {
+  FONTS,
+  type BlockStyle,
+  type Show,
+  type Site,
+  type Theme,
+  type UploadedFont,
+} from "./schema.ts";
 
 // Pure helpers shared by the public pages and the editor preview.
 
@@ -16,6 +23,25 @@ export const BASE_THEME = {
   buttonTextColor: "#ff1010",
   font: "martian-mono",
 } satisfies Theme;
+
+const BUILT_IN_FONTS = new Map<string, string>(Object.entries(FONTS));
+
+// The CSS font stack for a font setting: a built-in key or the name of an
+// uploaded font.
+export function fontFamily(font: string): string {
+  return BUILT_IN_FONTS.get(font) ?? `"${font}", sans-serif`;
+}
+
+// The @font-face rules that load the site's uploaded fonts. The schema keeps
+// names and URLs free of anything that could break out of the CSS.
+export function fontFaces(fonts: UploadedFont[] = []): string {
+  return fonts
+    .map(
+      ({ name, url }) =>
+        `@font-face{font-family:"${name}";src:url("${url}");font-display:swap}`,
+    )
+    .join("");
+}
 
 // Page theme over site theme over the built-in defaults. Unset and empty
 // values fall through to the layer below.
@@ -43,7 +69,7 @@ export function themeStyle(site: Site, theme: Theme = {}): CSSProperties {
     "--cms-text": merged.textColor,
     "--cms-link": merged.linkColor,
     "--cms-link-hover": merged.linkHoverColor,
-    "--cms-font": FONTS[merged.font],
+    "--cms-font": fontFamily(merged.font),
     ...optional(
       "--cms-panel-image",
       chosen.panelColor && `linear-gradient(${chosen.panelColor}, ${chosen.panelColor})`,

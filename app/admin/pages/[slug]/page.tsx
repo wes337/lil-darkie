@@ -3,10 +3,18 @@ import { use, useState } from "react";
 import BlockEditor, { ThemeFields } from "@/components/admin/block-editor";
 import Editor from "@/components/admin/editor";
 import { TextField } from "@/components/admin/fields";
+import { FontsContext } from "@/components/admin/font-field";
 import { useFetched, useRecord } from "@/components/admin/use-record";
 import PageView from "@/components/cms/page-view";
 import { resolveTheme } from "@/lib/cms/render";
-import { DEFAULT_SITE, pageSchema, type Page, type Post, type Site } from "@/lib/cms/schema";
+import {
+  DEFAULT_SITE,
+  pageSchema,
+  type Page,
+  type Post,
+  type Site,
+  type UploadedFont,
+} from "@/lib/cms/schema";
 
 // The two halves of a page's form, picked under its title.
 const SECTIONS = ["Content", "Theme"] as const;
@@ -20,12 +28,17 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
     theme: {},
     blocks: [],
   }));
-  const site = useFetched<Site>("/api/site") ?? DEFAULT_SITE;
+  const savedSite = useFetched<Site>("/api/site") ?? DEFAULT_SITE;
+  // Set once a font is uploaded or removed here, so the form and the preview
+  // show the new list without reloading the site record.
+  const [fonts, setFonts] = useState<UploadedFont[]>();
+  const site = fonts ? { ...savedSite, fonts } : savedSite;
   const posts = useFetched<Post[]>("/api/posts") ?? [];
   const page = record.doc;
   if (!page) return <p>Loading...</p>;
 
   return (
+    <FontsContext value={{ fonts: site.fonts ?? [], onChange: setFonts }}>
     <Editor
       title={page.title}
       record={record}
@@ -74,5 +87,6 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
         />
       }
     />
+    </FontsContext>
   );
 }

@@ -43,6 +43,19 @@ test("landing actions and link destinations are validated separately", () => {
   }
 });
 
+test("uploaded fonts need a unique, CSS-safe name and a font file URL", () => {
+  const comic = { name: "Comic Neue", url: "https://cdn.example/cms/abc-comic-neue.woff2" };
+  const withFonts = (fonts: unknown[]) => siteSchema.safeParse({ ...DEFAULT_SITE, fonts }).success;
+  assert.equal(withFonts([comic, { name: "Other", url: "/fonts/other.ttf" }]), true);
+  assert.equal(withFonts([comic, comic]), false);
+  assert.equal(withFonts([{ ...comic, name: "arial" }]), false);
+  assert.equal(withFonts([{ ...comic, name: 'x"; color: red' }]), false);
+  assert.equal(withFonts([{ ...comic, url: "https://cdn.example/a.png" }]), false);
+  assert.equal(withFonts([{ ...comic, url: 'https://cdn.example/a").woff2' }]), false);
+  // A page can name an uploaded font.
+  assert.equal(pageSchema.safeParse({ ...page, theme: { font: comic.name } }).success, true);
+});
+
 test("rejects reserved and malformed page slugs", () => {
   for (const slug of ["admin", "api", "sampler", "posts", "Has Spaces", "a/b", ""]) {
     assert.equal(pageSchema.safeParse({ ...page, slug }).success, false, slug);

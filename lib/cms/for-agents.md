@@ -4,7 +4,7 @@ This file is for AI agents asked to change the site's content. The record schema
 
 The site is made of three kinds of records, stored as JSON.
 
-- **site**: one record. Nav links, social links, the copyright line and the default theme.
+- **site**: one record. Nav links, social links, the copyright line, the logo and the default theme.
 - **page**: one per URL. `/comics` is the page with slug `comics`. A page has a title, a theme and an ordered list of blocks.
 - **post**: a blog entry. Posts belong to a `collection` (for example `writings`). A page shows a collection by including a `posts` block. Each published post also has its own URL at `/posts/<slug>`.
 
@@ -54,7 +54,7 @@ Theme fields are all optional. Anything left out falls back to the site theme. C
 | `linkColor`, `linkHoverColor` | Links |
 | `buttonColor`, `buttonTextColor` | Button blocks |
 
-Fonts: `martian-mono`, `sf-fedora`, `sf-fedora-titles`, `simple-letter`.
+Fonts: `arial`, `martian-mono`, `sf-fedora`, `sf-fedora-titles`, `simple-letter`, or the `name` of a font in the site record's `fonts` list.
 
 ## Blocks
 
@@ -102,12 +102,11 @@ A post with `"published": false` is a draft. Only the admin can see it.
         { "label": "Comics", "href": "/comics" }
       ],
       "homeButtons": [{ "label": "Tour tickets", "href": "https://example.com/tickets" }],
-      "landingLayout": "simple",
       "landingButtons": [
         { "type": "game", "label": "red game" },
         { "type": "link", "label": "shows", "href": "/tour" },
-        { "type": "link", "label": "merchandise", "href": "https://smalldarkone.com" },
-        { "type": "link", "label": "physical music", "href": "https://racingthoughtsrecords.com" },
+        { "type": "link", "label": "merchandise", "href": "https://smalldarkone.com", "newTab": true },
+        { "type": "link", "label": "physical music", "href": "https://racingthoughtsrecords.com", "newTab": true },
         { "type": "menu", "label": "more" }
       ],
       "social": [{ "platform": "spotify", "href": "https://open.spotify.com/artist/..." }],
@@ -117,11 +116,15 @@ A post with `"published": false` is a draft. Only the admin can see it.
 
 Nav links appear in the menu in this order. Social platforms: spotify, apple, soundcloud, youtube.
 
-`landingLayout` selects `simple` or `painting`. It defaults to `simple` for older records. Admin → Landing switches layouts and edits their buttons. Each layout keeps its own list when switched.
+`logo` is optional. Set it to an image path or URL to replace the built-in logo in the top bar and the menu.
 
-`landingButtons` controls the simple layout's list, in order. Every entry needs a `label` and a `type`. `link` also requires `href`; `game` starts the game; `menu` opens the existing menu. Omit the list to use the five defaults above, or save an empty array to show no buttons. This layout uses white Arial text on black, with red hover text.
+`fonts` is optional. It lists uploaded fonts as `{ "name": "Comic Neue", "url": "https://.../comic-neue.woff2" }`. Upload the file through `/api/media` first. Names use letters, numbers, spaces and dashes, must be unique, and can't match a built-in font. Files are `.woff2`, `.woff`, `.ttf` or `.otf`. A page or heading uses one by putting its `name` in `font`. Removing a font leaves pages that name it on the browser's fallback font.
 
-`homeButtons` are extra buttons on the preserved painting layout, shown in order under "Play the Game". Each has a `label` and an `href`, and optionally a `textColor`, a `backgroundColor` (a hex color or `"transparent"`) and a `size` (small, medium or large).
+The landing page has two layouts, `simple` and `painting`. `LANDING_LAYOUT` in `components/landing/layout.ts` picks one, and it is set to `simple`. The record's `landingLayout` field is no longer read. Admin → Landing edits the simple layout's buttons.
+
+`landingButtons` controls the simple layout's list, in order. Every entry needs a `label` and a `type`. `link` also requires `href` and accepts `"newTab": true` to open in a new tab; `game` starts the game; `menu` opens the existing menu. Omit the list to use the five defaults above, or save an empty array to show no buttons. This layout uses white Arial text on black, with red hover text.
+
+`homeButtons` are extra buttons on the painting layout, editable only through the API. They are shown in order under "Play the Game". Each has a `label` and an `href`, and optionally a `textColor`, a `backgroundColor` (a hex color or `"transparent"`) and a `size` (small, medium or large).
 
 The original painting layout is in `components/landing/painting.tsx` and `styles/painting-landing.module.scss`. Its animated scene remains in `components/red-game/landing-scene.tsx` and `styles/landing-scene.module.scss`.
 

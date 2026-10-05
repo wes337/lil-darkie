@@ -59,7 +59,7 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
         />
       </head>
       <body className={martianMono.className}>
-        <TopBar />
+        <TopBar logo={site.logo} />
         {children}
         <Nav site={site} />
         <GoogleAnalytics />

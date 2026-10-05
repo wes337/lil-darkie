@@ -4,7 +4,7 @@ import type { MediaFile } from "@/lib/cms/bunny";
 import Dialog from "./dialog";
 
 // Vercel rejects request bodies over 4.5 MB before they reach the upload route.
-const MAX_UPLOAD_BYTES = 4 * 1024 * 1024;
+export const MAX_UPLOAD_BYTES = 4 * 1024 * 1024;
 
 export const isImage = (url: string) => /\.(png|jpe?g|webp|gif|svg|avif)$/i.test(url);
 
