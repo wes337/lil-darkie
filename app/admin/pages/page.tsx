@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { useFetched } from "@/components/admin/use-record";
 import type { Page } from "@/lib/cms/schema";
 import Icon from "@/components/admin/icon";
@@ -15,9 +14,9 @@ export default function PagesView() {
           Pages
         </h1>
         <span className="spacer" />
-        <Link className="button primary" href="/admin/pages/new">
+        <a className="button primary" href="/admin/pages/new">
           New page
-        </Link>
+        </a>
       </header>
       {pages && pages.length > 0 && (
         <ul className="list">
@@ -25,7 +24,7 @@ export default function PagesView() {
             .sort((a, b) => a.title.localeCompare(b.title))
             .map((page) => (
               <li key={page.slug}>
-                <Link href={`/admin/pages/${page.slug}`}>{page.title}</Link>
+                <a href={`/admin/pages/${page.slug}`}>{page.title}</a>
                 <small>/{page.slug}</small>
               </li>
             ))}

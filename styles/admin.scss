@@ -147,6 +147,30 @@
     }
   }
 
+  // Keep each block's controls together and separate sibling blocks.
+  .blocks > .page-block {
+    margin-bottom: 20px;
+
+    &[data-type="box"] > .block-style {
+      margin: 0 0 16px;
+    }
+  }
+
+  .block-style[open] > summary {
+    margin-bottom: 12px;
+  }
+
+  // Stack again when the editor column is too narrow for both fields.
+  .heading-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+    column-gap: 12px;
+
+    select {
+      min-width: 0;
+    }
+  }
+
   .field {
     display: flex;
     flex-direction: column;
@@ -305,6 +329,20 @@
       display: none;
     }
 
+    // Small desktops: the three links on the right drop their text, so the
+    // bar stays on one line. The narrowest ones drop the title as well.
+    @media (min-width: 901px) and (max-width: 1300px) {
+      .label {
+        display: none;
+      }
+    }
+
+    @media (min-width: 901px) and (max-width: 1060px) {
+      strong {
+        display: none;
+      }
+    }
+
     // Phones: the bar is the title and a menu button. Opening the menu grows
     // the bar to fill the screen, with the links in one column under it.
     @media (max-width: 900px) {
@@ -441,6 +479,42 @@
     h1 {
       margin: 0 8px;
       font-size: 16px;
+    }
+  }
+
+  .editor-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    max-width: 100%;
+
+    h1 {
+      min-width: 0;
+      margin: 0;
+      overflow-wrap: anywhere;
+    }
+
+    > .icon,
+    button {
+      flex: none;
+    }
+
+    form {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      min-width: 0;
+      width: min(300px, calc(100vw - 130px));
+    }
+
+    input {
+      min-width: 0;
+    }
+
+    button.bare {
+      min-width: 32px;
+      min-height: 32px;
     }
   }
 

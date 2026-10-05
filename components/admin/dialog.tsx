@@ -37,6 +37,33 @@ export default function Dialog({
   );
 }
 
+// A yes-or-no question in a small modal. `children` is the question.
+export function Confirm({
+  title,
+  onYes,
+  onNo,
+  children,
+}: {
+  title: string;
+  onYes: () => void;
+  onNo: () => void;
+  children: ReactNode;
+}) {
+  return (
+    <Dialog title={title} onClose={onNo} small>
+      <p>{children}</p>
+      <div className="row fill">
+        <button type="button" className="primary" onClick={onYes}>
+          Yes
+        </button>
+        <button type="button" className="dismiss" onClick={onNo}>
+          No
+        </button>
+      </div>
+    </Dialog>
+  );
+}
+
 // Asks before something is deleted. `name` is what the question calls it.
 export function ConfirmDelete({
   name,
@@ -48,18 +75,8 @@ export function ConfirmDelete({
   onNo: () => void;
 }) {
   return (
-    <Dialog title="Delete" onClose={onNo} small>
-      <p>
-        Are you sure you want to delete <strong>{name}</strong>?
-      </p>
-      <div className="row fill">
-        <button type="button" className="primary" onClick={onYes}>
-          Yes
-        </button>
-        <button type="button" className="dismiss" onClick={onNo}>
-          No
-        </button>
-      </div>
-    </Dialog>
+    <Confirm title="Delete" onYes={onYes} onNo={onNo}>
+      Are you sure you want to delete <strong>{name}</strong>?
+    </Confirm>
   );
 }

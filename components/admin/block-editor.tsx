@@ -113,13 +113,15 @@ export function ThemeFields({
 function StyleFields({
   style = {},
   onChange,
+  label,
 }: {
   style: BlockStyle | undefined;
   onChange: (style: BlockStyle) => void;
+  label: string;
 }) {
   return (
-    <details>
-      <summary>Style</summary>
+    <details className="block-style">
+      <summary>{label}</summary>
       <SelectField
         label="Align"
         value={style.align}
@@ -238,20 +240,22 @@ function BlockFields({ block, onChange }: { block: Block; onChange: (block: Bloc
     case "heading":
       return (
         <>
-          <TextField label="Text" value={block.text} onChange={(text) => onChange({ ...block, text })} />
-          <Field label="Size">
-            <select
-              value={block.level}
-              onChange={(event) =>
-                onChange({ ...block, level: Number(event.target.value) as typeof block.level })
-              }
-            >
-              <option value={1}>Large</option>
-              <option value={2}>Medium</option>
-              <option value={3}>Small</option>
-            </select>
-          </Field>
-          <FontField value={block.font} onChange={(font) => onChange({ ...block, font })} />
+          <TextField label="Heading text" value={block.text} onChange={(text) => onChange({ ...block, text })} />
+          <div className="heading-options">
+            <Field label="Size">
+              <select
+                value={block.level}
+                onChange={(event) =>
+                  onChange({ ...block, level: Number(event.target.value) as typeof block.level })
+                }
+              >
+                <option value={1}>Large</option>
+                <option value={2}>Medium</option>
+                <option value={3}>Small</option>
+              </select>
+            </Field>
+            <FontField value={block.font} onChange={(font) => onChange({ ...block, font })} />
+          </div>
         </>
       );
     case "text":
@@ -347,20 +351,29 @@ export default function BlockEditor({
 
   return (
     <div className="blocks">
-      {blocks.map((block, i) => (
-        <fieldset key={block.id}>
-          <legend>
-            {block.type}
-            <RowControls items={blocks} index={i} onChange={onChange} name={`this ${block.type} block`} />
-          </legend>
-          <BlockFields block={block} onChange={(next) => onChange(replaceAt(blocks, i, next))} />
+      {blocks.map((block, i) => {
+        const label = block.type === "html" ? "HTML" : block.type.charAt(0).toUpperCase() + block.type.slice(1);
+        const styleFields = (
           <StyleFields
+            label={`${label} style`}
             style={block.style}
             onChange={(style) => onChange(replaceAt(blocks, i, { ...block, style }))}
           />
-        </fieldset>
-      ))}
-      <Field label={nested ? "Add to box" : "Add a block"}>
+        );
+        return (
+          <fieldset className="page-block" data-type={block.type} key={block.id}>
+            <legend>
+              {label}
+              <RowControls items={blocks} index={i} onChange={onChange} name={`this ${block.type} block`} />
+            </legend>
+            {/* Keep box-wide settings outside the list of child settings. */}
+            {block.type === "box" && styleFields}
+            <BlockFields block={block} onChange={(next) => onChange(replaceAt(blocks, i, next))} />
+            {block.type !== "box" && styleFields}
+          </fieldset>
+        );
+      })}
+      <Field label={nested ? "Add a block to this box" : "Add a block to the page"}>
         <select
           value=""
           onChange={(event) => {

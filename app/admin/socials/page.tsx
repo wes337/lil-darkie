@@ -1,5 +1,5 @@
 "use client";
-import { Issues } from "@/components/admin/editor";
+import { Issues, SaveStatus } from "@/components/admin/editor";
 import { useRecord } from "@/components/admin/use-record";
 import { DEFAULT_SITE, SOCIAL_PLATFORMS, siteSchema, type Site } from "@/lib/cms/schema";
 import Icon from "@/components/admin/icon";
@@ -27,7 +27,7 @@ export default function SocialsView() {
     <main className="view">
       <header className="row">
         <h1>
-          <Icon name="share" size={32} />
+          <Icon name="users_3" size={32} />
           Socials
         </h1>
       </header>
@@ -52,7 +52,7 @@ export default function SocialsView() {
           <Icon name="diskette" />
           Save
         </button>
-        {record.state.saved && <span className="saved">Saved</span>}
+        <SaveStatus dirty={record.dirty} saving={record.state.saving} saved={record.state.saved} />
       </div>
     </main>
   );

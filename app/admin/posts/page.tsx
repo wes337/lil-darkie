@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { useFetched } from "@/components/admin/use-record";
 import { formatPosted } from "@/lib/cms/render";
 import type { Post } from "@/lib/cms/schema";
@@ -20,9 +19,9 @@ export default function PostsView() {
           Posts
         </h1>
         <span className="spacer" />
-        <Link className="button primary" href="/admin/posts/new">
+        <a className="button primary" href="/admin/posts/new">
           New post
-        </Link>
+        </a>
       </header>
       {collections.map(([collection, group = []]) => (
         <section key={collection}>
@@ -32,9 +31,9 @@ export default function PostsView() {
               .sort((a, b) => b.date.localeCompare(a.date))
               .map((post) => (
                 <li key={post.slug}>
-                  <Link href={`/admin/posts/${post.slug}`}>
+                  <a href={`/admin/posts/${post.slug}`}>
                     {post.title ?? formatPosted(post.date)}
-                  </Link>
+                  </a>
                   {post.title && <small>{formatPosted(post.date)}</small>}
                   <small>{post.author}</small>
                   {!post.published && <span className="badge">draft</span>}

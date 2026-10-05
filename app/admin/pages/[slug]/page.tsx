@@ -2,7 +2,6 @@
 import { use, useState } from "react";
 import BlockEditor, { ThemeFields } from "@/components/admin/block-editor";
 import Editor from "@/components/admin/editor";
-import { TextField } from "@/components/admin/fields";
 import { FontsContext } from "@/components/admin/font-field";
 import { useFetched, useRecord } from "@/components/admin/use-record";
 import PageView from "@/components/cms/page-view";
@@ -41,6 +40,7 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
     <FontsContext value={{ fonts: site.fonts ?? [], onChange: setFonts }}>
     <Editor
       title={page.title}
+      onTitleChange={(title) => record.setDoc({ ...page, title })}
       icon="page"
       record={record}
       backHref="/admin/pages"
@@ -49,11 +49,6 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
       tabs={{
         Edit: (
           <>
-            <TextField
-              label="Title"
-              value={page.title}
-              onChange={(title) => record.setDoc({ ...page, title })}
-            />
             <div className="tabs">
               {SECTIONS.map((name) => (
                 <button

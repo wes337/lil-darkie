@@ -1,7 +1,5 @@
 "use client";
 import { useState, type FormEvent, type ReactNode } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Issues } from "./editor";
 import { TextField } from "./fields";
 import Icon from "./icon";
@@ -29,7 +27,6 @@ export default function CreateForm<T>({
   build: (title: string, slug: string) => T;
   children?: ReactNode;
 }) {
-  const router = useRouter();
   const [title, setTitle] = useState("");
   const [typedSlug, setTypedSlug] = useState<string>();
   const [issues, setIssues] = useState<string[]>([]);
@@ -49,14 +46,14 @@ export default function CreateForm<T>({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(build(title, slug)),
     });
-    if (response.ok) return router.push(`/admin/${kind}/${slug}`);
+    if (response.ok) return window.location.assign(`/admin/${kind}/${slug}`);
     const body = await response.json().catch(() => ({}));
     setIssues(body.issues ?? [body.error ?? "Couldn't create it."]);
   }
 
   return (
     <main className="view narrow">
-      <Link href={`/admin/${kind}`}>← Back</Link>
+      <a href={`/admin/${kind}`}>← Back</a>
       <h1>
         <Icon name={kind === "pages" ? "page" : "newspaper"} size={32} />
         {heading}
@@ -75,9 +72,9 @@ export default function CreateForm<T>({
         <Issues issues={issues} />
         <div className="row">
           <button className="primary">Create</button>
-          <Link className="button dismiss" href={`/admin/${kind}`}>
+          <a className="button dismiss" href={`/admin/${kind}`}>
             Cancel
-          </Link>
+          </a>
         </div>
       </form>
     </main>
