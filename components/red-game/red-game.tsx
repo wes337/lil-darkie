@@ -23,16 +23,17 @@ import { GAME_CDN, artSources } from "./art";
 import { dialogImage } from "./final-art";
 import type { TopicId } from "./game-model";
 import FinalImage from "./final-image";
-import { MUSIC_VOLUME, SOUND_EFFECT_VOLUME, playSound } from "./audio";
+import { MUSIC_DUCKED_VOLUME, MUSIC_VOLUME, SOUND_EFFECT_VOLUME, playSound } from "./audio";
 import styles from "@/styles/red-game.module.scss";
 
 const ROOM_FADE_MS = 240;
 const START_FADE_OUT_MS = 450;
 const START_HOLD_MS = 100;
 const START_FADE_IN_MS = 650;
+// In playing order: escape-room-2 opens, then the two alternate.
 const MUSIC_TRACKS = [
-  `${GAME_CDN}/music/escape-room-1-4f8ace32b060.mp3`,
   `${GAME_CDN}/music/escape-room-2-7a61ff94c3cd.mp3`,
+  `${GAME_CDN}/music/escape-room-1-4f8ace32b060.mp3`,
 ] as const;
 const NAVIGATION_TARGETS = [
   "desk",
@@ -388,9 +389,16 @@ export default function RedGame({
       return;
     }
     if (game.sequence?.type === "repair") {
-      setRoomIndex(3);
-      setInspectionHistory([]);
+      // Fade to black and back like a move between rooms: the mended bear
+      // gives way to the sink wall while the curtain is dark.
       focusAfterMove.current = rightArrowRef.current;
+      transitionActionRef.current = () => {
+        setRoomIndex(3);
+        setInspectionHistory([]);
+        game.finishSequence();
+      };
+      setTransition("out");
+      return;
     }
     game.finishSequence();
   }
@@ -457,7 +465,7 @@ export default function RedGame({
         src={MUSIC_TRACKS[0]}
         preload="metadata"
         onTimeUpdate={(event) => {
-          // Short sessions only need track 1; let the browser load track 2 after a minute.
+          // Short sessions only need the opening track; let the browser load the other after a minute.
           if (!preloadSecondTrack && event.currentTarget.currentTime >= 60) {
             setPreloadSecondTrack(true);
           }
@@ -466,7 +474,10 @@ export default function RedGame({
           musicTrack.current = musicTrack.current === 0 ? 1 : 0;
           // Reuse the audio element unlocked by the start click on mobile Safari.
           event.currentTarget.src = MUSIC_TRACKS[musicTrack.current];
-          if (!document.hidden) playSound(event.currentTarget, MUSIC_VOLUME);
+          // Stay dipped if the next track starts under the found-an-item sound.
+          const itemSound = itemMysterySoundRef.current;
+          const volume = itemSound && !itemSound.paused ? MUSIC_DUCKED_VOLUME : MUSIC_VOLUME;
+          if (!document.hidden) playSound(event.currentTarget, volume);
         }}
         hidden
       />
@@ -522,6 +533,14 @@ export default function RedGame({
         ref={itemMysterySoundRef}
         src={`${GAME_CDN}/sounds/item-mystery.mp3`}
         preload="auto"
+        // The music dips while the found-an-item sound plays. Reaching the
+        // end fires `pause` too, so one handler brings the music back.
+        onPlay={() => {
+          if (musicRef.current) musicRef.current.volume = MUSIC_DUCKED_VOLUME;
+        }}
+        onPause={() => {
+          if (musicRef.current) musicRef.current.volume = MUSIC_VOLUME;
+        }}
         hidden
       />
       <audio

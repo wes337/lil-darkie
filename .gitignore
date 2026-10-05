@@ -39,4 +39,4 @@ raw_assets/
 
 # Local one-off tooling (art grading, etc.)
 /scripts/
-/.impeccable/
+.impeccable

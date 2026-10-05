@@ -1,4 +1,6 @@
 export const MUSIC_VOLUME = 0.45;
+// The music's level while the found-an-item sound plays over it.
+export const MUSIC_DUCKED_VOLUME = 0.12;
 export const SOUND_EFFECT_VOLUME = 0.5;
 
 export function playSound(
