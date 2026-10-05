@@ -96,6 +96,14 @@ test("a box groups other blocks but not another box", () => {
   assert.equal(withBox([{ id: "inner", type: "box", blocks: [text] }]), false);
 });
 
+test("slideshow images are bare URLs or URLs with a caption", () => {
+  const withImages = (images: unknown[]) =>
+    pageSchema.safeParse({ ...page, blocks: [{ id: "a", type: "slideshow", images }] }).success;
+  assert.equal(withImages(["/a.png", { src: "/b.png", caption: "Backstage" }, { src: "/c.png" }]), true);
+  assert.equal(withImages([{ caption: "No image" }]), false);
+  assert.equal(withImages([{ src: "javascript:alert(1)", caption: "Bad" }]), false);
+});
+
 test("tour shows need a real date, a city and a venue", () => {
   const show = { date: "2026-10-17", city: "San Francisco, CA", venue: "Neck of the Woods" };
   const withShows = (shows: unknown[]) =>

@@ -117,6 +117,18 @@
     @include panel;
   }
 
+  // A panel inside a panel is much lighter, so it stands out from its
+  // parent. A third level goes dark again to stand out from that.
+  fieldset fieldset {
+    background: #2e2e2e;
+    border-color: rgba(255, 255, 255, 0.22);
+
+    fieldset {
+      background: var(--panel);
+      border-color: var(--line);
+    }
+  }
+
   legend {
     display: flex;
     align-items: center;

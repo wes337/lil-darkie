@@ -4,6 +4,7 @@ import {
   type BlockStyle,
   type Show,
   type Site,
+  type Slide,
   type Theme,
   type UploadedFont,
 } from "./schema.ts";
@@ -95,6 +96,11 @@ export function blockStyleCss(style: BlockStyle = {}): CSSProperties {
       backgroundImage: `url("${style.backgroundImage}")`,
     }),
   };
+}
+
+// A slideshow image in one shape, whichever way it was saved.
+export function slideParts(slide: Slide): { src: string; caption?: string } {
+  return typeof slide === "string" ? { src: slide } : slide;
 }
 
 // Turns a normal Spotify, SoundCloud or YouTube link into its player URL.

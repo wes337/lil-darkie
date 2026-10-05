@@ -65,7 +65,7 @@ Every block needs a `type` and an `id` that is unique within the page.
 | heading | `text`, `level` (1, 2 or 3), optional `font` |
 | text | `markdown` |
 | image | `src`, optional `alt`, `caption`, `href` |
-| slideshow | `images` (a list of image URLs) |
+| slideshow | `images`, a list where each entry is an image URL or `{ "src": "...", "caption": "..." }`. The caption shows under the image |
 | embed | `url` (a normal Spotify, SoundCloud or YouTube link), optional `height` |
 | button | `label`, `href` |
 | spacer | `size` (sm, md or lg) |

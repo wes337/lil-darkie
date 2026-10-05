@@ -376,6 +376,11 @@ h3.heading {
   // Sideways drags are swipes; up and down still scrolls the page.
   touch-action: pan-y;
 
+  // The caption line takes its 30px out of the stage.
+  .slideshow[data-captioned="true"] & {
+    height: calc(100svh - 440px);
+  }
+
   img {
     flex: 1;
     min-width: 0;
@@ -414,6 +419,16 @@ h3.heading {
       display: none;
     }
   }
+}
+
+// One line under the stage. It keeps its height for images without a
+// caption, so the thumbnails don't jump between images.
+.slideshow-caption {
+  margin: 0;
+  min-height: 20px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .slideshow-thumbs {

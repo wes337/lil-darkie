@@ -73,6 +73,10 @@ const showSchema = z.strictObject({
   soldOut: z.boolean().optional(),
 });
 
+// A slideshow image: a bare URL, or a URL with a caption shown under it.
+// Slideshows saved before captions existed hold bare URLs.
+const slide = z.union([url, z.strictObject({ src: url, caption: z.string().optional() })]);
+
 const contentBlocks = [
   z.strictObject({
     ...base,
@@ -90,7 +94,7 @@ const contentBlocks = [
     caption: z.string().optional(),
     href: url.optional(),
   }),
-  z.strictObject({ ...base, type: z.literal("slideshow"), images: z.array(url) }),
+  z.strictObject({ ...base, type: z.literal("slideshow"), images: z.array(slide) }),
   // A Spotify, SoundCloud or YouTube link. The site turns it into a player.
   z.strictObject({
     ...base,
@@ -226,6 +230,7 @@ export const siteSchema = z.strictObject({
 export type Block = z.infer<typeof blockSchema>;
 export type ContentBlock = z.infer<typeof contentBlockSchema>;
 export type Show = z.infer<typeof showSchema>;
+export type Slide = z.infer<typeof slide>;
 export type BlockStyle = z.infer<typeof blockStyle>;
 export type Theme = z.infer<typeof themeSchema>;
 export type Page = z.infer<typeof pageSchema>;

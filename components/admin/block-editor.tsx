@@ -5,9 +5,10 @@ import {
   type ContentBlock,
   type BlockStyle,
   type Show,
+  type Slide,
   type Theme,
 } from "@/lib/cms/schema";
-import type { resolveTheme } from "@/lib/cms/render";
+import { slideParts, type resolveTheme } from "@/lib/cms/render";
 import {
   ColorField,
   Field,
@@ -144,26 +145,35 @@ function StyleFields({
   );
 }
 
+// The images of a slideshow block, each with an optional caption. An image
+// is saved as a bare URL until it has a caption.
 function SlideshowImages({
   images,
   onChange,
 }: {
-  images: string[];
-  onChange: (images: string[]) => void;
+  images: Slide[];
+  onChange: (images: Slide[]) => void;
 }) {
   const [picking, setPicking] = useState(false);
   return (
     <>
-      {images.map((image, i) => (
-        <div className="row" key={i}>
-          <ImageField
-            label={`Image ${i + 1}`}
-            value={image}
-            onChange={(value) => onChange(replaceAt(images, i, value ?? ""))}
-          />
-          <RowControls items={images} index={i} onChange={onChange} name={`image ${i + 1}`} />
-        </div>
-      ))}
+      {images.map((image, i) => {
+        const { src, caption } = slideParts(image);
+        const set = (nextSrc: string, nextCaption: string | undefined) =>
+          onChange(
+            replaceAt(images, i, nextCaption ? { src: nextSrc, caption: nextCaption } : nextSrc),
+          );
+        return (
+          <fieldset key={i}>
+            <legend>
+              Image {i + 1}
+              <RowControls items={images} index={i} onChange={onChange} name={`image ${i + 1}`} />
+            </legend>
+            <ImageField label="Image" value={src} onChange={(value) => set(value ?? "", caption)} />
+            <OptionalTextField label="Caption" value={caption} onChange={(value) => set(src, value)} />
+          </fieldset>
+        );
+      })}
       <button type="button" onClick={() => setPicking(true)}>
         <Icon name="plus" />
         Add image

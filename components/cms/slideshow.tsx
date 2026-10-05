@@ -1,13 +1,18 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { slideParts } from "@/lib/cms/render";
+import type { Slide } from "@/lib/cms/schema";
 import styles from "@/styles/cms.module.scss";
 
 // A swipe has to travel this far sideways to change the image.
 const SWIPE_PX = 40;
 
 // One large image and a strip of thumbnails. Change images with the arrow
-// buttons, by swiping on a touch screen, or by picking a thumbnail.
-export default function Slideshow({ images }: { images: string[] }) {
+// buttons, by swiping on a touch screen, or by picking a thumbnail. When any
+// image has a caption, a line under the large image shows the current one.
+export default function Slideshow({ images: slides }: { images: Slide[] }) {
+  const images = slides.map(slideParts);
+  const captioned = images.some((image) => image.caption);
   const [selected, setSelected] = useState(0);
   const thumbs = useRef<HTMLDivElement>(null);
   const touchStart = useRef<number>(null);
@@ -28,7 +33,7 @@ export default function Slideshow({ images }: { images: string[] }) {
   if (images.length === 0) return null;
 
   return (
-    <div className={styles.slideshow}>
+    <div className={styles.slideshow} data-captioned={captioned}>
       <div
         className={styles["slideshow-main"]}
         onTouchStart={(event) => {
@@ -47,23 +52,24 @@ export default function Slideshow({ images }: { images: string[] }) {
             ‹
           </button>
         )}
-        <img src={images[current]} alt="" draggable={false} />
+        <img src={images[current]?.src} alt={images[current]?.caption ?? ""} draggable={false} />
         {images.length > 1 && (
           <button aria-label="Next image" onClick={() => step(1)}>
             ›
           </button>
         )}
       </div>
+      {captioned && <p className={styles["slideshow-caption"]}>{images[current]?.caption}</p>}
       {images.length > 1 && (
         <div className={styles["slideshow-thumbs"]} ref={thumbs}>
           {images.map((image, i) => (
             <button
-              key={`${image}-${i}`}
+              key={`${image.src}-${i}`}
               aria-label={`Image ${i + 1}`}
               aria-current={i === current}
               onClick={() => setSelected(i)}
             >
-              <img src={image} alt="" loading="lazy" />
+              <img src={image.src} alt="" loading="lazy" />
             </button>
           ))}
         </div>
