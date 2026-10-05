@@ -20,7 +20,11 @@
     color: var(--t-accent);
   }
 
+  // A screen's title, with its section's 32px icon in front.
   h1:not(.editor-preview *) {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin: 0;
     font-size: 20px;
   }
@@ -61,6 +65,7 @@
     font-size: 13px;
     white-space: nowrap;
     @include btn;
+    gap: 6px;
     padding: 6px 10px;
     color: var(--t-text);
 
@@ -81,6 +86,21 @@
     // Close and Cancel: the plain button with amber text.
     &.dismiss {
       color: var(--t-alt-text);
+    }
+
+    // Just the icon, with no button face around it.
+    &.bare {
+      padding: 2px;
+      background: none;
+      border: 0;
+      box-shadow: none;
+      filter: none;
+
+      &:hover:not(:disabled),
+      &:focus-visible {
+        background: none;
+        filter: brightness(1.5);
+      }
     }
 
     // The selected one of a set of toggles.
@@ -157,6 +177,11 @@
     gap: 8px;
   }
 
+  // A row whose buttons share its full width.
+  .row.fill > * {
+    flex: 1;
+  }
+
   .row-controls {
     display: flex;
     gap: 4px;
@@ -168,6 +193,14 @@
 
   .spacer {
     flex: 1;
+  }
+
+  // An icon beside a label, with the same hard-edged shadow as the text on
+  // filled buttons. No width or height here: icons show at their file's own
+  // size and are never scaled.
+  .icon {
+    flex: none;
+    filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.6));
   }
 
   .thumb {
@@ -230,6 +263,7 @@
     a {
       font-size: 12px;
       @include btn;
+      gap: 6px;
       color: var(--t-text);
 
       &[aria-current="page"] {
@@ -240,6 +274,7 @@
 
     // Plain buttons in the bar match the tabs.
     button {
+      gap: 6px;
       font-size: 12px;
       color: var(--t-text);
     }
@@ -348,6 +383,7 @@
   a.button {
     font-size: 13px;
     @include btn;
+    gap: 6px;
     padding: 6px 10px;
     color: var(--t-text);
 
@@ -552,6 +588,11 @@
     > .row {
       justify-content: space-between;
       margin-bottom: 12px;
+
+      // A closing row of buttons leaves only the dialog's own padding below.
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
 
     &.small {

@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useFetched } from "@/components/admin/use-record";
 import type { Page } from "@/lib/cms/schema";
+import Icon from "@/components/admin/icon";
 
 export default function PagesView() {
   const pages = useFetched<Page[]>("/api/pages");
@@ -9,7 +10,10 @@ export default function PagesView() {
   return (
     <main className="view">
       <header className="row">
-        <h1>Pages</h1>
+        <h1>
+          <Icon name="page" size={32} />
+          Pages
+        </h1>
         <span className="spacer" />
         <Link className="button primary" href="/admin/pages/new">
           New page

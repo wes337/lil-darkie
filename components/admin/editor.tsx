@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import type { z } from "zod";
 import { describeIssues } from "@/lib/cms/schema";
 import type { Version } from "@/lib/cms/store";
+import Dialog, { ConfirmDelete } from "./dialog";
+import Icon from "./icon";
 import { useFetched, type RecordState } from "./use-record";
 
 // A text box holding the record as JSON, for pasting to and from an AI
@@ -82,11 +84,12 @@ export function Issues({ issues }: { issues: string[] }) {
   );
 }
 
-// The frame around every editor: title, Save, a row of tabs on the left and
-// a live preview on the right. Each editor supplies its own form tabs; JSON
-// and History are added after them.
+// The frame around every editor: title, Save, the form on the left and a
+// live preview on the right. Each editor supplies its own form tabs, shown
+// as toggles when there is more than one. JSON and History open in dialogs.
 export default function Editor<T>({
   title,
+  icon,
   record,
   backHref,
   viewHref,
@@ -95,6 +98,8 @@ export default function Editor<T>({
   preview,
 }: {
   title: string;
+  // The FatCow icon of the section this record belongs to.
+  icon: string;
   record: RecordState<T>;
   // The list this record belongs to. Omitted for the site settings.
   backHref?: string;
@@ -107,12 +112,13 @@ export default function Editor<T>({
   preview?: ReactNode;
 }) {
   const router = useRouter();
-  const names = [...Object.keys(tabs), "JSON", "History"];
+  const names = Object.keys(tabs);
   const [tab, setTab] = useState(names[0]);
+  const [dialog, setDialog] = useState<"JSON" | "History">();
+  const [deleting, setDeleting] = useState(false);
   const { state } = record;
 
   async function remove() {
-    if (!confirm(`Delete "${title}"? This takes it off the site.`)) return;
     await fetch(record.path, { method: "DELETE" });
     router.push(backHref ?? "/admin");
   }
@@ -125,45 +131,65 @@ export default function Editor<T>({
             Back
           </Link>
         )}
-        <h1>{title}</h1>
+        <h1>
+          <Icon name={icon} size={32} />
+          {title}
+        </h1>
         <span className="spacer" />
         {state.saved && <span className="saved">Saved</span>}
         <div className="tabs">
-          {names.map((name) => (
-            <button
-              type="button"
-              key={name}
-              aria-pressed={tab === name}
-              onClick={() => setTab(name)}
-            >
-              {name}
-            </button>
-          ))}
+          {names.length > 1 &&
+            names.map((name) => (
+              <button
+                type="button"
+                key={name}
+                aria-pressed={tab === name}
+                onClick={() => setTab(name)}
+              >
+                {name}
+              </button>
+            ))}
+          <button type="button" onClick={() => setDialog("JSON")}>
+            JSON
+          </button>
+          <button type="button" onClick={() => setDialog("History")}>
+            History
+          </button>
         </div>
         <span className="divider" />
         {viewHref && record.exists && (
           <a className="button" href={viewHref} target="_blank">
+            <Icon name="world_go" />
             View
           </a>
         )}
         {deletable && record.exists && (
-          <button type="button" className="danger" onClick={remove}>
+          <button type="button" className="danger" onClick={() => setDeleting(true)}>
             Delete
           </button>
         )}
         <button type="button" className="primary" disabled={state.saving} onClick={() => record.save()}>
+          <Icon name="diskette" />
           {state.saving ? "Saving..." : "Save"}
         </button>
       </header>
       <Issues issues={state.issues} />
       <div className="editor-body" data-preview={preview !== undefined}>
-        <div className="editor-form">
-          {tab === "JSON" && <JsonEditor record={record} />}
-          {tab === "History" && <History record={record} onLoad={() => setTab(names[0])} />}
-          {tab !== undefined && tabs[tab]}
-        </div>
+        <div className="editor-form">{tab !== undefined && tabs[tab]}</div>
         {preview !== undefined && <div className="editor-preview">{preview}</div>}
       </div>
+      {deleting && (
+        <ConfirmDelete name={title} onYes={remove} onNo={() => setDeleting(false)} />
+      )}
+      {dialog && (
+        <Dialog title={dialog} onClose={() => setDialog(undefined)} small={dialog === "History"}>
+          {dialog === "JSON" ? (
+            <JsonEditor record={record} />
+          ) : (
+            <History record={record} onLoad={() => setDialog(undefined)} />
+          )}
+        </Dialog>
+      )}
     </div>
   );
 }

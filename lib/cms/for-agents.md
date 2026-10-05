@@ -118,6 +118,8 @@ Nav links appear in the menu in this order. Social platforms: spotify, apple, so
 
 `logo` is optional. Set it to an image path or URL to replace the built-in logo in the top bar and the menu.
 
+`icon` is optional. Set it to a square PNG, ICO or SVG to replace the favicon on the site and the admin. It is also used as the home screen icon on phones.
+
 `fonts` is optional. It lists uploaded fonts as `{ "name": "Comic Neue", "url": "https://.../comic-neue.woff2" }`. Upload the file through `/api/media` first. Names use letters, numbers, spaces and dashes, must be unique, and can't match a built-in font. Files are `.woff2`, `.woff`, `.ttf` or `.otf`. A page or heading uses one by putting its `name` in `font`. Removing a font leaves pages that name it on the browser's fallback font.
 
 The landing page has two layouts, `simple` and `painting`. `LANDING_LAYOUT` in `components/landing/layout.ts` picks one, and it is set to `simple`. The record's `landingLayout` field is no longer read. Admin → Landing edits the simple layout's buttons.

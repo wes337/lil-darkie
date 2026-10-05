@@ -8,6 +8,7 @@ import {
 } from "@/lib/cms/schema";
 import Dialog from "./dialog";
 import { Issues } from "./editor";
+import Icon from "./icon";
 import { Field, MoveButtons, RemoveButton, TextField, replaceAt } from "./fields";
 import type { RecordState } from "./use-record";
 
@@ -88,7 +89,10 @@ function ButtonDialog({
       )}
       <Issues issues={issues} />
       <div className="row">
-        <button type="button" className="primary" onClick={() => onSave(button)}>Save</button>
+        <button type="button" className="primary" onClick={() => onSave(button)}>
+          <Icon name="diskette" />
+          Save
+        </button>
         <button type="button" className="dismiss" onClick={onClose}>Cancel</button>
       </div>
     </Dialog>
@@ -135,14 +139,21 @@ export default function LandingButtons({
               <small>{button.type === "link" ? button.href : button.type === "game" ? "Start the red game" : "Open the menu"}</small>
               <span className="spacer" />
               <span className="row-controls">
-                <button type="button" onClick={() => setEditing(i)}>Edit</button>
-                <RemoveButton items={buttons} index={i} onChange={saveButtons} />
+                <button type="button" className="bare" onClick={() => setEditing(i)} aria-label="Edit">
+                  <Icon name="pencil" />
+                </button>
+                <RemoveButton items={buttons} index={i} onChange={saveButtons} name={button.label} />
               </span>
             </div>
           ))}
         </div>
       )}
-      <p><button type="button" onClick={() => setEditing("new")}>Add button</button></p>
+      <p>
+        <button type="button" onClick={() => setEditing("new")}>
+          <Icon name="plus" />
+          Add button
+        </button>
+      </p>
       {editing !== undefined && (
         <ButtonDialog
           initial={editing === "new" ? blank : (buttons[editing] ?? blank)}

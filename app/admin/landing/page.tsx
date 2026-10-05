@@ -1,5 +1,6 @@
 "use client";
 import { Issues } from "@/components/admin/editor";
+import Icon from "@/components/admin/icon";
 import LandingButtons from "@/components/admin/landing-buttons";
 import { useFetched, useRecord } from "@/components/admin/use-record";
 import { DEFAULT_SITE, siteSchema, type Page, type Site } from "@/lib/cms/schema";
@@ -12,10 +13,16 @@ export default function LandingView() {
   return (
     <main className="view">
       <header className="row">
-        <h1>Landing</h1>
+        <h1>
+          <Icon name="house" size={32} />
+          Landing
+        </h1>
         <span className="spacer" />
         {record.state.saved && <span className="saved">Saved</span>}
-        <a className="button" href="/" target="_blank" rel="noreferrer">View</a>
+        <a className="button" href="/" target="_blank" rel="noreferrer">
+          <Icon name="world_go" />
+          View
+        </a>
       </header>
       <Issues issues={record.state.issues} />
       <LandingButtons record={record} pages={pages} />

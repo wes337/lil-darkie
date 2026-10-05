@@ -1,15 +1,16 @@
 /* eslint-disable @next/next/no-page-custom-font */
 import type { ReactNode } from "react";
+import type { Metadata } from "next";
 import { Martian_Mono } from "next/font/google";
 import TopBar from "@/components/top-bar";
 import Nav from "@/components/nav";
 import GoogleAnalytics from "@/components/google-analytics";
-import { getSite } from "@/lib/cms/content";
+import { getSite, siteIcons } from "@/lib/cms/content";
 import "@/styles/globals.scss";
 
 const martianMono = Martian_Mono({ subsets: ["latin"] });
 
-export const metadata = {
+const METADATA: Metadata = {
   // Preview deploys serve share images from their own URL; production isn't guaranteed to have them yet.
   metadataBase: new URL(
     process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL
@@ -38,6 +39,10 @@ export const metadata = {
     images: ["/images/social/lil-darkie-red-logo.png"],
   },
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  return { ...METADATA, icons: await siteIcons() };
+}
 
 // The public site: the game, the sampler and every CMS page. The nav and top
 // bar are drawn from the editable site record.

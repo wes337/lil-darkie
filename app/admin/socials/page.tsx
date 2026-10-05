@@ -2,6 +2,7 @@
 import { Issues } from "@/components/admin/editor";
 import { useRecord } from "@/components/admin/use-record";
 import { DEFAULT_SITE, SOCIAL_PLATFORMS, siteSchema, type Site } from "@/lib/cms/schema";
+import Icon from "@/components/admin/icon";
 
 // One URL box per social platform. A platform with no URL isn't shown on the
 // site, so the saved list only holds the filled-in ones.
@@ -25,7 +26,10 @@ export default function SocialsView() {
   return (
     <main className="view">
       <header className="row">
-        <h1>Socials</h1>
+        <h1>
+          <Icon name="share" size={32} />
+          Socials
+        </h1>
       </header>
       {SOCIAL_PLATFORMS.map((platform) => (
         <label className="field inline" key={platform}>
@@ -45,6 +49,7 @@ export default function SocialsView() {
           disabled={record.state.saving}
           onClick={() => record.save()}
         >
+          <Icon name="diskette" />
           Save
         </button>
         {record.state.saved && <span className="saved">Saved</span>}

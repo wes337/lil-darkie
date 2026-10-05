@@ -6,7 +6,7 @@ import Dialog from "./dialog";
 // Vercel rejects request bodies over 4.5 MB before they reach the upload route.
 export const MAX_UPLOAD_BYTES = 4 * 1024 * 1024;
 
-export const isImage = (url: string) => /\.(png|jpe?g|webp|gif|svg|avif)$/i.test(url);
+export const isImage = (url: string) => /\.(png|jpe?g|webp|gif|svg|avif|ico)$/i.test(url);
 
 // The upload button and the grid of everything uploaded so far. With `onPick`
 // a click chooses a file; without it a click copies the file's URL.

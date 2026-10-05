@@ -1,5 +1,6 @@
 "use client";
 import { useState, type FormEvent } from "react";
+import Icon from "@/components/admin/icon";
 
 export default function PasswordView() {
   const [fields, setFields] = useState({ current: "", next: "", confirm: "" });
@@ -39,7 +40,10 @@ export default function PasswordView() {
   return (
     <main className="view narrow">
       <header className="row">
-        <h1>Password</h1>
+        <h1>
+          <Icon name="key" size={32} />
+          Password
+        </h1>
       </header>
       <form onSubmit={submit}>
         {input("current", "Old password", "current-password")}

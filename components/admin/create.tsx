@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Issues } from "./editor";
 import { TextField } from "./fields";
+import Icon from "./icon";
 
 export const slugify = (text: string) =>
   text
@@ -56,7 +57,10 @@ export default function CreateForm<T>({
   return (
     <main className="view narrow">
       <Link href={`/admin/${kind}`}>← Back</Link>
-      <h1>{heading}</h1>
+      <h1>
+        <Icon name={kind === "pages" ? "page" : "newspaper"} size={32} />
+        {heading}
+      </h1>
       <form onSubmit={submit}>
         <TextField label={titleLabel} value={title} onChange={setTitle} />
         <TextField

@@ -1,5 +1,7 @@
 "use client";
 import { useState, type ReactNode } from "react";
+import { ConfirmDelete } from "./dialog";
+import Icon from "./icon";
 import { MediaDialog, isImage } from "./media";
 
 // Form inputs for the editors. Optional values use `undefined` for "not set",
@@ -128,21 +130,27 @@ export function SelectField<T extends string>({
 export function ImageField({
   label,
   value,
+  fallback,
   onChange,
 }: {
   label: string;
   value: string | undefined;
+  // The image in use while nothing is set. Shown in the thumbnail and as the
+  // placeholder.
+  fallback?: string;
   onChange: (value: string | undefined) => void;
 }) {
   const [picking, setPicking] = useState(false);
+  const shown = value ?? fallback;
   return (
     <>
       <Field label={label}>
         <span className="row">
-          {value && isImage(value) && <img className="thumb" src={value} alt="" />}
+          {shown && isImage(shown) && <img className="thumb" src={shown} alt="" />}
           <input
             type="text"
             value={value ?? ""}
+            placeholder={fallback}
             onChange={(event) => onChange(orUndefined(event.target.value))}
           />
           <button type="button" onClick={() => setPicking(true)}>
@@ -177,7 +185,7 @@ export function MoveButtons<T>({ items, index, onChange }: RowProps<T>) {
   return (
     <>
       <button type="button" disabled={index === 0} onClick={() => move(index - 1)} aria-label="Move up">
-        ↑
+        <Icon name="bullet_arrow_up" />
       </button>
       <button
         type="button"
@@ -185,26 +193,44 @@ export function MoveButtons<T>({ items, index, onChange }: RowProps<T>) {
         onClick={() => move(index + 1)}
         aria-label="Move down"
       >
-        ↓
+        <Icon name="bullet_arrow_down" />
       </button>
     </>
   );
 }
 
-export function RemoveButton<T>({ items, index, onChange }: RowProps<T>) {
+// A bare cross that asks before deleting. `name` is what the question calls
+// the thing being deleted.
+export function DeleteButton({ name, onDelete }: { name: string; onDelete: () => void }) {
+  const [confirming, setConfirming] = useState(false);
   return (
-    <button
-      type="button"
-      onClick={() => onChange(items.filter((_, i) => i !== index))}
-      aria-label="Remove"
-    >
-      ✕
-    </button>
+    <>
+      <button type="button" className="bare" onClick={() => setConfirming(true)} aria-label="Remove">
+        <Icon name="cross" />
+      </button>
+      {confirming && (
+        <ConfirmDelete
+          name={name}
+          onNo={() => setConfirming(false)}
+          onYes={() => {
+            setConfirming(false);
+            onDelete();
+          }}
+        />
+      )}
+    </>
+  );
+}
+
+// The delete button for one row of an ordered list.
+export function RemoveButton<T>({ items, index, onChange, name }: RowProps<T> & { name: string }) {
+  return (
+    <DeleteButton name={name} onDelete={() => onChange(items.filter((_, i) => i !== index))} />
   );
 }
 
 // Up, down and remove buttons together.
-export function RowControls<T>(props: RowProps<T>) {
+export function RowControls<T>(props: RowProps<T> & { name: string }) {
   return (
     <span className="row-controls">
       <MoveButtons {...props} />

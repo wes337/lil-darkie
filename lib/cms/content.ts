@@ -1,4 +1,5 @@
 import { unstable_cache } from "next/cache";
+import { DEFAULT_ICON } from "./schema.ts";
 import { store } from "./store.ts";
 
 // Cached reads for the public site. Visitors hit this cache, not Redis.
@@ -8,7 +9,15 @@ const cached = { tags: [CMS_TAG] };
 
 export const getSite = unstable_cache(() => store.getSite(), ["cms-site"], cached);
 
-export const getPage = unstable_cache(
+// The browser tab icon for the site and the admin: the one set in Settings,
+// or the built-in favicon. A custom one also serves as the home screen icon
+// on phones.
+export async function siteIcons() {
+  const { icon } = await getSite();
+  return icon ? { icon, apple: icon } : { icon: DEFAULT_ICON };
+}
+
+export const getPage =unstable_cache(
   (slug: string) => store.get("page", slug),
   ["cms-page"],
   cached,

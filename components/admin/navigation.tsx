@@ -12,6 +12,7 @@ import {
   TextField,
   replaceAt,
 } from "./fields";
+import Icon from "./icon";
 import type { RecordState } from "./use-record";
 
 // Landing buttons are nav links with a few extra, optional looks. One form
@@ -106,6 +107,7 @@ function LinkDialog({
       <Issues issues={issues} />
       <div className="row">
         <button type="button" className="primary" onClick={() => onSave(link)}>
+          <Icon name="diskette" />
           Save
         </button>
         <button type="button" className="dismiss" onClick={onClose}>
@@ -157,10 +159,10 @@ export default function LinkList({
               <small>{link.href}</small>
               <span className="spacer" />
               <span className="row-controls">
-                <button type="button" onClick={() => setEditing(i)}>
-                  Edit
+                <button type="button" className="bare" onClick={() => setEditing(i)} aria-label="Edit">
+                  <Icon name="pencil" />
                 </button>
-                <RemoveButton items={links} index={i} onChange={saveLinks} />
+                <RemoveButton items={links} index={i} onChange={saveLinks} name={link.label} />
               </span>
             </div>
           ))}
@@ -168,6 +170,7 @@ export default function LinkList({
       )}
       <p>
         <button type="button" onClick={() => setEditing("new")}>
+          <Icon name="plus" />
           {field === "nav" ? "Add link" : "Add button"}
         </button>
       </p>

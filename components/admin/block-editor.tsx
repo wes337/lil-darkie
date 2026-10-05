@@ -20,6 +20,7 @@ import {
 } from "./fields";
 import CollectionField from "./collection-field";
 import { FontField } from "./font-field";
+import Icon from "./icon";
 import { MediaDialog } from "./media";
 
 type ColorKey =
@@ -160,10 +161,11 @@ function SlideshowImages({
             value={image}
             onChange={(value) => onChange(replaceAt(images, i, value ?? ""))}
           />
-          <RowControls items={images} index={i} onChange={onChange} />
+          <RowControls items={images} index={i} onChange={onChange} name={`image ${i + 1}`} />
         </div>
       ))}
       <button type="button" onClick={() => setPicking(true)}>
+        <Icon name="plus" />
         Add image
       </button>
       {picking && (
@@ -192,7 +194,7 @@ function Shows({ shows, onChange }: { shows: Show[]; onChange: (shows: Show[]) =
           <fieldset key={i}>
             <legend>
               {show.city || "Show"}
-              <RowControls items={shows} index={i} onChange={onChange} />
+              <RowControls items={shows} index={i} onChange={onChange} name={show.city || "this show"} />
             </legend>
             <Field label="Date">
               <input type="date" value={show.date} onChange={(event) => set({ date: event.target.value })} />
@@ -213,6 +215,7 @@ function Shows({ shows, onChange }: { shows: Show[]; onChange: (shows: Show[]) =
         );
       })}
       <button type="button" onClick={() => onChange([...shows, { date: today, city: "", venue: "" }])}>
+        <Icon name="plus" />
         Add show
       </button>
     </>
@@ -338,7 +341,7 @@ export default function BlockEditor({
         <fieldset key={block.id}>
           <legend>
             {block.type}
-            <RowControls items={blocks} index={i} onChange={onChange} />
+            <RowControls items={blocks} index={i} onChange={onChange} name={`this ${block.type} block`} />
           </legend>
           <BlockFields block={block} onChange={(next) => onChange(replaceAt(blocks, i, next))} />
           <StyleFields

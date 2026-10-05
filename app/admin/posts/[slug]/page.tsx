@@ -32,6 +32,7 @@ export default function PostEditor({ params }: { params: Promise<{ slug: string 
   return (
     <Editor
       title={post.title ?? slug}
+      icon="newspaper"
       record={record}
       backHref="/admin/posts"
       viewHref={post.published ? `/posts/${slug}` : undefined}

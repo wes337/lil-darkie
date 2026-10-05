@@ -160,6 +160,9 @@ export const pageSchema = z.strictObject({
 
 export const DEFAULT_AUTHOR = "Lil Darkie";
 
+// The favicon in use until the site record sets its own `icon`.
+export const DEFAULT_ICON = "/favicon.ico";
+
 export const postSchema = z.strictObject({
   slug,
   title: z.string().optional(),
@@ -206,6 +209,8 @@ export const siteSchema = z.strictObject({
   copyright: z.string(),
   // Replaces the built-in logo in the top bar and the menu.
   logo: url.optional(),
+  // Replaces the built-in favicon in the browser tab.
+  icon: url.optional(),
   // Fonts uploaded in the admin, offered next to the built-in ones.
   fonts: z
     .array(uploadedFont)

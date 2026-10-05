@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from "react";
 import type { MediaFile } from "@/lib/cms/bunny";
 import { FONTS, type Site, type UploadedFont } from "@/lib/cms/schema";
 import Dialog from "./dialog";
-import { Field, TextField } from "./fields";
+import { DeleteButton, Field, TextField } from "./fields";
 import { MAX_UPLOAD_BYTES } from "./media";
 
 // The site's uploaded fonts, for every font dropdown under an editor. The
@@ -114,13 +114,10 @@ function FontsDialog({ onClose }: { onClose: () => void }) {
             <div key={font.name}>
               <strong>{font.name}</strong>
               <span className="spacer" />
-              <button
-                type="button"
-                aria-label="Remove"
-                onClick={() => apply((current) => current.filter((item) => item.name !== font.name))}
-              >
-                ✕
-              </button>
+              <DeleteButton
+                name={font.name}
+                onDelete={() => apply((current) => current.filter((item) => item.name !== font.name))}
+              />
             </div>
           ))}
         </div>

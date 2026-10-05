@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useFetched } from "@/components/admin/use-record";
 import { formatPosted } from "@/lib/cms/render";
 import type { Post } from "@/lib/cms/schema";
+import Icon from "@/components/admin/icon";
 
 // Posts under a heading per collection, newest first within each.
 export default function PostsView() {
@@ -14,7 +15,10 @@ export default function PostsView() {
   return (
     <main className="view">
       <header className="row">
-        <h1>Posts</h1>
+        <h1>
+          <Icon name="newspaper" size={32} />
+          Posts
+        </h1>
         <span className="spacer" />
         <Link className="button primary" href="/admin/posts/new">
           New post

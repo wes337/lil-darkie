@@ -41,6 +41,7 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
     <FontsContext value={{ fonts: site.fonts ?? [], onChange: setFonts }}>
     <Editor
       title={page.title}
+      icon="page"
       record={record}
       backHref="/admin/pages"
       viewHref={`/${slug}`}
