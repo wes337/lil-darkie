@@ -23,7 +23,7 @@ export function Prop({
     >
       <picture>
         {name === "wisp" && <source media="(prefers-reduced-motion: reduce)" srcSet={`${FINAL_ART}wisp-still.webp`} />}
-        <img src={image.src} alt="" width={image.width} height={image.height} draggable={false} />
+        <img src={`${FINAL_ART}${name}.webp`} alt="" width={image.width} height={image.height} draggable={false} />
       </picture>
     </span>
   );

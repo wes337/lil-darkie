@@ -1,4 +1,3 @@
-@import "./wesware.scss";
 .game {
   position: relative;
   --frame-width: clamp(10px, 1.6vmin, 14px);
@@ -110,118 +109,6 @@
   }
 }
 
-.start {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  width: max-content;
-  max-width: calc(100% - 32px);
-
-  p {
-    color: #fff;
-    max-width: 28rem;
-    font-size: 12px;
-  }
-}
-
-.play {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: clamp(310px, 38vw, 420px);
-  max-width: 100%;
-  aspect-ratio: 3.7;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: #fff;
-  font-family: inherit;
-  font-size: clamp(24px, 2.5vw, 32px);
-  font-weight: 700;
-  text-transform: uppercase;
-  text-shadow: 2px 2px 0 #000;
-  line-height: 1.1;
-  filter: drop-shadow(3px 4px 2px #08080880);
-  cursor: pointer;
-
-  @media (min-width: 701px) {
-    width: clamp(420px, 44vw, 640px);
-    font-size: clamp(32px, 3.4vw, 48px);
-    text-shadow: 4px 4px 0 #000;
-  }
-
-  img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  span {
-    position: relative;
-  }
-  .playYellow {
-    opacity: 0;
-  }
-  .playRed {
-    opacity: 1;
-  }
-  &:disabled {
-    opacity: 0.6;
-    cursor: wait;
-  }
-  &:enabled:is(:hover, :focus-visible, :active) {
-    scale: 1.15;
-    rotate: -2deg;
-    filter: drop-shadow(3px 5px 3px #0009);
-    .playYellow {
-      opacity: 1;
-    }
-    .playRed {
-      opacity: 0;
-    }
-  }
-}
-
-// The site's extra start-screen links, set in the admin.
-.links {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  margin-top: clamp(16px, 3svh, 32px);
-
-  a {
-    min-width: min(280px, 100%);
-    box-sizing: border-box;
-    font-size: clamp(13px, 1.3vw, 16px);
-    text-transform: uppercase;
-    @include btn;
-    padding: 10px 20px;
-
-    &[data-size="small"] {
-      min-width: min(200px, 100%);
-      font-size: 12px;
-      padding: 6px 14px;
-    }
-
-    &[data-size="large"] {
-      min-width: min(360px, 100%);
-      font-size: clamp(16px, 1.8vw, 22px);
-      padding: 14px 28px;
-    }
-
-    // A see-through button keeps its outline but loses the panel shading.
-    &[data-transparent="true"] {
-      box-shadow: none;
-    }
-  }
-}
-
 // Above the painted frame (11) so the arrows aren't cut by it, below the
 // fade curtain (13).
 .navigation {
@@ -266,7 +153,6 @@
   }
 }
 
-.play:focus-visible,
 .arrow:focus-visible {
   outline: 2px solid #fff0a1;
   outline-offset: 5px;

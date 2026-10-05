@@ -10,8 +10,7 @@ import styles from "@/styles/top-bar.module.scss";
 // The same logo art on the landing page and everywhere else.
 const LOGO = "/images/greatest-show-in-human-history/lil-darkie.png";
 
-// The page header. The landing page gets the game's logo; every other page
-// gets the site logo, which links home. The menu button lives in Nav.
+// Both landing layouts and the game share the centered logo.
 export default function TopBar() {
   const pathname = usePathname();
   const { sticky, gameStarted } = useStore();

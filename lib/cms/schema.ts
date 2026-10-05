@@ -169,10 +169,20 @@ const homeButton = link.extend({
   size: z.enum(BUTTON_SIZES).optional(),
 });
 
+// Simple landing entries either navigate to a URL or run a built-in action.
+const landingButton = z.discriminatedUnion("type", [
+  link.extend({ type: z.literal("link") }),
+  z.strictObject({ type: z.literal("game"), label: z.string().min(1) }),
+  z.strictObject({ type: z.literal("menu"), label: z.string().min(1) }),
+]);
+
 export const siteSchema = z.strictObject({
   // The menu, in order.
   nav: z.array(link),
-  // Extra buttons on the landing page, under "Play the Game".
+  // Each layout keeps its own buttons so switching doesn't erase either one.
+  landingLayout: z.enum(["simple", "painting"]).optional(),
+  landingButtons: z.array(landingButton).optional(),
+  // Extra buttons on the painting layout, under "Play the Game".
   homeButtons: z.array(homeButton).optional(),
   social: z.array(
     z.strictObject({ platform: z.enum(SOCIAL_PLATFORMS), href: z.url() }),
@@ -191,6 +201,16 @@ export type Page = z.infer<typeof pageSchema>;
 export type Post = z.infer<typeof postSchema>;
 export type Site = z.infer<typeof siteSchema>;
 export type HomeButton = z.infer<typeof homeButton>;
+export type LandingButton = z.infer<typeof landingButton>;
+
+// Older site records use the new layout and this list until first edited.
+export const DEFAULT_LANDING_BUTTONS: LandingButton[] = [
+  { type: "game", label: "red game" },
+  { type: "link", label: "shows", href: "/tour" },
+  { type: "link", label: "merchandise", href: "https://smalldarkone.com" },
+  { type: "link", label: "physical music", href: "https://racingthoughtsrecords.com" },
+  { type: "menu", label: "more" },
+];
 
 export const SCHEMAS = { site: siteSchema, page: pageSchema, post: postSchema };
 export type Kind = keyof typeof SCHEMAS;

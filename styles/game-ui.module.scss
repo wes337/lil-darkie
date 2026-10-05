@@ -153,7 +153,8 @@
   box-sizing: border-box;
   width: calc(100% - 2 * (clamp(44px, 11cqw, 88px) + 2cqw));
   position: absolute;
-  z-index: 4;
+  // Above the painted frame (11), below the fade curtain (13).
+  z-index: 12;
   bottom: 6px;
   left: 50%;
   translate: -50% 0;
@@ -184,7 +185,7 @@
   overflow: clip;
   display: grid;
   place-items: center;
-  border: 0;
+  border: 2px solid #ffd333;
   background: #00000033;
   color: #fff;
   font: inherit;

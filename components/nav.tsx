@@ -49,6 +49,7 @@ export default function Nav({ site }: { site: Site }) {
   }, [setScroll, setSticky]);
 
   const gamePlaying = pathname === "/" && gameStarted;
+  const showMenuButton = pathname !== "/" || site.landingLayout === "painting";
 
   return (
     <>
@@ -56,7 +57,7 @@ export default function Nav({ site }: { site: Site }) {
         className={`blur${navOpen ? " open" : ""}`}
         onClick={() => setNavOpen(false)}
       />
-      <button
+      {showMenuButton && <button
         className={`mobile-nav-button${sticky ? " sticky" : ""}`}
         data-game-landing={pathname === "/"}
         data-game-playing={gamePlaying}
@@ -75,8 +76,8 @@ export default function Nav({ site }: { site: Site }) {
           width={98}
           height={66}
         />
-      </button>
-      <div className={`nav${navOpen ? " open" : ""}`} inert={!navOpen}>
+      </button>}
+      <div id="site-menu" className={`nav${navOpen ? " open" : ""}`} inert={!navOpen}>
         <div className="nav-header">
           <Image
             className="nav-logo"

@@ -12,4 +12,12 @@
     height: auto;
     pointer-events: none;
   }
+
+  // Tint both the animated wisp and its reduced-motion image, preserving transparency.
+  &[data-asset="imaginary-friend"] img {
+    filter:
+      brightness(0) invert(70%) sepia(100%) saturate(5) hue-rotate(285deg)
+      drop-shadow(0 0 2px #ff67bd)
+      drop-shadow(0 0 6px #ff3ca699);
+  }
 }

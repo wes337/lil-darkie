@@ -7,12 +7,11 @@ import {
   useState,
   type CSSProperties,
   type MouseEvent,
+  type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
 import useStore from "@/app/store";
-import type { HomeButton } from "@/lib/cms/schema";
 import RoomScene from "./room-scene";
-import LandingScene from "./landing-scene";
 import PropCloseup from "./prop-closeup";
 import useGame from "./use-game";
 import GameDialog from "./game-dialog";
@@ -20,7 +19,7 @@ import Inventory from "./inventory";
 import GameSequence from "./game-sequence";
 import { ROOMS } from "./rooms";
 import { GAME_CDN, artSources } from "./art";
-import { FINAL_ART, dialogImage } from "./final-art";
+import { dialogImage } from "./final-art";
 import type { TopicId } from "./game-model";
 import FinalImage from "./final-image";
 import { MUSIC_VOLUME, SOUND_EFFECT_VOLUME, playSound } from "./audio";
@@ -30,6 +29,10 @@ const ROOM_FADE_MS = 240;
 const START_FADE_OUT_MS = 450;
 const START_HOLD_MS = 100;
 const START_FADE_IN_MS = 650;
+const MUSIC_TRACKS = [
+  `${GAME_CDN}/music/escape-room-1-4f8ace32b060.mp3`,
+  `${GAME_CDN}/music/escape-room-2-7a61ff94c3cd.mp3`,
+] as const;
 const NAVIGATION_TARGETS = [
   "desk",
   "door-front",
@@ -68,14 +71,20 @@ const EXTRA_SOUNDS = {
   ...Object.fromEntries(SPARKLE_SOUNDS.map((id) => [id, "mp3"])),
 };
 
+export type StartScreenProps = {
+  onStart: () => void;
+  disabled: boolean;
+  failed: boolean;
+};
+
+// The page supplies the landing layout; the game owns readiness, audio and fades.
 // `onExit` runs from the ending's EXIT button; the page remounts the game to reset it.
-// `buttons` are the site's extra links, shown under Play on the start screen.
 export default function RedGame({
   onExit,
-  buttons,
+  renderStart,
 }: {
   onExit: () => void;
-  buttons: HomeButton[];
+  renderStart: (props: StartScreenProps) => ReactNode;
 }) {
   const { gameStarted, setGameStarted, setNavOpen } = useStore();
   const game = useGame();
@@ -119,6 +128,9 @@ export default function RedGame({
   const extraSounds = useRef<Record<string, HTMLAudioElement | null>>({});
   const humRef = useRef<HTMLAudioElement>(null);
   const musicRef = useRef<HTMLAudioElement>(null);
+  const musicTrack = useRef<0 | 1>(0);
+  const nextMusicRef = useRef<HTMLAudioElement>(null);
+  const [preloadSecondTrack, setPreloadSecondTrack] = useState(false);
   const playCue = useCallback((id: string | undefined) => {
     if (id === "sparkle") {
       SPARKLE_SOUNDS.forEach((soundId) =>
@@ -158,6 +170,7 @@ export default function RedGame({
   useEffect(() => {
     // The <audio> elements are always rendered, so their refs are set before effects run.
     const music = musicRef.current!;
+    const nextMusic = nextMusicRef.current!;
     if (!gameStarted) return;
     const update = () => {
       if (document.hidden) music.pause();
@@ -167,6 +180,8 @@ export default function RedGame({
     return () => {
       document.removeEventListener("visibilitychange", update);
       music.pause();
+      nextMusic.removeAttribute("src");
+      nextMusic.load();
     };
   }, [gameStarted]);
 
@@ -415,7 +430,9 @@ export default function RedGame({
       ref={gameRef}
       className={styles.game}
       aria-label="Red Game"
-      onContextMenu={(event) => event.preventDefault()}
+      onContextMenu={(event) => {
+        if (gameStarted) event.preventDefault();
+      }}
       onClick={playClickSound}
       data-transition={transition}
       data-playing={gameStarted}
@@ -424,7 +441,30 @@ export default function RedGame({
       // CSSProperties has no custom properties, hence the cast.
       style={{ "--room-fade-duration": `${ROOM_FADE_MS}ms` } as CSSProperties}
     >
-      <audio ref={musicRef} src={`${FINAL_ART}music.m4a`} preload="auto" loop hidden />
+      <audio
+        ref={musicRef}
+        src={MUSIC_TRACKS[0]}
+        preload="metadata"
+        onTimeUpdate={(event) => {
+          // Short sessions only need track 1; let the browser load track 2 after a minute.
+          if (!preloadSecondTrack && event.currentTarget.currentTime >= 60) {
+            setPreloadSecondTrack(true);
+          }
+        }}
+        onEnded={(event) => {
+          musicTrack.current = musicTrack.current === 0 ? 1 : 0;
+          // Reuse the audio element unlocked by the start click on mobile Safari.
+          event.currentTarget.src = MUSIC_TRACKS[musicTrack.current];
+          if (!document.hidden) playSound(event.currentTarget, MUSIC_VOLUME);
+        }}
+        hidden
+      />
+      <audio
+        ref={nextMusicRef}
+        src={preloadSecondTrack ? MUSIC_TRACKS[1] : undefined}
+        preload="auto"
+        hidden
+      />
       <audio
         ref={detectionSoundRef}
         src={`${GAME_CDN}/sounds/detection-click-1.mp3`}
@@ -575,7 +615,6 @@ export default function RedGame({
           hidden
         />
       ))}
-      {!gameStarted && <LandingScene />}
       {/* Decode game views in advance, but only reveal them after Play. */}
       {ROOMS.map((view) => (
         <div
@@ -628,47 +667,7 @@ export default function RedGame({
       )}
 
       {!gameStarted ? (
-        <div className={styles.start}>
-          <button className={styles.play} onClick={startGame} disabled={!ready || moving}>
-            <img
-              className={styles.playYellow}
-              {...artSources(`${GAME_CDN}/buttons/paint-yellow.webp`)}
-              alt=""
-              width={2172}
-              height={724}
-              draggable={false}
-            />
-            <img
-              className={styles.playRed}
-              {...artSources(`${GAME_CDN}/buttons/paint-red.webp`)}
-              alt=""
-              width={2172}
-              height={724}
-              draggable={false}
-            />
-            <span>Play the Game</span>
-          </button>
-          {buttons.length > 0 && (
-            <nav className={styles.links} aria-label="Featured links">
-              {buttons.map((button) => (
-                <a
-                  key={`${button.label}-${button.href}`}
-                  href={button.href}
-                  data-size={button.size ?? "medium"}
-                  data-transparent={button.backgroundColor === "transparent"}
-                  style={{ color: button.textColor, background: button.backgroundColor }}
-                >
-                  {button.label}
-                </a>
-              ))}
-            </nav>
-          )}
-          {failed && (
-            <p role="alert">
-              The room artwork couldn’t load. Please refresh to try again.
-            </p>
-          )}
-        </div>
+        renderStart({ onStart: startGame, disabled: !ready || moving, failed })
       ) : (
         <>
           <p className={styles.srOnly} role="status">

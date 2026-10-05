@@ -21,7 +21,7 @@ export default function Inventory({
   // Where the selecting click happened, so the held item starts under the cursor.
   const [grabbedAt, setGrabbedAt] = useState<Point | null>(null);
   const items = inventory(game.progress);
-  if (!items.length) return null;
+  if (!items.length || game.sequence) return null;
   return (
     <aside className={styles.inventory} aria-label="Inventory" inert={disabled}>
       <div className={styles.items}>

@@ -102,6 +102,14 @@ A post with `"published": false` is a draft. Only the admin can see it.
         { "label": "Comics", "href": "/comics" }
       ],
       "homeButtons": [{ "label": "Tour tickets", "href": "https://example.com/tickets" }],
+      "landingLayout": "simple",
+      "landingButtons": [
+        { "type": "game", "label": "red game" },
+        { "type": "link", "label": "shows", "href": "/tour" },
+        { "type": "link", "label": "merchandise", "href": "https://smalldarkone.com" },
+        { "type": "link", "label": "physical music", "href": "https://racingthoughtsrecords.com" },
+        { "type": "menu", "label": "more" }
+      ],
       "social": [{ "platform": "spotify", "href": "https://open.spotify.com/artist/..." }],
       "copyright": "© 2026 Lil Darkie® All Rights Reserved",
       "theme": {}
@@ -109,6 +117,12 @@ A post with `"published": false` is a draft. Only the admin can see it.
 
 Nav links appear in the menu in this order. Social platforms: spotify, apple, soundcloud, youtube.
 
-`homeButtons` are extra buttons on the home page, shown in order under "Play the Game". Each has a `label` and an `href`, and optionally a `textColor`, a `backgroundColor` (a hex color or `"transparent"`) and a `size` (small, medium or large).
+`landingLayout` selects `simple` or `painting`. It defaults to `simple` for older records. Admin → Landing switches layouts and edits their buttons. Each layout keeps its own list when switched.
 
-The rest of the home page (the game) and `/sampler` are built in code and can't be edited here, but nav links can point to them.
+`landingButtons` controls the simple layout's list, in order. Every entry needs a `label` and a `type`. `link` also requires `href`; `game` starts the game; `menu` opens the existing menu. Omit the list to use the five defaults above, or save an empty array to show no buttons. This layout uses white Arial text on black, with red hover text.
+
+`homeButtons` are extra buttons on the preserved painting layout, shown in order under "Play the Game". Each has a `label` and an `href`, and optionally a `textColor`, a `backgroundColor` (a hex color or `"transparent"`) and a `size` (small, medium or large).
+
+The original painting layout is in `components/landing/painting.tsx` and `styles/painting-landing.module.scss`. Its animated scene remains in `components/red-game/landing-scene.tsx` and `styles/landing-scene.module.scss`.
+
+The game and `/sampler` are built in code and can't be edited here.

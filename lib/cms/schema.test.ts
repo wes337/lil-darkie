@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { describeIssues, pageSchema, postSchema } from "./schema.ts";
+import { DEFAULT_LANDING_BUTTONS, DEFAULT_SITE, describeIssues, pageSchema, postSchema, siteSchema } from "./schema.ts";
 
 const page = {
   slug: "comics",
@@ -15,6 +15,32 @@ const page = {
 
 test("accepts a valid page", () => {
   assert.deepEqual(pageSchema.parse(page), page);
+});
+
+test("landing layouts preserve their separate lists and accept older site records", () => {
+  assert.deepEqual(siteSchema.parse(DEFAULT_SITE), DEFAULT_SITE);
+  const site = {
+    ...DEFAULT_SITE,
+    homeButtons: [{ label: "Tickets", href: "/tour", textColor: "#ffffff" }],
+    landingButtons: DEFAULT_LANDING_BUTTONS,
+  };
+  for (const landingLayout of ["simple", "painting"]) {
+    const input = { ...site, landingLayout };
+    assert.deepEqual(siteSchema.parse(input), input);
+  }
+  assert.deepEqual(siteSchema.parse({ ...site, landingButtons: [] }).landingButtons, []);
+});
+
+test("landing actions and link destinations are validated separately", () => {
+  for (const button of [
+    { type: "link", label: "Missing URL" },
+    { type: "link", label: "Unsafe", href: "javascript:alert(1)" },
+    { type: "game", label: "Play", href: "/tour" },
+    { type: "menu", label: "" },
+    { type: "unknown", label: "Unknown" },
+  ]) {
+    assert.equal(siteSchema.safeParse({ ...DEFAULT_SITE, landingButtons: [button] }).success, false);
+  }
 });
 
 test("rejects reserved and malformed page slugs", () => {

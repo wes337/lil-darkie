@@ -178,7 +178,7 @@ export default function GameSequence({
               : step === 5
                 ? "YOU ALWAYS HAVE BEEN"
                 : step >= 6
-                  ? "RED"
+                  ? "red"
                   : ""}
           </p>
           {step < 6 && CAN_SKIP_ANIMATION && (
