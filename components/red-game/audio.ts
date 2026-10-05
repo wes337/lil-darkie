@@ -1,5 +1,5 @@
 export const MUSIC_VOLUME = 0.45;
-export const SOUND_EFFECT_VOLUME = 0.15;
+export const SOUND_EFFECT_VOLUME = 0.5;
 
 export function playSound(
   sound: HTMLAudioElement | null | undefined,

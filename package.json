@@ -10,7 +10,8 @@
     "lint": "next lint",
     "test:game": "node --test components/red-game/*.test.ts",
     "test:preview": "node --test lib/preview-access.test.ts",
-    "test:cms": "node --test lib/cms/*.test.ts"
+    "test:cms": "node --test lib/cms/*.test.ts",
+    "test:downloads": "node --test lib/signed-downloads.test.ts lib/red-game-session.test.ts"
   },
   "engines": {
     "node": ">=22"

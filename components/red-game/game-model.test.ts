@@ -4,10 +4,11 @@ import {
   interact,
   inventory,
   newProgress,
+  replay,
   talk,
   unlockSafe,
 } from "./game-model.ts";
-import type { ItemId, Result, TopicId } from "./game-model.ts";
+import type { ItemId, Move, Result, TopicId } from "./game-model.ts";
 
 function play() {
   let state = newProgress();
@@ -59,6 +60,30 @@ test("complete authored route unlocks both rewards and the optional ending", () 
   assert.equal(g.act("doorknob", "key").sequence, "ending");
   assert.equal(g.state.endingSeen, true);
   assert.deepEqual(g.items, ["key"]);
+});
+
+test("replaying a game's moves rebuilds its progress", () => {
+  const use = (target: string, item: ItemId | null = null): Move => ({ type: "interact", target, item });
+  const toUsb: Move[] = [
+    ...(["where", "escape", "who", "help"] as const).map((topic): Move => ({ type: "talk", topic })),
+    use("bear-ripped", "imaginary-friend"),
+    use("door-frame"),
+    use("thread-spool", "needle"),
+    use("bear-ripped", "needle-and-thread"),
+    use("mouse-hole"),
+    use("sink", "glass-empty"),
+    use("flower-wilted", "glass-half-full"),
+    use("computer-tower", "usb-stick"),
+  ];
+  const toCd: Move[] = [{ type: "code", code: "100698" }, use("cd"), use("computer-tower", "cd")];
+
+  assert.equal(replay([]).usbInserted, false);
+  assert.equal(replay(toUsb).usbInserted, true);
+  assert.equal(replay(toUsb).cdInserted, false);
+  assert.equal(replay([...toUsb, ...toCd]).cdInserted, true);
+  // Skipping a step leaves the chain unfinished, and the CD needs the USB.
+  assert.equal(replay(toUsb.filter((move) => move !== toUsb[5])).usbInserted, false);
+  assert.equal(replay(toCd).cdInserted, false);
 });
 
 test("fixed code bypasses the main chain, but early CD still requires USB", () => {

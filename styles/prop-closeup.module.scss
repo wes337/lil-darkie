@@ -6,14 +6,15 @@
   position: absolute;
   inset: 0 0 auto;
   height: var(--game-size);
-  isolation: isolate;
   background: #080808;
 }
 
+// Isolated so nothing in the artwork can rise above the game's frame.
 .canvas {
   position: absolute;
   inset: 0;
   overflow: hidden;
+  isolation: isolate;
 }
 
 .canvas .desk {
@@ -24,8 +25,11 @@
   max-width: none;
 }
 
+// Above the painted frame (11) so the arrow isn't cut by it, below the fade
+// curtain (13), like the room arrows.
 .back {
   position: absolute;
+  z-index: 12;
   left: 1%;
   bottom: calc(6px - var(--controls-height));
   width: clamp(44px, 11cqw, 88px);

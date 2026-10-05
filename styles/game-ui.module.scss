@@ -56,6 +56,34 @@
     width: min(100cqw, calc(100cqh * var(--prop-ratio)));
   }
 }
+// The exit question: the text box, grown to cover the whole screen with its
+// words in the middle. The painted frame is left off at this size.
+.exitDialog {
+  width: 100vw;
+  max-width: none;
+  height: 100svh;
+  max-height: none;
+  margin: 0;
+  &[open] {
+    display: grid;
+    place-items: center;
+  }
+  &::after {
+    display: none;
+  }
+  // The body shrinks to the question, and the buttons are sized from it, so
+  // their paint is as wide as the line of text above them. The paint stroke
+  // stops short of its box on both sides, hence a box wider than the text.
+  .dialogBody {
+    width: fit-content;
+    overflow: visible;
+  }
+  .textButton {
+    width: 109%;
+    // A step up from the question's size.
+    font-size: 1.2em;
+  }
+}
 .dialogBody {
   max-height: calc(var(--game-size) - 100px);
   overflow-y: auto;

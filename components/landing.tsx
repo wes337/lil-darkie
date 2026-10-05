@@ -16,8 +16,11 @@ export default function Landing({ site }: { site: Site }) {
   const layout = LANDING_LAYOUT;
   // Either exit button remounts the game with fresh state.
   const [gameRun, setGameRun] = useState(0);
+  // The EXIT button up top asks first. The game draws the question.
+  const [confirmingExit, setConfirmingExit] = useState(false);
 
   function exitGame() {
+    setConfirmingExit(false);
     setGameStarted(false);
     setGameRun((run) => run + 1);
   }
@@ -35,13 +38,15 @@ export default function Landing({ site }: { site: Site }) {
   return (
     <main className={styles.landing} data-playing={gameStarted} data-layout={layout}>
       {gameStarted && (
-        <button className={styles.exit} onClick={exitGame}>
+        <button className={styles.exit} onClick={() => setConfirmingExit(true)}>
           EXIT
         </button>
       )}
       <RedGame
         key={gameRun}
         onExit={exitGame}
+        confirmingExit={confirmingExit}
+        onCancelExit={() => setConfirmingExit(false)}
         renderStart={(props) => layout === "painting" ? (
           <PaintingLanding {...props} buttons={site.homeButtons ?? []} />
         ) : (

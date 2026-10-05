@@ -14,6 +14,7 @@ import useStore from "@/app/store";
 import RoomScene from "./room-scene";
 import PropCloseup from "./prop-closeup";
 import useGame from "./use-game";
+import ExitDialog from "./exit-dialog";
 import GameDialog from "./game-dialog";
 import Inventory from "./inventory";
 import GameSequence from "./game-sequence";
@@ -78,16 +79,25 @@ export type StartScreenProps = {
 };
 
 // The page supplies the landing layout; the game owns readiness, audio and fades.
-// `onExit` runs from the ending's EXIT button; the page remounts the game to reset it.
+// `onExit` runs from the ending's EXIT button and from a yes to the exit
+// question; the page remounts the game to reset it.
 export default function RedGame({
   onExit,
+  confirmingExit,
+  onCancelExit,
   renderStart,
 }: {
   onExit: () => void;
+  // Set while the page's EXIT button is waiting for a yes or no.
+  confirmingExit: boolean;
+  onCancelExit: () => void;
   renderStart: (props: StartScreenProps) => ReactNode;
 }) {
   const { gameStarted, setGameStarted, setNavOpen } = useStore();
   const game = useGame();
+  // The session ends with this game: on either exit, or on leaving the page.
+  const endSession = game.end;
+  useEffect(() => endSession, [endSession]);
   const { deselect, selected, dialog, sequence } = game;
   const [roomIndex, setRoomIndex] = useState(0);
   const [loadedRooms, setLoadedRooms] = useState<Record<string, boolean>>({});
@@ -188,7 +198,7 @@ export default function RedGame({
   useEffect(() => {
     const hum = humRef.current!;
     if (!humming) return;
-    playSound(hum, SOUND_EFFECT_VOLUME * 0.3);
+    playSound(hum, SOUND_EFFECT_VOLUME * 0.1);
     return () => {
       hum.pause();
       hum.currentTime = 0;
@@ -357,6 +367,7 @@ export default function RedGame({
     playSound(musicRef.current, MUSIC_VOLUME);
     playSound(movementSoundRef.current);
     focusOnStart.current = true;
+    game.begin();
     setNavOpen(false);
     setTransition("start-out");
   }
@@ -748,6 +759,7 @@ export default function RedGame({
               onSound={playCue}
             />
           )}
+          {confirmingExit && <ExitDialog onYes={onExit} onNo={onCancelExit} />}
         </>
       )}
     </section>

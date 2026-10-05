@@ -75,7 +75,7 @@ export default function PropCloseup({
           </>
         )}
         {["computer-monitor", "password-document"].includes(view) && (
-          <ComputerScreen progress={progress} selected={game.selected} onTarget={onInspect} onNavigate={onNavigate} onSound={onSound} document={view === "password-document"} />
+          <ComputerScreen progress={progress} selected={game.selected} onTarget={onInspect} onNavigate={onNavigate} onSound={onSound} onDownload={game.download} document={view === "password-document"} />
         )}
         {view === "desk-note" && <NoteView />}
         {view === "peephole" && <PeepholeView onTarget={onInspect} />}

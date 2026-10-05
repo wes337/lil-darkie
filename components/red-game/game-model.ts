@@ -297,6 +297,28 @@ export function talk(progress: Progress, topic: TopicId | "help"): Result {
   };
 }
 
+// One thing the player did. A game's moves, replayed in order from a new
+// game, rebuild its progress. The server does that to check a download.
+export type Move =
+  | { type: "interact"; target: string; item: ItemId | null }
+  | { type: "talk"; topic: TopicId | "help" }
+  | { type: "code"; code: string };
+
+export function applyMove(progress: Progress, move: Move): Result {
+  switch (move.type) {
+    case "interact":
+      return interact(progress, move.target, move.item);
+    case "talk":
+      return talk(progress, move.topic);
+    case "code":
+      return unlockSafe(progress, move.code);
+  }
+}
+
+export function replay(moves: Move[]): Progress {
+  return moves.reduce((progress, move) => applyMove(progress, move).progress, newProgress());
+}
+
 export function unlockSafe(progress: Progress, code: string): Result {
   if (code !== "100698")
     return { progress, message: ["the code is incorrect"], sound: "click-no" };

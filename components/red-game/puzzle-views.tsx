@@ -1,14 +1,16 @@
-import { useState, type MouseEvent, type SubmitEvent } from "react";
+import { useState, type SubmitEvent } from "react";
 import FinalImage, { Hotspot } from "./final-image";
 import { NOTE, RIDDLE } from "./game-content";
 import type { ItemId, Progress } from "./game-model";
+import type { DownloadId } from "@/lib/signed-downloads";
 import styles from "@/styles/puzzle-views.module.scss";
 
-// Set these to the supplied release files; never substitute a different album.
-const DOWNLOADS: Record<string, string> = {
-  prjct: process.env.NEXT_PUBLIC_RED_ALBUM_URL || "",
-  xtra: process.env.NEXT_PUBLIC_RED_BONUS_URL || "",
-};
+// The reward files on the computer, by the signed download each one opens.
+// Never substitute a different album.
+const DOWNLOADS = [
+  { file: "prjct", download: "red-album" },
+  { file: "xtra", download: "red-bonus-track" },
+] satisfies { file: string; download: DownloadId }[];
 
 type OnTarget = (target: string) => void;
 
@@ -88,6 +90,7 @@ export function ComputerScreen({
   onTarget,
   onNavigate,
   onSound,
+  onDownload,
   document = false,
 }: {
   progress: Progress;
@@ -95,16 +98,16 @@ export function ComputerScreen({
   onTarget: OnTarget;
   onNavigate: (view: string) => void;
   onSound: (id: string) => void;
+  onDownload: (id: DownloadId) => void;
   document?: boolean;
 }) {
-  function download(event: MouseEvent<HTMLAnchorElement>, id: string) {
+  function download(file: string, id: DownloadId) {
     if (selected) {
-      event.preventDefault();
-      onTarget(id);
+      onTarget(file);
       return;
     }
     onSound("computer-click-download");
-    if (!DOWNLOADS[id]) event.preventDefault();
+    onDownload(id);
   }
   return (
     <>
@@ -121,11 +124,11 @@ export function ComputerScreen({
               <span className={styles.documentIcon} aria-hidden="true">≡</span>
               <span>psswrd</span>
             </button>
-            {["prjct", ...(progress.cdInserted ? ["xtra"] : [])].map((id) => (
-              <a key={id} className={styles.file} href={DOWNLOADS[id] || "#"} download onClick={(event) => download(event, id)}>
+            {DOWNLOADS.filter(({ file }) => file === "prjct" || progress.cdInserted).map(({ file, download: id }) => (
+              <button key={file} className={styles.file} onClick={() => download(file, id)}>
                 <span className={styles.folderIcon} aria-hidden="true" />
-                <span>{id}</span>
-              </a>
+                <span>{file}</span>
+              </button>
             ))}
           </div>
         )}

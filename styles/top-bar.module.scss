@@ -5,6 +5,9 @@
   inset: 0 0 auto;
   z-index: 5;
   height: clamp(4rem, 10svh, 6.5rem);
+  // Extra room above the logo, so it doesn't crowd the top of the screen.
+  box-sizing: border-box;
+  padding-top: 16px;
   display: grid;
   place-items: center;
   pointer-events: none;
@@ -15,17 +18,18 @@
     height: var(--game-header-height);
     img {
       width: min(42vw, 180px);
-      max-height: calc(var(--game-header-height) - 8px);
+      max-height: calc(var(--game-header-height) - 24px);
     }
   }
 
   // The max-height keeps a tall custom logo inside the header, with a gap
-  // above and below it. The gap is smaller in the compact bars.
+  // above and below it on top of the header's own padding. The gap is
+  // smaller in the compact bars.
   img {
     display: block;
     width: clamp(140px, 23svh, 200px);
     height: auto;
-    max-height: calc(clamp(4rem, 10svh, 6.5rem) - 16px);
+    max-height: calc(clamp(4rem, 10svh, 6.5rem) - 32px);
     object-fit: contain;
     -webkit-user-select: none;
     user-select: none;
@@ -43,6 +47,8 @@
   left: 0;
   width: 100vw;
   height: clamp(4rem, 10svh, 6.5rem);
+  box-sizing: border-box;
+  padding-top: 16px;
   display: grid;
   place-items: center;
   user-select: none;
@@ -53,6 +59,7 @@
   // Scrolled: the logo sits in the 60px red bar.
   &.sticky {
     height: 60px;
+    padding-top: 0;
   }
 
   .top-bar-logo {
@@ -68,7 +75,7 @@
       display: block;
       width: 100%;
       height: auto;
-      max-height: calc(clamp(4rem, 10svh, 6.5rem) - 16px);
+      max-height: calc(clamp(4rem, 10svh, 6.5rem) - 32px);
       object-fit: contain;
       pointer-events: none;
     }

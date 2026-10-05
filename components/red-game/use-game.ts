@@ -1,15 +1,22 @@
 import { useState } from "react";
 import { createStore } from "zustand/vanilla";
 import { useStore } from "zustand";
-import {
-  interact,
-  inventory,
-  newProgress,
-  talk,
-  unlockSafe,
-} from "./game-model";
-import type { ItemId, Progress, Result, TopicId } from "./game-model";
+import { applyMove, inventory, newProgress } from "./game-model";
+import type { ItemId, Move, Progress, Result, TopicId } from "./game-model";
 import { GREETING, ITEMS } from "./game-content";
+import type { Refusal } from "@/lib/red-game-proof";
+import type { DownloadId } from "@/lib/signed-downloads";
+
+// What the game says when the server won't hand over a file.
+const FAILED_LINE = "the download failed. try again";
+const REFUSAL_LINES = new Map<string, string>(
+  Object.entries({
+    refused: FAILED_LINE,
+    expired: "this session has expired. exit and begin again",
+    "too-soon": "the file is not ready yet. try again in a moment",
+    limit: "this file has been taken too many times",
+  } satisfies Record<Refusal, string>),
+);
 
 type DialogArt = {
   asset: (typeof ITEMS)[ItemId]["asset"];
@@ -39,6 +46,12 @@ export type Game = {
   act(target: string): Result | null;
   submitCode(code: string): Result | null;
   talk(topic: TopicId | "help"): void;
+  // Starts the session. Called once, when the game starts.
+  begin(): void;
+  // Tells the server the session is over, without waiting for an answer.
+  end(): void;
+  // Asks the server for a reward file. Says why when it is refused.
+  download(id: DownloadId): Promise<void>;
   closeDialog(): void;
   finishSequence(): void;
 };
@@ -80,11 +93,68 @@ function createGameStore() {
       return result;
     };
     const blocked = () => get().dialog || get().sequence;
+
+    // The moves that changed something, in order. The server replays them to
+    // check a download, so looking at things isn't recorded.
+    const moves: Move[] = [];
+    const play = (move: Move, sourceTarget?: string) => {
+      const before = get().progress;
+      const result = apply(applyMove(before, move), sourceTarget);
+      if (result && result.progress !== before) moves.push(move);
+      return result;
+    };
+
+    // The session token, or null when the server couldn't be reached.
+    let session: Promise<string | null> = Promise.resolve(null);
+
     return {
       progress: newProgress(),
       selected: null,
       dialog: null,
       sequence: null,
+      begin() {
+        session = fetch("/api/red-game/session", { method: "POST" })
+          .then((response) => (response.ok ? response.json() : null))
+          .then((body: { session: string } | null) => body?.session ?? null)
+          .catch(() => null);
+      },
+      end() {
+        const ended = session;
+        session = Promise.resolve(null);
+        // Not waited for, and a failure is fine: the session expires anyway.
+        // `keepalive` lets the request finish if the page is going away.
+        void ended
+          .then((token) =>
+            token
+              ? fetch("/api/red-game/session", {
+                  method: "DELETE",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ session: token }),
+                  keepalive: true,
+                })
+              : null,
+          )
+          .catch(() => null);
+      },
+      async download(id) {
+        const token = await session;
+        const response = token
+          ? await fetch(`/api/downloads/${id}`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ session: token, moves }),
+            }).catch(() => null)
+          : null;
+        if (response?.ok) {
+          const { url }: { url: string } = await response.json();
+          // The file downloads and the game stays on screen.
+          window.location.assign(url);
+          return;
+        }
+        const body: { error?: string } = (await response?.json().catch(() => null)) ?? {};
+        const line = REFUSAL_LINES.get(body.error ?? "") ?? FAILED_LINE;
+        set({ dialog: { kind: "message", messages: [line] } });
+      },
       select(item) {
         if (blocked() || !inventory(get().progress).includes(item)) return;
         set({ selected: get().selected === item ? null : item });
@@ -93,14 +163,14 @@ function createGameStore() {
       act(target) {
         return blocked()
           ? null
-          : apply(interact(get().progress, target, get().selected), target);
+          : play({ type: "interact", target, item: get().selected }, target);
       },
       submitCode(code) {
-        return blocked() ? null : apply(unlockSafe(get().progress, code));
+        return blocked() ? null : play({ type: "code", code });
       },
       talk(topic) {
         if (get().dialog?.kind !== "conversation") return;
-        apply(talk(get().progress, topic));
+        play({ type: "talk", topic });
       },
       closeDialog: () => set({ dialog: null }),
       finishSequence() {

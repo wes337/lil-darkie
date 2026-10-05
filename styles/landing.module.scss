@@ -21,18 +21,18 @@
 }
 .exit {
   position: fixed;
-  top: calc((var(--game-header-height) - 44px) / 2);
+  top: calc((var(--game-header-height) - 52px) / 2);
   right: max(var(--game-edge-gap), env(safe-area-inset-right));
   z-index: 6;
   isolation: isolate;
-  width: clamp(64px, 12vw, 88px);
-  height: 44px;
+  width: clamp(80px, 15vw, 116px);
+  height: 52px;
   padding: 0;
   border: 0;
   background: none;
   color: #fff;
   font: inherit;
-  font-size: clamp(12px, 1.5vw, 15px);
+  font-size: clamp(14px, 1.9vw, 19px);
   text-shadow: 2px 3px 0 #000;
   cursor: pointer;
 

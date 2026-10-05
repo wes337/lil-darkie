@@ -10,7 +10,7 @@ The optimized assets are on the CDN, so building and running the game requires n
 
 The source PNG sequences contain no timing metadata, so video runs at 24 fps. The wisp uses every other frame at 12 fps. Reduced motion uses the static room and wisp artwork and advances directly to the ending's story cards.
 
-Music begins from the start button click in either landing layout, loops across rooms and the ending, pauses when the document is hidden, and stops when the game exits. Music plays at 45% volume and sound effects at 15%, with the ambient computer hum softer still. These levels are defined in `audio.ts`. The interaction sound effects are in the CDN folder `lil-darkie/red-game/sounds`.
+Music begins from the start button click in either landing layout, loops across rooms and the ending, pauses when the document is hidden, and stops when the game exits. Music plays at 45% volume and sound effects at 50%, with the ambient computer hum softer still. These levels are defined in `audio.ts`. The interaction sound effects are in the CDN folder `lil-darkie/red-game/sounds`.
 
 The soundtrack alternates between two MP3s, starting with track 1 and repeating after track 2. Each is 128 kbps stereo at 44.1 kHz. Track 1 is 2.61 MB and track 2 is 3.02 MB, down from 101.51 MB of WAVs in total. Only track 1's metadata loads on the landing page. After a minute of playback, a hidden audio element asks the browser to preload track 2. The playing element switches sources on each ended event, preserving mobile Safari's audio unlock. Exiting cancels the preload.
 
@@ -44,16 +44,28 @@ Starting play fades the entire page to dark, switches to the framed Final artwor
 
 Invalid item use preserves the item and deselects it. Rewards cannot be collected twice. Wrong safe codes clear the input and permit another attempt. The development build has a Skip animation button; production does not.
 
-## Download configuration
+## Downloads
 
-Set these public build-time variables to the supplied ZIP URLs, then rebuild:
+The two rewards use the site's signed downloads, defined in `lib/signed-downloads.ts`. The ZIPs are in the Bunny storage zone `w-sig` under `lil-darkie/red-game/`.
 
-```dotenv
-NEXT_PUBLIC_RED_ALBUM_URL=
-NEXT_PUBLIC_RED_BONUS_URL=
-```
+- `prjct` opens the `red-album` download, `red (the album).zip`. It appears once the USB is in the computer.
+- `xtra` opens the `red-bonus-track` download, `red (bonus track).zip`. It appears once the CD is inserted too.
 
-For local files, place the ZIPs in `public/downloads/` and use `/downloads/<filename>.zip`. Until configured, an unlocked download icon does nothing.
+Clicking an icon POSTs to `/api/downloads/<id>`, which returns a link signed for one hour, and the browser then downloads from it. The route only answers requests made by this site's own pages, so there is no link to paste elsewhere.
+
+### Proof of a solved game
+
+The server only signs a link for a game that was solved. `lib/red-game-proof.ts` does the check.
+
+- When the game starts it gets a session from `/api/red-game/session`: a random id and the start time, signed with `RED_GAME_SESSION_SECRET`. Nothing is stored for it. It lasts 3 hours.
+- The game records each move that changes something. A download request sends the session and those moves.
+- The server replays the moves through `game-model.ts` from a new game. `prjct` needs the replay to end with the USB inserted, `xtra` with the CD inserted.
+- A game has to be at least 35 seconds old, and gets 5 links per file.
+- Exiting ends the session: the game tells the server without waiting, and the server marks it so the token gets no more links. If that request is lost, the session still expires by itself.
+
+Redis holds one sorted set per session, `<namespace>:red-game:session:<id>`, under the same `prod` or `dev` namespace as the CMS. It counts the links signed for each file, holds the mark for an ended session, and expires with the session. Play times are not recorded.
+
+This proves a valid solution was sent, not that someone played. The rules ship with the game, so a solution can be written out by hand.
 
 ## Code and checks
 
