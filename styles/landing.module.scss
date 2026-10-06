@@ -19,6 +19,12 @@
       var(--game-edge-gap) max(var(--game-edge-gap), env(safe-area-inset-bottom));
   }
 }
+// Safari versions that ignore the theme color tint the status bar from the
+// body, so the body is black on this page too.
+:global(body):has(.landing) {
+  background-color: #000;
+}
+
 .exit {
   position: fixed;
   top: calc((var(--game-header-height) - 52px) / 2);
