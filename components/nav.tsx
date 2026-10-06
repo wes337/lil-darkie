@@ -91,18 +91,6 @@ export default function Nav({ site }: { site: Site }) {
               height={68}
             />
           )}
-          <div className="social-media-links">
-            {site.social.map(({ platform, href }) => (
-              <Link key={href} href={href} target="_blank">
-                <Image
-                  src={SOCIAL_ICONS[platform]}
-                  alt={platform}
-                  width={32}
-                  height={32}
-                />
-              </Link>
-            ))}
-          </div>
           <button className="nav-close" onClick={() => setNavOpen(false)}>
             <Image src={ASSETS.closeIcon} alt="Close" width={40} height={42} />
           </button>
@@ -112,6 +100,18 @@ export default function Nav({ site }: { site: Site }) {
             <SiteLink key={`${label}-${href}`} href={href}>
               <span>{label}</span>
             </SiteLink>
+          ))}
+        </div>
+        <div className="social-media-links">
+          {site.social.map(({ platform, href }) => (
+            <Link key={href} href={href} target="_blank">
+              <Image
+                src={SOCIAL_ICONS[platform]}
+                alt={platform}
+                width={32}
+                height={32}
+              />
+            </Link>
           ))}
         </div>
         <div className="nav-copyright">{site.copyright}</div>

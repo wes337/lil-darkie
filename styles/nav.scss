@@ -84,10 +84,8 @@
     width: 360px;
   }
 
-  // Logo and close button on one row, the social icons on the next.
   .nav-header {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
     padding: $space-md;
     gap: $space-md;
@@ -107,21 +105,6 @@
         display: block;
         width: 28px;
         height: auto;
-      }
-    }
-
-    .social-media-links {
-      order: 1;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: $space-md;
-
-      img {
-        display: block;
-        width: 28px;
-        height: auto;
-        object-fit: contain;
       }
     }
   }
@@ -150,8 +133,24 @@
     }
   }
 
-  .nav-copyright {
+  // Pinned to the bottom of the menu, centered above the copyright line.
+  .social-media-links {
     margin-top: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $space-md;
+    padding: $space-md $space-md 0;
+
+    img {
+      display: block;
+      width: 28px;
+      height: auto;
+      object-fit: contain;
+    }
+  }
+
+  .nav-copyright {
     padding: $space-md $space-sm;
     text-align: center;
     font-size: $font-size-xs;
