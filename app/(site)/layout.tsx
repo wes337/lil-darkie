@@ -1,14 +1,12 @@
 /* eslint-disable @next/next/no-page-custom-font */
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import { Martian_Mono } from "next/font/google";
 import TopBar from "@/components/top-bar";
 import Nav from "@/components/nav";
 import GoogleAnalytics from "@/components/google-analytics";
 import { getSite, siteIcons } from "@/lib/cms/content";
+import { fontFaces, fontFamily, resolveTheme } from "@/lib/cms/render";
 import "@/styles/globals.scss";
-
-const martianMono = Martian_Mono({ subsets: ["latin"] });
 
 const METADATA: Metadata = {
   // Preview deploys serve share images from their own URL; production isn't guaranteed to have them yet.
@@ -45,9 +43,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 // The public site: the game, the sampler and every CMS page. The nav and top
-// bar are drawn from the editable site record.
+// bar are drawn from the editable site record, and the site theme's font is
+// set on the body so everything outside a CMS page follows it too.
 export default async function SiteLayout({ children }: { children: ReactNode }) {
   const site = await getSite();
+  const faces = fontFaces(site.fonts);
 
   return (
     <html lang="en">
@@ -62,8 +62,9 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
           href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@100;200;300;400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
+        {faces && <style dangerouslySetInnerHTML={{ __html: faces }} />}
       </head>
-      <body className={martianMono.className}>
+      <body style={{ fontFamily: fontFamily(resolveTheme(site.theme).font) }}>
         <TopBar logo={site.logo} />
         {children}
         <Nav site={site} />

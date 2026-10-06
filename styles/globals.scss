@@ -52,9 +52,10 @@ body {
   }
 }
 
+// Form controls default to the system font; follow the site font instead.
 button,
 input {
-  font-family: "Martian Mono", monospace;
+  font-family: inherit;
 }
 
 html {
