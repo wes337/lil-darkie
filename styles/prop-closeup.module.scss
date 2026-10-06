@@ -1,0 +1,49 @@
+.view {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+  position: absolute;
+  inset: 0 0 auto;
+  height: var(--game-size);
+  background: #080808;
+}
+
+// Isolated so nothing in the artwork can rise above the game's frame.
+.canvas {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.canvas .desk {
+  width: 200%;
+  height: 200%;
+  left: -12%;
+  top: -50%;
+  max-width: none;
+}
+
+// Above the painted frame (11) so the arrow isn't cut by it, below the fade
+// curtain (13), like the room arrows.
+.back {
+  position: absolute;
+  z-index: 12;
+  left: 1%;
+  bottom: calc(6px - var(--controls-height));
+  width: clamp(44px, 11cqw, 88px);
+  height: clamp(44px, 11cqw, 88px);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  filter: drop-shadow(2px 3px 2px #0006);
+  img { width: 100%; height: 100%; }
+  &:enabled:active { scale: 1.08; rotate: -5deg; }
+  @media (hover: hover) {
+    &:enabled:hover { scale: 1.08; rotate: -5deg; }
+  }
+  &:disabled { cursor: default; }
+  &:focus-visible { outline: 2px solid #ffd333; outline-offset: 2px; }
+}

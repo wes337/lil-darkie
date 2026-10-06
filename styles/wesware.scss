@@ -1,0 +1,102 @@
+// The WesWare look shared with Wendigo Corp: gradient panels with a bordered
+// edge and an inset highlight, beveled buttons, striped list rows. Colors come
+// from the --t-* variables set in globals.scss.
+
+@mixin inset-shadow {
+  box-shadow:
+    inset 0 1px 0 var(--t-inset-100),
+    inset -1px 0 0 var(--t-inset-75),
+    inset 0 -1px 0 var(--t-inset-25),
+    inset 0 10px 10px var(--t-inset-50);
+}
+
+@mixin panel {
+  background: linear-gradient(
+    to bottom left,
+    var(--t-panel-from),
+    var(--t-panel-via),
+    var(--t-panel-to)
+  );
+  border: 1px solid var(--t-panel-border);
+  border-radius: 2px;
+  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.3));
+  @include inset-shadow;
+}
+
+@mixin btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  background: var(--t-btn-bg);
+  border: 1px solid var(--t-panel-border);
+  border-radius: 4px;
+  color: var(--t-accent);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.5));
+  @include inset-shadow;
+
+  &:hover:not(:disabled),
+  &:focus-visible {
+    background: var(--t-btn-hover);
+  }
+}
+
+// A filled button with white text. `$name` picks the gradient: "submit" is
+// the theme red, "alt" is the amber one.
+@mixin filled-btn($name: "submit") {
+  $fill: linear-gradient(
+    to bottom left,
+    var(--t-#{$name}-from),
+    var(--t-#{$name}-via),
+    var(--t-#{$name}-to)
+  );
+
+  @include btn;
+  background: $fill;
+  border-color: var(--t-#{$name}-border);
+  border-radius: 2px;
+  color: #fff;
+  // A hard-edged shadow keeps the white label readable on the gradient.
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.6);
+
+  &:hover:not(:disabled),
+  &:focus-visible {
+    background: $fill;
+    filter: brightness(1.15) drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.5));
+  }
+}
+
+@mixin input {
+  padding: 8px 10px;
+  background: var(--t-input-bg);
+  border: 1px solid var(--t-panel-border);
+  border-radius: 2px;
+  color: var(--t-text);
+  outline: none;
+  @include inset-shadow;
+
+  &:focus {
+    border-color: var(--t-accent);
+  }
+}
+
+@mixin list-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--t-row-even);
+  border: 1px solid var(--t-panel-border);
+  border-radius: 2px;
+
+  &:nth-child(odd) {
+    background: var(--t-row-odd);
+  }
+
+  &:hover {
+    background: var(--t-row-hover);
+  }
+}

@@ -1,71 +1,91 @@
 @import "./variables.scss";
 
+.game-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 5;
+  height: clamp(4rem, 10svh, 6.5rem);
+  // Extra room above the logo, so it doesn't crowd the top of the screen.
+  box-sizing: border-box;
+  padding-top: 16px;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  &[data-playing="true"] {
+    height: var(--game-header-height);
+    img {
+      width: min(42vw, 180px);
+      max-height: calc(var(--game-header-height) - 24px);
+    }
+  }
+
+  // The max-height keeps a tall custom logo inside the header, with a gap
+  // above and below it on top of the header's own padding. The gap is
+  // smaller in the compact bars.
+  img {
+    display: block;
+    width: clamp(140px, 23svh, 200px);
+    height: auto;
+    max-height: calc(clamp(4rem, 10svh, 6.5rem) - 32px);
+    object-fit: contain;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+}
+
+// The header on every other page. It matches the landing header's box and
+// logo size exactly, so the logo doesn't shift when moving between them.
+// 100vw (not 100%) keeps it centered on the window whether or not the page
+// has a scrollbar.
 .top-bar {
   position: fixed;
-  top: 32px;
+  top: 0;
   left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 32px;
+  width: 100vw;
+  height: clamp(4rem, 10svh, 6.5rem);
+  box-sizing: border-box;
+  padding-top: 16px;
+  display: grid;
+  place-items: center;
   user-select: none;
   z-index: 5;
+  pointer-events: none;
+  transition: height 0.2s ease;
 
-  transition: top 0.2s ease;
+  // Scrolled: the logo sits in the 60px red bar.
+  &.sticky {
+    height: 60px;
+    padding-top: 0;
+  }
 
   .top-bar-logo {
     all: unset;
+    display: grid;
+    width: clamp(140px, 23svh, 200px);
     cursor: pointer;
-    position: relative;
-    max-width: 200px;
-    height: 58px;
+    pointer-events: auto;
 
+    // Both logos share one cell and cross-fade.
     img {
-      pointer-events: none;
+      grid-area: 1 / 1;
+      display: block;
       width: 100%;
       height: auto;
+      max-height: calc(clamp(4rem, 10svh, 6.5rem) - 32px);
+      object-fit: contain;
+      pointer-events: none;
     }
 
-    &.head {
-      width: 200px;
-      filter: drop-shadow(2px 2px 0px rgba(0, 0, 0, 1));
-
-      img {
-        object-fit: contain;
-        max-height: 100px;
-      }
-
-      @include for-short-screens {
-        img {
-          max-height: 72px;
-        }
-      }
-
-      @include for-phone-only {
-        img {
-          max-height: 40px;
-        }
-      }
-    }
-
-    .logo-primary {
-      position: absolute;
-      top: 0;
-      left: 0;
-      opacity: 1;
-
-      @include for-phone-only {
-        top: -16px;
-      }
+    &.sticky img {
+      max-height: 52px;
     }
 
     .logo-yellow {
       opacity: 0;
-    }
-
-    &:hover {
-      transform: rotate(-5deg) scale(1.2);
     }
 
     &.sticky {
@@ -75,84 +95,6 @@
 
       .logo-yellow {
         opacity: 1;
-      }
-    }
-
-    &.hide {
-      opacity: 0;
-    }
-  }
-
-  &.sticky {
-    top: 0px;
-
-    .top-bar-logo {
-      margin-top: 2px;
-    }
-  }
-
-  a:not(.top-bar-logo),
-  button:not(.top-bar-logo) {
-    @include for-phone-only {
-      display: none;
-    }
-
-    all: unset;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    font-size: 18px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-weight: 700;
-    text-shadow: 2px 3px $color-black;
-    cursor: pointer;
-    position: relative;
-
-    &:hover,
-    &:focus,
-    &:active {
-      color: $color-yellow;
-
-      &:before {
-        position: absolute;
-        content: " ";
-        background-color: $color-red;
-        width: 120%;
-        margin-left: -5%;
-        height: 100%;
-        box-shadow: 4px 4px 0px darken($color-red, 25%);
-      }
-
-      img,
-      span {
-        transform: scale(1.17);
-      }
-    }
-
-    img {
-      width: 48px;
-      height: 48px;
-      object-fit: contain;
-    }
-  }
-
-  &.light {
-    @include for-phone-only {
-      background-color: transparent;
-    }
-
-    a,
-    button:not(.top-bar-logo) {
-      color: $color-yellow;
-      text-shadow: -1px -1px 0 $color-black, 1px -1px 0 $color-black,
-        -1px 1px 0 $color-black, 1px 1px 0 $color-black, 2px 2px $color-black;
-
-      &:hover,
-      &:focus,
-      &:active {
-        color: $color-yellow;
-        text-shadow: 2px 3px $color-black;
       }
     }
   }
@@ -167,10 +109,6 @@
   z-index: 4;
   transition: transform 0.2s ease;
   transform: translateY(-100%);
-
-  &.black {
-    background-color: rgba($color-black, 0.75);
-  }
 
   &.sticky {
     transform: translateY(0);

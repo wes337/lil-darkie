@@ -1,10 +1,7 @@
 @import "./variables.scss";
+@import "./wesware.scss";
 
 .mobile-nav-button {
-  @include for-desktop {
-    display: none;
-  }
-
   all: unset;
   cursor: pointer;
   position: fixed;
@@ -14,14 +11,42 @@
   user-select: none;
   transition: all 0.2s ease;
 
+  &[data-game-landing="true"] {
+    transition:
+      transform 650ms cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 650ms ease,
+      visibility 0s;
+
+    &[data-game-playing="true"] {
+      transform: translateX(calc(100% + 32px));
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  // Scrolled: sit smaller, centered in the 60px red bar.
   &.sticky {
     filter: grayscale(1) brightness(5);
-    top: 16px;
+    top: 30px;
+    translate: 0 -50%;
+
+    img {
+      max-height: 28px;
+    }
   }
 
   img {
+    display: block;
     max-height: 40px;
     max-width: 8vw;
+    // Both auto so the max limits scale the icon without stretching it.
+    width: auto;
     height: auto;
   }
 
@@ -34,7 +59,8 @@
 
 .nav {
   position: fixed;
-  background-color: darken($color-red, 5%);
+  background: linear-gradient(to bottom left, var(--t-panel-from), var(--t-panel-via), var(--t-panel-to));
+  border-left: 1px solid var(--t-panel-border);
   top: 0;
   right: 0;
   width: 100vw;
@@ -47,47 +73,29 @@
   flex-direction: column;
 
   transform: translateX(100%);
-  transition: transform 0.5s ease;
+  transition: transform 0.15s ease-out;
 
   &.open {
     transform: translateX(0);
 
-    @include for-desktop {
-      box-shadow: -8px 4px 0px darken($color-red, 25%);
-    }
   }
 
   @include for-desktop {
-    width: 40vw;
+    width: 360px;
   }
 
+  // Logo and close button on one row, the social icons on the next.
   .nav-header {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    padding: $space-md $space-lg;
+    padding: $space-md;
     gap: $space-md;
     user-select: none;
 
-    .social-media-links {
-      display: flex;
-      align-items: center;
-      gap: $space-md;
-      margin-left: $space-sm;
-
-      img {
-        width: 32px;
-        height: auto;
-        object-fit: contain;
-      }
-    }
-
     .nav-logo {
-      height: 48px;
+      height: 32px;
       width: auto;
-
-      @include for-phone-only {
-        height: 32px;
-      }
     }
 
     .nav-close {
@@ -96,13 +104,24 @@
       margin-left: auto;
 
       img {
-        max-width: 40px;
+        display: block;
+        width: 28px;
         height: auto;
       }
+    }
 
-      &:hover,
-      &:focus {
-        transform: scale(1.2);
+    .social-media-links {
+      order: 1;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: $space-md;
+
+      img {
+        display: block;
+        width: 28px;
+        height: auto;
+        object-fit: contain;
       }
     }
   }
@@ -110,164 +129,34 @@
   .nav-links {
     display: flex;
     flex-direction: column;
-    padding: 16px;
-    padding-left: 32px;
-    gap: 24px;
+    padding: $space-md;
+    gap: $space-sm;
 
     a {
       all: unset;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      font-size: 18px;
+      box-sizing: border-box;
+      font-size: $font-size-sm;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
-      font-weight: 600;
-      text-shadow: 2px 3px $color-black;
       cursor: pointer;
       user-select: none;
-      color: $color-white;
-
-      .new {
-        font-style: italic;
-        color: $color-yellow;
-        font-size: 14px;
-      }
+      color: var(--t-text);
+      @include list-row;
 
       &:hover,
-      &:focus,
-      &:active {
-        color: $color-yellow;
-
-        .new {
-          color: $color-blue;
-        }
-
-        background-color: $color-red;
-
-        img,
-        span {
-          transform: scale(1.2);
-        }
-      }
-
-      img {
-        width: 24px;
-        height: 48px;
-        object-fit: contain;
+      &:focus-visible {
+        color: var(--t-accent);
       }
     }
   }
 
   .nav-copyright {
-    width: 100%;
+    margin-top: auto;
+    padding: $space-md $space-sm;
     text-align: center;
-    font-size: 10px;
-    font-weight: 300;
-    letter-spacing: -0.5px;
-    text-shadow: 2px 3px $color-black;
-    margin-top: 80px;
-    color: $color-white;
-
-    @include for-desktop {
-      position: fixed;
-      bottom: $space-md;
-      font-size: $font-size-sm;
-    }
-
-    @include for-phone-only {
-      position: fixed;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      bottom: $space-md;
-    }
-  }
-}
-
-.mushroom {
-  @include for-desktop {
-    display: none;
-  }
-
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 100vw;
-  min-height: 100vh;
-  max-height: -webkit-fill-available;
-  z-index: 4;
-  transform: translateX(100%);
-  transition: transform 0.5s linear;
-  filter: brightness(80%);
-  pointer-events: none;
-
-  img {
-    height: 100%;
-    width: auto;
-  }
-
-  &.open {
-    transform: translateX(-225%);
-  }
-}
-
-.planes {
-  img {
-    position: fixed;
-    z-index: 4;
-    pointer-events: none;
-    mix-blend-mode: multiply;
-    opacity: 0.25;
-    pointer-events: none;
-    transition: bottom 1s ease, left 1s ease;
-    height: auto;
-
-    @include for-desktop {
-      opacity: 0.75;
-    }
-
-    &.plane-one {
-      width: 35%;
-      bottom: 50%;
-      left: -100%;
-
-      @include for-desktop {
-        width: 10%;
-      }
-    }
-
-    &.plane-two {
-      width: 75%;
-      bottom: -100%;
-      right: -50%;
-
-      @include for-desktop {
-        width: 20%;
-      }
-    }
-  }
-
-  &.open {
-    .plane-one {
-      bottom: 15%;
-      left: 20%;
-
-      @include for-desktop {
-        left: auto;
-        right: 15%;
-      }
-    }
-
-    .plane-two {
-      bottom: -2%;
-      right: -10%;
-
-      @include for-desktop {
-        bottom: -2%;
-        right: -2%;
-      }
-    }
+    font-size: $font-size-xs;
+    white-space: nowrap;
+    color: var(--t-text-muted);
   }
 }
 
@@ -285,7 +174,7 @@
     left: 0;
     opacity: 0;
     pointer-events: none;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease-out;
 
     &.open {
       opacity: 1;

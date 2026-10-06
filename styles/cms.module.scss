@@ -1,0 +1,461 @@
+@import "./variables.scss";
+@import "./wesware.scss";
+
+// Styles for pages drawn from CMS records: one WesWare panel holding the
+// page's blocks. Page colors and font come from the --cms-* variables that
+// the page wrapper sets from the theme.
+
+.page {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 120px $space-md 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--cms-bg);
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: var(--cms-text);
+  // Bylines and selected thumbnails follow the link color.
+  --t-accent: var(--cms-link);
+  font-family: var(--cms-font);
+  font-size: $font-size-sm;
+  line-height: 1.5;
+
+  @include for-phone-only {
+    padding-top: 96px;
+    // Fixed backgrounds jump on mobile browsers.
+    background-attachment: scroll;
+  }
+
+  // :where keeps this from outranking classes like .button.
+  :where(a) {
+    color: var(--cms-link);
+
+    &:hover {
+      color: var(--cms-link-hover);
+    }
+  }
+}
+
+// The column a page's blocks sit in.
+.content {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  // A page with a slideshow uses most of the window, with room at the sides.
+  &:has(.slideshow) {
+    max-width: calc(100vw - 2 * clamp(#{$space-md}, 8vw, 160px));
+
+    // Phones keep the usual narrow gutter.
+    @include for-small-phone-only {
+      max-width: none;
+    }
+  }
+}
+
+// A box: a panel around a group of blocks.
+.panel {
+  box-sizing: border-box;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-size: cover;
+  background-position: center;
+  @include panel;
+  // A chosen panel color replaces the gradient.
+  background-color: transparent;
+  background-image: var(
+    --cms-panel-image,
+    linear-gradient(to bottom left, var(--t-panel-from), var(--t-panel-via), var(--t-panel-to))
+  );
+
+  @include for-phone-only {
+    padding: $space-md;
+  }
+
+  // A box with nothing in it isn't drawn.
+  &:empty {
+    display: none;
+  }
+
+  // A feed's posts are boxes of their own, so a box around a feed steps aside.
+  &:has(.posts) {
+    padding: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    filter: none;
+  }
+}
+
+.footer {
+  margin-top: auto;
+  padding: $space-xl $space-md 20px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--t-text-muted);
+}
+
+.block {
+  background-size: cover;
+  background-position: center;
+
+  &[data-filled="true"] {
+    padding: 20px;
+    border: 1px solid var(--t-panel-border);
+    border-radius: 2px;
+  }
+}
+
+.heading {
+  margin: 0;
+  color: var(--cms-heading, inherit);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1.2;
+  text-shadow: 2px 2px 0 var(--t-heading-shadow);
+}
+
+h1.heading {
+  font-size: $font-size-xl;
+}
+
+h2.heading {
+  font-size: $font-size-lg;
+}
+
+h3.heading {
+  font-size: $font-size-sm;
+}
+
+.prose {
+  overflow-wrap: break-word;
+
+  > * {
+    margin: 0;
+  }
+
+  > * + * {
+    margin-top: $space-md;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--cms-heading, inherit);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  h3,
+  h4 {
+    font-size: 1.1rem;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  ul,
+  ol {
+    padding-left: 20px;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--t-panel-border);
+  }
+
+  blockquote {
+    padding: 10px;
+    background: var(--t-input-bg);
+    border: 1px solid var(--t-panel-border);
+    border-radius: 4px;
+    color: var(--t-text-muted);
+    font-style: italic;
+    @include inset-shadow;
+
+    > * {
+      margin: 0;
+    }
+
+    > * + * {
+      margin-top: $space-sm;
+    }
+  }
+}
+
+.image {
+  margin: 0;
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 2px;
+  }
+
+  figcaption {
+    margin-top: 10px;
+    font-size: 12px;
+    font-style: italic;
+    text-align: right;
+    color: var(--t-text-muted);
+  }
+}
+
+.embed {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--t-panel-border);
+  border-radius: 2px;
+}
+
+.button {
+  font-size: $font-size-sm;
+  @include btn;
+
+  // The theme's button colors, when set, replace the defaults.
+  &,
+  &:hover {
+    background: var(--cms-button-bg, var(--t-btn-bg));
+    color: var(--cms-button-text, var(--cms-link));
+  }
+
+  &:hover,
+  &:focus-visible {
+    filter: brightness(1.2) drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.5));
+  }
+}
+
+.spacer {
+  height: $space-md;
+
+  &[data-size="sm"] {
+    height: 0;
+  }
+
+  &[data-size="lg"] {
+    height: $space-xl * 2;
+  }
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+// A blog entry: title, body, then who posted it and when. In a feed each one
+// is its own panel; on its own page it sits in the page's panel.
+.post {
+  .posts & {
+    padding: 20px;
+    @include panel;
+    background: var(
+      --cms-panel-image,
+      linear-gradient(to bottom left, var(--t-panel-from), var(--t-panel-via), var(--t-panel-to))
+    );
+
+    @include for-phone-only {
+      padding: $space-md;
+    }
+  }
+
+  h2 {
+    margin: 0 0 $space-xs;
+    color: var(--cms-heading, inherit);
+    font-size: $font-size-md;
+    font-weight: 700;
+  }
+
+  footer {
+    margin-top: $space-sm;
+    font-size: 12px;
+    color: var(--t-text-muted);
+
+    strong,
+    a {
+      color: var(--t-accent);
+    }
+
+    a {
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Tour dates: one row per show with the date, the place and the ticket link.
+.tour {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+
+  li {
+    @include list-row;
+    gap: $space-md;
+    padding: 10px $space-md;
+  }
+
+  time {
+    flex: none;
+    width: 180px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  div {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  span {
+    font-size: 12px;
+    color: var(--t-text-muted);
+  }
+
+  em {
+    flex: none;
+    font-style: normal;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--t-text-muted);
+  }
+
+  // On a phone the date sits above the place, with tickets on the right.
+  @include for-small-phone-only {
+    li {
+      flex-wrap: wrap;
+      gap: $space-xs $space-md;
+    }
+
+    time {
+      width: 100%;
+    }
+  }
+}
+
+.slideshow {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+// The image with an arrow on each side. The stage is sized to the window,
+// not the image, so portrait and landscape images don't move the page. The
+// 410px is everything else on screen with it: the header, the page heading,
+// the thumbnails, the panel's padding and the footer.
+.slideshow-main {
+  display: flex;
+  align-items: stretch;
+  height: calc(100svh - 410px);
+  min-height: 240px;
+  // Sideways drags are swipes; up and down still scrolls the page.
+  touch-action: pan-y;
+
+  // The caption line takes its 30px out of the stage.
+  .slideshow[data-captioned="true"] & {
+    height: calc(100svh - 440px);
+  }
+
+  img {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    object-fit: contain;
+    user-select: none;
+  }
+
+  // Bare arrows whose click area runs the full height of the stage.
+  button {
+    all: unset;
+    flex: none;
+    width: clamp(48px, 8%, 96px);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    color: var(--cms-text);
+    font-size: 40px;
+    user-select: none;
+    opacity: 0.6;
+
+    &:hover,
+    &:focus-visible {
+      opacity: 1;
+      color: var(--cms-link);
+    }
+  }
+
+  // Phones swipe instead of using arrows, and the stage is never taller than
+  // it is wide, so a landscape image isn't lost in empty space.
+  @include for-small-phone-only {
+    height: min(100vw - 64px, 100svh - 410px);
+    min-height: 0;
+
+    button {
+      display: none;
+    }
+  }
+}
+
+// One line under the stage. It keeps its height for images without a
+// caption, so the thumbnails don't jump between images.
+.slideshow-caption {
+  margin: 0;
+  min-height: 20px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.slideshow-thumbs {
+  display: flex;
+  gap: $space-sm;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: $space-sm;
+
+  button {
+    all: unset;
+    flex: none;
+    cursor: pointer;
+    border: 1px solid var(--t-panel-border);
+    border-radius: 2px;
+    opacity: 0.5;
+
+    &[aria-current="true"] {
+      border-color: var(--t-accent);
+      opacity: 1;
+    }
+  }
+
+  img {
+    display: block;
+    width: clamp(64px, 16vw, 96px);
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+}

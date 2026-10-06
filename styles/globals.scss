@@ -3,6 +3,39 @@
 
 :root {
   color-scheme: dark;
+  --game-header-height: clamp(56px, 8svh, 76px);
+
+  // The WesWare theme: Wendigo Corp's panel system in Lil Darkie's black,
+  // red and yellow.
+  --t-bg: #0a0a0a;
+  --t-panel-from: #141414;
+  --t-panel-via: #1c1c1c;
+  --t-panel-to: #141414;
+  --t-panel-border: rgba(255, 255, 255, 0.12);
+  --t-text: #e4e4e7;
+  --t-text-muted: #a1a1aa;
+  --t-accent: #ff1010;
+  --t-input-bg: #0f0f0f;
+  --t-row-even: #141414;
+  --t-row-odd: #1a1a1a;
+  --t-row-hover: #242424;
+  --t-btn-bg: #1c1c1c;
+  --t-btn-hover: #2a2a2a;
+  --t-submit-from: #ff2a31;
+  --t-submit-via: #e00910;
+  --t-submit-to: #a8070c;
+  --t-submit-border: #a8070c;
+  --t-alt-from: #d97706;
+  --t-alt-via: #b45309;
+  --t-alt-to: #92400e;
+  --t-alt-border: #78350f;
+  // Amber as a text color, on the dark buttons.
+  --t-alt-text: #fbbf24;
+  --t-inset-100: rgba(255, 255, 255, 0.08);
+  --t-inset-75: rgba(255, 255, 255, 0.05);
+  --t-inset-25: rgba(255, 255, 255, 0.02);
+  --t-inset-50: rgba(255, 255, 255, 0.04);
+  --t-heading-shadow: rgba(0, 0, 0, 0.8);
 }
 
 body {
@@ -11,27 +44,18 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-color: $color-black;
-  color: $color-white;
-
-  &.light {
-    background-color: $color-white;
-    color: $color-black;
-  }
-
-  &.peach {
-    background-color: $color-peach;
-    color: $color-black;
-  }
+  background-color: var(--t-bg);
+  color: var(--t-text);
 
   &.no-scroll {
     overflow: hidden;
   }
 }
 
+// Form controls default to the system font; follow the site font instead.
 button,
 input {
-  font-family: "Martian Mono", monospace;
+  font-family: inherit;
 }
 
 html {

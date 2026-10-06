@@ -1,143 +1,82 @@
-@import "./variables.scss";
-
-$poster-red: #8a2125;
-$top-bar-space: 8.5rem;
-$top-bar-space-phone: 5rem;
-$footer-space: 2.5rem;
-
 .landing {
+  --game-edge-gap: clamp(8px, 1.6vmin, 16px);
   position: relative;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
   box-sizing: border-box;
   width: 100%;
   height: 100svh;
-  padding: $top-bar-space 1rem $footer-space;
-  justify-content: center;
-  gap: 0;
-  overflow: hidden;
-  background-color: $poster-red;
-  color: $color-black;
-  font-family: Helvetica, Arial, "Helvetica Neue", sans-serif;
-  text-align: center;
-  line-height: 1.15;
+  overflow: clip;
+  background: #080808;
+
+  &[data-layout="simple"][data-playing="false"] {
+    background: #000;
+  }
+
+  &[data-playing="true"] {
+    padding: calc(var(--game-header-height) + var(--game-edge-gap))
+      var(--game-edge-gap) max(var(--game-edge-gap), env(safe-area-inset-bottom));
+  }
+}
+.exit {
+  position: fixed;
+  top: calc((var(--game-header-height) - 52px) / 2);
+  right: max(var(--game-edge-gap), env(safe-area-inset-right));
+  z-index: 6;
+  isolation: isolate;
+  width: clamp(80px, 15vw, 116px);
+  height: 52px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  font: inherit;
+  font-size: clamp(14px, 1.9vw, 19px);
+  text-shadow: 2px 3px 0 #000;
   cursor: pointer;
 
-  @include for-desktop {
-    padding-bottom: $footer-space + 3rem;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: url("https://w-img.b-cdn.net/lil-darkie/red-game/buttons/paint-red-mobile.webp") center / 100% 100% no-repeat;
+    filter: grayscale(1) brightness(1.8);
   }
 
-  @include for-phone-only {
-    padding-top: $top-bar-space-phone;
-  }
-
-  :where(h1, h2, p) {
-    margin: 0;
-    padding: 0;
-    font-weight: 400;
-  }
-}
-
-.top,
-.bottom {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 0 0 auto;
-  width: 100%;
-}
-
-.top {
-  translate: 0 32px;
-}
-
-.bottom {
-  translate: 0 -32px;
-}
-
-// The image is pre-cropped to the hand (1600x1255), so it is simply shown
-// contained. The box takes whatever height is left, but never more than the
-// image renders at, so the text hugs it.
-$artwork-ratio: 1.275;
-
-.artwork {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1 1 auto;
-  min-height: 0;
-  width: 100%;
-  max-height: calc((100vw - 2rem) / #{$artwork-ratio});
-  user-select: none;
-
-  @include for-desktop {
-    max-height: min(calc((100vw - 2rem) / #{$artwork-ratio}), 46svh);
-  }
-
-  img {
-    display: block;
-    max-width: 100%;
-    max-height: 100%;
-    pointer-events: none;
-  }
-}
-
-.album {
-  font-size: clamp(2.75rem, 7.5vmin, 5rem);
-  line-height: 1;
-
-  @include for-phone-only {
-    font-size: min(14vw, 4.5rem);
-  }
-}
-
-.subtitle {
-  margin-top: 0.25rem;
-  font-size: clamp(1rem, 2.8vmin, 1.6rem);
-  font-style: italic;
-  font-weight: 700;
-
-  @include for-phone-only {
-    font-size: min(5.5vw, 1.8rem);
-  }
-}
-
-.details {
-  font-size: clamp(0.9rem, 2.4vmin, 1.3rem);
-
-  @include for-phone-only {
-    font-size: min(4.4vw, 1.5rem);
-  }
-}
-
-.tickets {
-  margin-top: 0.75rem;
-  font-size: clamp(1.25rem, 3.8vmin, 2rem);
-
-  @include for-phone-only {
-    font-size: min(7vw, 2.4rem);
-  }
+  &:hover::before { filter: grayscale(1) brightness(2.4); }
+  &:focus-visible { outline: 2px solid #fff0a1; outline-offset: 3px; }
 }
 
 .footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: $footer-space;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 5;
+  padding: 16px 16px max(16px, env(safe-area-inset-bottom));
+  color: #fff;
+  text-align: center;
+  font-size: clamp(12px, 1.1vw, 14px);
+  line-height: 1.5;
+  text-shadow: 1px 2px 0 #000;
+  pointer-events: none;
+  user-select: none;
+  transition:
+    transform 650ms cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0s;
 
-  .copyright {
-    text-align: center;
-    color: $color-black;
-    font-size: 0.7rem;
+  .landing[data-layout="simple"] & {
+    font-family: Arial, sans-serif;
+    text-transform: lowercase;
+  }
 
-    @include for-desktop {
-      font-size: 0.9rem;
-    }
+  &[data-playing="true"] {
+    transform: translateY(100%);
+    visibility: hidden;
+    transition: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 }

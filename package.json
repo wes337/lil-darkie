@@ -2,24 +2,41 @@
   "name": "lil-darkie",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:game": "node --test components/red-game/*.test.ts",
+    "test:preview": "node --test lib/preview-access.test.ts",
+    "test:cms": "node --test lib/cms/*.test.ts",
+    "test:downloads": "node --test lib/signed-downloads.test.ts lib/red-game-session.test.ts"
   },
   "engines": {
     "node": ">=22"
   },
   "dependencies": {
+    "@tiptap/extension-image": "^3.31.4",
+    "@tiptap/pm": "^3.31.4",
+    "@tiptap/react": "^3.31.4",
+    "@tiptap/starter-kit": "^3.31.4",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.8",
-    "hammerjs": "^2.0.8",
+    "marked": "^18.0.14",
     "next": "16.0.7",
     "react": "19.2.1",
     "react-dom": "19.2.1",
+    "redis": "^6.3.0",
     "sass": "^1.63.6",
     "uuid": "^13.0.0",
+    "zod": "^4.6.5",
     "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^5.9.3"
   }
 }

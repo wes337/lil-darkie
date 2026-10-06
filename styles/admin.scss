@@ -1,0 +1,722 @@
+@import "./wesware.scss";
+
+// Styles for /admin, in the same WesWare look as the public site.
+
+.admin {
+  --line: var(--t-panel-border);
+  --panel: var(--t-panel-via);
+
+  background: var(--t-bg);
+  color: var(--t-text);
+  font-family: Tahoma, Verdana, sans-serif;
+  font-size: 14px;
+  // The tab bar on top, the current view filling the rest.
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  // Element rules skip the page preview, which has its own styles.
+  a:not(.editor-preview *) {
+    color: var(--t-accent);
+  }
+
+  // A screen's title, with its section's 32px icon in front.
+  h1:not(.editor-preview *) {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    font-size: 20px;
+  }
+
+  h2:not(.editor-preview *) {
+    margin: 24px 0 8px;
+    font-size: 16px;
+  }
+
+  input,
+  select,
+  textarea {
+    font: inherit;
+    @include input;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  input[type="color"] {
+    flex: none;
+    width: 36px;
+    height: 32px;
+    padding: 2px;
+  }
+
+  textarea {
+    resize: vertical;
+    font-family: ui-monospace, monospace;
+  }
+
+  button:not(.editor-preview *) {
+    font: inherit;
+    font-size: 13px;
+    white-space: nowrap;
+    @include btn;
+    gap: 6px;
+    padding: 6px 10px;
+    color: var(--t-text);
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    &.primary {
+      @include filled-btn;
+      padding: 6px 14px;
+    }
+
+    &.danger {
+      color: #ff8d89;
+    }
+
+    // Close and Cancel: the plain button with amber text.
+    &.dismiss {
+      color: var(--t-alt-text);
+    }
+
+    // Just the icon, with no button face around it.
+    &.bare {
+      padding: 2px;
+      background: none;
+      border: 0;
+      box-shadow: none;
+      filter: none;
+
+      &:hover:not(:disabled),
+      &:focus-visible {
+        background: none;
+        filter: brightness(1.5);
+      }
+    }
+
+    // The selected one of a set of toggles.
+    &[aria-pressed="true"] {
+      @include filled-btn("alt");
+      padding: 6px 10px;
+    }
+  }
+
+  fieldset {
+    margin: 0 0 12px;
+    padding: 12px;
+    min-width: 0;
+    @include panel;
+  }
+
+  // A panel inside a panel is much lighter, so it stands out from its
+  // parent. A third level goes dark again to stand out from that.
+  fieldset fieldset {
+    background: #2e2e2e;
+    border-color: rgba(255, 255, 255, 0.22);
+
+    fieldset {
+      background: var(--panel);
+      border-color: var(--line);
+    }
+  }
+
+  legend {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 6px;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+
+  details {
+    margin-top: 8px;
+
+    summary {
+      cursor: pointer;
+      color: var(--t-text-muted);
+    }
+  }
+
+  // Keep each block's controls together and separate sibling blocks.
+  .blocks > .page-block {
+    margin-bottom: 20px;
+
+    &[data-type="box"] > .block-style {
+      margin: 0 0 16px;
+    }
+  }
+
+  .block-style[open] > summary {
+    margin-bottom: 12px;
+  }
+
+  // Stack again when the editor column is too narrow for both fields.
+  .heading-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+    column-gap: 12px;
+
+    select {
+      min-width: 0;
+    }
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 10px;
+    flex: 1;
+    min-width: 0;
+
+    > span:first-child {
+      color: var(--t-text-muted);
+      font-size: 12px;
+    }
+  }
+
+  // Label on the left, input on the right.
+  .field.inline {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+
+    > span:first-child {
+      flex: none;
+      width: 120px;
+      color: inherit;
+      font-size: inherit;
+      text-transform: capitalize;
+    }
+  }
+
+  .check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  // A row whose buttons share its full width.
+  .row.fill > * {
+    flex: 1;
+  }
+
+  .row-controls {
+    display: flex;
+    gap: 4px;
+
+    button {
+      padding: 2px 8px;
+    }
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  // An icon beside a label, with the same hard-edged shadow as the text on
+  // filled buttons. No width or height here: icons show at their file's own
+  // size and are never scaled.
+  .icon {
+    flex: none;
+    filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.6));
+  }
+
+  .thumb {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .badge {
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--t-btn-hover);
+    font-size: 12px;
+  }
+
+  .saved {
+    color: #7dd67d;
+  }
+
+  .issues {
+    margin: 0;
+    padding: 10px 16px 10px 32px;
+    background: #3a1212;
+    color: #ffb3b0;
+  }
+
+  // A one-line error, not a list.
+  p.issues {
+    padding: 10px 16px;
+    margin-bottom: 10px;
+  }
+
+  .login {
+    max-width: 320px;
+    margin: 20vh auto 0;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .admin-tabs {
+    flex: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 10px;
+    padding: 10px;
+    @include panel;
+
+    strong {
+      margin-right: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 0 var(--t-heading-shadow);
+    }
+
+    a {
+      font-size: 12px;
+      @include btn;
+      gap: 6px;
+      color: var(--t-text);
+
+      &[aria-current="page"] {
+        @include filled-btn;
+        font-size: 12px;
+      }
+    }
+
+    // Plain buttons in the bar match the tabs.
+    button {
+      gap: 6px;
+      font-size: 12px;
+      color: var(--t-text);
+    }
+
+    // On wide screens the menu's links sit straight in the bar.
+    .admin-menu {
+      display: contents;
+    }
+
+    .menu-toggle {
+      display: none;
+    }
+
+    // Only the phone list draws the rule above "View site".
+    hr {
+      display: none;
+    }
+
+    // Small desktops: the three links on the right drop their text, so the
+    // bar stays on one line. The narrowest ones drop the title as well.
+    @media (min-width: 901px) and (max-width: 1300px) {
+      .label {
+        display: none;
+      }
+    }
+
+    @media (min-width: 901px) and (max-width: 1060px) {
+      strong {
+        display: none;
+      }
+    }
+
+    // Phones: the bar is the title and a menu button. Opening the menu grows
+    // the bar to fill the screen, with the links in one column under it.
+    @media (max-width: 900px) {
+      .menu-toggle {
+        display: inline-flex;
+        margin-left: auto;
+        font-size: 16px;
+      }
+
+      .admin-menu {
+        display: none;
+      }
+
+      &[data-open="true"] {
+        position: fixed;
+        inset: 0;
+        z-index: 9;
+        margin: 0;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto 1fr;
+
+        .admin-menu {
+          grid-column: 1 / -1;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          min-height: 0;
+          overflow-y: auto;
+          padding-top: 8px;
+
+          // The rule takes the spacer's job here: its auto margins split the
+          // free space evenly above and below it.
+          .spacer {
+            display: none;
+          }
+
+          hr {
+            display: block;
+            width: 100%;
+            margin: auto 0;
+            // A 1px line with 16px of clear space built in on each side, for
+            // when the list leaves no free space to split.
+            box-sizing: content-box;
+            height: 1px;
+            border: 0;
+            border-block: 16px solid transparent;
+            background: var(--line) padding-box;
+          }
+
+          a,
+          button {
+            padding: 14px;
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+
+  // A list or form screen.
+  .view {
+    flex: 1;
+    overflow-y: auto;
+    width: 100%;
+    max-width: 900px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 24px 16px 64px;
+
+    &.narrow {
+      max-width: 480px;
+    }
+
+    header {
+      margin-bottom: 16px;
+    }
+
+    form {
+      margin-top: 16px;
+    }
+
+    small {
+      color: var(--t-text-muted);
+    }
+  }
+
+  a.button {
+    font-size: 13px;
+    @include btn;
+    gap: 6px;
+    padding: 6px 10px;
+    color: var(--t-text);
+
+    &.primary {
+      @include filled-btn;
+    }
+
+    &.dismiss {
+      color: var(--t-alt-text);
+    }
+  }
+
+  .list {
+    margin: 0;
+    padding: 10px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    @include panel;
+
+    li {
+      @include list-row;
+    }
+  }
+
+  .editor {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  // One row: back and title on the left, the tabs and the actions on the right.
+  .editor-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 0 10px 10px;
+    border-bottom: 1px solid var(--line);
+
+    h1 {
+      margin: 0 8px;
+      font-size: 16px;
+    }
+  }
+
+  .editor-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    max-width: 100%;
+
+    h1 {
+      min-width: 0;
+      margin: 0;
+      overflow-wrap: anywhere;
+    }
+
+    > .icon,
+    button {
+      flex: none;
+    }
+
+    form {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      min-width: 0;
+      width: min(300px, calc(100vw - 130px));
+    }
+
+    input {
+      min-width: 0;
+    }
+
+    button.bare {
+      min-width: 32px;
+      min-height: 32px;
+    }
+  }
+
+  .editor-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(360px, 1fr) 1.4fr;
+    min-height: 0;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+
+    // One centered column when there's no preview pane.
+    &[data-preview="false"] {
+      grid-template-columns: minmax(0, 860px);
+      justify-content: center;
+
+      .editor-form {
+        border-right: 0;
+      }
+    }
+  }
+
+  .rich-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 6px;
+    border: 1px solid var(--line);
+    border-bottom: 0;
+    border-radius: 4px 4px 0 0;
+    background: var(--panel);
+
+    button {
+      min-width: 30px;
+      padding: 3px 8px;
+    }
+
+    .gap {
+      width: 8px;
+    }
+  }
+
+  .rich-content {
+    min-height: 320px;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 0 0 4px 4px;
+    background: var(--t-input-bg);
+    line-height: 1.6;
+    outline: none;
+
+    > :first-child {
+      margin-top: 0;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    blockquote {
+      margin-left: 0;
+      padding-left: 12px;
+      border-left: 4px solid #666;
+    }
+  }
+
+  .editor-form {
+    padding: 16px;
+    overflow-y: auto;
+    border-right: 1px solid var(--line);
+  }
+
+  .editor-preview {
+    overflow-y: auto;
+
+    // The preview is a scrolling pane, not the viewport.
+    > main {
+      min-height: 100%;
+      padding-top: 24px;
+      background-attachment: scroll;
+    }
+  }
+
+  .tabs {
+    display: flex;
+    gap: 4px;
+  }
+
+  // Tabs inside a form sit on their own row above what they switch.
+  .editor-form .tabs {
+    margin-bottom: 16px;
+  }
+
+  // A thin vertical rule between groups of buttons.
+  .divider {
+    align-self: stretch;
+    width: 1px;
+    margin: 2px 6px;
+    background: var(--line);
+  }
+
+  .json {
+    height: 70vh;
+    font-size: 12px;
+  }
+
+  .history {
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--line);
+    }
+  }
+
+  .nav-links {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    @include panel;
+
+    > div {
+      @include list-row;
+    }
+
+    small {
+      color: var(--t-text-muted);
+    }
+  }
+
+  .dialog-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .dialog {
+    width: min(900px, 92vw);
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 16px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+
+    > .row {
+      justify-content: space-between;
+      margin-bottom: 12px;
+
+      // A closing row of buttons leaves only the dialog's own padding below.
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    &.small {
+      width: min(440px, 92vw);
+    }
+
+    h2 {
+      margin: 0;
+    }
+  }
+
+  .media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 8px;
+    margin-top: 16px;
+
+    button {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 6px;
+      min-width: 0;
+    }
+
+    img,
+    button > span {
+      width: 100%;
+      height: 90px;
+      object-fit: cover;
+      display: grid;
+      place-items: center;
+    }
+
+    small {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 11px;
+    }
+  }
+}

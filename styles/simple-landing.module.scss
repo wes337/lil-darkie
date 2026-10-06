@@ -1,0 +1,64 @@
+.landing {
+  position: absolute;
+  // Keep the scrollable links clear of the shared logo and copyright.
+  inset: clamp(4rem, 10svh, 6.5rem) 0 max(56px, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: auto;
+  padding: 16px max(24px, env(safe-area-inset-right))
+    16px max(24px, env(safe-area-inset-left));
+  background: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+
+  nav {
+    max-width: 100%;
+    margin-block: auto;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(4px, 1.5svh, 14px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  a,
+  button {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 44px;
+    padding: 8px 16px;
+    border: 0;
+    background: none;
+    color: #fff;
+    font: 400 clamp(22px, 3vw, 32px) / 1.25 Arial, sans-serif;
+    text-align: center;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    cursor: pointer;
+
+    &:focus-visible {
+      color: #f00;
+      outline: 2px solid currentColor;
+      outline-offset: 4px;
+    }
+
+    &:disabled { cursor: wait; }
+
+    @media (hover: hover) {
+      &:not(:disabled):hover { color: #f00; }
+    }
+  }
+
+  p {
+    max-width: 28rem;
+    font-size: 14px;
+  }
+}
