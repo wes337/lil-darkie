@@ -388,6 +388,14 @@ h3.heading {
   td:first-child {
     overflow-wrap: anywhere;
 
+    a {
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
     img {
       vertical-align: -3px;
       margin-right: 6px;
