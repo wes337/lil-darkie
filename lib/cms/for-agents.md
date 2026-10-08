@@ -130,6 +130,6 @@ The landing page has two layouts, `simple` and `painting`. `LANDING_LAYOUT` in `
 
 The original painting layout is in `components/landing/painting.tsx` and `styles/painting-landing.module.scss`. Its animated scene remains in `components/red-game/landing-scene.tsx` and `styles/landing-scene.module.scss`.
 
-`files` is optional. It is the list shown on `/files`, in order, as `{ "label": "Red (the album)", "url": "https://w-s3.b-cdn.net/lil-darkie/files/red.zip", "size": 508559360 }`. `size` is in bytes and optional. Admin → Files uploads straight to storage, which has no size limit; through the API, upload the file somewhere first and list its URL.
+`files` is optional. It is the list shown on `/files`, in order, as `{ "label": "Red (the album)", "url": "https://w-s3.b-cdn.net/lil-darkie/files/red.zip", "size": 508559360, "date": "2026-09-30T19:04:00.000Z" }`. `size` is in bytes and `date` is a UTC timestamp; both are optional and show in the listing. Admin → Files uploads straight to storage, which has no size limit; through the API, upload the file somewhere first and list its URL.
 
 The game and `/sampler` are built in code and can't be edited here.

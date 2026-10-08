@@ -1,6 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { fontFamily, upcomingShows } from "./render.ts";
+import {
+  fileIcon,
+  fontFamily,
+  formatModified,
+  upcomingShows,
+} from "./render.ts";
 
 test("a font setting resolves to a built-in stack or an uploaded font's name", () => {
   assert.equal(fontFamily("arial"), "Arial, sans-serif");
@@ -27,4 +32,15 @@ test("a show stays listed through its evening everywhere, then drops off", () =>
   // 11pm in California on the night of the show.
   assert.equal(at("2026-10-18T06:00:00Z"), 1);
   assert.equal(at("2026-10-19T00:00:00Z"), 0);
+});
+
+test("file icons come from the label's extension, then the URL's", () => {
+  assert.equal(fileIcon("red (the album).zip", "https://cdn/x"), "page_white_zip");
+  assert.equal(fileIcon("Lyrics", "https://cdn/lyrics.PDF"), "page_white_acrobat");
+  assert.equal(fileIcon("Notes", "https://cdn/notes"), "page_white");
+});
+
+test("listing dates are written like a directory listing, in the artist's time zone", () => {
+  assert.equal(formatModified("2026-10-08T21:50:00Z"), "2026-10-08 14:50");
+  assert.equal(formatModified("2026-01-01T07:05:00Z"), "2025-12-31 23:05");
 });

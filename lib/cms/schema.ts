@@ -183,11 +183,13 @@ export const postSchema = z.strictObject({
 const link = z.strictObject({ label: z.string().min(1), href: url });
 
 // One entry on the /files page: a download with the name it's listed under.
-// `size` is in bytes, from the upload.
+// `size` is in bytes and `date` is when it was uploaded; both come from the
+// upload and show in the listing.
 const siteFile = z.strictObject({
   label: z.string().min(1),
   url,
   size: z.number().int().min(0).optional(),
+  date: z.iso.datetime().optional(),
 });
 
 export const BUTTON_SIZES = ["small", "medium", "large"] as const;

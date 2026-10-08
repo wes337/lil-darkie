@@ -6,7 +6,7 @@ import { MoveButtons, RemoveButton, TextField, replaceAt } from "@/components/ad
 import Icon from "@/components/admin/icon";
 import { uploadFile } from "@/components/admin/upload";
 import { useRecord } from "@/components/admin/use-record";
-import { formatBytes } from "@/lib/cms/render";
+import { fileIcon, formatBytes } from "@/lib/cms/render";
 import { DEFAULT_SITE, siteSchema, type Site, type SiteFile } from "@/lib/cms/schema";
 
 function FileDialog({
@@ -58,7 +58,7 @@ export default function FilesView() {
       const { url, size } = await uploadFile(file, (fraction) =>
         setProgress(`${Math.round(fraction * 100)}%`),
       );
-      await saveFiles([...files, { label: file.name, url, size }]);
+      await saveFiles([...files, { label: file.name, url, size, date: new Date().toISOString() }]);
       setProgress(undefined);
     } catch (error) {
       setProgress(error instanceof Error ? error.message : "Upload failed");
@@ -94,6 +94,7 @@ export default function FilesView() {
                 <span className="row-controls">
                   <MoveButtons items={files} index={i} onChange={saveFiles} />
                 </span>
+                <Icon name={fileIcon(file.label, file.url)} />
                 <strong>{file.label}</strong>
                 <small>
                   {file.url}

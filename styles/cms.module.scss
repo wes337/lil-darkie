@@ -358,32 +358,55 @@ h3.heading {
   }
 }
 
-// The /files page: one row per download with its size on the right.
-.files {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: $space-sm;
+// The /files page, drawn like a server's directory listing: a heading, a
+// rule, the table, a rule. Everything is in the page's own text color.
+.index {
+  width: 100%;
 
-  li {
-    @include list-row;
-    gap: $space-md;
-    padding: 10px $space-md;
+  table {
+    width: 100%;
+    margin-top: $space-md;
+    border-collapse: collapse;
+    border-top: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
   }
 
-  a {
-    flex: 1;
-    min-width: 0;
-    overflow-wrap: anywhere;
+  th {
+    padding: 6px 0;
+    text-align: left;
     font-weight: 700;
+    border-bottom: 1px solid currentColor;
   }
 
-  span {
-    flex: none;
-    font-size: 12px;
-    color: var(--t-text-muted);
+  td {
+    padding: 4px 0;
+    vertical-align: top;
+  }
+
+  th + th,
+  td + td {
+    padding-left: $space-md;
+  }
+
+  // The name takes the room; the date and size stay on one line.
+  td:first-child {
+    overflow-wrap: anywhere;
+
+    img {
+      vertical-align: -3px;
+      margin-right: 6px;
+    }
+  }
+
+  th:not(:first-child),
+  td:not(:first-child) {
+    width: 1%;
+    white-space: nowrap;
+  }
+
+  th:last-child,
+  td:last-child {
+    text-align: right;
   }
 }
 
