@@ -60,17 +60,24 @@ async function putPart(url: string, part: Blob, attempt = 1): Promise<string> {
   }
 }
 
-// Runs `work` over every item with at most `limit` going at once.
+// Runs `work` over every item with at most `limit` going at once. Once one
+// fails, the rest stop picking up new items.
 async function inParallel<T>(
   items: T[],
   limit: number,
   work: (item: T, index: number) => Promise<void>,
 ): Promise<void> {
   let next = 0;
+  let failed = false;
   const worker = async () => {
-    while (next < items.length) {
+    while (next < items.length && !failed) {
       const i = next++;
-      await work(items[i]!, i);
+      try {
+        await work(items[i]!, i);
+      } catch (error) {
+        failed = true;
+        throw error;
+      }
     }
   };
   await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));

@@ -6,6 +6,7 @@ import { MoveButtons, RemoveButton, TextField, replaceAt } from "@/components/ad
 import Icon from "@/components/admin/icon";
 import { uploadFile } from "@/components/admin/upload";
 import { useRecord } from "@/components/admin/use-record";
+import { useUnsavedChanges } from "@/components/admin/use-unsaved-changes";
 import { fileIcon, formatBytes } from "@/lib/cms/render";
 import { DEFAULT_SITE, siteSchema, type Site, type SiteFile } from "@/lib/cms/schema";
 
@@ -45,7 +46,11 @@ function FileDialog({
 export default function FilesView() {
   const record = useRecord<Site>("/api/site", siteSchema, () => DEFAULT_SITE);
   const [editing, setEditing] = useState<number | "new">();
-  const [progress, setProgress] = useState<string>();
+  const [uploading, setUploading] = useState(false);
+  // The upload's progress, or why the last one failed.
+  const [message, setMessage] = useState("");
+  // Leaving mid-upload would throw the upload away.
+  useUnsavedChanges(uploading);
   const site = record.doc;
   if (!site) return <p>Loading...</p>;
 
@@ -53,15 +58,18 @@ export default function FilesView() {
   const saveFiles = (next: SiteFile[]) => record.save({ ...site, files: next });
 
   async function upload(file: File) {
-    setProgress("0%");
+    setUploading(true);
+    setMessage("0%");
     try {
       const { url, size } = await uploadFile(file, (fraction) =>
-        setProgress(`${Math.round(fraction * 100)}%`),
+        setMessage(`${Math.round(fraction * 100)}%`),
       );
       await saveFiles([...files, { label: file.name, url, size, date: new Date().toISOString() }]);
-      setProgress(undefined);
+      setMessage("");
     } catch (error) {
-      setProgress(error instanceof Error ? error.message : "Upload failed");
+      setMessage(error instanceof Error ? error.message : "Upload failed");
+    } finally {
+      setUploading(false);
     }
   }
 
@@ -86,7 +94,7 @@ export default function FilesView() {
         </a>
       </header>
       <Issues issues={record.state.issues} />
-      <fieldset disabled={record.state.saving || progress !== undefined}>
+      <fieldset disabled={record.state.saving || uploading}>
         {files.length > 0 && (
           <div className="nav-links">
             {files.map((file, i) => (
@@ -130,7 +138,7 @@ export default function FilesView() {
             <Icon name="link" />
             Add link
           </button>
-          {progress && <span role="status">{progress}</span>}
+          {message && <span role="status">{message}</span>}
         </p>
       </fieldset>
       {editing !== undefined && (
