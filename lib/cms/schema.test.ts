@@ -31,6 +31,28 @@ test("landing layouts preserve their separate lists and accept older site record
   assert.deepEqual(siteSchema.parse({ ...site, landingButtons: [] }).landingButtons, []);
 });
 
+test("files are a label and a URL, with the size and date optional", () => {
+  const files = [
+    { label: "Red (the album)", href: "https://w-s3.b-cdn.net/lil-darkie/files/red.zip" },
+  ];
+  const site = {
+    ...DEFAULT_SITE,
+    files: [{ label: "Red", url: files[0]!.href, size: 485, date: "2026-10-08T12:00:00.000Z" }],
+  };
+  assert.deepEqual(siteSchema.parse(site), site);
+  assert.deepEqual(siteSchema.parse({ ...site, files: [{ label: "Notes", url: "/notes.pdf" }] }).files, [
+    { label: "Notes", url: "/notes.pdf" },
+  ]);
+  for (const file of [
+    { label: "", url: "/notes.pdf" },
+    { label: "Unsafe", url: "javascript:alert(1)" },
+    { label: "Half", url: "/notes.pdf", size: 1.5 },
+    { label: "Day", url: "/notes.pdf", date: "2026-10-08" },
+  ]) {
+    assert.equal(siteSchema.safeParse({ ...site, files: [file] }).success, false, JSON.stringify(file));
+  }
+});
+
 test("landing actions and link destinations are validated separately", () => {
   for (const button of [
     { type: "link", label: "Missing URL" },

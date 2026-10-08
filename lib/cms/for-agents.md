@@ -4,7 +4,7 @@ This file is for AI agents asked to change the site's content. The record schema
 
 The site is made of three kinds of records, stored as JSON.
 
-- **site**: one record. Nav links, social links, the copyright line, the logo and the default theme.
+- **site**: one record. Nav links, social links, the copyright line, the logo, the default theme and the `/files` list.
 - **page**: one per URL. `/comics` is the page with slug `comics`. A page has a title, a theme and an ordered list of blocks.
 - **post**: a blog entry. Posts belong to a `collection` (for example `writings`). A page shows a collection by including a `posts` block. Each published post also has its own URL at `/posts/<slug>`.
 
@@ -129,5 +129,7 @@ The landing page has two layouts, `simple` and `painting`. `LANDING_LAYOUT` in `
 `homeButtons` are extra buttons on the painting layout, editable only through the API. They are shown in order under "Play the Game". Each has a `label` and an `href`, and optionally a `textColor`, a `backgroundColor` (a hex color or `"transparent"`) and a `size` (small, medium or large).
 
 The original painting layout is in `components/landing/painting.tsx` and `styles/painting-landing.module.scss`. Its animated scene remains in `components/red-game/landing-scene.tsx` and `styles/landing-scene.module.scss`.
+
+`files` is optional. It is the list shown on `/files`, in order, as `{ "label": "Red (the album)", "url": "https://w-s3.b-cdn.net/lil-darkie/files/red.zip", "size": 508559360, "date": "2026-09-30T19:04:00.000Z" }`. `size` is in bytes and `date` is a UTC timestamp; both are optional and show in the listing. Admin → Files uploads straight to storage, which has no size limit; through the API, upload the file somewhere first and list its URL.
 
 The game and `/sampler` are built in code and can't be edited here.

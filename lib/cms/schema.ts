@@ -23,6 +23,7 @@ export const RESERVED_SLUGS = [
   "sounds",
   "fonts",
   "red-game",
+  "files",
 ];
 
 const slug = z
@@ -181,6 +182,16 @@ export const postSchema = z.strictObject({
 
 const link = z.strictObject({ label: z.string().min(1), href: url });
 
+// One entry on the /files page: a download with the name it's listed under.
+// `size` is in bytes and `date` is when it was uploaded; both come from the
+// upload and show in the listing.
+const siteFile = z.strictObject({
+  label: z.string().min(1),
+  url,
+  size: z.number().int().min(0).optional(),
+  date: z.iso.datetime().optional(),
+});
+
 export const BUTTON_SIZES = ["small", "medium", "large"] as const;
 
 // A landing page button: a link plus how it looks.
@@ -223,6 +234,8 @@ export const siteSchema = z.strictObject({
       "Font names must be unique",
     )
     .optional(),
+  // The downloads listed on /files, in order.
+  files: z.array(siteFile).optional(),
   // Defaults that every page inherits unless its own theme overrides them.
   theme: themeSchema,
 });
@@ -237,6 +250,7 @@ export type Page = z.infer<typeof pageSchema>;
 export type Post = z.infer<typeof postSchema>;
 export type Site = z.infer<typeof siteSchema>;
 export type UploadedFont = z.infer<typeof uploadedFont>;
+export type SiteFile = z.infer<typeof siteFile>;
 export type HomeButton =z.infer<typeof homeButton>;
 export type LandingButton = z.infer<typeof landingButton>;
 

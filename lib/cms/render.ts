@@ -177,3 +177,81 @@ export function formatPosted(date: string): string {
     .join("");
   return `${day} @ ${time}`;
 }
+
+// The FatCow icon for a file, by its extension. Anything unknown is a plain
+// page, like a server's directory listing.
+const FILE_ICONS: Record<string, string> = {
+  zip: "page_white_zip",
+  rar: "page_white_zip",
+  "7z": "page_white_zip",
+  gz: "page_white_zip",
+  tar: "page_white_zip",
+  pdf: "page_white_acrobat",
+  png: "page_white_picture",
+  jpg: "page_white_picture",
+  jpeg: "page_white_picture",
+  gif: "page_white_picture",
+  webp: "page_white_picture",
+  svg: "page_white_picture",
+  avif: "page_white_picture",
+  mp3: "music",
+  wav: "music",
+  flac: "music",
+  m4a: "music",
+  aiff: "music",
+  ogg: "music",
+  mp4: "film",
+  mov: "film",
+  webm: "film",
+  mkv: "film",
+  txt: "page_white_text",
+  md: "page_white_text",
+  doc: "page_white_word",
+  docx: "page_white_word",
+  xls: "page_white_excel",
+  xlsx: "page_white_excel",
+  csv: "page_white_excel",
+  ppt: "page_white_powerpoint",
+  pptx: "page_white_powerpoint",
+};
+
+// "red (the album).zip" picks the zip icon. Looks at the label first, then
+// the URL, so a link listed under a plain name still gets its file's icon.
+export function fileIcon(label: string, url: string): string {
+  for (const name of [label, url]) {
+    const extension = /\.([a-z0-9]+)$/i.exec(name)?.[1]?.toLowerCase();
+    const icon = extension && FILE_ICONS[extension];
+    if (icon) return icon;
+  }
+  return "page_white";
+}
+
+// "2026-10-08T21:50:00Z" becomes "2026-10-08 14:50", in the artist's time
+// zone, the way a server's directory listing writes it.
+export function formatModified(date: string): string {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: POST_TIME_ZONE,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(new Date(date));
+  const part = (type: Intl.DateTimeFormatPartTypes) =>
+    parts.find((item) => item.type === type)?.value ?? "";
+  return `${part("year")}-${part("month")}-${part("day")} ${part("hour")}:${part("minute")}`;
+}
+
+// Bytes as "485 MB", "3.2 MB" or "900 KB". Under a kilobyte it's the bytes.
+export function formatBytes(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  const units = ["KB", "MB", "GB"] as const;
+  let value = bytes / 1024;
+  let unit = 0;
+  while (value >= 1024 && unit < units.length - 1) {
+    value /= 1024;
+    unit += 1;
+  }
+  return `${value < 10 ? value.toFixed(1).replace(/\.0$/, "") : Math.round(value)} ${units[unit]}`;
+}

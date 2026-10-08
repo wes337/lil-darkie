@@ -11,6 +11,7 @@ const TABS = [
   { href: "/admin/pages", label: "Pages", icon: "page" },
   { href: "/admin/posts", label: "Posts", icon: "newspaper" },
   { href: "/admin/media", label: "Media", icon: "pictures" },
+  { href: "/admin/files", label: "Files", icon: "folder" },
   { href: "/admin/site", label: "Settings", icon: "cog" },
 ];
 

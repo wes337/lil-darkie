@@ -19,6 +19,7 @@ Secrets, all server-only:
 - `ADMIN_PASSWORD` unlocks `/admin` and is the bearer token for API saves, until the password is changed in the admin. A changed password is stored as a hash in Redis and replaces this one. With neither set, nothing can be saved.
 - `REDIS_URL` is the one Redis database. Keys are prefixed `prod:` on the production deploy and `dev:` everywhere else, so local and preview edits never touch the live site.
 - `BUNNY_STORAGE_KEY` is for uploads, which go to the `lil-darkie/cms` folder of the storage zone.
+- `BUNNY_S3_PASSWORD` is the password of the `wes-s3` storage zone, which the Files page uploads to through Bunny's S3 API. Files go to its `lil-darkie/files` folder and are served from `w-s3.b-cdn.net`.
 
 Commands:
 
