@@ -17,7 +17,7 @@ export default async function FilesPage() {
   return (
     <PageShell site={site}>
       <div className={styles.index}>
-        <h1 className={styles.heading}>Index of /files</h1>
+        <h1 className={styles.heading}>Files</h1>
         <table>
           <thead>
             <tr>
