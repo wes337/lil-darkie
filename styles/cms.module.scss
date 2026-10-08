@@ -359,18 +359,18 @@ h3.heading {
 }
 
 // The /files listing, drawn like a server's directory listing inside the
-// usual panel: name, date and size between two rules, in the text color.
+// usual panel: name, date and size between two rules in the panel's border gray.
 .index {
   width: 100%;
   border-collapse: collapse;
-  border-top: 1px solid currentColor;
-  border-bottom: 1px solid currentColor;
+  border-top: 1px solid var(--t-panel-border);
+  border-bottom: 1px solid var(--t-panel-border);
 
   th {
     padding: 6px 0;
     text-align: left;
     font-weight: 700;
-    border-bottom: 1px solid currentColor;
+    border-bottom: 1px solid var(--t-panel-border);
   }
 
   td {
