@@ -25,9 +25,10 @@ export async function uploadFile(
   let done = 0;
 
   try {
-    await inParallel(upload.parts, PARALLEL, async (url, i) => {
+    await inParallel(upload.parts, PARALLEL, async (url, i, signal) => {
       const part = file.slice(i * upload.partSize, (i + 1) * upload.partSize);
-      etags[i] = await putPart(url, part);
+      etags[i] = await putPart(url, part, signal);
+      signal.throwIfAborted();
       done += part.size;
       onProgress(done / file.size);
     });
@@ -41,44 +42,47 @@ export async function uploadFile(
     });
     if (!completed.ok) throw new Error(`Couldn't finish the upload (${completed.status})`);
   } catch (error) {
-    fetch(upload.abort, { method: "DELETE" }).catch(() => {});
+    await fetch(upload.abort, { method: "DELETE" }).catch(() => {});
     throw error;
   }
   return { url: upload.url, size: file.size };
 }
 
 // Resolves to the part's ETag, which the complete step needs.
-async function putPart(url: string, part: Blob, attempt = 1): Promise<string> {
+async function putPart(url: string, part: Blob, signal: AbortSignal, attempt = 1): Promise<string> {
+  signal.throwIfAborted();
   try {
-    const response = await fetch(url, { method: "PUT", body: part });
+    const response = await fetch(url, { method: "PUT", body: part, signal });
     const etag = response.headers.get("etag");
     if (!response.ok || !etag) throw new Error(`Part upload failed (${response.status})`);
     return etag;
   } catch (error) {
-    if (attempt >= 2) throw error;
-    return putPart(url, part, attempt + 1);
+    if (signal.aborted || attempt >= 2) throw error;
+    return putPart(url, part, signal, attempt + 1);
   }
 }
 
 // Runs `work` over every item with at most `limit` going at once. Once one
-// fails, the rest stop picking up new items.
+// fails, cancel the others and wait for them to stop before throwing the
+// original failure. No worker can report progress after this rejects.
 async function inParallel<T>(
   items: T[],
   limit: number,
-  work: (item: T, index: number) => Promise<void>,
+  work: (item: T, index: number, signal: AbortSignal) => Promise<void>,
 ): Promise<void> {
   let next = 0;
-  let failed = false;
+  const controller = new AbortController();
+  const { signal } = controller;
   const worker = async () => {
-    while (next < items.length && !failed) {
+    while (next < items.length && !signal.aborted) {
       const i = next++;
       try {
-        await work(items[i]!, i);
+        await work(items[i]!, i, signal);
       } catch (error) {
-        failed = true;
-        throw error;
+        controller.abort(error);
       }
     }
   };
   await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+  signal.throwIfAborted();
 }

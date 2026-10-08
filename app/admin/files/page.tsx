@@ -57,21 +57,27 @@ export default function FilesView() {
   const files = site.files ?? [];
   const saveFiles = (next: SiteFile[]) => record.save({ ...site, files: next });
 
-  async function upload(file: File) {
+  const upload = async (file: File) => {
     setUploading(true);
     setMessage("0%");
     try {
       const { url, size } = await uploadFile(file, (fraction) =>
         setMessage(`${Math.round(fraction * 100)}%`),
       );
-      await saveFiles([...files, { label: file.name, url, size, date: new Date().toISOString() }]);
+      const next = {
+        ...site,
+        files: [...files, { label: file.name, url, size, date: new Date().toISOString() }],
+      };
+      // Keep the completed upload in the editor if publishing fails. Save
+      // can then retry just the record, and leaving warns about unsaved work.
+      if (!(await record.save(next))) record.setDoc(next);
       setMessage("");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Upload failed");
     } finally {
       setUploading(false);
     }
-  }
+  };
 
   async function saveFile(file: SiteFile) {
     if (editing === undefined || record.state.saving) return;
@@ -88,12 +94,24 @@ export default function FilesView() {
         </h1>
         <span className="spacer" />
         {record.state.saved && <span className="saved">Saved</span>}
+        {record.dirty && (
+          <button
+            type="button"
+            className="primary"
+            disabled={record.state.saving || uploading}
+            onClick={() => record.save()}
+          >
+            <Icon name="diskette" />
+            Save
+          </button>
+        )}
         <a className="button" href="/files" target="_blank" rel="noreferrer">
           <Icon name="world_go" />
           View
         </a>
       </header>
       <Issues issues={record.state.issues} />
+      {record.dirty && <p role="status">The uploaded file is stored. Save to publish the updated list.</p>}
       <fieldset disabled={record.state.saving || uploading}>
         {files.length > 0 && (
           <div className="nav-links">

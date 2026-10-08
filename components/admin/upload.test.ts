@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import type { Upload } from "../../lib/cms/s3.ts";
 import { uploadFile } from "./upload.ts";
 
 type Call = { url: string; method: string; body?: unknown };
@@ -61,6 +62,58 @@ test("a part that fails twice abandons the upload", async (t) => {
 
   await assert.rejects(uploadFile(file(), () => {}), /Part upload failed \(500\)/);
 
+  assert.equal(calls.some((call) => call.url.endsWith("complete")), false);
+  assert.equal(calls.filter((call) => call.url.endsWith("abort")).length, 1);
+});
+
+test("failure cancels active parts before cleanup and suppresses late progress", async (t) => {
+  const calls: Call[] = [];
+  const fetchResponse = fakeFetch(calls, { 1: [500, 500] });
+  const signals: AbortSignal[] = [];
+  const progress: number[] = [];
+  let settled = 0;
+  let settledAtCleanup = -1;
+
+  t.mock.method(globalThis, "fetch", async (url: string | URL | Request, init?: RequestInit) => {
+    const target = String(url);
+    if (target === "/api/uploads") {
+      const response = await fetchResponse(url, init);
+      const upload: Upload = await response.json();
+      upload.parts.push("https://s3/x?partNumber=4");
+      return Response.json(upload);
+    }
+    const part = Number(/partNumber=(\d)/.exec(target)?.[1]);
+    if (part === 2 || part === 3) {
+      calls.push({ url: target, method: init?.method ?? "GET" });
+      const signal = init?.signal;
+      assert.ok(signal);
+      signals.push(signal);
+      return new Promise<Response>((resolve, reject) => {
+        signal.addEventListener("abort", () => {
+          settled += 1;
+          if (part === 2) {
+            reject(new DOMException("Aborted", "AbortError"));
+          } else {
+            // A response can arrive just as cancellation starts.
+            resolve(new Response(null, { headers: { ETag: '"late-etag"' } }));
+          }
+        }, { once: true });
+      });
+    }
+    if (target.endsWith("abort")) settledAtCleanup = settled;
+    return fetchResponse(url, init);
+  });
+
+  await assert.rejects(uploadFile(file(), (fraction) => progress.push(fraction)), /Part upload failed \(500\)/);
+
+  assert.equal(signals.length, 2);
+  assert.equal(signals.every((signal) => signal.aborted), true);
+  assert.equal(settledAtCleanup, 2);
+  assert.deepEqual(progress, []);
+  for (const part of [2, 3]) {
+    assert.equal(calls.filter((call) => call.url.includes(`partNumber=${part}`)).length, 1);
+  }
+  assert.equal(calls.some((call) => call.url.includes("partNumber=4")), false);
   assert.equal(calls.some((call) => call.url.endsWith("complete")), false);
   assert.equal(calls.filter((call) => call.url.endsWith("abort")).length, 1);
 });
