@@ -16,9 +16,9 @@ export default async function FilesPage() {
 
   return (
     <PageShell site={site}>
-      <div className={styles.index}>
+      <div className={styles.panel}>
         <h1 className={styles.heading}>Files</h1>
-        <table>
+        <table className={styles.index}>
           <thead>
             <tr>
               <th>Name</th>

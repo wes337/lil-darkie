@@ -358,18 +358,13 @@ h3.heading {
   }
 }
 
-// The /files page, drawn like a server's directory listing: a heading, a
-// rule, the table, a rule. Everything is in the page's own text color.
+// The /files listing, drawn like a server's directory listing inside the
+// usual panel: name, date and size between two rules, in the text color.
 .index {
   width: 100%;
-
-  table {
-    width: 100%;
-    margin-top: $space-md;
-    border-collapse: collapse;
-    border-top: 1px solid currentColor;
-    border-bottom: 1px solid currentColor;
-  }
+  border-collapse: collapse;
+  border-top: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
 
   th {
     padding: 6px 0;
